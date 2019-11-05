@@ -1,6 +1,13 @@
 #include <iostream>
+#include "Application.h"
 
 int main() {
-    std::cout << "Hello, World!" << std::endl;
+
+    Application* app = new Application();
+    app->initialize();
+
+    while (app->run())
+    {
+    }
     return 0;
 }

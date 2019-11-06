@@ -4,7 +4,6 @@
 
 #include "Application.h"
 #include <iostream>
-//#include "SFML\Graphics.hpp"
 
 Application::Application()
     :window(new sf::RenderWindow(sf::VideoMode(800,600), "MyGame"))
@@ -18,6 +17,8 @@ Application::~Application() {
 }
 
 void Application::initialize() {
+    std::cout << "Start initialization.\n";
+
     sf::Font* font = new sf::Font();
     if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
     {
@@ -30,6 +31,11 @@ void Application::initialize() {
     text->setString("");
     text->setCharacterSize(24);
     text->setFillColor(sf::Color::Red);
+
+    std::cout << "Create button\n";
+    button = new Button(sf::Vector2f(600.0f,540.0f), sf::Vector2f(1.0f,1.0f), [&]{clear();});
+
+    std::cout << "End initialization\n";
 }
 
 bool Application::run() {
@@ -40,6 +46,7 @@ bool Application::run() {
         return false;
     }
 
+    //Input detection
     sf::Event evt;
     while (window->pollEvent(evt))
     {
@@ -73,14 +80,25 @@ bool Application::run() {
             }
 
         }
-        else
+        else if (evt.type == sf::Event::MouseButtonPressed)
         {
-
+            if (evt.mouseButton.button == sf::Mouse::Left)
+            {
+                sf::Vector2f mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
+                if(button->isPositionOnButton(mousePos))
+                {
+                    button->down();
+                }
+            }
+        }
+        else if (evt.type == sf::Event::MouseButtonReleased)
+        {
+            if (evt.mouseButton.button == sf::Mouse::Left)
+            {
+                button->up();
+            }
         }
     }
-
-    //Input detection
-
 
     //Update Components
 
@@ -90,6 +108,7 @@ bool Application::run() {
 
     //Draw Components
     window->draw(*text);
+    button->drawTo(window);
 
     //display
     window->display();
@@ -99,4 +118,8 @@ bool Application::run() {
     return true;
 
 
+}
+
+void Application::clear() {
+    text->setString("");
 }

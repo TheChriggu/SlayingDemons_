@@ -6,7 +6,7 @@
 #include <iostream>
 
 Application::Application()
-    :window(new sf::RenderWindow(sf::VideoMode(800,600), "MyGame"))
+    :window(new sf::RenderWindow(sf::VideoMode(1920,1080), "MyGame"))
 {
     window->setFramerateLimit(60);
 }
@@ -19,21 +19,21 @@ Application::~Application() {
 void Application::initialize() {
     std::cout << "Start initialization.\n";
 
-    sf::Font* font = new sf::Font();
-    if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
-    {
-        std::cout << "Could not load Font!\n";
-        return;
-    }
 
-    text = new sf::Text();
-    text->setFont(*font);
-    text->setString("");
-    text->setCharacterSize(24);
-    text->setFillColor(sf::Color::Red);
+
+
 
     std::cout << "Create button\n";
     button = new Button(sf::Vector2f(600.0f,540.0f), sf::Vector2f(1.0f,1.0f), [&]{clear();});
+
+
+
+    background = new DisplayArea(sf::Vector2f(0.0,0.0), sf::Vector2f(1920,1080), sf::Color::Blue);
+    textOutput = new TextOutput(sf::Vector2f(48.0,41.0), sf::Vector2f(1044,1008), sf::Color::Red);
+    wordList = new DisplayArea(sf::Vector2f(39.0,605.0), sf::Vector2f(1059,445), sf::Color::Yellow);
+    inputField = new DisplayArea(sf::Vector2f(55,977), sf::Vector2f(1025,63), sf::Color::Magenta);
+    map = new DisplayArea(sf::Vector2f(1127.0,41.0), sf::Vector2f(761,558), sf::Color::Green);
+    books = new DisplayArea(sf::Vector2f(1103.0,611.0), sf::Vector2f( 816,461), sf::Color::Cyan);
 
     std::cout << "End initialization\n";
 }
@@ -58,25 +58,13 @@ bool Application::run() {
         else if (evt.type == sf::Event::TextEntered)
         {
             sf::Uint32 input = evt.text.unicode;
-            sf::String strg = text->getString();
-            if(input == 8 && strg.getSize() > 0)
-            {
-                strg.erase(strg.getSize()-1,1);
-            }
-            else
-            {
-                strg += evt.text.unicode;
-            }
-
-            text->setString(strg);
+            textOutput->addText(input);
         }
         else if(evt.type == sf::Event::KeyPressed)
         {
             if(evt.key.code == sf::Keyboard::Enter)
             {
-                sf::String strg = text->getString();
-                strg += "\n";
-                text->setString(strg);
+                textOutput->addText("\n");
             }
 
         }
@@ -107,8 +95,15 @@ bool Application::run() {
     window->clear();
 
     //Draw Components
-    window->draw(*text);
-    button->drawTo(window);
+    background->drawTo(window);
+    textOutput->drawTo(window);
+    wordList->drawTo(window);
+    inputField->drawTo(window);
+    map->drawTo(window);
+    books->drawTo(window);
+
+    //button->drawTo(window);
+
 
     //display
     window->display();
@@ -121,5 +116,5 @@ bool Application::run() {
 }
 
 void Application::clear() {
-    text->setString("");
+    //text->setString("");
 }

@@ -6,13 +6,21 @@
 #define UNTITLED_APPLICATION_H
 #include "SFML\Graphics.hpp"
 #include "Button.h"
+#include "DisplayArea.h"
+#include "TextOutput.h"
+#include <list>
 
 
 class Application {
 
     sf::RenderWindow* window;
-    sf::Text* text;
     Button* button;
+    DisplayArea* background;
+    TextOutput* textOutput;
+    DisplayArea* wordList;
+    DisplayArea* inputField;
+    DisplayArea* map;
+    DisplayArea* books;
 
 public:
     Application();

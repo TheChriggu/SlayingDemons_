@@ -34,7 +34,8 @@ void FormattedLine::formatLine(sf::String string) {
 
         else
         {
-           FormattedWord* newWord = new FormattedWord(word, false, sf::Vector2f(getRect().left + getRect().width,getRect().top) );
+            sf::Vector2f wordPosition =  sf::Vector2f(getRect().left + getRect().width,getRect().top);
+           FormattedWord* newWord = new FormattedWord(word, false, wordPosition);
            words->push_back(newWord);
            word = " ";
         }

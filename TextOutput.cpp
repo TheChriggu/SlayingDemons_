@@ -54,31 +54,3 @@ void TextOutput::addLine(sf::String string) {
 }
 
 
-void TextOutput::addText(sf::Uint32 input) {
-    sf::String result = text;
-    if(input == 8 && result.getSize() > 0)
-    {
-        result.erase(result.getSize()-1,1);
-    }
-    else
-    {
-        result += static_cast<char>(input);
-    }
-
-    text = result;
-}
-
-void TextOutput::enterPressed() {
-    addLine(text);
-    text = "";
-}
-/*
-void TextOutput::addText(sf::String input) {
-    sf::String result = text->getString();
-
-     result += input;
-
-    text->setString(result);
-}*/
-
-

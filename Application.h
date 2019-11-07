@@ -7,6 +7,7 @@
 #include "SFML\Graphics.hpp"
 #include "Button.h"
 #include "DisplayArea.h"
+#include "InputField.h"
 #include "TextOutput.h"
 #include <list>
 
@@ -18,7 +19,7 @@ class Application {
     DisplayArea* background;
     TextOutput* textOutput;
     DisplayArea* wordList;
-    DisplayArea* inputField;
+    InputField* inputField;
     DisplayArea* map;
     DisplayArea* books;
 

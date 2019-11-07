@@ -20,10 +20,6 @@ public:
     ~TextOutput();
 
     void addLine(sf::String string);
-    void addText(sf::Uint32 input);
-    //void addText(sf::String input);
-    void enterPressed();
-
 
     void drawTo(sf::RenderWindow* window) override;
 };

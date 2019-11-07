@@ -13,7 +13,7 @@
 class TextOutput: public DisplayArea {
 
     sf::String text;
-    //TextGlitch* glitch;
+    sf::RenderWindow* glitchWindow;
     std::list<FormattedLine*>* lines;
 public:
     TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color);
@@ -22,6 +22,7 @@ public:
     void addLine(sf::String string);
 
     void drawTo(sf::RenderWindow* window) override;
+    void toggleGlitch();
 };
 
 

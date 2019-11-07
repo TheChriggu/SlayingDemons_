@@ -24,7 +24,7 @@ void Application::initialize() {
 
 
     std::cout << "Create button\n";
-    button = new Button(sf::Vector2f(600.0f,540.0f), sf::Vector2f(1.0f,1.0f), [&]{clear();});
+    button = new Button(sf::Vector2f(1200.0f,500.0f), sf::Vector2f(1.0f,1.0f), [&]{clear();});
 
 
 
@@ -102,7 +102,7 @@ bool Application::run() {
     map->drawTo(window);
     books->drawTo(window);
 
-    //button->drawTo(window);
+    button->drawTo(window);
 
 
     //display
@@ -116,5 +116,6 @@ bool Application::run() {
 }
 
 void Application::clear() {
+    textOutput->toggleGlitch();
     //text->setString("");
 }

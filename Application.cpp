@@ -64,7 +64,7 @@ bool Application::run() {
         {
             if(evt.key.code == sf::Keyboard::Enter)
             {
-                textOutput->addText("\n");
+                textOutput->enterPressed();
             }
 
         }

@@ -9,6 +9,7 @@ Application::Application()
     :window(new sf::RenderWindow(sf::VideoMode(1920,1080), "MyGame"))
 {
     window->setFramerateLimit(60);
+
 }
 
 Application::~Application() {

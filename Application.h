@@ -4,7 +4,7 @@
 
 #ifndef UNTITLED_APPLICATION_H
 #define UNTITLED_APPLICATION_H
-#include "SFML\Graphics.hpp"
+#include "SFML/Graphics.hpp"
 #include "Button.h"
 #include "DisplayArea.h"
 #include "TextOutput.h"

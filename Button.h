@@ -6,7 +6,7 @@
 #define UNTITLED_BUTTON_H
 
 #include <functional>
-#include "SFML\Graphics.hpp"
+#include "SFML/Graphics.hpp"
 
 class Button {
 

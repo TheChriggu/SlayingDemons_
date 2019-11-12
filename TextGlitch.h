@@ -4,7 +4,7 @@
 
 #ifndef UNTITLED_TEXTGLITCH_H
 #define UNTITLED_TEXTGLITCH_H
-#include "SFML\Graphics.hpp"
+#include "SFML/Graphics.hpp"
 
 
 class TextGlitch {

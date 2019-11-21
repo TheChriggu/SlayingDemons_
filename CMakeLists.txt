@@ -3,13 +3,30 @@ project(SlayingDemons)
 
 set(CMAKE_CXX_STANDARD 17)
 
-if(CMAKE_HOST_UNIX)
-    message("It worked!")
-else()
-    message("Shit!")
+# This CMake-File links the SFML Libary files for the current Host System.
+# This means the Game can only be build for a Target-System on that Target-System
+
+# Link to the cmake sub-files that link the SFML libary files to the equivalent Header-files for the corresponding Host-System
+# and set include Directories
+if(CMAKE_HOST_WIN32)
+    set(SFML_DIR "SFML-2.5.1/Windows/lib/cmake/SFML")
+    include_directories("SFML-2.5.1/Windows/include")
 endif()
 
-#set(SFML_DIR "C:/Users/christian.heusser/Desktop/SFML-2.5.1/lib/cmake/SFML")
-#find_package(SFML COMPONENTS system window graphics network audio main REQUIRED)
-add_executable(SlayingDemons main.cpp)
-#target_link_libraries(untitled sfml-system sfml-window sfml-graphics sfml-network sfml-audio sfml-main)
+if(CMAKE_HOST_UNIX)
+    set(SFML_DIR "SFML-2.5.1/Linux/lib/cmake/SFML")
+    include_directories("SFML-2.5.1/Linux/include")
+endif()
+
+if(CMAKE_HOST_APPLE)
+    set(SFML_DIR "SFML-2.5.1/Windows/lib")
+    include_directories("SFML-2.5.1/Mac/include")
+endif()
+
+# set executable-files
+add_executable(SlayingDemons main.cpp Application.cpp Application.h Button.cpp Button.h TextGlitch.cpp TextGlitch.h DisplayArea.cpp DisplayArea.h TextOutput.cpp TextOutput.h )
+
+# find SFML packages that where linked together in DFML_DIR
+find_package(SFML COMPONENTS system window graphics network audio REQUIRED)
+# link executable to SFML Libaries
+target_link_libraries(SlayingDemons sfml-system sfml-window sfml-graphics sfml-network sfml-audio)

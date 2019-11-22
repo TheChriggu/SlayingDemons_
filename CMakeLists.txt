@@ -6,6 +6,9 @@ set(CMAKE_CXX_STANDARD 17)
 # This CMake-File links the SFML Libary files for the current Host System.
 # This means the Game can only be build for a Target-System on that Target-System
 
+#set option that sfml libaries get linked static
+set(SFML_STATIC_LIBRARIES true)
+
 # Link to the cmake sub-files that link the SFML libary files to the equivalent Header-files for the corresponding Host-System
 # and set include Directories
 if(CMAKE_HOST_WIN32)

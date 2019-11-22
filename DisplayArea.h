@@ -4,7 +4,7 @@
 
 #ifndef UNTITLED_DISPLAYAREA_H
 #define UNTITLED_DISPLAYAREA_H
-#include "SFML\Graphics.hpp"
+#include "SFML/Graphics.hpp"
 
 class DisplayArea {
 protected:

@@ -9,5 +9,6 @@ int main() {
     while (app->run())
     {
     }
+
     return 0;
 }

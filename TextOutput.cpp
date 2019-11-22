@@ -6,73 +6,60 @@
 #include <iostream>
 
 TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color) : DisplayArea(position, size, color) {
+    lines = new std::list<FormattedLine*>();
+    lines->push_back(new FormattedLine("", sf::Vector2f(backgroundImage->getPosition()+sf::Vector2f(20,20))));
+    text = "";
+    glitchWindow = new sf::RenderWindow(sf::VideoMode(1920,1080), "Glitch");
+    glitchWindow->setVisible(false);
 
-    sf::Font* font = new sf::Font();
-    if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
-    {
-        std::cout << "Could not load Font!\n";
-        return;
-    }
-
-    text = new sf::Text();
-    text->setFont(*font);
-    text->setString("");
-    text->setCharacterSize(24);
-    text->setFillColor(sf::Color::Magenta);
-    text->setPosition(position);
-
-    glitch = new TextGlitch();
 }
 
 TextOutput::~TextOutput() {
-
+    delete lines;
+    lines = nullptr;
 }
 
-void TextOutput::drawTo(sf::RenderWindow *window) {
+void TextOutput::drawTo(sf::RenderWindow* window) {
     DisplayArea::drawTo(window);
-    window->draw(*text);
 
     if (!sf::Shader::isAvailable())
     {
-        window->draw(*text);
-
+        for (FormattedLine* line : *lines) {
+            line->drawTo(window, window);
+        }
     }
     else
     {
+        glitchWindow->clear(sf::Color::Black);
+        for (FormattedLine* line : *lines) {
+            line->drawTo(window, glitchWindow);
+        }
         sf::Shader shader;
 
-        if (!shader.loadFromFile("../Resources/Shaders/textGlitch.frag", sf::Shader::Fragment))
-        {
+        if (!shader.loadFromFile("../Resources/Shaders/textGlitch.frag", sf::Shader::Fragment)) {
             // error...
         }
-        sf::Texture* tex = glitch->glitch(text);
+        sf::Texture* tex = new sf::Texture();
+        tex->create(1920, 1080);
+        tex->update(*glitchWindow);
         shader.setUniform("texture", *tex);
         sf::Sprite sprite;
         sprite.setTexture(*tex);
         window->draw(sprite, &shader);
+        delete tex;
     }
 }
 
-void TextOutput::addText(sf::Uint32 input) {
-    sf::String result = text->getString();
-    if(input == 8 && result.getSize() > 0)
-    {
-        result.erase(result.getSize()-1,1);
-    }
-    else
-    {
-        result += static_cast<char>(input);
-    }
-
-    text->setString(result);
+void TextOutput::addLine(sf::String string) {
+    FormattedLine* newLine = new FormattedLine(string, sf::Vector2f(lines->back()->getRect().left, lines->back()->getRect().top+lines->back()->getRect().height)) ;
+    //format line
+    lines->push_back(newLine);
 }
 
-void TextOutput::addText(sf::String input) {
-    sf::String result = text->getString();
-
-     result += input;
-
-    text->setString(result);
+void TextOutput::toggleGlitch() {
+    for(FormattedLine* line : *lines){
+        line->toggleGlitch();
+    }
 }
 
 

@@ -25,14 +25,14 @@ void Application::initialize() {
 
 
     std::cout << "Create button\n";
-    button = new Button(sf::Vector2f(600.0f,540.0f), sf::Vector2f(1.0f,1.0f), [&]{clear();});
+    button = new Button(sf::Vector2f(1200.0f,500.0f), sf::Vector2f(1.0f,1.0f), [&]{clear();});
 
 
 
     background = new DisplayArea(sf::Vector2f(0.0,0.0), sf::Vector2f(1920,1080), sf::Color::Blue);
     textOutput = new TextOutput(sf::Vector2f(48.0,41.0), sf::Vector2f(1044,1008), sf::Color::Red);
     wordList = new DisplayArea(sf::Vector2f(39.0,605.0), sf::Vector2f(1059,445), sf::Color::Yellow);
-    inputField = new DisplayArea(sf::Vector2f(55,977), sf::Vector2f(1025,63), sf::Color::Magenta);
+    inputField = new InputField(sf::Vector2f(55,977), sf::Vector2f(1025,63), sf::Color::Magenta);
     map = new DisplayArea(sf::Vector2f(1127.0,41.0), sf::Vector2f(761,558), sf::Color::Green);
     books = new DisplayArea(sf::Vector2f(1103.0,611.0), sf::Vector2f( 816,461), sf::Color::Cyan);
 
@@ -59,13 +59,13 @@ bool Application::run() {
         else if (evt.type == sf::Event::TextEntered)
         {
             sf::Uint32 input = evt.text.unicode;
-            textOutput->addText(input);
+            inputField->addText(input);
         }
         else if(evt.type == sf::Event::KeyPressed)
         {
             if(evt.key.code == sf::Keyboard::Enter)
             {
-                textOutput->addText("\n");
+                textOutput->addLine(inputField->getTextAndClear());
             }
 
         }
@@ -103,7 +103,7 @@ bool Application::run() {
     map->drawTo(window);
     books->drawTo(window);
 
-    //button->drawTo(window);
+    button->drawTo(window);
 
 
     //display
@@ -117,5 +117,6 @@ bool Application::run() {
 }
 
 void Application::clear() {
+    textOutput->toggleGlitch();
     //text->setString("");
 }

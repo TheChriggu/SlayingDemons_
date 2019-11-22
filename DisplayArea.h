@@ -7,6 +7,7 @@
 #include "SFML/Graphics.hpp"
 
 class DisplayArea {
+protected:
     sf::RectangleShape* backgroundImage;
 
 public:

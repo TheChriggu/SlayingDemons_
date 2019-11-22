@@ -10,7 +10,7 @@ TextGlitch::TextGlitch() {
 }
 
 TextGlitch::~TextGlitch() {
-
+    delete window;
 }
 
 sf::Texture* TextGlitch::glitch(sf::Text* text) {

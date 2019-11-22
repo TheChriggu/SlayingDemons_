@@ -27,7 +27,25 @@ if(CMAKE_HOST_APPLE)
 endif()
 
 # set executable-files
-add_executable(SlayingDemons main.cpp Application.cpp Application.h Button.cpp Button.h TextGlitch.cpp TextGlitch.h DisplayArea.cpp DisplayArea.h TextOutput.cpp TextOutput.h )
+add_executable(SlayingDemons
+        main.cpp
+        Application.cpp
+        Application.h
+        Button.cpp
+        Button.h
+        TextGlitch.cpp
+        TextGlitch.h
+        DisplayArea.cpp
+        DisplayArea.h
+        TextOutput.cpp
+        TextOutput.h
+        FormattedLine.h
+        FormattedLine.cpp
+        FormattedWord.h
+        FormattedWord.cpp
+        InputField.h
+        InputField.cpp
+        )
 
 # find SFML packages that where linked together in DFML_DIR
 find_package(SFML COMPONENTS system window graphics network audio REQUIRED)

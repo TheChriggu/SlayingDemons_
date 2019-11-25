@@ -9,6 +9,7 @@
 #include "DisplayArea.h"
 #include "InputField.h"
 #include "TextOutput.h"
+#include "Tilemap.h"
 #include <list>
 
 
@@ -22,6 +23,7 @@ class Application {
     InputField* inputField;
     DisplayArea* map;
     DisplayArea* books;
+    Tilemap* tilemap;
 
 public:
     Application();

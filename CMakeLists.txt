@@ -45,7 +45,7 @@ add_executable(SlayingDemons
         FormattedWord.cpp
         InputField.h
         InputField.cpp
-        )
+        Tilemap.cpp Tilemap.h)
 
 # find SFML packages that where linked together in DFML_DIR
 find_package(SFML COMPONENTS system window graphics network audio REQUIRED)

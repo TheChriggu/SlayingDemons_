@@ -6,7 +6,9 @@
 #include "Button.h"
 
 
-Button::Button(sf::Vector2f position, sf::Vector2f scale, std::function<void()> _callback) {
+sd::Button::Button(sf::Vector2f position, sf::Vector2f scale, std::function<void()> _callback)
+    : DrawableObject(position, scale)
+{
     button = new sf::Sprite();;
     normalTexture = new sf::Texture();
     pressedTexture = new sf::Texture();
@@ -26,27 +28,27 @@ Button::Button(sf::Vector2f position, sf::Vector2f scale, std::function<void()> 
     callback = _callback;
 }
 
-Button::~Button() {
+sd::Button::~Button() {
     delete normalTexture;
     delete pressedTexture;
     delete button;
     button = 0;
 }
 
-void Button::down() {
+void sd::Button::down() {
     button->setTexture(*pressedTexture, true);
 }
 
-void Button::up() {
+void sd::Button::up() {
     button->setTexture(*normalTexture, true);
     callback();
 }
 
-void Button::drawTo(sf::RenderWindow *window) {
+void sd::Button::Draw(sf::RenderWindow *window) const {
     window->draw(*button);
 }
 
-bool Button::isPositionOnButton(sf::Vector2f positionToCheck) {
+bool sd::Button::isPositionOnButton(sf::Vector2f positionToCheck) {
     sf::Rect bounds = button->getGlobalBounds();
     return bounds.contains(positionToCheck);
 }

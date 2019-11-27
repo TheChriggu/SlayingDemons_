@@ -7,26 +7,29 @@
 
 #include <functional>
 #include "SFML/Graphics.hpp"
+#include "DrawableObject.h"
 
-class Button {
+namespace sd {
+    class Button : public DrawableObject {
 
-    sf::Sprite* button;
-    sf::Texture* normalTexture;
-    sf::Texture* pressedTexture;
+        sf::Sprite* button;
+        sf::Texture* normalTexture;
+        sf::Texture* pressedTexture;
 
-    std::function<void()> callback;
+        std::function<void()> callback;
 
 
-public:
-    Button(sf::Vector2f position, sf::Vector2f scale, std::function<void()> _callback);
-    ~Button();
+    public:
+        Button(sf::Vector2f position, sf::Vector2f scale, std::function<void()> _callback);
+        ~Button();
 
-    void down();
-    void up();
+        void down();
+        void up();
 
-    void drawTo(sf::RenderWindow* window);
-    bool isPositionOnButton(sf::Vector2f positionToCheck);
-};
+        void Draw(sf::RenderWindow* window) const override;
+        bool isPositionOnButton(sf::Vector2f positionToCheck);
+    };
+}
 
 
 #endif //UNTITLED_BUTTON_H

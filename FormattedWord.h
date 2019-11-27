@@ -4,7 +4,7 @@
 
 #ifndef UNTITLED_FORMATTEDWORD_H
 #define UNTITLED_FORMATTEDWORD_H
-#include "SFML\Graphics.hpp"
+#include "SFML/Graphics.hpp"
 
 class FormattedWord {
     sf::Text* text;

@@ -6,14 +6,14 @@ set(CMAKE_CXX_STANDARD 17)
 # This CMake-File links the SFML Libary files for the current Host System.
 # This means the Game can only be build for a Target-System on that Target-System
 
-#set option that sfml libaries get linked static
-set(SFML_STATIC_LIBRARIES true)
-
 # Link to the cmake sub-files that link the SFML libary files to the equivalent Header-files for the corresponding Host-System
 # and set include Directories
 if(CMAKE_HOST_WIN32)
     set(SFML_DIR "SFML-2.5.1/Windows/lib/cmake/SFML")
     include_directories("SFML-2.5.1/Windows/include")
+
+    #set option that sfml libaries get linked static
+    set(SFML_STATIC_LIBRARIES true)
 endif()
 
 if(CMAKE_HOST_UNIX)
@@ -35,8 +35,8 @@ add_executable(SlayingDemons
         Button.h
         TextGlitch.cpp
         TextGlitch.h
-        DisplayArea.cpp
-        DisplayArea.h
+        DrawableObject.cpp
+        DrawableObject.h
         TextOutput.cpp
         TextOutput.h
         FormattedLine.h
@@ -45,7 +45,7 @@ add_executable(SlayingDemons
         FormattedWord.cpp
         InputField.h
         InputField.cpp
-        )
+        Manageable.h Drawable.h Panel.cpp Panel.h)
 
 # find SFML packages that where linked together in DFML_DIR
 find_package(SFML COMPONENTS system window graphics network audio REQUIRED)

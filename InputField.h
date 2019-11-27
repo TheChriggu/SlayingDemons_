@@ -4,20 +4,27 @@
 
 #ifndef UNTITLED_INPUTFIELD_H
 #define UNTITLED_INPUTFIELD_H
-#include "DisplayArea.h"
+#include "DrawableObject.h"
+#include "TextOutput.h"
 
-class InputField : public DisplayArea{
-    sf::Text* text;
+namespace sd {
+    class InputField : public DrawableObject{
+        sf::Text* text;
+        TextOutput* output_;
 
-public:
-    InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color);
-    ~InputField();
+    public:
+        // TODO(FK): remove Textoutput from Input class?
+        InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color, TextOutput* output);
+        ~InputField();
 
-    void addText(sf::Uint32 input);
-    sf::String getTextAndClear();
+        void addText(sf::Uint32 input);
+        sf::String getTextAndClear();
 
-    void drawTo(sf::RenderWindow* window) override;
-};
+        void Draw(sf::RenderWindow* window) const override;
+        void Handle(sf::Event event) override;
+
+    };
+}
 
 
 #endif //UNTITLED_INPUTFIELD_H

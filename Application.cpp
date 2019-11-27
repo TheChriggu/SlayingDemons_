@@ -3,89 +3,69 @@
 //
 
 #include "Application.h"
+#include "Panel.h"
+#include "UserInput.h"
 #include <iostream>
 
-Application::Application()
-    :window(new sf::RenderWindow(sf::VideoMode(1920,1080), "MyGame"))
+sd::Application::Application()
 {
-    window->setFramerateLimit(60);
-
+    window_ = nullptr;
+    world_ = nullptr;
+    file_input_ = nullptr;
 }
 
-Application::~Application() {
-    delete window;
-    window = 0;
-}
 
-void Application::initialize() {
+
+bool sd::Application::Setup() {
+    window_ = new sf::RenderWindow(sf::VideoMode(1920, 1080), "MyGame");
+    window_->setFramerateLimit(60);
+
+    // TODO(FK)
+    new UserInput(window_);
+
     std::cout << "Start initialization.\n";
 
-
-
-
-
     std::cout << "Create button\n";
-    button = new Button(sf::Vector2f(1200.0f,500.0f), sf::Vector2f(1.0f,1.0f), [&]{clear();});
+    drawable_objects_.emplace_back(new Button(sf::Vector2f(1200.0f,500.0f), sf::Vector2f(1.0f,1.0f), [&]{clear();}));
 
-
-
-    background = new DisplayArea(sf::Vector2f(0.0,0.0), sf::Vector2f(1920,1080), sf::Color::Blue);
-    textOutput = new TextOutput(sf::Vector2f(48.0,41.0), sf::Vector2f(1044,1008), sf::Color::Red);
-    wordList = new DisplayArea(sf::Vector2f(39.0,605.0), sf::Vector2f(1059,445), sf::Color::Yellow);
-    inputField = new InputField(sf::Vector2f(55,977), sf::Vector2f(1025,63), sf::Color::Magenta);
-    map = new DisplayArea(sf::Vector2f(1127.0,41.0), sf::Vector2f(761,558), sf::Color::Green);
-    books = new DisplayArea(sf::Vector2f(1103.0,611.0), sf::Vector2f( 816,461), sf::Color::Cyan);
+    drawable_objects_.emplace_back(new Panel(sf::Vector2f(0.0, 0.0), sf::Vector2f(1920, 1080), sf::Color::Blue));
+    // TODO(FK): clean up this shit
+    auto output = new TextOutput(sf::Vector2f(48.0,41.0), sf::Vector2f(1044,1008), sf::Color::Red);
+    drawable_objects_.emplace_back(output);
+    drawable_objects_.emplace_back(new Panel(sf::Vector2f(39.0, 605.0), sf::Vector2f(1059, 445), sf::Color::Green));
+    drawable_objects_.emplace_back(new InputField(sf::Vector2f(55,977), sf::Vector2f(1025,63), sf::Color::Magenta, output));
+    drawable_objects_.emplace_back(new Panel(sf::Vector2f(1127.0, 41.0), sf::Vector2f(761, 558), sf::Color::Magenta));
+    drawable_objects_.emplace_back(new Panel(sf::Vector2f(1103.0, 611.0), sf::Vector2f(816, 461), sf::Color::Red));
 
     std::cout << "End initialization\n";
+
+    return true;
 }
 
-bool Application::run() {
+void sd::Application::Shutdown() {
+    delete window_;
+    window_ = nullptr;
+}
+
+bool sd::Application::Run() {
 
 
-    if(!window->isOpen())
+    if(!window_->isOpen())
     {
         return false;
     }
 
     //Input detection
     sf::Event evt;
-    while (window->pollEvent(evt))
+    while (window_->pollEvent(evt))
     {
         if (evt.type == sf::Event::Closed)
         {
-            window->close();
+            window_->close();
         }
 
-        else if (evt.type == sf::Event::TextEntered)
-        {
-            sf::Uint32 input = evt.text.unicode;
-            inputField->addText(input);
-        }
-        else if(evt.type == sf::Event::KeyPressed)
-        {
-            if(evt.key.code == sf::Keyboard::Enter)
-            {
-                textOutput->addLine(inputField->getTextAndClear());
-            }
-
-        }
-        else if (evt.type == sf::Event::MouseButtonPressed)
-        {
-            if (evt.mouseButton.button == sf::Mouse::Left)
-            {
-                sf::Vector2f mousePos = window->mapPixelToCoords(sf::Mouse::getPosition(*window));
-                if(button->isPositionOnButton(mousePos))
-                {
-                    button->down();
-                }
-            }
-        }
-        else if (evt.type == sf::Event::MouseButtonReleased)
-        {
-            if (evt.mouseButton.button == sf::Mouse::Left)
-            {
-                button->up();
-            }
+        for (auto object : drawable_objects_) {
+            object->Handle(evt);
         }
     }
 
@@ -93,21 +73,17 @@ bool Application::run() {
 
 
     //Clear Window
-    window->clear();
+    window_->clear();
 
     //Draw Components
-    background->drawTo(window);
-    textOutput->drawTo(window);
-    wordList->drawTo(window);
-    inputField->drawTo(window);
-    map->drawTo(window);
-    books->drawTo(window);
 
-    button->drawTo(window);
+    for (auto comp : drawable_objects_) {
+        comp->Draw(window_);
+    }
 
 
     //display
-    window->display();
+    window_->display();
 
 
     //end
@@ -116,7 +92,9 @@ bool Application::run() {
 
 }
 
-void Application::clear() {
-    textOutput->toggleGlitch();
+void sd::Application::clear() {
+    //textOutput->toggleGlitch();
     //text->setString("");
 }
+
+

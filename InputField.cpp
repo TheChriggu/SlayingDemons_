@@ -5,7 +5,9 @@
 #include "InputField.h"
 #include <iostream>
 
-InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color) : DisplayArea(position, size, color){
+sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color, TextOutput* output)
+    : DrawableObject(position, size)
+    , output_(output) {
     sf::Font* font = new sf::Font();
     if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
     {
@@ -18,14 +20,14 @@ InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color
     text->setString("");
     text->setCharacterSize(24);
     text->setFillColor(sf::Color::Black);
-    text->setPosition(backgroundImage->getPosition() + sf::Vector2f(10,10));
+    text->setPosition(sprite->getPosition() + sf::Vector2f(10, 10));
 }
 
-InputField::~InputField() {
+sd::InputField::~InputField() {
 
 }
 
-void InputField::addText(sf::Uint32 input) {
+void sd::InputField::addText(sf::Uint32 input) {
     sf::String result = text->getString();
     if(input == 8 && result.getSize() > 0)
     {
@@ -39,13 +41,29 @@ void InputField::addText(sf::Uint32 input) {
     text->setString(result);
 }
 
-sf::String InputField::getTextAndClear() {
+sf::String sd::InputField::getTextAndClear() {
     sf::String retVal = text->getString();
     text ->setString("");
     return retVal;
 }
 
-void InputField::drawTo(sf::RenderWindow *window) {
-    DisplayArea::drawTo(window);
+void sd::InputField::Draw(sf::RenderWindow *window) const {
+    DrawableObject::Draw(window);
     window->draw(*text);
+}
+
+void sd::InputField::Handle(sf::Event event) {
+    if (event.type == sf::Event::TextEntered)
+    {
+        sf::Uint32 input = event.text.unicode;
+        addText(input);
+    }
+    if(event.type == sf::Event::KeyPressed)
+    {
+        if(event.key.code == sf::Keyboard::Enter)
+        {
+            output_->addLine(getTextAndClear());
+        }
+
+    }
 }

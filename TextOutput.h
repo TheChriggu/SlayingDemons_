@@ -4,26 +4,30 @@
 
 #ifndef UNTITLED_TEXTOUTPUT_H
 #define UNTITLED_TEXTOUTPUT_H
-#include "DisplayArea.h"
+#include "DrawableObject.h"
 #include "TextGlitch.h"
 #include <list>
 #include "FormattedLine.h"
 
 
-class TextOutput: public DisplayArea {
+namespace sd {
+    class TextOutput: public DrawableObject {
 
-    sf::String text;
-    sf::RenderWindow* glitchWindow;
-    std::list<FormattedLine*>* lines;
-public:
-    TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color);
-    ~TextOutput();
+        sf::String text;
+        sf::RenderWindow* glitchWindow;
+        std::list<FormattedLine*>* lines;
+    public:
+        TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color);
+        ~TextOutput();
 
-    void addLine(sf::String string);
+        void addLine(sf::String string);
 
-    void drawTo(sf::RenderWindow* window) override;
-    void toggleGlitch();
-};
+        void Draw(sf::RenderWindow* window) const override;
+        void toggleGlitch();
+
+        void Handle(sf::Event event) override;
+    };
+}
 
 
 #endif //UNTITLED_TEXTOUTPUT_H

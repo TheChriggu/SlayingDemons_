@@ -3,12 +3,14 @@
 
 int main() {
 
-    Application* app = new Application();
-    app->initialize();
+    sd::Application* app = new sd::Application();
+    app->Setup();
 
-    while (app->run())
+    while (app->Run())
     {
     }
+
+    app->Shutdown();
 
     return 0;
 }

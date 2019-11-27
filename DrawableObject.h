@@ -16,7 +16,10 @@ namespace sd {
         DrawableObject(sf::Vector2f position, sf::Vector2f size);
         virtual ~DrawableObject();
 
+        // TODO(FK): make virtual?
         void Draw(sf::RenderWindow *window) const override;
+
+        virtual void Handle(sf::Event event) = 0;
     };
 }
 

@@ -62,4 +62,8 @@ void sd::TextOutput::toggleGlitch() {
     }
 }
 
+void sd::TextOutput::Handle(sf::Event event) {
+
+}
+
 

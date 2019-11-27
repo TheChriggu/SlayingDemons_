@@ -8,7 +8,6 @@ sd::DrawableObject::DrawableObject(sf::Vector2f position, sf::Vector2f size) {
     sprite = new sf::Sprite();
     sprite->setPosition(position);
     sprite->setScale(size);
-    //sprite->setFillColor(color);
 }
 
 sd::DrawableObject::~DrawableObject() {

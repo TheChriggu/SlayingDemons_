@@ -4,6 +4,7 @@
 
 #include <iostream>
 #include "Button.h"
+#include "UserInput.h"
 
 
 sd::Button::Button(sf::Vector2f position, sf::Vector2f scale, std::function<void()> _callback)
@@ -51,5 +52,33 @@ void sd::Button::Draw(sf::RenderWindow *window) const {
 bool sd::Button::isPositionOnButton(sf::Vector2f positionToCheck) {
     sf::Rect bounds = button->getGlobalBounds();
     return bounds.contains(positionToCheck);
+}
+
+void sd::Button::Handle(sf::Event event) {
+    if (event.type == sf::Event::MouseButtonPressed)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            auto mousePos = sd::UserInput::GetInstance()->GetMousePosition();
+            std::cout << "after mouse pos" << std::endl;
+            sf::Vector2f test;
+            test.x = mousePos.x;
+            test.y = mousePos.y;
+            if(isPositionOnButton(test))
+            {
+                std::cout << "down" << std::endl;
+                down();
+            }
+        }
+    }
+
+    if (event.type == sf::Event::MouseButtonReleased)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            std::cout << "up" << std::endl;
+            up();
+        }
+    }
 }
 

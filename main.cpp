@@ -10,5 +10,7 @@ int main() {
     {
     }
 
+    app->Shutdown();
+
     return 0;
 }

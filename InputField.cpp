@@ -5,7 +5,9 @@
 #include "InputField.h"
 #include <iostream>
 
-sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color) : DrawableObject(position, size) {
+sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color, TextOutput* output)
+    : DrawableObject(position, size)
+    , output_(output) {
     sf::Font* font = new sf::Font();
     if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
     {
@@ -48,4 +50,20 @@ sf::String sd::InputField::getTextAndClear() {
 void sd::InputField::Draw(sf::RenderWindow *window) const {
     DrawableObject::Draw(window);
     window->draw(*text);
+}
+
+void sd::InputField::Handle(sf::Event event) {
+    if (event.type == sf::Event::TextEntered)
+    {
+        sf::Uint32 input = event.text.unicode;
+        addText(input);
+    }
+    if(event.type == sf::Event::KeyPressed)
+    {
+        if(event.key.code == sf::Keyboard::Enter)
+        {
+            output_->addLine(getTextAndClear());
+        }
+
+    }
 }

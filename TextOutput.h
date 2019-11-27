@@ -24,6 +24,8 @@ namespace sd {
 
         void Draw(sf::RenderWindow* window) const override;
         void toggleGlitch();
+
+        void Handle(sf::Event event) override;
     };
 }
 

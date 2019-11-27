@@ -28,6 +28,8 @@ namespace sd {
 
         void Draw(sf::RenderWindow* window) const override;
         bool isPositionOnButton(sf::Vector2f positionToCheck);
+
+        void Handle(sf::Event event) override;
     };
 }
 

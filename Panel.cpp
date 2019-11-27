@@ -6,7 +6,10 @@
 
 sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, sf::Color color)
     : DrawableObject(position, size) {
-    sprite->setColor(color);
+    //auto shape = sf::RectangleShape(size);
+    //shape.setFillColor(color);
+
+    //sprite->setTexture(*shape.getTexture());
 }
 
 sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, sf::Texture texture)

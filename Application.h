@@ -10,19 +10,17 @@
 #include "DrawableObject.h"
 #include "InputField.h"
 #include "TextOutput.h"
+#include "FileInput.h"
+#include "World.h"
 #include <vector>
 
 namespace sd {
     class Application : public Manageable {
 
         sf::RenderWindow* window_;
-        /*Button* button;
-        DrawableObject* background;
-        TextOutput* textOutput;
-        DrawableObject* wordList;
-        InputField* inputField;
-        DrawableObject* map;
-        DrawableObject* books;*/
+        FileInput* file_input_;
+
+        World* world_;
 
         std::vector<DrawableObject*> drawable_objects_;
 

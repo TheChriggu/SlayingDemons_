@@ -4,11 +4,14 @@
 
 #include "Application.h"
 #include "Panel.h"
+#include "UserInput.h"
 #include <iostream>
 
 sd::Application::Application()
 {
     window_ = nullptr;
+    world_ = nullptr;
+    file_input_ = nullptr;
 }
 
 
@@ -16,6 +19,9 @@ sd::Application::Application()
 bool sd::Application::Setup() {
     window_ = new sf::RenderWindow(sf::VideoMode(1920, 1080), "MyGame");
     window_->setFramerateLimit(60);
+
+    // TODO(FK)
+    new UserInput(window_);
 
     std::cout << "Start initialization.\n";
 

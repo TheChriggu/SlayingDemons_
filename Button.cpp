@@ -60,13 +60,9 @@ void sd::Button::Handle(sf::Event event) {
         if (event.mouseButton.button == sf::Mouse::Left)
         {
             auto mousePos = sd::UserInput::GetInstance()->GetMousePosition();
-            std::cout << "after mouse pos" << std::endl;
-            sf::Vector2f test;
-            test.x = mousePos.x;
-            test.y = mousePos.y;
-            if(isPositionOnButton(test))
+
+            if(isPositionOnButton(mousePos))
             {
-                std::cout << "down" << std::endl;
                 down();
             }
         }
@@ -76,7 +72,6 @@ void sd::Button::Handle(sf::Event event) {
     {
         if (event.mouseButton.button == sf::Mouse::Left)
         {
-            std::cout << "up" << std::endl;
             up();
         }
     }

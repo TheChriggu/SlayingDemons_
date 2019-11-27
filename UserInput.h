@@ -10,12 +10,10 @@
 
 namespace sd {
 
-
-
+    // TODO(FK)
     class UserInput {
 
         sf::RenderWindow* window_;
-
 
     public:
         static UserInput* instance;
@@ -27,10 +25,8 @@ namespace sd {
 
         static UserInput* GetInstance();
 
-        sf::Vector2i GetMousePosition();
+        sf::Vector2f GetMousePosition();
     };
-
-
 }
 
 

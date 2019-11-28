@@ -11,7 +11,7 @@ namespace sd {
         // declare virtual destructor to avoid potential memory leaks
         virtual ~Drawable() = default;
 
-        virtual void Draw(sf::RenderWindow* window) const = 0;
+        virtual void DrawTo(sf::RenderWindow* window) const = 0;
     };
 }
 

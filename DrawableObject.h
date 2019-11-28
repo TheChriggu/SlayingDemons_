@@ -9,15 +9,15 @@
 
 namespace sd {
     class DrawableObject : public Drawable {
-    protected:
-        sf::Sprite* sprite;
 
     public:
-        DrawableObject(sf::Vector2f position, sf::Vector2f size);
+        DrawableObject();
         virtual ~DrawableObject();
 
-        // TODO(FK): make virtual?
-        void Draw(sf::RenderWindow *window) const override;
+        void DrawTo(sf::RenderWindow *window) const = 0;
+
+        virtual sf::Vector2f GetPosition();
+        virtual sf::Vector2f GetSize();
 
         virtual void Handle(sf::Event event) = 0;
     };

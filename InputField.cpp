@@ -6,8 +6,7 @@
 #include <iostream>
 
 sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color, TextOutput* output)
-    : DrawableObject(position, size)
-    , output_(output) {
+    : output_(output) {
     sf::Font* font = new sf::Font();
     if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
     {
@@ -20,7 +19,7 @@ sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color c
     text->setString("");
     text->setCharacterSize(24);
     text->setFillColor(sf::Color::Black);
-    text->setPosition(sprite->getPosition() + sf::Vector2f(10, 10));
+    text->setPosition(position + sf::Vector2f(10, 10));
 }
 
 sd::InputField::~InputField() {
@@ -47,8 +46,7 @@ sf::String sd::InputField::getTextAndClear() {
     return retVal;
 }
 
-void sd::InputField::Draw(sf::RenderWindow *window) const {
-    DrawableObject::Draw(window);
+void sd::InputField::DrawTo(sf::RenderWindow *window) const {
     window->draw(*text);
 }
 

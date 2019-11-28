@@ -20,7 +20,7 @@ namespace sd {
         void addText(sf::Uint32 input);
         sf::String getTextAndClear();
 
-        void Draw(sf::RenderWindow* window) const override;
+        void DrawTo(sf::RenderWindow* window) const override;
         void Handle(sf::Event event) override;
 
     };

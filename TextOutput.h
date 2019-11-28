@@ -22,7 +22,9 @@ namespace sd {
 
         void addLine(sf::String string);
 
-        void Draw(sf::RenderWindow* window) const override;
+        void DrawTo(sf::RenderWindow* window) const override;
+        sf::Vector2f GetPosition() override;
+        sf::Vector2f GetSize() override;
         void toggleGlitch();
 
         void Handle(sf::Event event) override;

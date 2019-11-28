@@ -11,7 +11,7 @@ sd::Fighter::Fighter() {
     defensiveStats = new Stats();
     defensiveBuffs = new Stats();
 
-    //TODO: Load stat values from file or something like that
+    //TODO: Load stat values from file or something like that. Buffs should probably be 0
     Stats stats1 = {1,1,1,1,1,1,1,1,1};
     Stats stats2 = {9,8,7,6,5,4,3,2,1};
     StatwiseOperation ops1 = {StatwiseOperation::OperationType::Add

@@ -12,6 +12,7 @@ sd::Application::Application()
     window_ = nullptr;
     world_ = nullptr;
     file_input_ = nullptr;
+    engine_ = nullptr;
 }
 
 
@@ -19,6 +20,9 @@ sd::Application::Application()
 bool sd::Application::Setup() {
     window_ = new sf::RenderWindow(sf::VideoMode(1920, 1080), "MyGame");
     window_->setFramerateLimit(60);
+
+    engine_ = new ScriptEngine();
+    engine_->Setup();
 
     // TODO(FK)
     new UserInput(window_);

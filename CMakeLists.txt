@@ -6,6 +6,11 @@ set(CMAKE_CXX_STANDARD 17)
 # This CMake-File links the SFML Libary files for the current Host System.
 # This means the Game can only be build for a Target-System on that Target-System
 
+add_compile_definitions(CHAISCRIPT_NO_DYNLOAD)
+add_link_options("-lpthread")
+
+include_directories("ChaiScript-6.1.0/include")
+
 # Link to the cmake sub-files that link the SFML libary files to the equivalent Header-files for the corresponding Host-System
 # and set include Directories
 if(CMAKE_HOST_WIN32)
@@ -45,7 +50,16 @@ add_executable(SlayingDemons
         FormattedWord.cpp
         InputField.h
         InputField.cpp
-        Manageable.h Drawable.h Panel.cpp Panel.h UserInput.cpp UserInput.h FileInput.cpp FileInput.h World.cpp World.h)
+        Manageable.h
+        Drawable.h
+        Panel.cpp
+        Panel.h
+        UserInput.cpp
+        UserInput.h
+        FileInput.cpp
+        FileInput.h
+        World.cpp
+        World.h ScriptEngine.cpp ScriptEngine.h Script.cpp Script.h)
 
 # find SFML packages that where linked together in DFML_DIR
 find_package(SFML COMPONENTS system window graphics network audio REQUIRED)

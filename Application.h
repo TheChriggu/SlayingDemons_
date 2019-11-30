@@ -12,6 +12,7 @@
 #include "TextOutput.h"
 #include "FileInput.h"
 #include "World.h"
+#include "ScriptEngine.h"
 #include <vector>
 
 namespace sd {
@@ -21,6 +22,7 @@ namespace sd {
         FileInput* file_input_;
 
         World* world_;
+        ScriptEngine* engine_;
 
         std::vector<DrawableObject*> drawable_objects_;
 

@@ -45,7 +45,7 @@ add_executable(SlayingDemons
         FormattedWord.cpp
         InputField.h
         InputField.cpp
-        Manageable.h Drawable.h Panel.cpp Panel.h UserInput.cpp UserInput.h FileInput.cpp FileInput.h World.cpp World.h FightScripts/Fighter.cpp FightScripts/Fighter.h FightScripts/Player.cpp FightScripts/Player.h FightScripts/Vocabulary.cpp FightScripts/Vocabulary.h FightScripts/Word.cpp FightScripts/Word.h FightScripts/Action.cpp FightScripts/Action.h FightScripts/Modifier.cpp FightScripts/Modifier.h)
+        Manageable.h Drawable.h Panel.cpp Panel.h UserInput.cpp UserInput.h FileInput.cpp FileInput.h World.cpp World.h FightScripts/Fighter.cpp FightScripts/Fighter.h FightScripts/Player.cpp FightScripts/Player.h FightScripts/Vocabulary.cpp FightScripts/Vocabulary.h FightScripts/Word.cpp FightScripts/Word.h FightScripts/Action.cpp FightScripts/Action.h FightScripts/Modifier.cpp FightScripts/Modifier.h InputTextProcessor.cpp InputTextProcessor.h FightScripts/Fight.cpp FightScripts/Fight.h)
 
 # find SFML packages that where linked together in DFML_DIR
 find_package(SFML COMPONENTS system window graphics network audio REQUIRED)

@@ -7,6 +7,8 @@
 
 sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color, TextOutput* output)
     : output_(output) {
+    textProcessor = new InputTextProcessor();
+
     sf::Font* font = new sf::Font();
     if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
     {
@@ -40,12 +42,6 @@ void sd::InputField::addText(sf::Uint32 input) {
     text->setString(result);
 }
 
-sf::String sd::InputField::getTextAndClear() {
-    sf::String retVal = text->getString();
-    text ->setString("");
-    return retVal;
-}
-
 void sd::InputField::DrawTo(sf::RenderWindow *window) const {
     window->draw(*text);
 }
@@ -60,7 +56,17 @@ void sd::InputField::Handle(sf::Event event) {
     {
         if(event.key.code == sf::Keyboard::Enter)
         {
-            output_->addLine(getTextAndClear());
+            //std::cout << "processing input\n";
+            //textProcessor->ProcessInput(text->getString());
+
+            std::vector<sf::String> strings = textProcessor->SplitBySpace(text->getString());
+
+            text->setString("");
+
+            for(sf::String string : strings)
+            {
+                output_->addLine(string);
+            }
         }
 
     }

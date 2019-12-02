@@ -6,11 +6,13 @@
 #define UNTITLED_INPUTFIELD_H
 #include "DrawableObject.h"
 #include "TextOutput.h"
+#include "InputTextProcessor.h"
 
 namespace sd {
     class InputField : public DrawableObject{
         sf::Text* text;
         TextOutput* output_;
+        InputTextProcessor* textProcessor;
 
     public:
         // TODO(FK): remove Textoutput from Input class?
@@ -18,7 +20,6 @@ namespace sd {
         ~InputField();
 
         void addText(sf::Uint32 input);
-        sf::String getTextAndClear();
 
         void DrawTo(sf::RenderWindow* window) const override;
         void Handle(sf::Event event) override;

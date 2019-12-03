@@ -56,17 +56,17 @@ void sd::InputField::Handle(sf::Event event) {
     {
         if(event.key.code == sf::Keyboard::Enter)
         {
-            //std::cout << "processing input\n";
-            //textProcessor->ProcessInput(text->getString());
+            std::cout << "processing input\n";
+            textProcessor->ProcessInput(text->getString());
 
-            std::vector<sf::String> strings = textProcessor->SplitBySpace(text->getString());
+            //std::vector<sf::String> strings = textProcessor->SplitBySpace(text->getString());
 
-            text->setString("");
-
+            //text->setString("");
+/*
             for(sf::String string : strings)
             {
                 output_->addLine(string);
-            }
+            }*/
         }
 
     }

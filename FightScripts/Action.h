@@ -16,10 +16,10 @@ namespace sd {
 
     public:
         Action();
-        ~Action();
+        ~Action() override;
 
         void LoadFrom(sf::String source);
-        void Set(Stats* _stats);
+        void Set(Stats _stats);
 
         sd::Stats* GetStats();
     };

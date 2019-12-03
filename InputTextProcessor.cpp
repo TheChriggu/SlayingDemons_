@@ -6,7 +6,9 @@
 #include <iostream>
 
 sd::InputTextProcessor::InputTextProcessor() {
-    fight = nullptr;
+    Player* player = new Player();
+    Monster* enemy = new Monster();
+    fight = new Fight(player, enemy);
 }
 
 sd::InputTextProcessor::~InputTextProcessor() {
@@ -16,7 +18,10 @@ sd::InputTextProcessor::~InputTextProcessor() {
 void sd::InputTextProcessor::ProcessInput(sf::String spell) {
 
     //split spell
+    std::cout << "splitting input\n";
     std::vector<sf::String> words = SplitBySpace(spell);
+
+    //TODO: Sort words in array to be modifier first, then action(or other way round)
 
     //check spell validity (or do this in input field already?)
     //
@@ -29,12 +34,14 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
     //*}
 
     //check if currently fighting
+    std::cout << "checking fight\n";
     if(fight != nullptr)
     {
         //check if fight spell
-
+        std::cout << "fight not nullptr\n";
+        std::cout << "making turn\n";
             //make turn in fight
-            //*fight->fullTurn(string action, string modifier);
+            fight->FullTurn(words[1], words[0]);
 
             //evaluate result
             //end fight, if fight is over

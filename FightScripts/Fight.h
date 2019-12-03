@@ -9,17 +9,18 @@
 #include "Vocabulary.h"
 #include "Attack.h"
 #include "Player.h"
+#include "Monster.h"
 
 namespace sd {
 
     class Fight {
     private:
     Player* player;
-    Fighter* enemy;
+    Monster* enemy;
     //Attack GetAttack(Fighter* _fighter, sf::String _action, sf::String _modifier);
 
     public:
-        Fight(Fighter* _player, Fighter* _enemy);
+        Fight(Player* _player, Monster* _enemy);
         ~Fight();
 
         void FullTurn(sf::String _action, sf::String _modifier);

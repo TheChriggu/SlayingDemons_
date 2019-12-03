@@ -14,6 +14,8 @@
 #include "World.h"
 #include <vector>
 #include "FightScripts/Vocabulary.h"
+#include "FightScripts/Action.h"
+#include "FightScripts/Modifier.h"
 
 namespace sd {
     class Application : public Manageable {

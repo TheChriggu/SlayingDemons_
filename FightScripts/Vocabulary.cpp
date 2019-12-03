@@ -17,11 +17,11 @@ bool sd::Vocabulary::Contains(sf::String word) {
 }
 
 sd::Word *sd::Vocabulary::Get(sf::String word) {
-    return nullptr;
+    return words.at(word);
 }
 
-void sd::Vocabulary::Add(sf::String word, sd::Word *) {
-
+void sd::Vocabulary::Add(sf::String word, sd::Word* value) {
+    words.insert({word, value});
 }
 
-sd::Vocabulary* sd::Vocabulary::allWords = nullptr;
+

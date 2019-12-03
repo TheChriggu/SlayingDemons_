@@ -6,6 +6,8 @@
 #define SLAYINGDEMONS_INPUTTEXTPROCESSOR_H
 #include "SFML/Graphics.hpp"
 #include "FightScripts/Fight.h"
+#include "FightScripts/Player.h"
+#include "FightScripts/Monster.h"
 
 namespace sd {
 

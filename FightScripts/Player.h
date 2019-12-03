@@ -10,9 +10,9 @@
 namespace sd {
     class Player : public Fighter{
     private:
-        Vocabulary *actions;
-        Vocabulary *modifiers;
-        Vocabulary *world;
+        std::vector<sf::String>* actions;
+        std::vector<sf::String>* modifiers;
+        std::vector<sf::String>* world;
 
     public:
         Player();

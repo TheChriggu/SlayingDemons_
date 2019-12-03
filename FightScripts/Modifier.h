@@ -17,10 +17,10 @@ namespace sd {
 
     public:
         Modifier();
-        ~Modifier();
+        ~Modifier() override;
 
         void LoadFrom(sf::String source);
-        void Set(Stats* _stats, StatwiseOperation* _statwiseOperation);
+        void Set(Stats _stats, StatwiseOperation _statwiseOperation);
 
         Stats ApplyTo(Stats* _stats);
     };

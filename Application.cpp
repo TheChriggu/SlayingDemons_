@@ -7,6 +7,8 @@
 #include "UserInput.h"
 #include <iostream>
 
+sd::Vocabulary* sd::Vocabulary::allWords = nullptr;
+
 sd::Application::Application()
 {
     window_ = nullptr;
@@ -44,7 +46,20 @@ bool sd::Application::Setup() {
     drawable_objects_.emplace_back(new Button(sf::Vector2f(1200.0f,500.0f), sf::Vector2f(1.0f,1.0f), [&]{clear();}));
 
     std::cout << "Create global vocabulary containing all words\n";
-    Vocabulary::allWords = new Vocabulary();
+    Vocabulary* vocab = new Vocabulary();
+
+    vocab->Add("honk", new Action());
+    vocab->Add("smash", new Action());
+    vocab->Add("scratch", new Action());
+    vocab->Add("howl", new Action());
+    vocab->Add("flirty", new Modifier());
+    vocab->Add("heavy", new Modifier());
+    vocab->Add("monstrous", new Modifier());
+    vocab->Add("loud", new Modifier());
+    vocab->Add("walk to", new Word());
+    vocab->Add("jump over", new Word());
+
+    Vocabulary::allWords = vocab;
     //add words to vocabulary
 
     std::cout << "End initialization\n";

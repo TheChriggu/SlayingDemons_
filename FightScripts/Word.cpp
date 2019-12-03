@@ -3,3 +3,7 @@
 //
 
 #include "Word.h"
+
+sd::Word::~Word() {
+
+}

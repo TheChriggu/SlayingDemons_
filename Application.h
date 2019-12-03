@@ -13,6 +13,7 @@
 #include "FileInput.h"
 #include "World.h"
 #include <vector>
+#include "FightScripts/Vocabulary.h"
 
 namespace sd {
     class Application : public Manageable {
@@ -24,6 +25,7 @@ namespace sd {
 
         std::vector<DrawableObject*> drawable_objects_;
 
+
     public:
         Application();
         virtual ~Application() = default;
@@ -33,9 +35,6 @@ namespace sd {
         void Shutdown() override;
 
         void clear();
-
-
-
     };
 }
 

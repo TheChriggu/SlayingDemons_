@@ -18,45 +18,55 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
     //split spell
     std::vector<sf::String> words = SplitBySpace(spell);
 
-    //*check spell validity (or do this in input field already?
+    //check spell validity (or do this in input field already?)
+    //
+    //*for(auto word : words)
+    //*{
+        //*if(!player->HasWord(word))
+        //*{
+            //send invalid input message to output
+        //*}
+    //*}
 
-
-    //*check if currently fighting
+    //check if currently fighting
     if(fight != nullptr)
+    {
+        //check if fight spell
 
-        //*check if fight spell
+            //make turn in fight
+            //*fight->fullTurn(string action, string modifier);
 
-            //*make turn in fight
-            //fight->fullTurn(string action, string modifier);
+            //evaluate result
+            //end fight, if fight is over
+                //*delete(fight);
+                //*fight = nullptr;
 
-            //*evaluate result
-                //*end fight, if fight is over
-                //delete(fight);
-                //fight = nullptr;
+        //if not fight spell
 
-        //*if not fight spell
+            //make enemy turn in fight
+            //*fight->makeEnemyTurnOnly();
+            //evaluate enemy turn result
 
-            //*make enemy turn in fight
-            //fight->makeEnemyTurnOnly();
-            //*evaluate enemy turn result
+            //evaluate player
 
-            //*evaluate player
+    }
 
-    //*if not fighting
 
-        //*check if it starts a fight
+    //if not fighting
 
-            //*create fight object with player & enemy
-            //fight = new fight(player, enemy);
+        //check if it starts a fight
+
+            //create fight object with player & enemy
+            //*fight = new fight(player, enemy);
             //evaluate spell (maybe from fight?)
 
-        //*if not starting fight
+        //if not starting fight
 
-            //*evaluate spell
+            //evaluate spell
 
 
 
-    //*send evaluation to output
+    //send evaluation to output
 }
 
 std::vector<sf::String> sd::InputTextProcessor::SplitBySpace(sf::String string) {

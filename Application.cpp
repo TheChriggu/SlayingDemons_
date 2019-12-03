@@ -42,6 +42,11 @@ bool sd::Application::Setup() {
     drawable_objects_.emplace_back(new Panel(sf::Vector2f(1103.0, 611.0), sf::Vector2f(816, 461), sf::Color::Red));
     std::cout << "Create button\n";
     drawable_objects_.emplace_back(new Button(sf::Vector2f(1200.0f,500.0f), sf::Vector2f(1.0f,1.0f), [&]{clear();}));
+
+    std::cout << "Create global vocabulary containing all words\n";
+    Vocabulary::allWords = new Vocabulary();
+    //add words to vocabulary
+
     std::cout << "End initialization\n";
 
     return true;

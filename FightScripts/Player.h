@@ -14,6 +14,11 @@ namespace sd {
         Vocabulary *modifiers;
         Vocabulary *world;
 
+    public:
+        Player();
+        ~Player();
+
+        bool HasWord(sf::String word);
     };
 }
 

@@ -9,6 +9,7 @@ namespace sd {
     class Word {
     private:
         //TODO: I honestly don't know what all words of the game have in common -.- Maybe Stats. Or a load function
+        virtual ~Word();
     };
 }
 

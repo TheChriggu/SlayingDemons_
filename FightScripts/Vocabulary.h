@@ -21,6 +21,7 @@ namespace sd {
         Word* Get(sf::String word);
         void Add(sf::String word, Word* );
 
+        static Vocabulary* allWords;
     };
 }
 

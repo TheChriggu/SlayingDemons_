@@ -5,13 +5,13 @@
 #include "TextOutput.h"
 #include <iostream>
 
-sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color) : DrawableObject(position, size) {
+//TODO(CH): Lines have to move up, when max is reached.
+sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color){
     lines = new std::list<FormattedLine*>();
-    lines->push_back(new FormattedLine("", sf::Vector2f(sprite->getPosition() + sf::Vector2f(20, 20))));
+    lines->push_back(new FormattedLine("", sf::Vector2f(position + sf::Vector2f(20, 20))));
     text = "";
     glitchWindow = new sf::RenderWindow(sf::VideoMode(1920,1080), "Glitch");
     glitchWindow->setVisible(false);
-
 }
 
 sd::TextOutput::~TextOutput() {
@@ -19,9 +19,7 @@ sd::TextOutput::~TextOutput() {
     lines = nullptr;
 }
 
-void sd::TextOutput::Draw(sf::RenderWindow* window) const {
-    DrawableObject::Draw(window);
-
+void sd::TextOutput::DrawTo(sf::RenderWindow* window) const {
     if (!sf::Shader::isAvailable())
     {
         for (FormattedLine* line : *lines) {
@@ -54,6 +52,10 @@ void sd::TextOutput::addLine(sf::String string) {
     FormattedLine* newLine = new FormattedLine(string, sf::Vector2f(lines->back()->getRect().left, lines->back()->getRect().top+lines->back()->getRect().height)) ;
     //format line
     lines->push_back(newLine);
+    if (lines->size() > 9)
+    {
+        lines->pop_front();
+    }
 }
 
 void sd::TextOutput::toggleGlitch() {
@@ -64,6 +66,16 @@ void sd::TextOutput::toggleGlitch() {
 
 void sd::TextOutput::Handle(sf::Event event) {
 
+}
+
+sf::Vector2f sd::TextOutput::GetPosition() {
+    //TODO(CH): GetPosition function. Based on lines? or saved in variable?
+    return DrawableObject::GetPosition();
+}
+
+sf::Vector2f sd::TextOutput::GetSize() {
+    //TODO(CH): GetSize function based on lines
+    return DrawableObject::GetSize();
 }
 
 

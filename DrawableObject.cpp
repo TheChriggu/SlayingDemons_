@@ -4,19 +4,19 @@
 
 #include "DrawableObject.h"
 
-sd::DrawableObject::DrawableObject(sf::Vector2f position, sf::Vector2f size) {
-    sprite = new sf::Sprite();
-    sprite->setPosition(position);
-    sprite->setScale(size);
+sd::DrawableObject::DrawableObject()
+{
 }
 
 sd::DrawableObject::~DrawableObject() {
-    delete sprite;
-    sprite = nullptr;
 }
 
-void sd::DrawableObject::Draw(sf::RenderWindow *window) const {
-    window->draw(*sprite);
+sf::Vector2f sd::DrawableObject::GetPosition() {
+    return sf::Vector2f(-1,-1);
+}
+
+sf::Vector2f sd::DrawableObject::GetSize() {
+    return sf::Vector2f(-1,-1);
 }
 
 

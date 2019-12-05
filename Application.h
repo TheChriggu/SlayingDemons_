@@ -13,6 +13,9 @@
 #include "FileInput.h"
 #include "World.h"
 #include <vector>
+#include "FightScripts/Vocabulary.h"
+#include "FightScripts/Action.h"
+#include "FightScripts/Modifier.h"
 
 namespace sd {
     class Application : public Manageable {
@@ -23,6 +26,8 @@ namespace sd {
         World* world_;
 
         std::vector<DrawableObject*> drawable_objects_;
+        void LoadVocab();
+
 
     public:
         Application();
@@ -33,9 +38,6 @@ namespace sd {
         void Shutdown() override;
 
         void clear();
-
-
-
     };
 }
 

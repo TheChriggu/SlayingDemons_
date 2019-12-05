@@ -9,10 +9,17 @@
 
 namespace sd {
     class Panel : public DrawableObject {
+    private:
+        sf::Sprite* sprite;
+
     public:
         Panel(sf::Vector2f position, sf::Vector2f size, sf::Color color);
         Panel(sf::Vector2f position, sf::Vector2f size, sf::Texture texture);
-        virtual ~Panel() override = default;
+        ~Panel() override;
+
+        sf::Vector2f GetPosition() override;
+        sf::Vector2f GetSize() override;
+        void DrawTo(sf::RenderWindow *window) const override;
 
         void Handle(sf::Event event) override;
     };

@@ -16,7 +16,8 @@ sd::InputTextProcessor::InputTextProcessor() {
 }
 
 sd::InputTextProcessor::~InputTextProcessor() {
-
+    delete fight;
+    fight = nullptr;
 }
 
 void sd::InputTextProcessor::ProcessInput(sf::String spell) {

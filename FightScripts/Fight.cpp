@@ -43,6 +43,9 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
      if(playerAttackStats.speed >= enemyAttackStats.speed)
      {
          output->addLine(std::string(playerAttack->GetSentenceSecondPerson()));
+
+
+
          output->addLine(std::string(enemyAttack->GetSentenceThirdPerson()));
         //make player move
         //recalculate enemy attack

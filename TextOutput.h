@@ -15,10 +15,10 @@ namespace sd {
 
         sf::String text;
         sf::RenderTexture* glitchTexture;
-        sf::RenderTexture* textTexture;
         sf::Sprite* glitchSprite;
         std::list<FormattedLine*>* lines;
         sf::Vector2f maxSize;
+        sf::Shader* shader;
 
     public:
         TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color);

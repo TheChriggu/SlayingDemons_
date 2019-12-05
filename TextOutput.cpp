@@ -12,25 +12,39 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
     text = "";
 
     glitchTexture = new sf::RenderTexture();
-    glitchTexture->create(1920,1080);
-
-    textTexture = new sf::RenderTexture();
-    textTexture->create(1920,1080);
+    //if(!glitchTexture->create(1920,1080))
+    {
+        std::cout << "could not create render texture for output\n";
+    }
 
     glitchSprite = new sf::Sprite();
     glitchSprite->setTexture(glitchTexture->getTexture());
 
     maxSize = size;
     maxSize.y = 558; //TODO: This is not good
+
+    shader = new sf::Shader();
+    if (!shader->loadFromFile("../Resources/Shaders/textGlitch.frag", sf::Shader::Fragment)) {
+        // error...
+    }
 }
 
 sd::TextOutput::~TextOutput() {
     delete lines;
     lines = nullptr;
+
+    delete glitchTexture;
+    glitchTexture = nullptr;
+
+    delete glitchSprite;
+    glitchSprite = nullptr;
+
+    delete shader;
+    shader = nullptr;
 }
 
 void sd::TextOutput::DrawTo(sf::RenderTarget* window) const {
-/*
+
     if (!sf::Shader::isAvailable())
     {
         for (FormattedLine* line : *lines) {
@@ -39,22 +53,16 @@ void sd::TextOutput::DrawTo(sf::RenderTarget* window) const {
     }
     else
     {
-        glitchTexture->clear(sf::Color::Black);
+        glitchTexture->clear();
         for (FormattedLine* line : *lines) {
-            line->drawTo(glitchTexture, glitchTexture);
-        }
-
-        sf::Shader shader;
-
-        if (!shader.loadFromFile("../Resources/Shaders/textGlitch.frag", sf::Shader::Fragment)) {
-            // error...
+            line->drawTo(window, window);
         }
 
         glitchTexture->display();
-        shader.setUniform("texture", glitchTexture->getTexture());
-        window->draw(*glitchSprite, &shader);
+        //shader.setUniform("texture", glitchTexture->getTexture());
+        //window->draw(*glitchSprite, shader);
     }
-*/
+
 }
 
 void sd::TextOutput::addLine(sf::String string) {

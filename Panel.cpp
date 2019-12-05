@@ -26,7 +26,7 @@ sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, sf::Texture texture)
 }
 
 sd::Panel::~Panel() {
-    delete(sprite);
+    delete sprite;
     sprite = nullptr;
 }
 

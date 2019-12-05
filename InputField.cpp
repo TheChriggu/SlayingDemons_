@@ -5,11 +5,11 @@
 #include "InputField.h"
 #include <iostream>
 
-sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color)//, TextOutput* output)
-    //: output_(output)
+sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color, TextOutput* output)
+    : output_(output)
     {
-    //textProcessor = new InputTextProcessor();
-    //textProcessor->SetOutput(output);
+    textProcessor = new InputTextProcessor();
+    textProcessor->SetOutput(output);
 
     sf::Font* font = new sf::Font();
     if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
@@ -27,11 +27,16 @@ sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color c
 }
 
 sd::InputField::~InputField() {
-
+    delete text;
+    text = nullptr;
+    delete output_;
+    output_ = nullptr;
+    delete textProcessor;
+    textProcessor = nullptr;
 }
 
 void sd::InputField::addText(sf::Uint32 input) {
-/*    std::cout << "Adding text. received character is: " << input;
+    std::cout << "Adding text. received character is: " << input;
     sf::String result = text->getString();
     if(input == 8 && result.getSize() > 0)
     {
@@ -42,7 +47,7 @@ void sd::InputField::addText(sf::Uint32 input) {
         result += static_cast<char>(input);
     }
 
-    text->setString(result);*/
+    text->setString(result);
 }
 
 void sd::InputField::DrawTo(sf::RenderTarget *window) const {
@@ -50,7 +55,7 @@ void sd::InputField::DrawTo(sf::RenderTarget *window) const {
 }
 
 void sd::InputField::Handle(sf::Event event) {
-    /*if(event.key.code == sf::Keyboard::Enter)
+    if(event.key.code == sf::Keyboard::Enter)
     {
         if(event.type == sf::Event::KeyPressed)
         {
@@ -81,6 +86,6 @@ void sd::InputField::Handle(sf::Event event) {
 
 
     //}
-*/
+
 
 }

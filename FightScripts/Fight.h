@@ -10,6 +10,7 @@
 #include "Attack.h"
 #include "Player.h"
 #include "Monster.h"
+#include "../TextOutput.h"
 
 namespace sd {
 
@@ -23,7 +24,7 @@ namespace sd {
         Fight(Player* _player, Monster* _enemy);
         ~Fight();
 
-        void FullTurn(sf::String _action, sf::String _modifier);
+        void FullTurn(sf::String _action, sf::String _modifier, TextOutput* output);
 
     };
 }

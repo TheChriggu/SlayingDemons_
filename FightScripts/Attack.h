@@ -20,6 +20,9 @@ namespace sd
         ~Attack();
 
         Stats GetStats();
+
+        sf::String GetSentenceSecondPerson();
+        sf::String GetSentenceThirdPerson();
     };
 }
 

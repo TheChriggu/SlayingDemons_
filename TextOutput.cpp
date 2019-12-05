@@ -52,6 +52,10 @@ void sd::TextOutput::addLine(sf::String string) {
     FormattedLine* newLine = new FormattedLine(string, sf::Vector2f(lines->back()->getRect().left, lines->back()->getRect().top+lines->back()->getRect().height)) ;
     //format line
     lines->push_back(newLine);
+    if (lines->size() > 9)
+    {
+        lines->pop_front();
+    }
 }
 
 void sd::TextOutput::toggleGlitch() {

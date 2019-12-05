@@ -26,6 +26,7 @@ namespace sd {
         World* world_;
 
         std::vector<DrawableObject*> drawable_objects_;
+        void LoadVocab();
 
 
     public:

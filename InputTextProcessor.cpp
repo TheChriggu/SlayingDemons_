@@ -6,8 +6,12 @@
 #include <iostream>
 
 sd::InputTextProcessor::InputTextProcessor() {
+    Stats zeroStats = {0,0,0,0,0,0,0,0,0};
+    Stats oneStats = {1,1,1,1,1,1,1,1,1};
     Player* player = new Player();
+    player->SetBaseStats(oneStats, oneStats);
     Monster* enemy = new Monster();
+    enemy->SetBaseStats(oneStats, oneStats);
     fight = new Fight(player, enemy);
 }
 
@@ -41,7 +45,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
         std::cout << "fight not nullptr\n";
         std::cout << "making turn\n";
             //make turn in fight
-            fight->FullTurn(words[1], words[0]);
+            fight->FullTurn(words[1], words[0], output);
 
             //evaluate result
             //end fight, if fight is over
@@ -91,6 +95,10 @@ std::vector<sf::String> sd::InputTextProcessor::SplitBySpace(sf::String string) 
     retVal.emplace_back(string);
 
     return retVal;
+}
+
+void sd::InputTextProcessor::SetOutput(sd::TextOutput *_output) {
+    output = _output;
 }
 
 

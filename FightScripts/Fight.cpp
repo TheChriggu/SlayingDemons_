@@ -10,8 +10,9 @@ sd::Fight::Fight(sd::Player *_player, sd::Monster *_enemy)
     , enemy(_enemy)
 {
     Stats zeroStats = {0,0,0,0,0,0,0,0,0};
-    player->SetBuffs(zeroStats, zeroStats);
-    enemy->SetBuffs(zeroStats, zeroStats);
+    Stats oneStats = {1,1,1,1,1,1,1,1,1};
+    player->SetBuffs(oneStats, oneStats);
+    enemy->SetBuffs(oneStats, oneStats);
 }
 
 sd::Fight::~Fight() {
@@ -21,43 +22,36 @@ sd::Fight::~Fight() {
     enemy = nullptr;
 }
 
-void sd::Fight::FullTurn(sf::String _action, sf::String _modifier) {
+void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* output) {
 
-    std::cout << "load modifier.\n";
     Word* playerModifier;
     playerModifier = Vocabulary::allWords->Get(_modifier);
 
-    std::cout << "load action.\n";
     Word* playerAction;
     playerAction = Vocabulary::allWords->Get(_action);
 
-    std::cout << "create player attack.\n";
      Attack* playerAttack = new Attack(player, (Modifier*)playerModifier, (Action*)playerAction);
 
-    std::cout << "load enemy action & modifier.\n";
      sf::String enemyAction = enemy->GetAction();
      sf::String enemyModifier = enemy->GetModifier();
-    std::cout << "Set enemy attack.\n";
      Attack* enemyAttack = new Attack(enemy,  (Modifier*)(Vocabulary::allWords->Get(enemyModifier)), (Action*)(Vocabulary::allWords->Get(enemyAction)));
 
-    std::cout << "Set player stats.\n";
      Stats playerAttackStats = playerAttack->GetStats();
-    std::cout << "Set enemy stats.\n";
      Stats enemyAttackStats = enemyAttack->GetStats();
-    std::cout << "compare stats.\n";
+     std::cout << "Player speed: " << playerAttackStats.speed << "\n";
+     std::cout << "Enemy speed: " << enemyAttackStats.speed << "\n";
      if(playerAttackStats.speed >= enemyAttackStats.speed)
      {
-         std::cout << "making player move first";
+         output->addLine(std::string(playerAttack->GetSentenceSecondPerson()));
+         output->addLine(std::string(enemyAttack->GetSentenceThirdPerson()));
         //make player move
         //recalculate enemy attack
         //make enemy move
      }
      else
      {
-         std::cout << "making enemy move first";
-        //make enemy move
-        //recalculate player attack
-        //make player move
+         output->addLine(std::string(enemyAttack->GetSentenceThirdPerson()));
+         output->addLine(std::string(playerAttack->GetSentenceSecondPerson()));
      }
 
      delete(playerAttack);

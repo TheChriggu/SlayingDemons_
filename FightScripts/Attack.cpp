@@ -22,10 +22,20 @@ sd::Attack::~Attack() {
 }
 
 sd::Stats sd::Attack::GetStats() {
-    std::cout << "get fighter stats\n";
-    std::cout << "apply modifier to action\n";
     Stats retVal = modifier->ApplyTo(action->GetStats());
-    std::cout << "multiply by offense\n";
     retVal = (fighter->GetOffense())*retVal;
+    fighter->PrintToConsole();
     return retVal;
 }
+
+sf::String sd::Attack::GetSentenceSecondPerson() {
+    sf::String retVal = "You attack with " + modifier->GetName() + " " + action->GetName() + ".\n";
+    return retVal;
+}
+
+sf::String sd::Attack::GetSentenceThirdPerson() {
+    sf::String retVal = "Your enemy attacks you with " + modifier->GetName() + " " + action->GetName() + ".\n";
+    return retVal;
+}
+
+

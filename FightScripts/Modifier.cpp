@@ -8,7 +8,7 @@ sd::Modifier::Modifier() {
     stats = new Stats();
     statwiseOperation = new StatwiseOperation();
 
-    Set({0,0,0,0,0,0,0,0,0}
+    SetStats({0,0,0,0,0,0,0,0,0}
     ,{StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add});
 }
 
@@ -20,7 +20,7 @@ void sd::Modifier::LoadFrom(sf::String source) {
 
 }
 
-void sd::Modifier::Set(sd::Stats _stats, sd::StatwiseOperation _statwiseOperation) {
+void sd::Modifier::SetStats(sd::Stats _stats, sd::StatwiseOperation _statwiseOperation) {
     *stats = _stats;
     *statwiseOperation = _statwiseOperation;
 }
@@ -28,4 +28,12 @@ void sd::Modifier::Set(sd::Stats _stats, sd::StatwiseOperation _statwiseOperatio
 sd::Stats sd::Modifier::ApplyTo(sd::Stats *_stats) {
     Stats retVal = statwiseOperation->Operate(*_stats, *stats);
     return retVal;
+}
+
+void sd::Modifier::SetName(sf::String _name) {
+    name = _name;
+}
+
+sf::String sd::Modifier::GetName() {
+    return name;
 }

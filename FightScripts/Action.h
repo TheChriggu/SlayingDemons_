@@ -13,15 +13,18 @@ namespace sd {
     class Action : public Word{
     private:
         Stats* stats;
+        sf::String name;
 
     public:
         Action();
         ~Action() override;
 
         void LoadFrom(sf::String source);
-        void Set(Stats _stats);
+        void SetStats(Stats _stats);
+        void SetName(sf::String _name);
 
         sd::Stats* GetStats();
+        sf::String GetName();
     };
 }
 

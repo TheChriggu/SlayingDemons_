@@ -17,7 +17,7 @@ FormattedWord::FormattedWord(sf::String _text, bool _isGlitching, sf::Vector2f _
     text->setFont(*font);
     text->setString(_text);
     text->setCharacterSize(24);
-    text->setFillColor(sf::Color::Magenta);
+    text->setFillColor(sf::Color::Black);
     text->setPosition(_position);
 
     isGlitching = _isGlitching;

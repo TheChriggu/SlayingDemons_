@@ -14,7 +14,7 @@ namespace sd {
 
     public:
         Panel(sf::Vector2f position, sf::Vector2f size, sf::Color color);
-        Panel(sf::Vector2f position, sf::Vector2f size, sf::Texture texture);
+        Panel(sf::Vector2f position, sf::Vector2f size, sf::Texture* texture);
         ~Panel() override;
 
         sf::Vector2f GetPosition() override;

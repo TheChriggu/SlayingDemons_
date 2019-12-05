@@ -13,7 +13,7 @@ sd::Vocabulary::~Vocabulary() {
 }
 
 bool sd::Vocabulary::Contains(sf::String word) {
-    return false;
+    return words.find(word) != words.end();
 }
 
 sd::Word *sd::Vocabulary::Get(sf::String word) {

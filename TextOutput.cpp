@@ -21,7 +21,7 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
     glitchSprite->setTexture(glitchTexture->getTexture());
 
     maxSize = size;
-    maxSize.y = 558; //TODO: This is not good
+    maxSize.y = 450; //TODO: This is not good
 
     shader = new sf::Shader();
     if (!shader->loadFromFile("../Resources/Shaders/textGlitch.frag", sf::Shader::Fragment)) {
@@ -69,14 +69,13 @@ void sd::TextOutput::addLine(sf::String string) {
     FormattedLine* newLine = new FormattedLine(string, sf::Vector2f(lines->back()->getRect().left, lines->back()->getRect().top+lines->back()->getRect().height)) ;
     //format line
     lines->push_back(newLine);
-    std::cout << "text size: " << GetSize().y << "\n";
-    std::cout << "max size: " << maxSize.y << "\n";
     while(GetSize().y > maxSize.y)
     {
         float distance = lines->front()->getRect().height;
         MoveVertical(-distance);
         lines->pop_front();
     }
+
 }
 
 void sd::TextOutput::toggleGlitch() {

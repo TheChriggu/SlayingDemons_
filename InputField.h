@@ -21,7 +21,7 @@ namespace sd {
 
         void addText(sf::Uint32 input);
 
-        void DrawTo(sf::RenderWindow* window) const override;
+        void DrawTo(sf::RenderTarget* window) const override;
         void Handle(sf::Event event) override;
 
     };

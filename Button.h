@@ -26,7 +26,7 @@ namespace sd {
         void down();
         void up();
 
-        void DrawTo(sf::RenderWindow* window) const override;
+        void DrawTo(sf::RenderTarget* window) const override;
         bool isPositionOnButton(sf::Vector2f positionToCheck);
 
         void Handle(sf::Event event) override;

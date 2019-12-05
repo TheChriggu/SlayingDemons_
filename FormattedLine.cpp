@@ -17,7 +17,7 @@ FormattedLine::~FormattedLine() {
     words = nullptr;
 }
 
-void FormattedLine::drawTo(sf::RenderWindow* window, sf::RenderWindow* glitchWindow) {
+void FormattedLine::drawTo(sf::RenderTarget* window, sf::RenderTarget* glitchWindow) {
     for (FormattedWord* word : *words) {
         word->drawTo(window, glitchWindow);
     }
@@ -74,6 +74,14 @@ sf::FloatRect FormattedLine::getRect(){
 void FormattedLine::toggleGlitch() {
     for (FormattedWord* word : *words) {
         word->toggleGlitch();
+    }
+}
+
+void FormattedLine::MoveVertical(float distance) {
+    position.y += distance;
+    for(FormattedWord* word : *words)
+    {
+        word->MoveVertical(distance);
     }
 }
 

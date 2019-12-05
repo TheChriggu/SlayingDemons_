@@ -19,7 +19,7 @@ namespace sd {
 
         sf::Vector2f GetPosition() override;
         sf::Vector2f GetSize() override;
-        void DrawTo(sf::RenderWindow *window) const override;
+        void DrawTo(sf::RenderTarget *window) const override;
 
         void Handle(sf::Event event) override;
     };

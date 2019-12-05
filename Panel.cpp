@@ -26,7 +26,7 @@ sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, sf::Texture texture)
 }
 
 sd::Panel::~Panel() {
-    delete(sprite);
+    delete sprite;
     sprite = nullptr;
 }
 
@@ -50,7 +50,7 @@ sf::Vector2f sd::Panel::GetSize() {
     return size;
 }
 
-void sd::Panel::DrawTo(sf::RenderWindow *window) const{
+void sd::Panel::DrawTo(sf::RenderTarget *window) const{
     window->draw(*sprite);
 }
 

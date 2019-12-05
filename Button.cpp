@@ -29,9 +29,11 @@ sd::Button::Button(sf::Vector2f position, sf::Vector2f scale, std::function<void
 
 sd::Button::~Button() {
     delete normalTexture;
+    normalTexture = nullptr;
     delete pressedTexture;
+    pressedTexture = nullptr;
     delete button;
-    button = 0;
+    button = nullptr;
 }
 
 void sd::Button::down() {
@@ -43,7 +45,7 @@ void sd::Button::up() {
     callback();
 }
 
-void sd::Button::DrawTo(sf::RenderWindow *window) const {
+void sd::Button::DrawTo(sf::RenderTarget *window) const {
     window->draw(*button);
 }
 

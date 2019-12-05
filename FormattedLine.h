@@ -19,9 +19,10 @@ public:
     FormattedLine(sf::String string, sf::Vector2f _position);
     ~FormattedLine();
 
-    void drawTo(sf::RenderWindow* window, sf::RenderWindow* glitchWindow);
+    void drawTo(sf::RenderTarget* window, sf::RenderTarget* glitchWindow);
 
     sf::FloatRect getRect();
+    void MoveVertical(float distance);
 
     void toggleGlitch();
 };

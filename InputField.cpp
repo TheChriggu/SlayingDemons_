@@ -6,7 +6,8 @@
 #include <iostream>
 
 sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color, TextOutput* output)
-    : output_(output) {
+    : output_(output)
+    {
     textProcessor = new InputTextProcessor();
     textProcessor->SetOutput(output);
 
@@ -26,7 +27,12 @@ sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color c
 }
 
 sd::InputField::~InputField() {
-
+    delete text;
+    text = nullptr;
+    delete output_;
+    output_ = nullptr;
+    delete textProcessor;
+    textProcessor = nullptr;
 }
 
 void sd::InputField::addText(sf::Uint32 input) {
@@ -44,7 +50,7 @@ void sd::InputField::addText(sf::Uint32 input) {
     text->setString(result);
 }
 
-void sd::InputField::DrawTo(sf::RenderWindow *window) const {
+void sd::InputField::DrawTo(sf::RenderTarget *window) const {
     window->draw(*text);
 }
 

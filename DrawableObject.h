@@ -14,7 +14,7 @@ namespace sd {
         DrawableObject();
         virtual ~DrawableObject();
 
-        void DrawTo(sf::RenderWindow *window) const = 0;
+        void DrawTo(sf::RenderTarget *window) const = 0;
 
         virtual sf::Vector2f GetPosition();
         virtual sf::Vector2f GetSize();

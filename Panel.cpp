@@ -50,7 +50,7 @@ sf::Vector2f sd::Panel::GetSize() {
     return size;
 }
 
-void sd::Panel::DrawTo(sf::RenderWindow *window) const{
+void sd::Panel::DrawTo(sf::RenderTarget *window) const{
     window->draw(*sprite);
 }
 

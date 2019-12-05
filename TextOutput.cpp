@@ -10,8 +10,18 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
     lines = new std::list<FormattedLine*>();
     lines->push_back(new FormattedLine("", sf::Vector2f(position + sf::Vector2f(20, 20))));
     text = "";
-    glitchWindow = new sf::RenderWindow(sf::VideoMode(1920,1080), "Glitch");
-    glitchWindow->setVisible(false);
+
+    glitchTexture = new sf::RenderTexture();
+    glitchTexture->create(1920,1080);
+
+    textTexture = new sf::RenderTexture();
+    textTexture->create(1920,1080);
+
+    glitchSprite = new sf::Sprite();
+    glitchSprite->setTexture(glitchTexture->getTexture());
+
+    maxSize = size;
+    maxSize.y = 558; //TODO: This is not good
 }
 
 sd::TextOutput::~TextOutput() {
@@ -19,7 +29,8 @@ sd::TextOutput::~TextOutput() {
     lines = nullptr;
 }
 
-void sd::TextOutput::DrawTo(sf::RenderWindow* window) const {
+void sd::TextOutput::DrawTo(sf::RenderTarget* window) const {
+/*
     if (!sf::Shader::isAvailable())
     {
         for (FormattedLine* line : *lines) {
@@ -28,32 +39,34 @@ void sd::TextOutput::DrawTo(sf::RenderWindow* window) const {
     }
     else
     {
-        glitchWindow->clear(sf::Color::Black);
+        glitchTexture->clear(sf::Color::Black);
         for (FormattedLine* line : *lines) {
-            line->drawTo(window, glitchWindow);
+            line->drawTo(glitchTexture, glitchTexture);
         }
+
         sf::Shader shader;
 
         if (!shader.loadFromFile("../Resources/Shaders/textGlitch.frag", sf::Shader::Fragment)) {
             // error...
         }
-        sf::Texture* tex = new sf::Texture();
-        tex->create(1920, 1080);
-        tex->update(*glitchWindow);
-        shader.setUniform("texture", *tex);
-        sf::Sprite sprite;
-        sprite.setTexture(*tex);
-        window->draw(sprite, &shader);
-        delete tex;
+
+        glitchTexture->display();
+        shader.setUniform("texture", glitchTexture->getTexture());
+        window->draw(*glitchSprite, &shader);
     }
+*/
 }
 
 void sd::TextOutput::addLine(sf::String string) {
     FormattedLine* newLine = new FormattedLine(string, sf::Vector2f(lines->back()->getRect().left, lines->back()->getRect().top+lines->back()->getRect().height)) ;
     //format line
     lines->push_back(newLine);
-    if (lines->size() > 9)
+    std::cout << "text size: " << GetSize().y << "\n";
+    std::cout << "max size: " << maxSize.y << "\n";
+    while(GetSize().y > maxSize.y)
     {
+        float distance = lines->front()->getRect().height;
+        MoveVertical(-distance);
         lines->pop_front();
     }
 }
@@ -74,8 +87,28 @@ sf::Vector2f sd::TextOutput::GetPosition() {
 }
 
 sf::Vector2f sd::TextOutput::GetSize() {
-    //TODO(CH): GetSize function based on lines
-    return DrawableObject::GetSize();
+    sf::Vector2f retVal;
+    retVal.x = 0;
+    retVal.y = 0;
+
+    for (FormattedLine* line : *lines)
+    {
+        sf::FloatRect rect = line->getRect();
+        if (rect.width > retVal.x)
+        {
+            retVal.x = rect.width;
+        }
+
+        retVal.y += rect.height;
+    }
+
+    return retVal;
+}
+
+void sd::TextOutput::MoveVertical(float distance) {
+    for(FormattedLine* line : *lines){
+        line->MoveVertical(distance);
+    }
 }
 
 

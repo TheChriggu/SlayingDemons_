@@ -16,12 +16,12 @@ namespace sd {
 
     public:
         // TODO(FK): remove Textoutput from Input class?
-        InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color, TextOutput* output);
+        InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color);//, TextOutput* output);
         ~InputField();
 
         void addText(sf::Uint32 input);
 
-        void DrawTo(sf::RenderWindow* window) const override;
+        void DrawTo(sf::RenderTarget* window) const override;
         void Handle(sf::Event event) override;
 
     };

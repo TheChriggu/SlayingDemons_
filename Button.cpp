@@ -43,7 +43,7 @@ void sd::Button::up() {
     callback();
 }
 
-void sd::Button::DrawTo(sf::RenderWindow *window) const {
+void sd::Button::DrawTo(sf::RenderTarget *window) const {
     window->draw(*button);
 }
 

@@ -19,6 +19,7 @@ namespace sd {
     Player* player;
     Monster* enemy;
     //Attack GetAttack(Fighter* _fighter, sf::String _action, sf::String _modifier);
+    Stats MinToZero(Stats stats);
 
     public:
         Fight(Player* _player, Monster* _enemy);

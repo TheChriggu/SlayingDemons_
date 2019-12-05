@@ -32,6 +32,20 @@ namespace sd{
             return *this;
         }
 
+        Stats& operator -(const Stats& other)
+        {
+            speed    -= other.speed   ;
+            accuracy -= other.accuracy;
+            physical -= other.physical;
+            mental   -= other.mental  ;
+            fire     -= other.fire    ;
+            water    -= other.water   ;
+            tree     -= other.tree    ;
+            earth    -= other.earth   ;
+            plant    -= other.plant   ;
+            return *this;
+        }
+
         Stats& operator *(const Stats& other)
         {
             speed    *= other.speed   ;
@@ -43,6 +57,20 @@ namespace sd{
             tree     *= other.tree    ;
             earth    *= other.earth   ;
             plant    *= other.plant   ;
+            return *this;
+        }
+
+        Stats& operator /(const Stats& other)
+        {
+            speed    /= other.speed   ;
+            accuracy /= other.accuracy;
+            physical /= other.physical;
+            mental   /= other.mental  ;
+            fire     /= other.fire    ;
+            water    /= other.water   ;
+            tree     /= other.tree    ;
+            earth    /= other.earth   ;
+            plant    /= other.plant   ;
             return *this;
         }
 

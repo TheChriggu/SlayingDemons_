@@ -128,11 +128,11 @@ void sd::Application::LoadVocab() {
     howl->SetStats({5,20,3,15,1,1,1,1,2});
     Modifier* flirty = new Modifier();
     flirty->SetName("flirty");
-    flirty->SetStats({3,0.5, 0.3, 15,0.5,0.5,0.5,0.5,0.5},
+    flirty->SetStats({3,0.5, 0.3, -2,0.5,0.5,0.5,0.5,0.5},
             {sd::StatwiseOperation::Add,
              sd::StatwiseOperation::Mult,
              sd::StatwiseOperation::Mult,
-             sd::StatwiseOperation::Add,
+             sd::StatwiseOperation::Mult,
              sd::StatwiseOperation::Mult,
              sd::StatwiseOperation::Mult,
              sd::StatwiseOperation::Mult,
@@ -140,10 +140,10 @@ void sd::Application::LoadVocab() {
              sd::StatwiseOperation::Mult});
     Modifier* heavy = new Modifier();
     heavy->SetName("heavy");
-    heavy->SetStats({0.4,2, 15, 1,5,5,5,5,5},
+    heavy->SetStats({0.4,2, 3, 1,5,5,5,5,5},
                      {sd::StatwiseOperation::Mult,
                       sd::StatwiseOperation::Mult,
-                      sd::StatwiseOperation::Add,
+                      sd::StatwiseOperation::Mult,
                       sd::StatwiseOperation::Mult,
                       sd::StatwiseOperation::Add,
                       sd::StatwiseOperation::Add,

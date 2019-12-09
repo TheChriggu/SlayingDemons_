@@ -19,6 +19,9 @@ namespace sd {
         ~Player();
 
         bool HasWord(sf::String word);
+        void AddAction(sf::String action);
+        void AddModifier(sf::String modifier);
+        void AddWorld(sf::String word);
     };
 }
 

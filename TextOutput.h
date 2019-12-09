@@ -31,6 +31,7 @@ namespace sd {
         sf::Vector2f GetSize() override;
         void toggleGlitch();
         void MoveVertical(float distance);
+        void Update(sf::RenderTarget* window);
 
         void Handle(sf::Event event) override;
     };

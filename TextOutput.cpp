@@ -12,16 +12,17 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
     text = "";
 
     glitchTexture = new sf::RenderTexture();
-    //if(!glitchTexture->create(1920,1080))
+    if(!glitchTexture->create(1920,1080))
     {
         std::cout << "could not create render texture for output\n";
     }
+
 
     glitchSprite = new sf::Sprite();
     glitchSprite->setTexture(glitchTexture->getTexture());
 
     maxSize = size;
-    maxSize.y = 558; //TODO: This is not good
+    maxSize.y = 450; //TODO: This is not good
 
     shader = new sf::Shader();
     if (!shader->loadFromFile("../Resources/Shaders/textGlitch.frag", sf::Shader::Fragment)) {
@@ -53,14 +54,17 @@ void sd::TextOutput::DrawTo(sf::RenderTarget* window) const {
     }
     else
     {
-        glitchTexture->clear();
+        glitchTexture->clear(sf::Color::White);
+        //glitchTexture->draw(*honkerSprite, shader);
+
         for (FormattedLine* line : *lines) {
-            line->drawTo(window, window);
+            line->drawTo(window, glitchTexture);
         }
 
+
         glitchTexture->display();
-        //shader.setUniform("texture", glitchTexture->getTexture());
-        //window->draw(*glitchSprite, shader);
+        //shader->setUniform("texture", glitchTexture->getTexture());
+        window->draw(*glitchSprite, shader);
     }
 
 }
@@ -69,14 +73,13 @@ void sd::TextOutput::addLine(sf::String string) {
     FormattedLine* newLine = new FormattedLine(string, sf::Vector2f(lines->back()->getRect().left, lines->back()->getRect().top+lines->back()->getRect().height)) ;
     //format line
     lines->push_back(newLine);
-    std::cout << "text size: " << GetSize().y << "\n";
-    std::cout << "max size: " << maxSize.y << "\n";
     while(GetSize().y > maxSize.y)
     {
         float distance = lines->front()->getRect().height;
         MoveVertical(-distance);
         lines->pop_front();
     }
+
 }
 
 void sd::TextOutput::toggleGlitch() {
@@ -117,6 +120,17 @@ void sd::TextOutput::MoveVertical(float distance) {
     for(FormattedLine* line : *lines){
         line->MoveVertical(distance);
     }
+}
+
+void sd::TextOutput::Update(sf::RenderTarget* window) {
+    glitchTexture->clear(sf::Color::White);
+
+    for (FormattedLine* line : *lines) {
+        line->drawTo(window, glitchTexture);
+    }
+
+
+    glitchTexture->display();
 }
 
 

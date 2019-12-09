@@ -21,6 +21,9 @@ namespace sd
 
         sf::String GetAction();
         sf::String GetModifier();
+
+        void AddAction(sf::String action);
+        void AddModifier(sf::String modifier);
     };
 }
 

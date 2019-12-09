@@ -20,7 +20,7 @@ sd::Application::Application()
 
 
 bool sd::Application::Setup() {
-    window_ = new sf::RenderWindow(sf::VideoMode(1920, 1080), "MyGame");
+    window_ = new sf::RenderWindow(sf::VideoMode(1920, 1080), "MyGame", sf::Style::Fullscreen);
     window_->setFramerateLimit(60);
 
     // TODO(FK)
@@ -28,23 +28,49 @@ bool sd::Application::Setup() {
 
     std::cout << "Start initialization.\n";
 
-
-    std::cout << "Create first panel\n";
-    drawable_objects_.emplace_back(new Panel(sf::Vector2f(0.0, 0.0), sf::Vector2f(1920, 1080), sf::Color::Blue));
+    std::cout << "Create background panel\n";
+    sf::Texture* backgroundTexture = new sf::Texture();
+    backgroundTexture->loadFromFile("../Resources/Sprites/fantasy_background.png");
+    drawable_objects_.emplace_back(new Panel(sf::Vector2f(0.0, 0.0), sf::Vector2f(1920, 1080), backgroundTexture));
     // TODO(FK): clean up this shit
+
+    std::cout << "Create text output background\n";
+    sf::Texture* textOutputBackground = new sf::Texture();
+    textOutputBackground->loadFromFile("../Resources/Sprites/fantasy_textoutput.png");
+    auto outputBackground = new Panel(sf::Vector2f(48.0,41.0), sf::Vector2f(1044,1008), textOutputBackground);
+    drawable_objects_.emplace_back(outputBackground);
+
+
+
+    std::cout << "Create words panel\n";
+    sf::Texture* wordsTexture = new sf::Texture();
+    wordsTexture->loadFromFile("../Resources/Sprites/fantasy_input.png");
+    drawable_objects_.emplace_back(new Panel(sf::Vector2f(39.0, 605.0), sf::Vector2f(1059, 445), wordsTexture));
+
     std::cout << "Create text output\n";
-    auto output = new TextOutput(sf::Vector2f(48.0,41.0), sf::Vector2f(1044,1008), sf::Color::Red);
+    output = new TextOutput(sf::Vector2f(90.0,100.0), sf::Vector2f(1044,1008), sf::Color::Red);
     drawable_objects_.emplace_back(output);
-    std::cout << "Create second panel\n";
-    drawable_objects_.emplace_back(new Panel(sf::Vector2f(39.0, 605.0), sf::Vector2f(1059, 445), sf::Color::Green));
-    std::cout << "Create third panel\n";
-    drawable_objects_.emplace_back(new InputField(sf::Vector2f(55,977), sf::Vector2f(1025,63), sf::Color::Magenta, output));
-    std::cout << "Create fourth panel\n";
-    drawable_objects_.emplace_back(new Panel(sf::Vector2f(1127.0, 41.0), sf::Vector2f(761, 558), sf::Color::Magenta));
-    std::cout << "Create fifth panel\n";
-    drawable_objects_.emplace_back(new Panel(sf::Vector2f(1103.0, 611.0), sf::Vector2f(816, 461), sf::Color::Red));
-    std::cout << "Create button\n";
-    drawable_objects_.emplace_back(new Button(sf::Vector2f(1200.0f,500.0f), sf::Vector2f(1.0f,1.0f), [&]{clear();}));
+
+    std::cout << "Create Map panel\n";
+    sf::Texture* mapTexture = new sf::Texture();
+    mapTexture->loadFromFile("../Resources/Sprites/fantasy_map.png");
+    drawable_objects_.emplace_back(new Panel(sf::Vector2f(1127.0, 41.0), sf::Vector2f(761, 558), mapTexture));
+
+
+
+
+    //create input field
+    drawable_objects_.emplace_back(new InputField(sf::Vector2f(80,940), sf::Vector2f(1025,63), sf::Color::Magenta, output));
+
+
+
+
+    //std::cout << "Create fourth panel\n";
+    //drawable_objects_.emplace_back(new Panel(sf::Vector2f(1127.0, 41.0), sf::Vector2f(761, 558), sf::Color::Magenta));
+    //std::cout << "Create fifth panel\n";
+    //drawable_objects_.emplace_back(new Panel(sf::Vector2f(1103.0, 611.0), sf::Vector2f(816, 461), sf::Color::Red));
+    //std::cout << "Create button\n";
+    //drawable_objects_.emplace_back(new Button(sf::Vector2f(1200.0f,500.0f), sf::Vector2f(1.0f,1.0f), [&]{clear();}));
 
     std::cout << "Create global vocabulary containing all words\n";
     LoadVocab();
@@ -82,7 +108,6 @@ bool sd::Application::Run() {
     }
 
     //Update Components
-
 
     //Clear Window
     window_->clear();
@@ -128,11 +153,11 @@ void sd::Application::LoadVocab() {
     howl->SetStats({5,20,3,15,1,1,1,1,2});
     Modifier* flirty = new Modifier();
     flirty->SetName("flirty");
-    flirty->SetStats({3,0.5, 0.3, 15,0.5,0.5,0.5,0.5,0.5},
+    flirty->SetStats({3,0.5, 0.3, -2,0.5,0.5,0.5,0.5,0.5},
             {sd::StatwiseOperation::Add,
              sd::StatwiseOperation::Mult,
              sd::StatwiseOperation::Mult,
-             sd::StatwiseOperation::Add,
+             sd::StatwiseOperation::Mult,
              sd::StatwiseOperation::Mult,
              sd::StatwiseOperation::Mult,
              sd::StatwiseOperation::Mult,
@@ -140,10 +165,10 @@ void sd::Application::LoadVocab() {
              sd::StatwiseOperation::Mult});
     Modifier* heavy = new Modifier();
     heavy->SetName("heavy");
-    heavy->SetStats({0.4,2, 15, 1,5,5,5,5,5},
+    heavy->SetStats({0.4,2, 3, 1,5,5,5,5,5},
                      {sd::StatwiseOperation::Mult,
                       sd::StatwiseOperation::Mult,
-                      sd::StatwiseOperation::Add,
+                      sd::StatwiseOperation::Mult,
                       sd::StatwiseOperation::Mult,
                       sd::StatwiseOperation::Add,
                       sd::StatwiseOperation::Add,

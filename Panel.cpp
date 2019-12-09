@@ -17,10 +17,11 @@ sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, sf::Color color){
     sprite->setPosition(position);
 }
 
-sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, sf::Texture texture)
+sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, sf::Texture* texture)
 {
     sprite = new sf::Sprite();
-    sprite->setTexture(texture);
+
+    sprite->setTexture(*texture, false);
 
     sprite->setPosition(position);
 }

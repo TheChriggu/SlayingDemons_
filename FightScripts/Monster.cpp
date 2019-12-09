@@ -7,12 +7,12 @@
 
 sd::Monster::Monster() {
     actions = new std::vector<sf::String>();
-    actions->emplace_back("scratch");
-    actions->emplace_back("howl");
+    AddAction("scratch");
+    AddAction("howl");
 
     modifiers = new std::vector<sf::String>();
-    modifiers->emplace_back("monstrous");
-    modifiers->emplace_back("loud");
+    AddModifier("monstrous");
+    AddModifier("loud");
 }
 
 sd::Monster::~Monster() {
@@ -36,4 +36,12 @@ sf::String sd::Monster::GetModifier() {
     int i = rand()%(modifiers->size());
 
     return modifiers->at(i);
+}
+
+void sd::Monster::AddAction(sf::String action) {
+    actions->emplace_back(action);
+}
+
+void sd::Monster::AddModifier(sf::String modifier) {
+    modifiers->emplace_back(modifier);
 }

@@ -15,6 +15,8 @@ namespace sd
         Fighter* fighter;
         Modifier* modifier;
         Action* action;
+
+
     public:
         Attack(Fighter* _fighter, Modifier* _modifier, Action* _action);
         ~Attack();
@@ -23,6 +25,7 @@ namespace sd
 
         sf::String GetSentenceSecondPerson();
         sf::String GetSentenceThirdPerson();
+
     };
 }
 

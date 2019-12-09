@@ -29,7 +29,11 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
     //TODO: Sort words in array to be modifier first, then action(or other way round)
 
     //check spell validity (or do this in input field already?)
-    //
+    if(!Vocabulary::allWords->Contains(words[0]) || !Vocabulary::allWords->Contains(words[1]))
+    {
+        output->addLine("Input not understood.");
+    }
+
     //*for(auto word : words)
     //*{
         //*if(!player->HasWord(word))
@@ -39,8 +43,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
     //*}
 
     //check if currently fighting
-    std::cout << "checking fight\n";
-    if(fight != nullptr)
+    else// if(fight != nullptr)
     {
         //check if fight spell
         std::cout << "fight not nullptr\n";

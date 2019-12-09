@@ -90,3 +90,19 @@ void sd::Fighter::PrintToConsole() {
     std::cout << "Fighter Defense: \nSpeed: " << defensiveStats->speed << "\nAccuracy: " << defensiveStats->accuracy << "\nPhysical: " << defensiveStats->physical << "\nMental: " << defensiveStats->mental << "\nFire: " << defensiveStats->fire << "\nWater: " << defensiveStats->water << "\nTree: " << defensiveStats->tree << "\nEarth: " << defensiveStats->earth<< "\nPlant: " << defensiveStats->plant << "\n";
     std::cout << "Fighter Defensive Buffs: \nSpeed: " << defensiveBuffs->speed << "\nAccuracy: " << defensiveBuffs->accuracy << "\nPhysical: " << defensiveBuffs->physical << "\nMental: " << defensiveBuffs->mental << "\nFire: " << defensiveBuffs->fire << "\nWater: " << defensiveBuffs->water << "\nTree: " << defensiveBuffs->tree << "\nEarth: " << defensiveBuffs->earth<< "\nPlant: " << defensiveBuffs->plant << "\n";
 }
+
+void sd::Fighter::ChangeMentalState(float value) {
+    mentalState += value;
+}
+
+void sd::Fighter::ChangeHitPoints(float value) {
+    hitPoints += value;
+}
+
+float sd::Fighter::GetMentalState() {
+    return mentalState;
+}
+
+float sd::Fighter::GetHitPoints() {
+    return hitPoints;
+}

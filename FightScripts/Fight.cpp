@@ -49,7 +49,7 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
 
          float physicalDamage = damageStats.fire+damageStats.earth+damageStats.physical+damageStats.tree+damageStats.plant+damageStats.water;
          output->addLine("You made " + std::to_string(physicalDamage) + " damage to your enemies hp.");
-         output->addLine("You made " + std::to_string(damageStats.mental) + " to his mentality.");
+         output->addLine("You made " + std::to_string(damageStats.mental) + " damage to his mentality.");
          if(damageStats.mental < 0)
          {
              output->addLine("He appears to be more friendly now.");
@@ -59,6 +59,8 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
              output->addLine("He glares at you.");
          }
 
+
+
          output->addLine("---");
          //Enemy move
          output->addLine(std::string(enemyAttack->GetSentenceThirdPerson()));
@@ -67,7 +69,10 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
 
          physicalDamage = damageStats.fire+damageStats.earth+damageStats.physical+damageStats.tree+damageStats.plant+damageStats.water;
          output->addLine("Your enemy made " + std::to_string(physicalDamage) + " damage to your hp.");
-         output->addLine("He made " + std::to_string(damageStats.mental) + " to your mentality.\n");
+         output->addLine("He made " + std::to_string(damageStats.mental) + " damage to your mentality.\n");
+
+         player->ChangeHitPoints(-physicalDamage);
+         player->ChangeMentalState(-damageStats.mental);
      }
      else
      {
@@ -79,6 +84,9 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
          float physicalDamage = damageStats.fire+damageStats.earth+damageStats.physical+damageStats.tree+damageStats.plant+damageStats.water;
          output->addLine("Your enemy made " + std::to_string(physicalDamage) + " damage to your hp.");
          output->addLine("He made " + std::to_string(damageStats.mental) + " damage to your mentality.");
+
+         player->ChangeHitPoints(-physicalDamage);
+         player->ChangeMentalState(-damageStats.mental);
 
          output->addLine("---");
          //player move
@@ -98,10 +106,19 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
              output->addLine("He glares at you.\n");
          }
 
+         enemy->ChangeHitPoints(-physicalDamage);
+         enemy->ChangeMentalState(-damageStats.mental);
+
 
      }
 
-     delete(playerAttack);
+     output->addLine("---");
+     output->addLine("You now have " + std::to_string(player->GetHitPoints()) + " hp and " + std::to_string(player->GetMentalState()) + " mentality.");
+     output->addLine("Your enemy now has " + std::to_string(enemy->GetHitPoints()) + " hp and " + std::to_string(enemy->GetMentalState()) + " mentality.");
+
+
+
+    delete(playerAttack);
      delete(enemyAttack);
 
 

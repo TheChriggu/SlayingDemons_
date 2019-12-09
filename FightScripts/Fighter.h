@@ -155,6 +155,12 @@ namespace sd{
         void ChangeBaseStats(Stats offense, StatwiseOperation offenseOps, Stats defense, StatwiseOperation defenseOps);
         void ChangeBuffs(Stats offense, StatwiseOperation offenseOps, Stats defense, StatwiseOperation defenseOps);
 
+        void ChangeHitPoints(float value);
+        void ChangeMentalState(float value);
+
+        float GetHitPoints();
+        float GetMentalState();
+
         void PrintToConsole();
     };
 }

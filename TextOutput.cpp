@@ -12,7 +12,7 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
     text = "";
 
     glitchTexture = new sf::RenderTexture();
-    //if(!glitchTexture->create(1920,1080))
+    if(!glitchTexture->create(1920,1080))
     {
         std::cout << "could not create render texture for output\n";
     }
@@ -53,14 +53,9 @@ void sd::TextOutput::DrawTo(sf::RenderTarget* window) const {
     }
     else
     {
-        glitchTexture->clear();
-        for (FormattedLine* line : *lines) {
-            line->drawTo(window, window);
-        }
 
-        glitchTexture->display();
-        //shader.setUniform("texture", glitchTexture->getTexture());
-        //window->draw(*glitchSprite, shader);
+        //shader->setUniform("texture", glitchTexture->getTexture());
+        window->draw(*glitchSprite, shader);
     }
 
 }
@@ -116,6 +111,15 @@ void sd::TextOutput::MoveVertical(float distance) {
     for(FormattedLine* line : *lines){
         line->MoveVertical(distance);
     }
+}
+
+void sd::TextOutput::Update() {
+    glitchTexture->clear();
+    for (FormattedLine* line : *lines) {
+        line->drawTo(glitchTexture, glitchTexture);
+    }
+
+    glitchTexture->display();
 }
 
 

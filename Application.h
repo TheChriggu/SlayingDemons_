@@ -28,6 +28,8 @@ namespace sd {
         std::vector<DrawableObject*> drawable_objects_;
         void LoadVocab();
 
+        TextOutput* output;
+
 
     public:
         Application();

@@ -7,13 +7,12 @@ void main()
 
     // multiply it by the color
     //gl_FragColor = pixel;
-    if (pixel == vec4(0,0,0,1))
+    if (pixel == vec4(1,1,1,1))
     {
-        pixel = vec4(0,0,0,0);
+        gl_FragColor = vec4(0,0,0,0);
     }
     else
     {
         gl_FragColor = vec4(1.0 - pixel.r,1.0 -pixel.g,1.0 -pixel.b,1);
-        //pixel = vec4(1.0 - pixel.r,1.0 -pixel.g,1.0 -pixel.b,1);
     }
 }

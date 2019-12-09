@@ -17,6 +17,7 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
         std::cout << "could not create render texture for output\n";
     }
 
+
     glitchSprite = new sf::Sprite();
     glitchSprite->setTexture(glitchTexture->getTexture());
 
@@ -53,7 +54,15 @@ void sd::TextOutput::DrawTo(sf::RenderTarget* window) const {
     }
     else
     {
+        glitchTexture->clear(sf::Color::White);
+        //glitchTexture->draw(*honkerSprite, shader);
 
+        for (FormattedLine* line : *lines) {
+            line->drawTo(window, glitchTexture);
+        }
+
+
+        glitchTexture->display();
         //shader->setUniform("texture", glitchTexture->getTexture());
         window->draw(*glitchSprite, shader);
     }
@@ -113,11 +122,13 @@ void sd::TextOutput::MoveVertical(float distance) {
     }
 }
 
-void sd::TextOutput::Update() {
-    glitchTexture->clear();
+void sd::TextOutput::Update(sf::RenderTarget* window) {
+    glitchTexture->clear(sf::Color::White);
+
     for (FormattedLine* line : *lines) {
-        line->drawTo(glitchTexture, glitchTexture);
+        line->drawTo(window, glitchTexture);
     }
+
 
     glitchTexture->display();
 }

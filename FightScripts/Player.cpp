@@ -6,16 +6,16 @@
 
 sd::Player::Player() {
     actions = new std::vector<sf::String>();
-    actions->emplace_back("honk");
-    actions->emplace_back("smash");
+    AddAction("honk");
+    AddAction("smash");
 
     modifiers = new std::vector<sf::String>();
-    modifiers->emplace_back("flirty");
-    modifiers->emplace_back("heavy");
+    AddModifier("flirty");
+    AddModifier("heavy");
 
     world = new std::vector<sf::String>();
-    world->emplace_back("walk to");
-    world->emplace_back("jump over");
+    AddWorld("walk to");
+    AddWorld("jump over");
 }
 
 sd::Player::~Player() {
@@ -41,4 +41,16 @@ bool sd::Player::HasWord(sf::String word) {
         return true;
     }
     return false;
+}
+
+void sd::Player::AddAction(sf::String action) {
+    actions->emplace_back(action);
+}
+
+void sd::Player::AddModifier(sf::String modifier) {
+    modifiers->emplace_back(modifier);
+}
+
+void sd::Player::AddWorld(sf::String word) {
+    world->emplace_back(word);
 }

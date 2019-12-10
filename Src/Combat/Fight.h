@@ -10,7 +10,7 @@
 #include "Attack.h"
 #include "../Player.h"
 #include "../Monster.h"
-#include "../Control/TextOutput.h"
+#include "../UI/TextOutput.h"
 
 namespace sd {
 

@@ -6,10 +6,10 @@
 #define UNTITLED_APPLICATION_H
 #include "SFML/Graphics.hpp"
 #include "Manageable.h"
-#include "../Control/Button.h"
+#include "../UI/Button.h"
 #include "DrawableObject.h"
-#include "../Control/InputField.h"
-#include "../Control/TextOutput.h"
+#include "../UI/InputField.h"
+#include "../UI/TextOutput.h"
 #include "../IO/FileInput.h"
 #include "../World.h"
 #include <vector>

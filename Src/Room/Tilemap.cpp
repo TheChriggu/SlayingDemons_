@@ -114,5 +114,13 @@ void Tilemap::UpdateTiles() {
     }
 }
 
+int Tilemap::GetWidth() {
+    return width;
+}
+
+int Tilemap::GetHeight() {
+    return height;
+}
+
 
 #include "Tilemap.h"

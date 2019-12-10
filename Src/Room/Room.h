@@ -5,14 +5,17 @@
 #ifndef SLAYINGDEMONS_ROOM_H
 #define SLAYINGDEMONS_ROOM_H
 #include "Tilemap.h"
-#include "Core/DrawableObject.h"
+#include "../Core/DrawableObject.h"
+#include "RoomObject.h"
+#include "SingleTileObject.h"
 
 namespace sd {
     class Room: public DrawableObject  {
     private:
         sf::Vector2f position;
         sf::Vector2f size;
-        //int room[];
+
+        std::vector<RoomObject*> roomObjects;
 
         Tilemap* tilemap;
 

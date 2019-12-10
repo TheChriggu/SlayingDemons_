@@ -15,6 +15,8 @@ public:
     void LoadSpriteSheet(sf::String path);
     void SetLayout(int _layout[], int size);
     int* GetLayout();
+    int GetWidth();
+    int GetHeight();
 
 private:
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

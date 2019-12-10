@@ -7,7 +7,7 @@
 
 
 #include "sol/sol.hpp"
-#include "Manageable.h"
+#include "../Core/Manageable.h"
 
 namespace sd {
     class ScriptEngine : public Manageable {

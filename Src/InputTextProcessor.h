@@ -5,10 +5,10 @@
 #ifndef SLAYINGDEMONS_INPUTTEXTPROCESSOR_H
 #define SLAYINGDEMONS_INPUTTEXTPROCESSOR_H
 #include "SFML/Graphics.hpp"
-#include "FightScripts/Fight.h"
-#include "FightScripts/Player.h"
-#include "FightScripts/Monster.h"
-#include "TextOutput.h"
+#include "Combat/Fight.h"
+#include "Player.h"
+#include "Monster.h"
+#include "Control/TextOutput.h"
 
 namespace sd {
 

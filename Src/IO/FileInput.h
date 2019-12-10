@@ -5,7 +5,7 @@
 #ifndef SLAYINGDEMONS_FILEINPUT_H
 #define SLAYINGDEMONS_FILEINPUT_H
 
-#include "Manageable.h"
+#include "../Core/Manageable.h"
 
 namespace sd {
     class FileInput : public Manageable {

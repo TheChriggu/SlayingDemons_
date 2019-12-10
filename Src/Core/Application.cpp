@@ -3,8 +3,8 @@
 //
 
 #include "Application.h"
-#include "Panel.h"
-#include "UserInput.h"
+#include "../Control/Panel.h"
+#include "../IO/UserInput.h"
 #include <iostream>
 
 

@@ -6,16 +6,16 @@
 #define UNTITLED_APPLICATION_H
 #include "SFML/Graphics.hpp"
 #include "Manageable.h"
-#include "Button.h"
+#include "../Control/Button.h"
 #include "DrawableObject.h"
-#include "InputField.h"
-#include "TextOutput.h"
-#include "FileInput.h"
-#include "World.h"
+#include "../Control/InputField.h"
+#include "../Control/TextOutput.h"
+#include "../IO/FileInput.h"
+#include "../World.h"
 #include <vector>
-#include "FightScripts/Vocabulary.h"
-#include "FightScripts/Action.h"
-#include "FightScripts/Modifier.h"
+#include "../Vocabulary.h"
+#include "../Combat/Action.h"
+#include "../Combat/Modifier.h"
 
 namespace sd {
     class Application : public Manageable {

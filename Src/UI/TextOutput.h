@@ -4,8 +4,8 @@
 
 #ifndef UNTITLED_TEXTOUTPUT_H
 #define UNTITLED_TEXTOUTPUT_H
-#include "DrawableObject.h"
-#include "TextGlitch.h"
+#include "../Core/DrawableObject.h"
+#include "../TextGlitch.h"
 #include <list>
 #include "FormattedLine.h"
 

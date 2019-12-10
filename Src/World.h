@@ -5,7 +5,7 @@
 #ifndef SLAYINGDEMONS_WORLD_H
 #define SLAYINGDEMONS_WORLD_H
 
-#include "Manageable.h"
+#include "Core/Manageable.h"
 
 namespace sd {
     class World : public Manageable {

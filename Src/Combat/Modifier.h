@@ -6,8 +6,8 @@
 #define SLAYINGDEMONS_MODIFIER_H
 
 #include <SFML/System/String.hpp>
-#include "Fighter.h"
-#include "Word.h"
+#include "../Fighter.h"
+#include "../Word.h"
 
 namespace sd {
     class Modifier : public Word{

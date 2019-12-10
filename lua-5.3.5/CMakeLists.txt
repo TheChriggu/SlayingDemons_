@@ -5,7 +5,4 @@ add_library(lua SHARED
         src/lauxlib.c  src/lcode.c     src/lctype.h    src/ldo.c     src/lfunc.h  src/liolib.c  src/lmathlib.c  src/lobject.c  src/loslib.c    src/lstate.c   src/lstrlib.c  src/ltm.c      src/luaconf.h  src/lundump.c  src/lvm.h
         src/lauxlib.h  src/lcode.h     src/ldblib.c    src/ldo.h     src/lgc.c    src/llex.c    src/lmem.c      src/lobject.h  src/lparser.c   src/lstate.h   src/ltable.c   src/ltm.h      src/lua.h      src/lundump.h  src/lzio.c)
 
-set_target_properties(lua
-        PROPERTIES
-        IMPORTED_LINK_INTERFACE_LANGUAGES C)
-
+target_include_directories(${PROJECT_NAME} PRIVATE src)

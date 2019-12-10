@@ -43,7 +43,7 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
      if(playerAttackStats.speed >= enemyAttackStats.speed)
      {
          //player move
-         output->addLine(std::string(playerAttack->GetSentenceSecondPerson()));
+         output->addLine(playerAttack->GetSentenceSecondPerson());
          Stats damageStats = playerAttackStats - (enemy->GetDefense()) ;
          damageStats = MinToZero(damageStats);
 
@@ -63,7 +63,7 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
 
          output->addLine("---");
          //Enemy move
-         output->addLine(std::string(enemyAttack->GetSentenceThirdPerson()));
+         output->addLine(enemyAttack->GetSentenceThirdPerson());
          damageStats = enemyAttackStats - (player->GetDefense());
          damageStats = MinToZero(damageStats);
 
@@ -77,7 +77,7 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
      else
      {
          //Enemy move
-         output->addLine(std::string(enemyAttack->GetSentenceThirdPerson()));
+         output->addLine(enemyAttack->GetSentenceThirdPerson());
          Stats damageStats = enemyAttackStats - (player->GetDefense());
          damageStats = MinToZero(damageStats);
 
@@ -90,7 +90,7 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
 
          output->addLine("---");
          //player move
-         output->addLine(std::string(playerAttack->GetSentenceSecondPerson()));
+         output->addLine(playerAttack->GetSentenceSecondPerson());
          damageStats = playerAttackStats - (enemy->GetDefense());
          damageStats = MinToZero(damageStats);
 

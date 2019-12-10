@@ -7,7 +7,7 @@
 
 #include <functional>
 #include "SFML/Graphics.hpp"
-#include "DrawableObject.h"
+#include "../Core/DrawableObject.h"
 
 namespace sd {
     class Button : public DrawableObject {
@@ -26,7 +26,7 @@ namespace sd {
         void down();
         void up();
 
-        void Draw(sf::RenderWindow* window) const override;
+        void DrawTo(sf::RenderTarget* window) const override;
         bool isPositionOnButton(sf::Vector2f positionToCheck);
 
         void Handle(sf::Event event) override;

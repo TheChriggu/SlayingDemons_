@@ -17,7 +17,7 @@ FormattedWord::FormattedWord(sf::String _text, bool _isGlitching, sf::Vector2f _
     text->setFont(*font);
     text->setString(_text);
     text->setCharacterSize(24);
-    text->setFillColor(sf::Color::Magenta);
+    text->setFillColor(sf::Color::Black);
     text->setPosition(_position);
 
     isGlitching = _isGlitching;
@@ -29,7 +29,7 @@ FormattedWord::~FormattedWord() {
     delete text;
 }
 
-void FormattedWord::drawTo(sf::RenderWindow* window, sf::RenderWindow* glitchWindow) {
+void FormattedWord::drawTo(sf::RenderTarget* window, sf::RenderTarget* glitchWindow) {
     if(isGlitching)
     {
         glitchWindow->draw(*text);
@@ -50,4 +50,10 @@ void FormattedWord::format() {
 
 sf::FloatRect FormattedWord::getRect() {
     return text->getGlobalBounds();
+}
+
+void FormattedWord::MoveVertical(float distance) {
+    sf::Vector2f position = text->getPosition();
+    position.y += distance;
+    text->setPosition(position);
 }

@@ -18,7 +18,7 @@ sd::UserInput::~UserInput() {
 
 sf::Vector2f sd::UserInput::GetMousePosition() {
 
-    auto mousePos = sf::Mouse::getPosition();
+    auto mousePos = sf::Mouse::getPosition(*window_);
 
     return window_->mapPixelToCoords(mousePos);
 }

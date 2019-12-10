@@ -4,12 +4,10 @@
 
 #include <iostream>
 #include "Button.h"
-#include "UserInput.h"
+#include "../IO/UserInput.h"
 
 
-sd::Button::Button(sf::Vector2f position, sf::Vector2f scale, std::function<void()> _callback)
-    : DrawableObject(position, scale)
-{
+sd::Button::Button(sf::Vector2f position, sf::Vector2f scale, std::function<void()> _callback){
     button = new sf::Sprite();;
     normalTexture = new sf::Texture();
     pressedTexture = new sf::Texture();
@@ -31,9 +29,11 @@ sd::Button::Button(sf::Vector2f position, sf::Vector2f scale, std::function<void
 
 sd::Button::~Button() {
     delete normalTexture;
+    normalTexture = nullptr;
     delete pressedTexture;
+    pressedTexture = nullptr;
     delete button;
-    button = 0;
+    button = nullptr;
 }
 
 void sd::Button::down() {
@@ -45,7 +45,7 @@ void sd::Button::up() {
     callback();
 }
 
-void sd::Button::Draw(sf::RenderWindow *window) const {
+void sd::Button::DrawTo(sf::RenderTarget *window) const {
     window->draw(*button);
 }
 

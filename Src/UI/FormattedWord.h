@@ -4,7 +4,7 @@
 
 #ifndef UNTITLED_FORMATTEDWORD_H
 #define UNTITLED_FORMATTEDWORD_H
-#include "SFML\Graphics.hpp"
+#include "SFML/Graphics.hpp"
 
 class FormattedWord {
     sf::Text* text;
@@ -15,10 +15,11 @@ public:
     FormattedWord(sf::String _text, bool _isGlitching, sf::Vector2f _position);
     ~FormattedWord();
 
-    void drawTo(sf::RenderWindow* window, sf::RenderWindow* glitchWindow);
+    void drawTo(sf::RenderTarget* window, sf::RenderTarget* glitchWindow);
 
     void setPosition(sf::Vector2f _position);
     sf::FloatRect getRect();
+    void MoveVertical(float distance);
 
     void toggleGlitch(){
         isGlitching = !isGlitching;

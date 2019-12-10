@@ -4,9 +4,10 @@
 
 #include <iostream>
 #include "Button.h"
+#include "../IO/UserInput.h"
 
 
-Button::Button(sf::Vector2f position, sf::Vector2f scale, std::function<void()> _callback) {
+sd::Button::Button(sf::Vector2f position, sf::Vector2f scale, std::function<void()> _callback){
     button = new sf::Sprite();;
     normalTexture = new sf::Texture();
     pressedTexture = new sf::Texture();
@@ -26,28 +27,53 @@ Button::Button(sf::Vector2f position, sf::Vector2f scale, std::function<void()> 
     callback = _callback;
 }
 
-Button::~Button() {
+sd::Button::~Button() {
     delete normalTexture;
+    normalTexture = nullptr;
     delete pressedTexture;
+    pressedTexture = nullptr;
     delete button;
-    button = 0;
+    button = nullptr;
 }
 
-void Button::down() {
+void sd::Button::down() {
     button->setTexture(*pressedTexture, true);
 }
 
-void Button::up() {
+void sd::Button::up() {
     button->setTexture(*normalTexture, true);
     callback();
 }
 
-void Button::drawTo(sf::RenderWindow *window) {
+void sd::Button::DrawTo(sf::RenderTarget *window) const {
     window->draw(*button);
 }
 
-bool Button::isPositionOnButton(sf::Vector2f positionToCheck) {
+bool sd::Button::isPositionOnButton(sf::Vector2f positionToCheck) {
     sf::Rect bounds = button->getGlobalBounds();
     return bounds.contains(positionToCheck);
+}
+
+void sd::Button::Handle(sf::Event event) {
+    if (event.type == sf::Event::MouseButtonPressed)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            auto mousePos = sd::UserInput::GetInstance()->GetMousePosition();
+
+            if(isPositionOnButton(mousePos))
+            {
+                down();
+            }
+        }
+    }
+
+    if (event.type == sf::Event::MouseButtonReleased)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            up();
+        }
+    }
 }
 

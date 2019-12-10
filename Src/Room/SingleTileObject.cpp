@@ -3,6 +3,7 @@
 //
 
 #include "SingleTileObject.h"
+
 sd::SingleTileObject::SingleTileObject(sf::String _name, int _spriteSheetIdx, sf::Vector2i _positionOnTileMap)
         :name(_name)
         ,spriteSheetIdx(_spriteSheetIdx)

@@ -8,7 +8,7 @@
 
 
 namespace sd {
-    class SingleTileObject : RoomObject{
+    class SingleTileObject : public RoomObject{
     private:
         int spriteSheetIdx;
         sf::String name;
@@ -16,9 +16,9 @@ namespace sd {
 
     public:
         SingleTileObject(sf::String _name, int _spriteSheetIdx, sf::Vector2i _positionOnTileMap);
-        ~SingleTileObject();
+        ~SingleTileObject() override;
 
-        virtual void PutOnTileMap(Tilemap* map);
+        void PutOnTileMap(Tilemap* map) override;
     };
 }
 

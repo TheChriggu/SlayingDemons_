@@ -10,11 +10,10 @@ namespace sd {
     class RoomObject {
 
     public:
-        RoomObject();
-        ~RoomObject();
+        RoomObject() = default;
+        virtual ~RoomObject() = default;
 
-        void PutOnTileMap(Tilemap* map);
-
+        virtual void PutOnTileMap(Tilemap* map) = 0;
     };
 }
 

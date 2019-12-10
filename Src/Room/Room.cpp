@@ -24,7 +24,7 @@ sd::Room::Room(sf::Vector2f _position, sf::Vector2f _size)
     tilemap->SetLayout(room, 77);
 
     roomObjects.emplace_back(new SingleTileObject("Mushroom", 12, sf::Vector2i(3,4)));
-    
+
 
     for(auto object : roomObjects)
     {

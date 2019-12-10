@@ -13,7 +13,8 @@ sd::ScriptEngine::~ScriptEngine() {
 }
 
 bool sd::ScriptEngine::Setup() {
-    engine_ = new chaiscript::ChaiScript();
+    //sol::state _state;
+    engine_ = new sol::state;
 
     return true;
 }

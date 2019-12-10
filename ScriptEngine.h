@@ -5,12 +5,13 @@
 #ifndef SLAYINGDEMONS_SCRIPTENGINE_H
 #define SLAYINGDEMONS_SCRIPTENGINE_H
 
-#include "chaiscript/chaiscript.hpp"
+
+#include "sol/sol.hpp"
 #include "Manageable.h"
 
 namespace sd {
     class ScriptEngine : public Manageable {
-        chaiscript::ChaiScript* engine_;
+        sol::state* engine_;
 
     public:
         ScriptEngine();

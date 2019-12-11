@@ -4,23 +4,24 @@
 
 #include "FileInput.h"
 #include <fstream>
-#include <iostream>
 #include <filesystem>
+#include <cstring>
+#include <iostream>
 
 
 bool sd::FileInput::IsExisting(const char *url) {
     return std::filesystem::exists(url);
 }
 
-std::string sd::FileInput::LoadNormal(const char *url) {
-    std::string content;
+std::shared_ptr<std::string> sd::FileInput::Load(const char *url) {
+    std::shared_ptr<std::string> content(new std::string);
     std::string line;
 
     try {
         std::ifstream file(url);
         if (file.is_open()) {
             while (std::getline(file, line)) {
-                content += line + "\n";
+                (*content) += line + "\n";
             }
 
             file.close();
@@ -34,24 +35,29 @@ std::string sd::FileInput::LoadNormal(const char *url) {
     return content;
 }
 
-std::vector<std::vector<std::string>> sd::FileInput::LoadCSV(const char *url) {
-    std::vector<std::vector<std::string>> content;
+std::shared_ptr<std::vector<std::vector<std::string>>> sd::FileInput::LoadCSV(const char *url) {
+
+    std::shared_ptr<std::vector<std::vector<std::string>>> content(new std::vector<std::vector<std::string>>);
     std::string field;
+
+    // return if url is file is not a .csv file
+    if (strstr(url, ".csv") == nullptr)
+        return content;
 
     try {
         std::ifstream file(url);
 
         if (file.is_open()) {
-            content.emplace_back(std::vector<std::string>());
+            content->emplace_back(std::vector<std::string>());
 
             while (std::getline(file, field, ',')) {
                 if (field.empty()) continue;
                 if (field[0] == ASCII_NEWLINE) {
-                    content.emplace_back(std::vector<std::string>());
+                    content->emplace_back(std::vector<std::string>());
                     continue;
                 }
 
-                content.back().emplace_back(field);
+                content->back().emplace_back(field);
             }
 
             file.close();
@@ -63,5 +69,9 @@ std::vector<std::vector<std::string>> sd::FileInput::LoadCSV(const char *url) {
     }
 
     return content;
+}
+
+std::shared_ptr<std::vector<std::string>> sd::FileInput::GetFiles(const char *directory) {
+    return std::shared_ptr<std::vector<std::string>>();
 }
 

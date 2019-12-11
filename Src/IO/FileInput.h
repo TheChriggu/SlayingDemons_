@@ -9,7 +9,7 @@
 
 #include <string>
 #include <vector>
-#include "../Core/Manageable.h"
+#include <memory>
 
 namespace sd {
     class FileInput {
@@ -17,8 +17,10 @@ namespace sd {
 
         static bool IsExisting(const char* url);
 
-        static std::string LoadNormal(const char* url);
-        static std::vector<std::vector<std::string>> LoadCSV(const char* url);
+        static std::shared_ptr<std::vector<std::string>> GetFiles(const char* directory);
+
+        static std::shared_ptr<std::string> Load(const char* url);
+        static std::shared_ptr<std::vector<std::vector<std::string>>> LoadCSV(const char* url);
     };
 }
 

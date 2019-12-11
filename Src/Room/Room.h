@@ -8,6 +8,7 @@
 #include "../Core/DrawableObject.h"
 #include "RoomObject.h"
 #include "SingleTileObject.h"
+#include "MultiTileObject.h"
 
 namespace sd {
     class Room: public DrawableObject  {

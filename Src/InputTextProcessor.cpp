@@ -22,41 +22,45 @@ sd::InputTextProcessor::~InputTextProcessor() {
 
 void sd::InputTextProcessor::ProcessInput(sf::String spell) {
 
-    //split spell
-    std::cout << "splitting input\n";
-    std::vector<sf::String> words = SplitBySpace(spell);
-
-    //TODO: Sort words in array to be modifier first, then action(or other way round)
-
-    //check spell validity (or do this in input field already?)
-    if(!Vocabulary::allWords->Contains(words[0]) || !Vocabulary::allWords->Contains(words[1]))
+    if(spell == "inspect room")
     {
-        output->addLine("Input not understood.");
+        output->addLine(room->GetDescription());
     }
+    else {
+        //split spell
+        std::cout << "splitting input\n";
+        std::vector<sf::String> words = SplitBySpace(spell);
 
-    //*for(auto word : words)
-    //*{
-        //*if(!player->HasWord(word))
-        //*{
+        //TODO: Sort words in array to be modifier first, then action(or other way round)
+
+        //check spell validity (or do this in input field already?)
+        if (!Vocabulary::allWords->Contains(words[0]) || !Vocabulary::allWords->Contains(words[1])) {
+            output->addLine("Input not understood.");
+        }
+
+            //*for(auto word : words)
+            //*{
+            //*if(!player->HasWord(word))
+            //*{
             //send invalid input message to output
-        //*}
-    //*}
+            //*}
+            //*}
 
-    //check if currently fighting
-    else// if(fight != nullptr)
-    {
-        //check if fight spell
-        std::cout << "fight not nullptr\n";
-        std::cout << "making turn\n";
+            //check if currently fighting
+        else// if(fight != nullptr)
+        {
+            //check if fight spell
+            std::cout << "fight not nullptr\n";
+            std::cout << "making turn\n";
             //make turn in fight
             fight->FullTurn(words[1], words[0], output);
 
             //evaluate result
             //end fight, if fight is over
-                //*delete(fight);
-                //*fight = nullptr;
+            //*delete(fight);
+            //*fight = nullptr;
 
-        //if not fight spell
+            //if not fight spell
 
             //make enemy turn in fight
             //*fight->makeEnemyTurnOnly();
@@ -64,24 +68,25 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
 
             //evaluate player
 
-    }
+        }
 
 
-    //if not fighting
+        //if not fighting
 
         //check if it starts a fight
 
-            //create fight object with player & enemy
-            //*fight = new fight(player, enemy);
-            //evaluate spell (maybe from fight?)
+        //create fight object with player & enemy
+        //*fight = new fight(player, enemy);
+        //evaluate spell (maybe from fight?)
 
         //if not starting fight
 
-            //evaluate spell
+        //evaluate spell
 
 
 
-    //send evaluation to output
+        //send evaluation to output
+    }
 }
 
 std::vector<sf::String> sd::InputTextProcessor::SplitBySpace(sf::String string) {
@@ -103,6 +108,10 @@ std::vector<sf::String> sd::InputTextProcessor::SplitBySpace(sf::String string) 
 
 void sd::InputTextProcessor::SetOutput(sd::TextOutput *_output) {
     output = _output;
+}
+
+void sd::InputTextProcessor::SetRoom(sd::Room *_room) {
+    room = _room;
 }
 
 

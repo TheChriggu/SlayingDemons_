@@ -16,6 +16,7 @@
 #include "../Vocabulary.h"
 #include "../Combat/Action.h"
 #include "../Combat/Modifier.h"
+#include "../UI/MapWindow.h"
 #include "../ScriptEngine/ScriptEngine.h"
 
 namespace sd {

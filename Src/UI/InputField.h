@@ -16,7 +16,7 @@ namespace sd {
 
     public:
         // TODO(FK): remove Textoutput from Input class?
-        InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color, TextOutput* output);
+        InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color, TextOutput* output, Room* room);
         ~InputField();
 
         void addText(sf::Uint32 input);

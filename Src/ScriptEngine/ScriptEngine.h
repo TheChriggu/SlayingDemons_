@@ -8,17 +8,18 @@
 
 #include "sol/sol.hpp"
 #include "../Core/Manageable.h"
+#include "Script.h"
 
 namespace sd {
-    class ScriptEngine : public Manageable {
-        sol::state* engine_;
+    class ScriptEngine {
+
+        std::vector<Script> scripts_;
 
     public:
         ScriptEngine();
-        virtual ~ScriptEngine();
+        virtual ~ScriptEngine() = default;
 
-        bool Setup() override;
-        void Shutdown() override;
+        void Broadcast(const char* function) const;
     };
 }
 

@@ -5,21 +5,48 @@
 #include "ScriptEngine.h"
 
 sd::ScriptEngine::ScriptEngine() {
-    engine_ = nullptr;
+    /*scripts_.emplace_back(
+            Script(R"(
+                    function test()
+                        print("Test")
+                     end
+            )"),
+            Script(R"(
+                    function blub()
+                        print("blub")
+                     end
+            )")
+    );*/
 }
 
-sd::ScriptEngine::~ScriptEngine() {
-    Shutdown();
+
+void sd::ScriptEngine::Broadcast(const char *function) const {
+    for (const auto& script : scripts_) {
+        script.Call(function);
+    }
 }
 
-bool sd::ScriptEngine::Setup() {
+/*bool sd::ScriptEngine::Setup() {
     //sol::state _state;
     engine_ = new sol::state;
 
-    return true;
-}
+    engine_->open_libraries(sol::lib::base);
 
-void sd::ScriptEngine::Shutdown() {
-    delete engine_;
-    engine_ = nullptr;
-}
+    engine_->script_file("../Resources/Scripts/test.lua");
+
+    //sol::function func = (*engine_)["do_smth"];
+    //func();
+    (*engine_)["do_smth"]();
+    //std::function<int()> better_func = func;
+    //int var = better_func();
+
+    sol::optional<bool> config = (*engine_)["config"]["fullscreen"];
+    //config = (*engine_)["config"]["blub"];
+
+    if(config) {
+        std::cout << "script: " << typeof(true) << std::endl;
+    }
+
+
+    return true;
+}*/

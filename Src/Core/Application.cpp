@@ -3,9 +3,10 @@
 //
 
 #include "Application.h"
-#include "../UI/Panel.h"
-#include "../IO/UserInput.h"
+#include "UI/Panel.h"
+#include "IO/UserInput.h"
 #include <iostream>
+#include "IO/FileInput.h"
 
 
 sd::Vocabulary* sd::Vocabulary::allWords = nullptr;

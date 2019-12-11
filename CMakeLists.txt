@@ -8,7 +8,7 @@ set(CMAKE_CXX_STANDARD 17)
 # it also sets the include directories for each library and sets the Project Target
 
 # set executable-files (set Project-Target)
-add_executable(SlayingDemons
+add_executable(${PROJECT_NAME}
                Src/Core/main.cpp
                Src/Core/Application.cpp
                Src/Core/Application.h
@@ -61,6 +61,8 @@ add_executable(SlayingDemons
                Src/ScriptEngine/Script.h
                Src/ScriptEngine/Script.cpp
                )
+
+target_include_directories(${PROJECT_NAME} PRIVATE Src)
 
 # add all libraries as subdirectories
 add_subdirectory(lua-5.3.5)

@@ -15,12 +15,13 @@ sd::Application::Application()
     window_ = nullptr;
     world_ = nullptr;
     file_input_ = nullptr;
+    script_engine_ = nullptr;
 }
 
 
 
 bool sd::Application::Setup() {
-    window_ = new sf::RenderWindow(sf::VideoMode(1920, 1080), "MyGame", sf::Style::Fullscreen);
+    window_ = new sf::RenderWindow(sf::VideoMode(1920, 1080), "MyGame", sf::Style::Default);
     window_->setFramerateLimit(60);
 
     // TODO(FK)
@@ -75,6 +76,9 @@ bool sd::Application::Setup() {
 
     std::cout << "Create global vocabulary containing all words\n";
     LoadVocab();
+
+    script_engine_ = new ScriptEngine();
+    script_engine_->Broadcast("test");
 
     std::cout << "End initialization\n";
 

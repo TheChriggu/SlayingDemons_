@@ -17,6 +17,7 @@
 #include "../Combat/Action.h"
 #include "../Combat/Modifier.h"
 #include "../UI/MapWindow.h"
+#include "../ScriptEngine/ScriptEngine.h"
 
 namespace sd {
     class Application : public Manageable {
@@ -25,12 +26,15 @@ namespace sd {
         FileInput* file_input_;
 
         World* world_;
-
-        std::vector<DrawableObject*> drawable_objects_;
-        void LoadVocab();
-
         TextOutput* output;
 
+        ScriptEngine* script_engine_;
+
+        std::vector<DrawableObject*> drawable_objects_;
+
+
+
+        void LoadVocab();
 
     public:
         Application();

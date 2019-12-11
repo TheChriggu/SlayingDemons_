@@ -36,7 +36,9 @@ sd::Room::Room(sf::Vector2f _position, sf::Vector2f _size)
 }
 
 sd::Room::~Room() {
-
+    roomObjects.clear();
+    delete(tilemap);
+    tilemap = nullptr;
 }
 
 void sd::Room::DrawTo(sf::RenderTarget *window) const {
@@ -44,13 +46,34 @@ void sd::Room::DrawTo(sf::RenderTarget *window) const {
 }
 
 sf::Vector2f sd::Room::GetPosition() {
-    return DrawableObject::GetPosition();
+    return position;
 }
 
 sf::Vector2f sd::Room::GetSize() {
-    return DrawableObject::GetSize();
+    return size;
 }
 
 void sd::Room::Handle(sf::Event event) {
+
+}
+
+sf::String sd::Room::GetDescription() {
+    if (roomObjects.size() == 0)
+    {
+        return "The room is empty.";
+    }
+
+
+    sf::String retVal = "Inside the room there is a";
+    for(auto object : roomObjects)
+    {
+        retVal += " " + object->GetName() + ",";
+    }
+
+    retVal += ".";
+
+    return retVal;
+
+
 
 }

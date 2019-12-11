@@ -14,6 +14,7 @@ namespace sd {
         virtual ~RoomObject() = default;
 
         virtual void PutOnTileMap(Tilemap* map) = 0;
+        virtual sf::String GetName() = 0;
     };
 }
 

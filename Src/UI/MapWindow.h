@@ -24,6 +24,7 @@ namespace sd {
 
         sf::Vector2f GetPosition() override;
         sf::Vector2f GetSize() override;
+        Room* GetRoom();
 
         void Handle(sf::Event event) override;
     };

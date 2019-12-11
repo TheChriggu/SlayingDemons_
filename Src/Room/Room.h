@@ -30,6 +30,8 @@ namespace sd {
         sf::Vector2f GetSize() override;
 
         void Handle(sf::Event event) override;
+
+        sf::String GetDescription();
     };
 }
 

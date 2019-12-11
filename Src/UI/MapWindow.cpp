@@ -47,3 +47,7 @@ sf::Vector2f sd::MapWindow::GetSize() {
 void sd::MapWindow::Handle(sf::Event event) {
     room->Handle(event);
 }
+
+sd::Room *sd::MapWindow::GetRoom() {
+    return room;
+}

@@ -22,3 +22,7 @@ void sd::SingleTileObject::PutOnTileMap(Tilemap *map) {
 
     map->SetLayout(layout, map->GetWidth()*map->GetHeight());
 }
+
+sf::String sd::SingleTileObject::GetName() {
+    return name;
+}

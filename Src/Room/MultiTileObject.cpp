@@ -49,3 +49,7 @@ void sd::MultiTileObject::PutOnTileMap(Tilemap *map) {
     }
 
 }
+
+sf::String sd::MultiTileObject::GetName() {
+    return name;
+}

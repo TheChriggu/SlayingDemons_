@@ -19,6 +19,7 @@ namespace sd {
         ~SingleTileObject() override;
 
         void PutOnTileMap(Tilemap* map) override;
+        sf::String GetName() override;
     };
 }
 

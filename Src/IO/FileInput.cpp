@@ -4,16 +4,15 @@
 
 #include "FileInput.h"
 #include <fstream>
-#include <filesystem>
 #include <cstring>
 #include <iostream>
 
 
-bool sd::FileInput::IsExisting(const char *url) {
+bool sd::FileInput::IsExisting(std::filesystem::path url) {
     return std::filesystem::exists(url);
 }
 
-std::shared_ptr<std::string> sd::FileInput::Load(const char *url) {
+std::shared_ptr<std::string> sd::FileInput::Load(std::filesystem::path url) {
     std::shared_ptr<std::string> content(new std::string);
     std::string line;
 
@@ -35,13 +34,13 @@ std::shared_ptr<std::string> sd::FileInput::Load(const char *url) {
     return content;
 }
 
-std::shared_ptr<std::vector<std::vector<std::string>>> sd::FileInput::LoadCSV(const char *url) {
+std::shared_ptr<std::vector<std::vector<std::string>>> sd::FileInput::LoadCSV(std::filesystem::path url) {
 
     std::shared_ptr<std::vector<std::vector<std::string>>> content(new std::vector<std::vector<std::string>>);
     std::string field;
 
     // return if url is file is not a .csv file
-    if (strstr(url, ".csv") == nullptr)
+    if (strstr(url.c_str(), ".csv") == nullptr)
         return content;
 
     try {
@@ -71,7 +70,13 @@ std::shared_ptr<std::vector<std::vector<std::string>>> sd::FileInput::LoadCSV(co
     return content;
 }
 
-std::shared_ptr<std::vector<std::string>> sd::FileInput::GetFiles(const char *directory) {
-    return std::shared_ptr<std::vector<std::string>>();
+std::shared_ptr<std::vector<std::filesystem::path>> sd::FileInput::GetFiles(std::filesystem::path directory) {
+    std::shared_ptr<std::vector<std::filesystem::path>> content(new std::vector<std::filesystem::path>);
+
+    for (auto& path : directory) {
+        content->emplace_back(path);
+    }
+
+    return content;
 }
 

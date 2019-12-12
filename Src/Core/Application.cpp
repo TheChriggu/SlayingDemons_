@@ -78,6 +78,8 @@ bool sd::Application::Setup() {
     std::cout << "Create global vocabulary containing all words\n";
     LoadVocab();
 
+    std::cout << "Initialize Script Engine" << std::endl;
+
     script_engine_ = new ScriptEngine();
     script_engine_->Broadcast("test");
 

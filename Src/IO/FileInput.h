@@ -10,17 +10,18 @@
 #include <string>
 #include <vector>
 #include <memory>
+#include <filesystem>
 
 namespace sd {
     class FileInput {
     public:
 
-        static bool IsExisting(const char* url);
+        static bool IsExisting(std::filesystem::path url);
 
-        static std::shared_ptr<std::vector<std::string>> GetFiles(const char* directory);
+        static std::shared_ptr<std::vector<std::filesystem::path>> GetFiles(std::filesystem::path directory);
 
-        static std::shared_ptr<std::string> Load(const char* url);
-        static std::shared_ptr<std::vector<std::vector<std::string>>> LoadCSV(const char* url);
+        static std::shared_ptr<std::string> Load(std::filesystem::path url);
+        static std::shared_ptr<std::vector<std::vector<std::string>>> LoadCSV(std::filesystem::path url);
     };
 }
 

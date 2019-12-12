@@ -9,6 +9,7 @@
 #include "Player.h"
 #include "Monster.h"
 #include "UI/TextOutput.h"
+#include "Room/Room.h"
 
 namespace sd {
 
@@ -16,6 +17,7 @@ namespace sd {
     private:
     Fight* fight;
     TextOutput* output;
+    Room* room;
     //std::vector<sf::String> SplitBySpace(sf::String string);
 
     public:
@@ -23,6 +25,7 @@ namespace sd {
         ~InputTextProcessor();
 
         void SetOutput(TextOutput* _output);
+        void SetRoom(Room* _room);
 
         void ProcessInput(sf::String spell);
         std::vector<sf::String> SplitBySpace(sf::String string);

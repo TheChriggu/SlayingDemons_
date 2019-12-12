@@ -52,17 +52,18 @@ bool sd::Application::Setup() {
     std::cout << "Create text output\n";
     output = new TextOutput(sf::Vector2f(90.0,100.0), sf::Vector2f(1044,1008), sf::Color::Red);
     drawable_objects_.emplace_back(output);
-
     std::cout << "Create Map panel\n";
-    sf::Texture* mapTexture = new sf::Texture();
-    mapTexture->loadFromFile("../Resources/Sprites/fantasy_map.png");
-    drawable_objects_.emplace_back(new Panel(sf::Vector2f(1127.0, 41.0), sf::Vector2f(761, 558), mapTexture));
+    MapWindow* mapWindow = new MapWindow(sf::Vector2f(1127.0, 41.0), sf::Vector2f(761, 558));
+
+
+
+    drawable_objects_.emplace_back(mapWindow);
 
 
 
 
     //create input field
-    drawable_objects_.emplace_back(new InputField(sf::Vector2f(80,940), sf::Vector2f(1025,63), sf::Color::Magenta, output));
+    drawable_objects_.emplace_back(new InputField(sf::Vector2f(80,940), sf::Vector2f(1025,63), sf::Color::Magenta, output, mapWindow->GetRoom()));
 
 
 

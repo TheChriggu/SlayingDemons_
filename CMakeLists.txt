@@ -60,6 +60,18 @@ add_executable(${PROJECT_NAME}
                Src/ScriptEngine/ScriptEngine.h
                Src/ScriptEngine/Script.h
                Src/ScriptEngine/Script.cpp
+               Src/Room/MultiTileObject.cpp
+               Src/Room/MultiTileObject.h
+               Src/Room/Room.cpp
+               Src/Room/Room.h
+               Src/Room/RoomObject.cpp
+               Src/Room/RoomObject.h
+               Src/Room/SingleTileObject.cpp
+               Src/Room/SingleTileObject.h
+               Src/Room/Tilemap.cpp
+               Src/Room/Tilemap.h
+               Src/UI/MapWindow.cpp
+               Src/UI/MapWindow.h
                )
 
 target_include_directories(${PROJECT_NAME} PRIVATE Src)

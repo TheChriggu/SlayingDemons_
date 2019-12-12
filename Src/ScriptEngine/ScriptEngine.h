@@ -7,19 +7,22 @@
 
 
 #include "sol/sol.hpp"
-#include "Core/Manageable.h"
+#include <filesystem>
 #include "Script.h"
 
 namespace sd {
     class ScriptEngine {
 
-        std::vector<Script> scripts_;
+        std::vector<std::shared_ptr<Script>> scripts_;
 
     public:
         ScriptEngine();
         virtual ~ScriptEngine() = default;
 
+        void AddScript(const std::filesystem::path& url);
+
         void Broadcast(const char* function) const;
+        std::shared_ptr<Script> GetScript(const std::string& name) const;
     };
 }
 

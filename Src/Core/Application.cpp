@@ -81,7 +81,17 @@ bool sd::Application::Setup() {
     std::cout << "Initialize Script Engine" << std::endl;
 
     script_engine_ = new ScriptEngine();
-    script_engine_->Broadcast("test");
+
+    // TODO(FK): find out why Game chrashes when tmp test var is not used
+    auto test = FileInput::GetFiles("../Resources/Scripts/");
+    for (auto file : *test) {
+        script_engine_->AddScript(file);
+    }
+
+    script_engine_->Broadcast("update");
+
+    auto s = script_engine_->GetScript("conf");
+    if (s) s->Call("test");
 
     std::cout << "End initialization\n";
 

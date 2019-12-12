@@ -10,16 +10,18 @@
 
 class Script {
 public:
-    Script();
-    explicit Script(const char* content);
+    explicit Script(const char* name);
+    Script(const char* name, const std::string& content);
     virtual ~Script() = default;
 
     void SetConent(const char* content);
     void Call(const char* function) const;
 
+    const std::string& GetName() const;
+
 private:
     std::unique_ptr<sol::state> state_;
-
+    std::string name_;
 };
 
 

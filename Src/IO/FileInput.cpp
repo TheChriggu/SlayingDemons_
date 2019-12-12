@@ -73,9 +73,11 @@ std::shared_ptr<std::vector<std::vector<std::string>>> sd::FileInput::LoadCSV(st
 std::shared_ptr<std::vector<std::filesystem::path>> sd::FileInput::GetFiles(std::filesystem::path directory) {
     std::shared_ptr<std::vector<std::filesystem::path>> content(new std::vector<std::filesystem::path>);
 
-    for (auto& path : directory) {
-        content->emplace_back(path);
+    for (auto& entry : std::filesystem::directory_iterator(directory)) {
+        content->emplace_back(entry.path());
     }
+
+    std::cout << content->size() << std::endl;
 
     return content;
 }

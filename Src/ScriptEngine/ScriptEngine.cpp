@@ -3,6 +3,7 @@
 //
 
 #include "ScriptEngine.h"
+#include "IO/FileInput.h"
 
 sd::ScriptEngine::ScriptEngine() {
     /*scripts_.emplace_back(
@@ -19,12 +20,31 @@ sd::ScriptEngine::ScriptEngine() {
     );*/
 }
 
+void sd::ScriptEngine::AddScript(const std::filesystem::path& url) {
+    scripts_.emplace_back(new Script(
+            url.filename().c_str(),
+            (*FileInput::Load(url))
+    ));
+}
 
 void sd::ScriptEngine::Broadcast(const char *function) const {
     for (const auto& script : scripts_) {
-        script.Call(function);
+        script->Call(function);
     }
 }
+
+std::shared_ptr<Script> sd::ScriptEngine::GetScript(const std::string& name) const {
+
+    for (const auto& script : scripts_) {
+        if (script->GetName() == (name + ".lua")) {
+            return script;
+        }
+    }
+
+    return nullptr;
+}
+
+
 
 /*bool sd::ScriptEngine::Setup() {
     //sol::state _state;

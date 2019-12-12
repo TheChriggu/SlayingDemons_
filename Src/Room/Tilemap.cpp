@@ -10,6 +10,7 @@ Tilemap::Tilemap(unsigned int _width, unsigned int _height, sf::Vector2f _positi
     ,height(_height)
     ,tileSize(_tileSize)
 {
+    std::cout << "Start contructor Tilemap\n";
     layout = new int[width*height];
     position = _position;
 
@@ -22,7 +23,7 @@ Tilemap::Tilemap(unsigned int _width, unsigned int _height, sf::Vector2f _positi
     LoadSpriteSheet("../Resources/Sprites/fantasy_tilemap.png");
     SetLayout(defaultLayout, width*height);
     SetAllQuadPositions();
-
+    std::cout << "End contructor Tilemap\n";
 }
 
 Tilemap::~Tilemap() {
@@ -47,7 +48,7 @@ int *Tilemap::GetLayout() {
     return layout;
 }
 
-void Tilemap::LoadSpriteSheet(sf::String path) {
+void Tilemap::LoadSpriteSheet(std::string path) {
     // load the tileset texture
     if (!tileset.loadFromFile(path)) {
         //error

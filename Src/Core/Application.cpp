@@ -55,11 +55,11 @@ bool sd::Application::Setup() {
     std::cout << "Create Map panel\n";
     MapWindow* mapWindow = new MapWindow(sf::Vector2f(1127.0, 41.0), sf::Vector2f(761, 558));
 
-
+    std::cout << "emplace Window\n";
 
     drawable_objects_.emplace_back(mapWindow);
 
-
+    std::cout << "emplace Inputfield\n";
 
 
     //create input field

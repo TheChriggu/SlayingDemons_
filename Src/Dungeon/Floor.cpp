@@ -5,11 +5,8 @@
 #include "Floor.h"
 
 sd::Floor::Floor() {
-    sf::Vector2f position = sf::Vector2f(1127.0, 41.0) + sf::Vector2f(40,44);
-    Tilemap* tilemap = new Tilemap(11,7,position,sf::Vector2u(64,64));
-    Tilemap* tilemap2 = new Tilemap(11,7,position,sf::Vector2u(64,64));
-    Room* room1 = new Room(tilemap);
-    Room* room2 = new Room(tilemap2);
+    Room* room1 = new Room();
+    Room* room2 = new Room();
 
     Door* northDoor = new Door("north door", 9, 25, sf::Vector2i(5,0), room2);
     room1->AddObject(northDoor);

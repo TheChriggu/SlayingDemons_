@@ -18,7 +18,6 @@ namespace sd {
     Fight* fight;
     TextOutput* output;
     Room* room;
-    //std::vector<sf::String> SplitBySpace(sf::String string);
 
     public:
         InputTextProcessor();

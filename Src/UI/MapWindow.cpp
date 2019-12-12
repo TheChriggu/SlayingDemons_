@@ -16,6 +16,8 @@ sd::MapWindow::MapWindow(sf::Vector2f _position, sf::Vector2f _size)
     backgroundSprite->setTexture(*backgroundTexture);
     backgroundSprite->setPosition(position);
 
+    currenttileMap = new Tilemap(11,7,position + sf::Vector2f(40,44),sf::Vector2u(64,64));
+
     floor = new Floor();
     room = floor->GetCurrentRoom();
 
@@ -38,7 +40,9 @@ sd::MapWindow::~MapWindow() {
 
 void sd::MapWindow::DrawTo(sf::RenderTarget *window) const {
     window->draw(*backgroundSprite);
-    window->draw(*(room->GetTilemap()));
+
+    currenttileMap->SetLayout(room->GetLayout(),77);
+    window->draw(*currenttileMap);
 }
 
 sf::Vector2f sd::MapWindow::GetPosition() {

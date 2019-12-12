@@ -18,8 +18,9 @@ sd::Door::~Door() {
 
 }
 
-void sd::Door::PutOnTileMap(Tilemap *map) {
-    SingleTileObject::PutOnTileMap(map);
+void sd::Door::PutOnLayout(int *layout, int width, int height) {
+    //TODO: make sure position is within width & height
+    SingleTileObject::PutOnLayout(layout, width, height);
 }
 
 sf::String sd::Door::GetName() {

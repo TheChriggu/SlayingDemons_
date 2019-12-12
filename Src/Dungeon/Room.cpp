@@ -4,23 +4,21 @@
 
 #include "Room.h"
 
-sd::Room::Room(Tilemap* _tilemap)
-    :tilemap(_tilemap)
+sd::Room::Room()
 {
     //tilemap = new Tilemap(11,7,position,sf::Vector2u(64,64));
+    layout = new int[77]{
+            0,1,1,1,1,1,1,1,1,1,2,
+            8,9,9,9,9,9,9,9,9,9,10,
+            8,9,9,9,9,9,9,9,9,9,10,
+            8,9,9,9,9,9,9,9,9,9,10,
+            8,9,9,9,9,9,9,9,9,9,10,
+            8,9,9,9,9,9,9,9,9,9,10,
+            16,17,17,17,17,17,17,17,17,17,18
+    };
 
-    int room[] =
-            {
-                    0,1,1,1,1,1,1,1,1,1,2,
-                    8,9,9,9,9,9,9,9,9,9,10,
-                    8,9,9,9,9,9,9,9,9,9,10,
-                    8,9,9,9,9,9,9,9,9,9,10,
-                    8,9,9,9,9,9,9,9,9,9,10,
-                    8,9,9,9,9,9,9,9,9,9,10,
-                    16,17,17,17,17,17,17,17,17,17,18
-            };
 
-    tilemap->SetLayout(room, 77);
+    //tilemap->SetLayout(room, 77);
 
     //roomObjects.emplace_back(new SingleTileObject("Mushroom", 24, sf::Vector2i(3,4)));
 
@@ -36,8 +34,8 @@ sd::Room::Room(Tilemap* _tilemap)
 
 sd::Room::~Room() {
     roomObjects.clear();
-    //delete(tilemap);
-    tilemap = nullptr;
+    delete layout;
+    layout = nullptr;
 }
 
 
@@ -60,10 +58,11 @@ sf::String sd::Room::GetDescription() {
 }
 
 void sd::Room::AddObject(sd::RoomObject *object) {
+    object->PutOnLayout(layout, 11,7);
     roomObjects.emplace_back(object);
-    object->PutOnTileMap(tilemap);
+
 }
 
-Tilemap *sd::Room::GetTilemap() {
-    return tilemap;
+int *sd::Room::GetLayout() {
+    return layout;
 }

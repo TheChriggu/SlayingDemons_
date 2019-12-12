@@ -18,6 +18,8 @@ namespace sd {
 
         Room* room;
         Floor* floor;
+
+        Tilemap* currenttileMap;
     public:
         MapWindow(sf::Vector2f _position, sf::Vector2f _size);
         ~MapWindow() override;

@@ -17,15 +17,16 @@ namespace sd {
         sf::Vector2f size;
 
         std::vector<RoomObject*> roomObjects;
+        int* layout;
 
-        Tilemap* tilemap;
+        //Tilemap* tilemap;
 
     public:
-        Room(Tilemap* _tilemap);
+        Room();
         ~Room();
 
         sf::String GetDescription();
-        Tilemap* GetTilemap();
+        int* GetLayout();
 
         void AddObject(RoomObject* object);
 

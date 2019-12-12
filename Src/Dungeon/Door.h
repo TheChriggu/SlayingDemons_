@@ -18,7 +18,7 @@ namespace sd {
         Door(sf::String _name, int _spriteSheetIdxOpen, int _spriteSheetIdxLocked, sf::Vector2i _positionOnTileMap, Room* _nextRoom);
         ~Door() override;
 
-        virtual void PutOnTileMap(Tilemap* map) override;
+        virtual void PutOnLayout(int* layout, int width, int height) override;
         sf::String GetName() override;
 
         Room* GetConnectedRoom();

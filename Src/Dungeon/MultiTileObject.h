@@ -18,7 +18,7 @@ namespace sd {
         MultiTileObject(sf::String _name, int _layout[], sf::Vector2i _size, sf::Vector2i _positionOnTileMap);
         ~MultiTileObject() override;
 
-        void PutOnTileMap(Tilemap* map) override;
+        void PutOnLayout(int* layout, int width, int height) override;
         sf::String GetName() override;
     };
 }

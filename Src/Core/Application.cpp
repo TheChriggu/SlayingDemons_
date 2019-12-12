@@ -3,9 +3,10 @@
 //
 
 #include "Application.h"
-#include "../UI/Panel.h"
-#include "../IO/UserInput.h"
+#include "UI/Panel.h"
+#include "IO/UserInput.h"
 #include <iostream>
+#include "IO/FileInput.h"
 
 
 sd::Vocabulary* sd::Vocabulary::allWords = nullptr;
@@ -54,11 +55,11 @@ bool sd::Application::Setup() {
     std::cout << "Create Map panel\n";
     MapWindow* mapWindow = new MapWindow(sf::Vector2f(1127.0, 41.0), sf::Vector2f(761, 558));
 
-
+    std::cout << "emplace Window\n";
 
     drawable_objects_.emplace_back(mapWindow);
 
-
+    std::cout << "emplace Inputfield\n";
 
 
     //create input field
@@ -76,6 +77,8 @@ bool sd::Application::Setup() {
 
     std::cout << "Create global vocabulary containing all words\n";
     LoadVocab();
+
+    std::cout << "Initialize Script Engine" << std::endl;
 
     script_engine_ = new ScriptEngine();
     script_engine_->Broadcast("test");

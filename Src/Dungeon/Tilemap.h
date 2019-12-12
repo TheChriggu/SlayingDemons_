@@ -12,7 +12,7 @@ class Tilemap : public sf::Drawable, public sf::Transformable{
 public:
     Tilemap(unsigned int _width, unsigned int _height, sf::Vector2f _position, sf::Vector2u _tileSize);
     ~Tilemap() override;
-    void LoadSpriteSheet(sf::String path);
+    void LoadSpriteSheet(std::string path);
     void SetLayout(int _layout[], int size);
     int* GetLayout();
     int GetWidth();

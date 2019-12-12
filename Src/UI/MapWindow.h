@@ -6,6 +6,7 @@
 #define SLAYINGDEMONS_MAPWINDOW_H
 #include "../Core/DrawableObject.h"
 #include "../Dungeon/Room.h"
+#include "../Dungeon/Floor.h"
 
 namespace sd {
     class MapWindow : public DrawableObject {
@@ -16,6 +17,7 @@ namespace sd {
         sf::Vector2f size;
 
         Room* room;
+        Floor* floor;
     public:
         MapWindow(sf::Vector2f _position, sf::Vector2f _size);
         ~MapWindow() override;

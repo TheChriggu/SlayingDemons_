@@ -11,7 +11,7 @@
 #include "MultiTileObject.h"
 
 namespace sd {
-    class Room: public DrawableObject  {
+    class Room  {
     private:
         sf::Vector2f position;
         sf::Vector2f size;
@@ -21,17 +21,14 @@ namespace sd {
         Tilemap* tilemap;
 
     public:
-        Room(sf::Vector2f _position, sf::Vector2f _size);
-        ~Room() override;
-
-        void DrawTo(sf::RenderTarget* window) const override;
-
-        sf::Vector2f GetPosition() override;
-        sf::Vector2f GetSize() override;
-
-        void Handle(sf::Event event) override;
+        Room(Tilemap* _tilemap);
+        ~Room();
 
         sf::String GetDescription();
+        Tilemap* GetTilemap();
+
+        void AddObject(RoomObject* object);
+
     };
 }
 

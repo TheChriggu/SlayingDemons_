@@ -4,6 +4,7 @@
 
 #include "MapWindow.h"
 
+
 sd::MapWindow::MapWindow(sf::Vector2f _position, sf::Vector2f _size)
     :position(_position)
     ,size(_size)
@@ -15,13 +16,17 @@ sd::MapWindow::MapWindow(sf::Vector2f _position, sf::Vector2f _size)
     backgroundSprite->setTexture(*backgroundTexture);
     backgroundSprite->setPosition(position);
 
-    room = new Room((position + sf::Vector2f(40,44)), (size - sf::Vector2f(96,96)));
+    floor = new Floor();
+    room = floor->GetCurrentRoom();
 
 }
 
 sd::MapWindow::~MapWindow() {
     delete room;
     room = nullptr;
+
+    delete floor;
+    floor = nullptr;
 
     delete backgroundTexture;
     backgroundTexture = nullptr;
@@ -33,7 +38,7 @@ sd::MapWindow::~MapWindow() {
 
 void sd::MapWindow::DrawTo(sf::RenderTarget *window) const {
     window->draw(*backgroundSprite);
-    room->DrawTo(window);
+    window->draw(*(room->GetTilemap()));
 }
 
 sf::Vector2f sd::MapWindow::GetPosition() {
@@ -45,7 +50,7 @@ sf::Vector2f sd::MapWindow::GetSize() {
 }
 
 void sd::MapWindow::Handle(sf::Event event) {
-    room->Handle(event);
+    //room->Handle(event);
 }
 
 sd::Room *sd::MapWindow::GetRoom() {

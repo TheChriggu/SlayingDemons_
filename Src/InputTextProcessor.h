@@ -9,7 +9,7 @@
 #include "Player.h"
 #include "Monster.h"
 #include "UI/TextOutput.h"
-#include "Room/Room.h"
+#include "Dungeon/Room.h"
 
 namespace sd {
 

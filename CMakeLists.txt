@@ -72,7 +72,12 @@ add_executable(${PROJECT_NAME}
                Src/Dungeon/Tilemap.h
                Src/UI/MapWindow.cpp
                Src/UI/MapWindow.h
-        Src/Dungeon/Floor.cpp Src/Dungeon/Floor.h Src/Dungeon/Door.cpp Src/Dungeon/Door.h Src/PlayerState.cpp Src/PlayerState.h)
+               Src/Dungeon/Floor.cpp
+               Src/Dungeon/Floor.h
+               Src/Dungeon/Door.cpp
+               Src/Dungeon/Door.h
+               Src/PlayerState.cpp
+               Src/PlayerState.h)
 
 target_include_directories(${PROJECT_NAME} PRIVATE Src)
 

@@ -79,7 +79,7 @@ bool sd::Application::Setup() {
     LoadVocab();
 
     std::cout << "Initialize Script Engine" << std::endl;
-
+/*
     script_engine_ = new ScriptEngine();
 
     // TODO(FK): find out why Game chrashes when tmp test var is not used
@@ -92,7 +92,7 @@ bool sd::Application::Setup() {
 
     auto s = script_engine_->GetScript("conf");
     if (s) s->Call("test");
-
+*/
     std::cout << "End initialization\n";
 
     return true;

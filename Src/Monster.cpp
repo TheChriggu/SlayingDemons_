@@ -6,6 +6,8 @@
 #include <iostream>
 
 sd::Monster::Monster() {
+
+
     actions = new std::vector<sf::String>();
     AddAction("scratch");
     AddAction("howl");

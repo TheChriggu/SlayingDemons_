@@ -19,14 +19,14 @@ sd::ScriptEngine::ScriptEngine() {
             )")
     );*/
 }
-
+/*
 void sd::ScriptEngine::AddScript(const std::filesystem::path& url) {
     scripts_.emplace_back(new Script(
             url.filename().c_str(),
             (*FileInput::Load(url))
     ));
 }
-
+*/
 void sd::ScriptEngine::Broadcast(const char *function) const {
     for (const auto& script : scripts_) {
         script->Call(function);

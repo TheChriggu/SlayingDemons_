@@ -23,29 +23,29 @@ sd::MultiTileObject::~MultiTileObject() {
     layout = nullptr;
 }
 
-void sd::MultiTileObject::PutOnTileMap(Tilemap *map) {
+void sd::MultiTileObject::PutOnLayout(int *layout, int width, int height) {
 
-    if((map->GetWidth() < positionOnTileMap.x + size.x) || (map->GetHeight() < positionOnTileMap.y + size.y))
+    if((width < positionOnTileMap.x + size.x) || (height < positionOnTileMap.y + size.y))
     {
         std::cout << "MultiTileObject outside Room";
     }
     else
     {
-        int startPos = positionOnTileMap.x + positionOnTileMap.y*map->GetWidth();
-        int* mapLayout = map->GetLayout();
+        int startPos = positionOnTileMap.x + positionOnTileMap.y*width;
+
         for(int i = 0; i < size.x * size.y;i++)
         {
             int row = i/size.x;
             int col = i%size.x;
 
-            int pos = startPos+col+row*map->GetWidth();
+            int pos = startPos+col+row*width;
 
             if(layout[i] != -1)
             {
-                mapLayout[pos] = layout[i];
+                layout[pos] = layout[i];
             }
         }
-        map->SetLayout(mapLayout, map->GetWidth()*map->GetHeight());
+
     }
 
 }

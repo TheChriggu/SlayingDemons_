@@ -4,11 +4,21 @@
 
 #ifndef SLAYINGDEMONS_FLOOR_H
 #define SLAYINGDEMONS_FLOOR_H
-
+#include <vector>
+#include "Room.h"
+#include "Door.h"
 
 namespace sd {
     class Floor {
+    private:
+        std::vector<Room*> rooms;
 
+    public:
+        Floor();
+        ~Floor();
+
+        Room* GetCurrentRoom();
+        Room* GetStartRoom();
     };
 }
 

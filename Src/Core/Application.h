@@ -18,6 +18,7 @@
 #include "../Combat/Modifier.h"
 #include "../UI/MapWindow.h"
 #include "../ScriptEngine/ScriptEngine.h"
+#include "../InputTextProcessor.h"
 
 namespace sd {
     class Application : public Manageable {
@@ -31,6 +32,7 @@ namespace sd {
         ScriptEngine* script_engine_;
 
         std::vector<DrawableObject*> drawable_objects_;
+        InputTextProcessor* inputTextProcessor;
 
 
 

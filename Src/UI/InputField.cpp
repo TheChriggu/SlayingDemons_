@@ -5,12 +5,9 @@
 #include "InputField.h"
 #include <iostream>
 
-sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color, TextOutput* output, Room* room)
-    : output_(output)
-    {
-    textProcessor = new InputTextProcessor();
-    textProcessor->SetOutput(output);
-    textProcessor->SetRoom(room);
+sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color)
+{
+    textProcessor = nullptr;
 
     sf::Font* font = new sf::Font();
     if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
@@ -30,10 +27,6 @@ sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color c
 sd::InputField::~InputField() {
     delete text;
     text = nullptr;
-    delete output_;
-    output_ = nullptr;
-    delete textProcessor;
-    textProcessor = nullptr;
 }
 
 void sd::InputField::addText(sf::Uint32 input) {
@@ -89,4 +82,8 @@ void sd::InputField::Handle(sf::Event event) {
     //}
 
 
+}
+
+void sd::InputField::SetTextProcessor(sd::InputTextProcessor *_textProcessor) {
+    textProcessor = _textProcessor;
 }

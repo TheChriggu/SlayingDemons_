@@ -7,7 +7,7 @@
 #include <cstring>
 #include <iostream>
 
-
+/*
 bool sd::FileInput::IsExisting(std::filesystem::path url) {
     return std::filesystem::exists(url);
 }
@@ -82,3 +82,4 @@ std::shared_ptr<std::vector<std::filesystem::path>> sd::FileInput::GetFiles(std:
     return content;
 }
 
+*/

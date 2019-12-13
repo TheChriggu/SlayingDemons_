@@ -6,15 +6,18 @@
 
 #include <memory>
 
-Script::Script() {
+Script::Script(const char* name) {
     state_ = std::make_unique<sol::state>();
     state_->open_libraries(sol::lib::base);
+
+    name_ = name;
 }
 
-Script::Script(const char *content) {
+Script::Script(const char* name, const std::string& content) {
     state_ = std::make_unique<sol::state>();
     state_->open_libraries(sol::lib::base);
 
+    name_ = name;
     state_->script(content);
 }
 
@@ -23,5 +26,12 @@ void Script::SetConent(const char *content) {
 }
 
 void Script::Call(const char *function) const {
-    (*state_)[function]();
+    sol::function func = (*state_)[function];
+
+    if (func.valid())
+        func();
+}
+
+const std::string &Script::GetName() const {
+    return name_;
 }

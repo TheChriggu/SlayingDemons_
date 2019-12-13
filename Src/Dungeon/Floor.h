@@ -12,13 +12,13 @@ namespace sd {
     class Floor {
     private:
         std::vector<Room*> rooms;
-        Room* currentRoom;
 
     public:
         Floor();
         ~Floor();
 
         Room* GetCurrentRoom();
+        Room* GetStartRoom();
     };
 }
 

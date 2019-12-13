@@ -72,7 +72,7 @@ add_executable(SlayingDemons
                Src/Dungeon/Tilemap.h
                Src/UI/MapWindow.cpp
                Src/UI/MapWindow.h
-        Src/Dungeon/Floor.cpp Src/Dungeon/Floor.h Src/Dungeon/Door.cpp Src/Dungeon/Door.h)
+        Src/Dungeon/Floor.cpp Src/Dungeon/Floor.h Src/Dungeon/Door.cpp Src/Dungeon/Door.h Src/PlayerState.cpp Src/PlayerState.h)
 
 # add all libraries as subdirectories
 add_subdirectory(lua-5.3.5)

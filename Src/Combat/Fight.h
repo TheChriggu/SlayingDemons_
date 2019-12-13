@@ -16,13 +16,13 @@ namespace sd {
 
     class Fight {
     private:
-    Player* player;
+    Fighter* player;
     Monster* enemy;
     //Attack GetAttack(Fighter* _fighter, sf::String _action, sf::String _modifier);
     Stats MinToZero(Stats stats);
 
     public:
-        Fight(Player* _player, Monster* _enemy);
+        Fight(Fighter* _player, Monster* _enemy);
         ~Fight();
 
         void FullTurn(sf::String _action, sf::String _modifier, TextOutput* output);

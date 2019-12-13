@@ -6,6 +6,7 @@
 
 sd::Room::Room()
 {
+    enemy = nullptr;
     //tilemap = new Tilemap(11,7,position,sf::Vector2u(64,64));
     layout = new int[77]{
             0,1,1,1,1,1,1,1,1,1,2,
@@ -65,4 +66,38 @@ void sd::Room::AddObject(sd::RoomObject *object) {
 
 int *sd::Room::GetLayout() {
     return layout;
+}
+
+sd::RoomObject *sd::Room::GetObjectWithName(std::string name) {
+
+    for(auto object : roomObjects)
+    {
+        if (std::string(object->GetName()) == name)
+        {
+            return object;
+        }
+    }
+
+    //TODO: Error, if object not found
+    return nullptr;
+}
+
+void sd::Room::SetEnemy(sd::Monster *_enemy) {
+    enemy = _enemy;
+}
+
+std::string sd::Room::GetEnterDescription() {
+    if(enemy != nullptr)
+    {
+        return "You enter the new room. Immediately an enemy attacks you.";
+    }
+
+    else
+    {
+        return "You enter the new room.";
+    }
+}
+
+sd::Monster *sd::Room::GetEnemy() {
+    return enemy;
 }

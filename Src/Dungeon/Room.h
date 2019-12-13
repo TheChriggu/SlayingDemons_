@@ -9,15 +9,15 @@
 #include "RoomObject.h"
 #include "SingleTileObject.h"
 #include "MultiTileObject.h"
+#include "../Monster.h"
 
 namespace sd {
     class Room  {
     private:
-        sf::Vector2f position;
-        sf::Vector2f size;
-
         std::vector<RoomObject*> roomObjects;
         int* layout;
+
+        Monster* enemy;
 
         //Tilemap* tilemap;
 
@@ -29,6 +29,13 @@ namespace sd {
         int* GetLayout();
 
         void AddObject(RoomObject* object);
+        void SetEnemy(Monster* _enemy);
+
+        std::string GetEnterDescription();
+        Monster* GetEnemy();
+
+
+        RoomObject* GetObjectWithName(std::string name);
 
     };
 }

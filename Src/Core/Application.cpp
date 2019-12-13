@@ -51,28 +51,28 @@ bool sd::Application::Setup() {
     std::cout << "Create text output\n";
     output = new TextOutput(sf::Vector2f(90.0,100.0), sf::Vector2f(1044,1008), sf::Color::Red);
     drawable_objects_.emplace_back(output);
+
+
     std::cout << "Create Map panel\n";
     MapWindow* mapWindow = new MapWindow(sf::Vector2f(1127.0, 41.0), sf::Vector2f(761, 558));
-
-
-
     drawable_objects_.emplace_back(mapWindow);
 
 
+    std::cout << "Create input field\n";
+    InputField* inputField = new InputField(sf::Vector2f(80,940), sf::Vector2f(1025,63), sf::Color::Magenta);
+    drawable_objects_.emplace_back(inputField);
 
-
-    //create input field
-    drawable_objects_.emplace_back(new InputField(sf::Vector2f(80,940), sf::Vector2f(1025,63), sf::Color::Magenta, output, mapWindow->GetRoom()));
-
-
-
-
-    //std::cout << "Create fourth panel\n";
-    //drawable_objects_.emplace_back(new Panel(sf::Vector2f(1127.0, 41.0), sf::Vector2f(761, 558), sf::Color::Magenta));
-    //std::cout << "Create fifth panel\n";
-    //drawable_objects_.emplace_back(new Panel(sf::Vector2f(1103.0, 611.0), sf::Vector2f(816, 461), sf::Color::Red));
     //std::cout << "Create button\n";
     //drawable_objects_.emplace_back(new Button(sf::Vector2f(1200.0f,500.0f), sf::Vector2f(1.0f,1.0f), [&]{clear();}));
+
+
+    std::cout << "Create text processor\n";
+    inputTextProcessor = new InputTextProcessor();
+    inputTextProcessor->SetOutput(output);
+    inputField->SetTextProcessor(inputTextProcessor);
+    mapWindow->SetPlayerState(inputTextProcessor->GetPlayerState());
+
+
 
     std::cout << "Create global vocabulary containing all words\n";
     LoadVocab();

@@ -4,8 +4,8 @@
 
 #ifndef SLAYINGDEMONS_MAPWINDOW_H
 #define SLAYINGDEMONS_MAPWINDOW_H
-#include "../Core/DrawableObject.h"
-#include "../Dungeon/Room.h"
+#include "Core/DrawableObject.h"
+#include "Dungeon/Room.h"
 
 namespace sd {
     class MapWindow : public DrawableObject {

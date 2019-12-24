@@ -7,7 +7,7 @@
 
 #include <functional>
 #include "SFML/Graphics.hpp"
-#include "../Core/DrawableObject.h"
+#include "Core/DrawableObject.h"
 
 namespace sd {
     class Button : public DrawableObject {

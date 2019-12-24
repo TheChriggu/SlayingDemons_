@@ -4,6 +4,7 @@
 
 #include "Panel.h"
 #include <iostream>
+
 sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, sf::Color color){
     sf::Texture texture;
     if (!texture.create(size.x,size.y))

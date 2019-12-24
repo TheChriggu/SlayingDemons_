@@ -4,6 +4,7 @@
 
 #include "Action.h"
 #include <iostream>
+
 sd::Action::Action() {
     stats = new Stats();
     SetStats( {0,0,0,0,0,0,0,0,0});

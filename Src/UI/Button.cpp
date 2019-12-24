@@ -4,7 +4,7 @@
 
 #include <iostream>
 #include "Button.h"
-#include "../IO/UserInput.h"
+#include "IO/UserInput.h"
 
 
 sd::Button::Button(sf::Vector2f position, sf::Vector2f scale, std::function<void()> _callback){

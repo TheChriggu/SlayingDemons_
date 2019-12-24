@@ -4,9 +4,9 @@
 
 #ifndef UNTITLED_INPUTFIELD_H
 #define UNTITLED_INPUTFIELD_H
-#include "../Core/DrawableObject.h"
+#include "Core/DrawableObject.h"
 #include "TextOutput.h"
-#include "../InputTextProcessor.h"
+#include "InputTextProcessor.h"
 
 namespace sd {
     class InputField : public DrawableObject{

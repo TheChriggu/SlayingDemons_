@@ -4,13 +4,13 @@
 
 #ifndef SLAYINGDEMONS_FIGHT_H
 #define SLAYINGDEMONS_FIGHT_H
-#include "../Fighter.h"
+#include "Fighter.h"
 #include "SFML/Graphics.hpp"
-#include "../Vocabulary.h"
+#include "Vocabulary.h"
 #include "Attack.h"
-#include "../Player.h"
-#include "../Monster.h"
-#include "../UI/TextOutput.h"
+#include "Player.h"
+#include "Monster.h"
+#include "UI/TextOutput.h"
 
 namespace sd {
 

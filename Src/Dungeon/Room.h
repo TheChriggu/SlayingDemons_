@@ -5,7 +5,7 @@
 #ifndef SLAYINGDEMONS_ROOM_H
 #define SLAYINGDEMONS_ROOM_H
 #include "Tilemap.h"
-#include "../Core/DrawableObject.h"
+#include "Core/DrawableObject.h"
 #include "RoomObject.h"
 #include "SingleTileObject.h"
 #include "MultiTileObject.h"

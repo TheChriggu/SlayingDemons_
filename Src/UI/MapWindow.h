@@ -4,8 +4,11 @@
 
 #ifndef SLAYINGDEMONS_MAPWINDOW_H
 #define SLAYINGDEMONS_MAPWINDOW_H
+
 #include "Core/DrawableObject.h"
 #include "Dungeon/Room.h"
+#include "../Dungeon/Floor.h"
+#include "../PlayerState.h"
 
 namespace sd {
     class MapWindow : public DrawableObject {
@@ -15,7 +18,8 @@ namespace sd {
         sf::Vector2f position;
         sf::Vector2f size;
 
-        Room* room;
+        Tilemap* currenttileMap;
+        PlayerState* playerState;
     public:
         MapWindow(sf::Vector2f _position, sf::Vector2f _size);
         ~MapWindow() override;
@@ -25,6 +29,7 @@ namespace sd {
         sf::Vector2f GetPosition() override;
         sf::Vector2f GetSize() override;
         Room* GetRoom();
+        void SetPlayerState(PlayerState* _playerState);
 
         void Handle(sf::Event event) override;
     };

@@ -4,6 +4,7 @@
 
 #include "MapWindow.h"
 
+
 sd::MapWindow::MapWindow(sf::Vector2f _position, sf::Vector2f _size)
     :position(_position)
     ,size(_size)
@@ -15,25 +16,26 @@ sd::MapWindow::MapWindow(sf::Vector2f _position, sf::Vector2f _size)
     backgroundSprite->setTexture(*backgroundTexture);
     backgroundSprite->setPosition(position);
 
-    room = new Room((position + sf::Vector2f(40,44)), (size - sf::Vector2f(96,96)));
+    currenttileMap = new Tilemap(11,7,position + sf::Vector2f(40,44),sf::Vector2u(64,64));
 
 }
 
 sd::MapWindow::~MapWindow() {
-    delete room;
-    room = nullptr;
-
     delete backgroundTexture;
     backgroundTexture = nullptr;
 
     delete backgroundSprite;
     backgroundSprite = nullptr;
 
+    delete currenttileMap;
+    currenttileMap = nullptr;
 }
 
 void sd::MapWindow::DrawTo(sf::RenderTarget *window) const {
     window->draw(*backgroundSprite);
-    room->DrawTo(window);
+
+    currenttileMap->SetLayout(playerState->GetCurrentRoom()->GetLayout(),77);
+    window->draw(*currenttileMap);
 }
 
 sf::Vector2f sd::MapWindow::GetPosition() {
@@ -45,9 +47,15 @@ sf::Vector2f sd::MapWindow::GetSize() {
 }
 
 void sd::MapWindow::Handle(sf::Event event) {
-    room->Handle(event);
+    //room->Handle(event);
 }
 
 sd::Room *sd::MapWindow::GetRoom() {
-    return room;
+    //return room;
+    std::cout << "dont call MapWindow.GetRoom()!!\n";
+    return nullptr;
+}
+
+void sd::MapWindow::SetPlayerState(sd::PlayerState *_playerState) {
+    playerState = _playerState;
 }

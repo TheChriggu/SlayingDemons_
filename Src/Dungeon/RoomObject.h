@@ -13,7 +13,7 @@ namespace sd {
         RoomObject() = default;
         virtual ~RoomObject() = default;
 
-        virtual void PutOnTileMap(Tilemap* map) = 0;
+        virtual void PutOnLayout(int* layout, int width, int height) = 0;
         virtual sf::String GetName() = 0;
     };
 }

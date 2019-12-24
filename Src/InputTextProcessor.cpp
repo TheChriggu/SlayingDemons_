@@ -6,25 +6,19 @@
 #include <iostream>
 
 sd::InputTextProcessor::InputTextProcessor() {
-    Stats zeroStats = {0,0,0,0,0,0,0,0,0};
-    Stats oneStats = {1,1,1,1,1,1,1,1,1};
-    Player* player = new Player();
-    player->SetBaseStats(oneStats, oneStats);
-    Monster* enemy = new Monster();
-    enemy->SetBaseStats(oneStats, oneStats);
-    fight = new Fight(player, enemy);
+    playerState = new PlayerState();
 }
 
 sd::InputTextProcessor::~InputTextProcessor() {
-    delete fight;
-    fight = nullptr;
+    delete playerState;
+    playerState = nullptr;
 }
 
 void sd::InputTextProcessor::ProcessInput(sf::String spell) {
 
     if(spell == "inspect room")
     {
-        output->addLine(room->GetDescription());
+        output->addLine(playerState->GetCurrentRoom()->GetDescription());
     }
     else {
         //split spell
@@ -33,11 +27,27 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
 
         //TODO: Sort words in array to be modifier first, then action(or other way round)
 
+
+
         //check spell validity (or do this in input field already?)
+        /*
         if (!Vocabulary::allWords->Contains(words[0]) || !Vocabulary::allWords->Contains(words[1])) {
             output->addLine("Input not understood.");
         }
+        */
 
+        if(words[0] == "move")
+        {
+            //TODO: Make sure that this actually is a door
+            Door* door = (Door*) playerState->GetCurrentRoom()->GetObjectWithName(words[1]);
+            playerState->SetRoomAsCurrent(door->GetConnectedRoom());
+            output->addLine(playerState->GetCurrentRoom()->GetEnterDescription());
+            if(playerState->GetCurrentRoom()->GetEnemy() != nullptr)
+            {
+                output->addLine("starting fight");
+                playerState->StartNewFight(playerState->GetCurrentRoom()->GetEnemy());
+            }
+        }
             //*for(auto word : words)
             //*{
             //*if(!player->HasWord(word))
@@ -47,13 +57,13 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
             //*}
 
             //check if currently fighting
-        else// if(fight != nullptr)
+        else if(playerState->IsFighting())
         {
             //check if fight spell
             std::cout << "fight not nullptr\n";
             std::cout << "making turn\n";
             //make turn in fight
-            fight->FullTurn(words[1], words[0], output);
+            playerState->GetFight()->FullTurn(words[1], words[0], output);
 
             //evaluate result
             //end fight, if fight is over
@@ -68,6 +78,11 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
 
             //evaluate player
 
+        }
+
+        else
+        {
+            output->addLine("nothing happens");
         }
 
 
@@ -111,7 +126,11 @@ void sd::InputTextProcessor::SetOutput(sd::TextOutput *_output) {
 }
 
 void sd::InputTextProcessor::SetRoom(sd::Room *_room) {
-    room = _room;
+    playerState->SetRoomAsCurrent(_room);
+}
+
+sd::PlayerState *sd::InputTextProcessor::GetPlayerState() {
+    return playerState;
 }
 
 

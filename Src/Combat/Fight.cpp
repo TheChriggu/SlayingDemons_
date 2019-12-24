@@ -5,7 +5,7 @@
 #include "Fight.h"
 #include <iostream>
 
-sd::Fight::Fight(sd::Player *_player, sd::Monster *_enemy)
+sd::Fight::Fight(sd::Fighter *_player, sd::Monster *_enemy)
     : player(_player)
     , enemy(_enemy)
 {
@@ -118,7 +118,7 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
 
 
 
-    delete(playerAttack);
+     delete(playerAttack);
      delete(enemyAttack);
 
 

@@ -15,7 +15,6 @@ sd::Application::Application()
     window_ = nullptr;
     world_ = nullptr;
     file_input_ = nullptr;
-    script_engine_ = nullptr;
 }
 
 
@@ -78,11 +77,12 @@ bool sd::Application::Setup() {
     LoadVocab();
 
     std::cout << "Initialize Script Engine" << std::endl;
-/*
-    script_engine_ = new ScriptEngine();
+    new ScriptEngine();
+
+    auto script_engine_ = ScriptEngine::Get();
 
     // TODO(FK): find out why Game chrashes when tmp test var is not used
-    auto test = FileInput::GetFiles("../Resources/Scripts/");
+    /*auto test = FileInput::GetFiles("../Resources/Scripts/");
     for (auto file : *test) {
         script_engine_->AddScript(file);
     }
@@ -90,8 +90,8 @@ bool sd::Application::Setup() {
     script_engine_->Broadcast("update");
 
     auto s = script_engine_->GetScript("conf");
-    if (s) s->Call("test");
-*/
+    if (s) s->Call("test");*/
+
     std::cout << "End initialization\n";
 
     return true;

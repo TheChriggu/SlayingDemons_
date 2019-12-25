@@ -4,8 +4,10 @@
 
 #include "ScriptEngine.h"
 #include "IO/FileInput.h"
+#include <memory>
 
 sd::ScriptEngine::ScriptEngine() {
+    if (!instance) instance = std::unique_ptr<ScriptEngine>(this);
     /*scripts_.emplace_back(
             Script(R"(
                     function test()
@@ -19,6 +21,11 @@ sd::ScriptEngine::ScriptEngine() {
             )")
     );*/
 }
+
+sd::ScriptEngine &sd::ScriptEngine::Get() {
+    return *instance;
+}
+
 /*
 void sd::ScriptEngine::AddScript(const std::filesystem::path& url) {
     scripts_.emplace_back(new Script(
@@ -70,3 +77,7 @@ std::shared_ptr<Script> sd::ScriptEngine::GetScript(const std::string& name) con
 
     return true;
 }*/
+
+std::unique_ptr<sd::ScriptEngine> sd::ScriptEngine::instance = nullptr;
+
+

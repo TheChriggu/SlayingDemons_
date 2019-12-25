@@ -13,11 +13,17 @@
 namespace sd {
     class ScriptEngine {
 
+        static std::unique_ptr<sd::ScriptEngine> instance;
+
         std::vector<std::shared_ptr<Script>> scripts_;
 
     public:
+
+
         ScriptEngine();
         virtual ~ScriptEngine() = default;
+
+        static ScriptEngine& Get();
 
         //void AddScript(const std::filesystem::path& url);
 

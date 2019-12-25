@@ -29,8 +29,6 @@ namespace sd {
         World* world_;
         TextOutput* output;
 
-        ScriptEngine* script_engine_;
-
         std::vector<DrawableObject*> drawable_objects_;
         InputTextProcessor* inputTextProcessor;
 

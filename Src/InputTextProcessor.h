@@ -25,7 +25,7 @@ namespace sd {
         void SetRoom(Room* _room);
 
         void ProcessInput(sf::String spell);
-        std::vector<sf::String> SplitBySpace(sf::String string);
+        std::vector<std::string> SplitBySpace(std::string string);
         PlayerState* GetPlayerState();
     };
 }

@@ -9,17 +9,17 @@
 namespace sd {
     class MultiTileObject : public RoomObject{
     private:
-        sf::String name;
+        std::string name;
         sf::Vector2i positionOnTileMap;
         sf::Vector2i size;
         int* layout;
 
     public:
-        MultiTileObject(sf::String _name, int _layout[], sf::Vector2i _size, sf::Vector2i _positionOnTileMap);
+        MultiTileObject(std::string _name, int _layout[], sf::Vector2i _size, sf::Vector2i _positionOnTileMap);
         ~MultiTileObject() override;
 
         void PutOnLayout(int* layout, int width, int height) override;
-        sf::String GetName() override;
+        std::string GetName() override;
     };
 }
 

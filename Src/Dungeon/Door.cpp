@@ -4,7 +4,7 @@
 
 #include "Door.h"
 
-sd::Door::Door(sf::String _name,
+sd::Door::Door(std::string _name,
                int _spriteSheetIdxOpen, int _spriteSheetIdxLocked, sf::Vector2i _positionOnTileMap, Room* _nextRoom)
         : SingleTileObject(_name, _spriteSheetIdxOpen, _positionOnTileMap)
         , nextRoom(_nextRoom)
@@ -23,6 +23,6 @@ void sd::Door::PutOnLayout(int *layout, int width, int height) {
     SingleTileObject::PutOnLayout(layout, width, height);
 }
 
-sf::String sd::Door::GetName() {
+std::string sd::Door::GetName() {
     return SingleTileObject::GetName();
 }

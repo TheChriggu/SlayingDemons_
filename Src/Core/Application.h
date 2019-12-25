@@ -6,19 +6,19 @@
 #define UNTITLED_APPLICATION_H
 #include "SFML/Graphics.hpp"
 #include "Manageable.h"
-#include "../UI/Button.h"
+#include "UI/Button.h"
 #include "DrawableObject.h"
-#include "../UI/InputField.h"
-#include "../UI/TextOutput.h"
-#include "../IO/FileInput.h"
-#include "../World.h"
+#include "UI/InputField.h"
+#include "UI/TextOutput.h"
+#include "IO/FileInput.h"
+#include "World.h"
 #include <vector>
-#include "../Vocabulary.h"
-#include "../Combat/Action.h"
-#include "../Combat/Modifier.h"
-#include "../UI/MapWindow.h"
-#include "../ScriptEngine/ScriptEngine.h"
-#include "../InputTextProcessor.h"
+#include "Vocabulary.h"
+#include "Combat/Action.h"
+#include "Combat/Modifier.h"
+#include "UI/MapWindow.h"
+#include "ScriptEngine/ScriptEngine.h"
+#include "InputTextProcessor.h"
 
 namespace sd {
     class Application : public Manageable {

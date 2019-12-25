@@ -4,7 +4,7 @@
 
 #include "SingleTileObject.h"
 
-sd::SingleTileObject::SingleTileObject(sf::String _name, int _spriteSheetIdx, sf::Vector2i _positionOnTileMap)
+sd::SingleTileObject::SingleTileObject(std::string _name, int _spriteSheetIdx, sf::Vector2i _positionOnTileMap)
         :name(_name)
         ,spriteSheetIdx(_spriteSheetIdx)
         ,positionOnTileMap(_positionOnTileMap)
@@ -20,6 +20,6 @@ void sd::SingleTileObject::PutOnLayout(int *layout, int width, int height) {
     layout[positionOnTileMap.x + positionOnTileMap.y*width] = spriteSheetIdx;
 }
 
-sf::String sd::SingleTileObject::GetName() {
+std::string sd::SingleTileObject::GetName() {
     return name;
 }

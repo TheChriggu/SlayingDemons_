@@ -5,7 +5,7 @@
 #include <iostream>
 #include "MultiTileObject.h"
 
-sd::MultiTileObject::MultiTileObject(sf::String _name, int *_layout, sf::Vector2i _size,
+sd::MultiTileObject::MultiTileObject(std::string _name, int *_layout, sf::Vector2i _size,
                                      sf::Vector2i _positionOnTileMap)
     :name(_name)
     ,size(_size)
@@ -50,6 +50,6 @@ void sd::MultiTileObject::PutOnLayout(int *layout, int width, int height) {
 
 }
 
-sf::String sd::MultiTileObject::GetName() {
+std::string sd::MultiTileObject::GetName() {
     return name;
 }

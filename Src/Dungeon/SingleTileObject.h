@@ -4,6 +4,7 @@
 
 #ifndef SLAYINGDEMONS_SINGLETILEOBJECT_H
 #define SLAYINGDEMONS_SINGLETILEOBJECT_H
+
 #include "RoomObject.h"
 
 
@@ -11,15 +12,15 @@ namespace sd {
     class SingleTileObject : public RoomObject{
     protected:
         int spriteSheetIdx;
-        sf::String name;
+        std::string name;
         sf::Vector2i positionOnTileMap;
 
     public:
-        SingleTileObject(sf::String _name, int _spriteSheetIdx, sf::Vector2i _positionOnTileMap);
+        SingleTileObject(std::string _name, int _spriteSheetIdx, sf::Vector2i _positionOnTileMap);
         ~SingleTileObject() override;
 
         virtual void PutOnLayout(int* layout, int width, int height) override;
-        sf::String GetName() override;
+        std::string GetName() override;
     };
 }
 

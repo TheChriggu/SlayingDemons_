@@ -15,11 +15,11 @@ namespace sd {
         Room* nextRoom;
 
     public:
-        Door(sf::String _name, int _spriteSheetIdxOpen, int _spriteSheetIdxLocked, sf::Vector2i _positionOnTileMap, Room* _nextRoom);
+        Door(std::string _name, int _spriteSheetIdxOpen, int _spriteSheetIdxLocked, sf::Vector2i _positionOnTileMap, Room* _nextRoom);
         ~Door() override;
 
         virtual void PutOnLayout(int* layout, int width, int height) override;
-        sf::String GetName() override;
+        std::string GetName() override;
 
         Room* GetConnectedRoom();
     };

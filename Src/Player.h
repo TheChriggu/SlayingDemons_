@@ -4,6 +4,7 @@
 
 #ifndef SLAYINGDEMONS_PLAYER_H
 #define SLAYINGDEMONS_PLAYER_H
+
 #include "Vocabulary.h"
 #include "Fighter.h"
 

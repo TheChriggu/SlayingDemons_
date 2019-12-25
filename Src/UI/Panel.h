@@ -5,7 +5,7 @@
 #ifndef SLAYINGDEMONS_PANEL_H
 #define SLAYINGDEMONS_PANEL_H
 
-#include "../Core/DrawableObject.h"
+#include "Core/DrawableObject.h"
 
 namespace sd {
     class Panel : public DrawableObject {

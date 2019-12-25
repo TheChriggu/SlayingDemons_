@@ -4,6 +4,7 @@
 
 #ifndef SLAYINGDEMONS_INPUTTEXTPROCESSOR_H
 #define SLAYINGDEMONS_INPUTTEXTPROCESSOR_H
+
 #include "SFML/Graphics.hpp"
 #include "UI/TextOutput.h"
 #include "PlayerState.h"
@@ -25,7 +26,7 @@ namespace sd {
         void SetRoom(Room* _room);
 
         void ProcessInput(sf::String spell);
-        std::vector<sf::String> SplitBySpace(sf::String string);
+        std::vector<std::string> SplitBySpace(std::string string);
         PlayerState* GetPlayerState();
     };
 }

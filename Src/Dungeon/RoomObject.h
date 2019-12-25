@@ -14,7 +14,7 @@ namespace sd {
         virtual ~RoomObject() = default;
 
         virtual void PutOnLayout(int* layout, int width, int height) = 0;
-        virtual sf::String GetName() = 0;
+        virtual std::string GetName() = 0;
     };
 }
 

@@ -23,7 +23,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
     else {
         //split spell
         std::cout << "splitting input\n";
-        std::vector<sf::String> words = SplitBySpace(spell);
+        std::vector<std::string> words = SplitBySpace(spell.toAnsiString());
 
         //TODO: Sort words in array to be modifier first, then action(or other way round)
 
@@ -104,17 +104,17 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
     }
 }
 
-std::vector<sf::String> sd::InputTextProcessor::SplitBySpace(sf::String string) {
-    std::vector<sf::String> retVal;
-    sf::String delimiter = " ";
+std::vector<std::string> sd::InputTextProcessor::SplitBySpace(std::string string) {
+    std::vector<std::string> retVal;
+    std::string delimiter = " ";
 
     size_t pos = 0;
-    sf::String token;
-    while ((pos = string.find(delimiter)) != string.InvalidPos) {
-        token = string.substring(0, pos);
+    std::string token;
+    while ((pos = string.find(delimiter)) != std::string::npos) {
+        token = string.substr(0, pos);
 
         retVal.emplace_back(token);
-        string.erase(0, pos + delimiter.getSize());
+        string.erase(0, pos + delimiter.size());
     }
     retVal.emplace_back(string);
 

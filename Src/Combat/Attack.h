@@ -4,7 +4,7 @@
 
 #ifndef SLAYINGDEMONS_ATTACK_H
 #define SLAYINGDEMONS_ATTACK_H
-#include "../Fighter.h"
+#include "Fighter.h"
 #include "Modifier.h"
 #include "Action.h"
 

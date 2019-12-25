@@ -4,6 +4,7 @@
 
 #ifndef SLAYINGDEMONS_MULTITILEOBJECT_H
 #define SLAYINGDEMONS_MULTITILEOBJECT_H
+
 #include "RoomObject.h"
 
 namespace sd {

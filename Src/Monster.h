@@ -4,6 +4,7 @@
 
 #ifndef SLAYINGDEMONS_MONSTER_H
 #define SLAYINGDEMONS_MONSTER_H
+
 #include "Fighter.h"
 #include "Vocabulary.h"
 #include <cstdlib>

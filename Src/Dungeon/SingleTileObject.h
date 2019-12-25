@@ -4,6 +4,7 @@
 
 #ifndef SLAYINGDEMONS_SINGLETILEOBJECT_H
 #define SLAYINGDEMONS_SINGLETILEOBJECT_H
+
 #include "RoomObject.h"
 
 

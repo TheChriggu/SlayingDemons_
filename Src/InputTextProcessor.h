@@ -4,6 +4,7 @@
 
 #ifndef SLAYINGDEMONS_INPUTTEXTPROCESSOR_H
 #define SLAYINGDEMONS_INPUTTEXTPROCESSOR_H
+
 #include "SFML/Graphics.hpp"
 #include "UI/TextOutput.h"
 #include "PlayerState.h"

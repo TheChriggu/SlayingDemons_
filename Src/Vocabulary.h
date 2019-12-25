@@ -4,6 +4,7 @@
 
 #ifndef SLAYINGDEMONS_VOCABULARY_H
 #define SLAYINGDEMONS_VOCABULARY_H
+
 #include <map>
 #include "SFML/Graphics.hpp"
 #include "Word.h"

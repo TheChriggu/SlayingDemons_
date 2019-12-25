@@ -18,7 +18,7 @@
 #include "Combat/Modifier.h"
 #include "UI/MapWindow.h"
 #include "ScriptEngine/ScriptEngine.h"
-#include "../InputTextProcessor.h"
+#include "InputTextProcessor.h"
 
 namespace sd {
     class Application : public Manageable {

@@ -7,8 +7,8 @@
 
 #include "Core/DrawableObject.h"
 #include "Dungeon/Room.h"
-#include "../Dungeon/Floor.h"
-#include "../PlayerState.h"
+#include "Dungeon/Floor.h"
+#include "PlayerState.h"
 
 namespace sd {
     class MapWindow : public DrawableObject {

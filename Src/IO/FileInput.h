@@ -10,13 +10,13 @@
 #include <string>
 #include <vector>
 #include <memory>
-//#include <filesystem>
+#include "boost/filesystem.hpp"
 
 namespace sd {
     class FileInput {
     public:
 
-        //static bool IsExisting(std::filesystem::path url);
+        static bool IsExisting(boost::filesystem::path url);
 
         //static std::shared_ptr<std::vector<std::filesystem::path>> GetFiles(std::filesystem::path directory);
 

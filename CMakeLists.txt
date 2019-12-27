@@ -85,9 +85,17 @@ target_include_directories(${PROJECT_NAME} PRIVATE Src)
 add_subdirectory(lua-5.3.5)
 add_subdirectory(SFML-2.5.1)
 add_subdirectory(sol2-develop)
+add_subdirectory(boost)
 
 # find SFML packages in SFML_DIR which was set in SFML-2.5.1 subdirectory
 find_package(SFML COMPONENTS system window graphics network audio REQUIRED)
 
 # link executable to SFML Libaries
-target_link_libraries(SlayingDemons sfml-system sfml-window sfml-graphics sfml-network sfml-audio lua)
+target_link_libraries(${PROJECT_NAME}
+                      sfml-system
+                      sfml-window
+                      sfml-graphics
+                      sfml-network
+                      sfml-audio
+                      lua
+                      Boost::filesystem)

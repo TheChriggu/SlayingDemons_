@@ -7,11 +7,11 @@
 #include <cstring>
 #include <iostream>
 
-/*
-bool sd::FileInput::IsExisting(std::filesystem::path url) {
-    return std::filesystem::exists(url);
-}
 
+bool sd::FileInput::IsExisting(boost::filesystem::path url) {
+    return boost::filesystem::exists(url);
+}
+/*
 std::shared_ptr<std::string> sd::FileInput::Load(std::filesystem::path url) {
     std::shared_ptr<std::string> content(new std::string);
     std::string line;

@@ -10,18 +10,18 @@
 #include <string>
 #include <vector>
 #include <memory>
-//#include <filesystem>
+#include "boost/filesystem.hpp"
 
 namespace sd {
     class FileInput {
     public:
 
-        //static bool IsExisting(std::filesystem::path url);
+        static bool IsExisting(boost::filesystem::path url);
 
-        //static std::shared_ptr<std::vector<std::filesystem::path>> GetFiles(std::filesystem::path directory);
+        static std::shared_ptr<std::vector<boost::filesystem::path>> GetFiles(boost::filesystem::path directory);
 
-        //static std::shared_ptr<std::string> Load(std::filesystem::path url);
-        //static std::shared_ptr<std::vector<std::vector<std::string>>> LoadCSV(std::filesystem::path url);
+        static std::shared_ptr<std::string> Load(boost::filesystem::path url);
+        static std::shared_ptr<std::vector<std::vector<std::string>>> LoadCSV(boost::filesystem::path url);
     };
 }
 

@@ -7,7 +7,7 @@
 
 
 #include "sol/sol.hpp"
-//#include <filesystem>
+#include "boost/filesystem.hpp"
 #include "Script.h"
 
 namespace sd {
@@ -25,7 +25,7 @@ namespace sd {
 
         static ScriptEngine& Get();
 
-        //void AddScript(const std::filesystem::path& url);
+        void AddScript(const boost::filesystem::path& url);
 
         void Broadcast(const char* function) const;
         std::shared_ptr<Script> GetScript(const std::string& name) const;

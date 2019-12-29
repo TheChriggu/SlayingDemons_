@@ -7,12 +7,12 @@
 #include <cstring>
 #include <iostream>
 
-/*
-bool sd::FileInput::IsExisting(std::filesystem::path url) {
-    return std::filesystem::exists(url);
+
+bool sd::FileInput::IsExisting(boost::filesystem::path url) {
+    return boost::filesystem::exists(url);
 }
 
-std::shared_ptr<std::string> sd::FileInput::Load(std::filesystem::path url) {
+std::shared_ptr<std::string> sd::FileInput::Load(boost::filesystem::path url) {
     std::shared_ptr<std::string> content(new std::string);
     std::string line;
 
@@ -34,7 +34,7 @@ std::shared_ptr<std::string> sd::FileInput::Load(std::filesystem::path url) {
     return content;
 }
 
-std::shared_ptr<std::vector<std::vector<std::string>>> sd::FileInput::LoadCSV(std::filesystem::path url) {
+std::shared_ptr<std::vector<std::vector<std::string>>> sd::FileInput::LoadCSV(boost::filesystem::path url) {
 
     std::shared_ptr<std::vector<std::vector<std::string>>> content(new std::vector<std::vector<std::string>>);
     std::string field;
@@ -70,10 +70,10 @@ std::shared_ptr<std::vector<std::vector<std::string>>> sd::FileInput::LoadCSV(st
     return content;
 }
 
-std::shared_ptr<std::vector<std::filesystem::path>> sd::FileInput::GetFiles(std::filesystem::path directory) {
-    std::shared_ptr<std::vector<std::filesystem::path>> content(new std::vector<std::filesystem::path>);
+std::shared_ptr<std::vector<boost::filesystem::path>> sd::FileInput::GetFiles(boost::filesystem::path directory) {
+    std::shared_ptr<std::vector<boost::filesystem::path>> content(new std::vector<boost::filesystem::path>);
 
-    for (auto& entry : std::filesystem::directory_iterator(directory)) {
+    for (auto& entry : boost::filesystem::directory_iterator(directory)) {
         content->emplace_back(entry.path());
     }
 
@@ -82,4 +82,3 @@ std::shared_ptr<std::vector<std::filesystem::path>> sd::FileInput::GetFiles(std:
     return content;
 }
 
-*/

@@ -82,15 +82,15 @@ bool sd::Application::Setup() {
     auto script_engine_ = ScriptEngine::Get();
 
     // TODO(FK): find out why Game chrashes when tmp test var is not used
-    /*auto test = FileInput::GetFiles("../Resources/Scripts/");
+    auto test = FileInput::GetFiles("../Resources/Scripts/");
     for (auto file : *test) {
-        script_engine_->AddScript(file);
+        script_engine_.AddScript(file);
     }
 
-    script_engine_->Broadcast("update");
+    script_engine_.Broadcast("update");
 
-    auto s = script_engine_->GetScript("conf");
-    if (s) s->Call("test");*/
+    auto s = script_engine_.GetScript("conf");
+    if (s) s->Call("test");
 
     std::cout << "End initialization\n";
 

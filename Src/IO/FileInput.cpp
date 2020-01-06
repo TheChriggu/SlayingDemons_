@@ -17,7 +17,7 @@ std::shared_ptr<std::string> sd::FileInput::Load(boost::filesystem::path url) {
     std::string line;
 
     try {
-        std::ifstream file(url);
+        std::ifstream file(url.string());
         if (file.is_open()) {
             while (std::getline(file, line)) {
                 (*content) += line + "\n";
@@ -40,11 +40,11 @@ std::shared_ptr<std::vector<std::vector<std::string>>> sd::FileInput::LoadCSV(bo
     std::string field;
 
     // return if url is file is not a .csv file
-    if (strstr(url.c_str(), ".csv") == nullptr)
+   /* if (strstr(url.c_str(), ".csv") == nullptr)
         return content;
-
+*/
     try {
-        std::ifstream file(url);
+        std::ifstream file(url.string());
 
         if (file.is_open()) {
             content->emplace_back(std::vector<std::string>());

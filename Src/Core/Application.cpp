@@ -87,10 +87,22 @@ bool sd::Application::Setup() {
         script_engine_.AddScript(file);
     }
 
+    //script_engine_.GetScript("test")->RegisterFunction("test1", &Application::Test1, this);
+    //script_engine_.RegisterAll("test2", &Application::Test2, this);
+
     script_engine_.Broadcast("update");
 
-    auto s = script_engine_.GetScript("conf");
+    /*auto s = script_engine_.GetScript("test");
     if (s) s->Call("test");
+    auto blub = s->GetVar<std::string>("current_state");
+    auto table = s->GetTable("config");
+
+    std::cout << "Var: " << blub << std::endl;
+    if (table) {
+        auto t = table.value();
+        int derp = t["derp"];
+        std::cout << "Table: " << derp << std::endl;
+    }*/
 
     std::cout << "End initialization\n";
 
@@ -233,5 +245,13 @@ void sd::Application::LoadVocab() {
     Vocabulary::allWords = vocab;
     //add words to vocabulary
 }
+
+/*int sd::Application::Test1() {
+    return drawable_objects_.size();
+}
+
+void sd::Application::Test2(std::string message) {
+    std::cout << message << std::endl;
+}*/
 
 

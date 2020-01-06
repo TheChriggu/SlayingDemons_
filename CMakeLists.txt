@@ -77,7 +77,12 @@ add_executable(${PROJECT_NAME}
                Src/Dungeon/Door.cpp
                Src/Dungeon/Door.h
                Src/PlayerState.cpp
-               Src/PlayerState.h)
+               Src/PlayerState.h
+               Src/Event/Subscriber.h
+               Src/Event/EventArgs.cpp
+               Src/Event/EventArgs.h
+               Src/Event/EventSystem.cpp
+               Src/Event/EventSystem.h Src/Event/Subscriber.cpp)
 
 target_include_directories(${PROJECT_NAME} PRIVATE Src)
 

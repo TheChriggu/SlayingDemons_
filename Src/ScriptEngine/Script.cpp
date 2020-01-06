@@ -3,7 +3,6 @@
 //
 
 #include "Script.h"
-
 #include <memory>
 
 Script::Script(const char* name) {
@@ -21,7 +20,7 @@ Script::Script(const char* name, const std::string& content) {
     state_->script(content);
 }
 
-void Script::SetConent(const char *content) {
+void Script::AddContent(const char *content) {
     state_->script(content);
 }
 
@@ -34,4 +33,8 @@ void Script::Call(const char *function) const {
 
 const std::string &Script::GetName() const {
     return name_;
+}
+
+sol::optional<sol::table> Script::GetTable(const char *name) const {
+    return (*state_)[name];
 }

@@ -89,8 +89,17 @@ bool sd::Application::Setup() {
 
     script_engine_.Broadcast("update");
 
-    auto s = script_engine_.GetScript("conf");
+    /*auto s = script_engine_.GetScript("test");
     if (s) s->Call("test");
+    auto blub = s->GetVar<std::string>("current_state");
+    auto table = s->GetTable("config");
+
+    std::cout << "Var: " << blub << std::endl;
+    if (table) {
+        auto t = table.value();
+        int derp = t["derp"];
+        std::cout << "Table: " << derp << std::endl;
+    }*/
 
     std::cout << "End initialization\n";
 

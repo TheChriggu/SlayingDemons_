@@ -87,6 +87,9 @@ bool sd::Application::Setup() {
         script_engine_.AddScript(file);
     }
 
+    //script_engine_.GetScript("test")->RegisterFunction("test1", &Application::Test1, this);
+    //script_engine_.RegisterAll("test2", &Application::Test2, this);
+
     script_engine_.Broadcast("update");
 
     /*auto s = script_engine_.GetScript("test");
@@ -242,5 +245,13 @@ void sd::Application::LoadVocab() {
     Vocabulary::allWords = vocab;
     //add words to vocabulary
 }
+
+/*int sd::Application::Test1() {
+    return drawable_objects_.size();
+}
+
+void sd::Application::Test2(std::string message) {
+    std::cout << message << std::endl;
+}*/
 
 

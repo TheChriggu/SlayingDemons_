@@ -17,6 +17,7 @@ public:
     void AddContent(const char* content);
     void Call(const char* function) const;
 
+
     const std::string& GetName() const;
 
     sol::optional<sol::table> GetTable(const char* name) const;
@@ -24,6 +25,11 @@ public:
     template <typename T>
     T GetVar(const char* name) const {
         return (*state_)[name];
+    }
+
+    template <typename... Args, typename Key>
+    void RegisterFunction(Key&& key, Args&&... args) {
+        state_->set_function(std::forward<Key>(key), std::forward<Args>(args)...);
     }
 
 private:

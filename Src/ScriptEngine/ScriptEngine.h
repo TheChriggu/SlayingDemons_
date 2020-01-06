@@ -29,6 +29,13 @@ namespace sd {
 
         void Broadcast(const char* function) const;
         std::shared_ptr<Script> GetScript(const std::string& name) const;
+
+        template <typename... Args, typename Key>
+        void RegisterAll(Key&& key, Args&&... args) {
+            for (auto script : scripts_) {
+                script->RegisterFunction(std::forward<Key>(key), std::forward<Args>(args)...);
+            }
+        }
     };
 }
 

@@ -45,6 +45,9 @@ namespace sd {
         void Shutdown() override;
 
         void clear();
+
+        //int Test1();
+        //void Test2(std::string message);
     };
 }
 

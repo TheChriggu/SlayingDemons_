@@ -6,6 +6,7 @@
 #include <fstream>
 #include <cstring>
 #include <iostream>
+#include <sstream>
 
 
 bool sd::FileInput::IsExisting(boost::filesystem::path url) {
@@ -38,6 +39,7 @@ std::shared_ptr<std::vector<std::vector<std::string>>> sd::FileInput::LoadCSV(bo
 
     std::shared_ptr<std::vector<std::vector<std::string>>> content(new std::vector<std::vector<std::string>>);
     std::string field;
+    std::string row;
 
     // return if url is file is not a .csv file
    /* if (strstr(url.c_str(), ".csv") == nullptr)
@@ -47,16 +49,21 @@ std::shared_ptr<std::vector<std::vector<std::string>>> sd::FileInput::LoadCSV(bo
         std::ifstream file(url.string());
 
         if (file.is_open()) {
-            content->emplace_back(std::vector<std::string>());
 
-            while (std::getline(file, field, ',')) {
-                if (field.empty()) continue;
-                if (field[0] == ASCII_NEWLINE) {
-                    content->emplace_back(std::vector<std::string>());
-                    continue;
+            while(std::getline(file,row,'\n')) {
+
+                content->emplace_back(std::vector<std::string>());
+                std::stringstream cheat(row);
+                while (std::getline(cheat, field, ',')) {
+                    if (field.empty()) continue;
+/*                    if (field[0] == ASCII_NEWLINE) {
+                        content->emplace_back(std::vector<std::string>());
+                        continue;
+                    }
+*/
+                    content->back().emplace_back(field);
                 }
 
-                content->back().emplace_back(field);
             }
 
             file.close();

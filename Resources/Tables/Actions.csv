@@ -1,0 +1,12 @@
+Name,Speed,Accuracy,Physical,Mental,Fire,Water,Tree,Earth
+Honk,10,10,2,20,1,1,1,1
+Attack,5,5,10,1,1,1,1,1
+Hit,7,7,7,1,1,1,1,1
+Kick,7,8,12,1,1,1,1,1
+Poke,4,2,5,10,3,3,3,3
+Slash,10,4,9,2,1,1,1,1
+Smash,2,5,8,3,2,2,2,2
+Spell,1,10,10,5,8,8,8,8
+Storm,3,10,4,1,9,9,9,9
+Wall,5,8,2,1,2,2,2,2
+Howl,8,6,2,15,5,5,5,5

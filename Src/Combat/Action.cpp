@@ -7,7 +7,7 @@
 
 sd::Action::Action() {
     stats = new Stats();
-    SetStats( {0,0,0,0,0,0,0,0,0});
+    SetStats( {0,0,0,0,0,0,0,0});
 }
 
 sd::Action::~Action() {

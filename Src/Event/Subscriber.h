@@ -15,7 +15,7 @@ namespace sd {
         // declare virtual destructor to avoid potential memory leaks
         virtual ~Subscriber() = default;
 
-        virtual void Handle(EventArgs e) = 0;
+        virtual void Handle(std::shared_ptr<EventArgs> e) = 0;
     };
 }
 

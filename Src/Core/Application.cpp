@@ -26,6 +26,9 @@ bool sd::Application::Setup() {
 
     new EventSystem();
 
+    //auto blub24 = std::make_shared<EventArgs>(new EventArgs());
+    //EventSystem::Get().Trigger(blub24);
+
     // TODO(FK)
     new UserInput(window_);
 
@@ -70,7 +73,7 @@ bool sd::Application::Setup() {
 
     std::cout << "Create text processor\n";
     inputTextProcessor = new InputTextProcessor();
-    inputTextProcessor->SetOutput(output);
+    //inputTextProcessor->SetOutput(output);
     inputField->SetTextProcessor(inputTextProcessor);
     mapWindow->SetPlayerState(inputTextProcessor->GetPlayerState());
 

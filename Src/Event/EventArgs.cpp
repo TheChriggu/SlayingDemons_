@@ -5,5 +5,5 @@
 #include "EventArgs.h"
 
  sd::EventArgs::EventArgs() {
-    type_ = Type::None;
+    type = Type::None;
  }

@@ -23,7 +23,7 @@ namespace sd {
         void operator=(const EventSystem&) = delete;
 
         void Subscribe(std::shared_ptr<Subscriber> newSubscriber);
-        void Trigger(EventArgs e) const;
+        void Trigger(std::shared_ptr<EventArgs> e) const;
 
     private:
         std::vector<std::shared_ptr<Subscriber>> subscriber_;

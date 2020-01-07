@@ -10,14 +10,14 @@ namespace sd {
     class EventArgs {
     public:
         enum class Type {
-            None = 0
+            None = 0,
+            TextOutputCreated
         };
 
         EventArgs();
         virtual ~EventArgs() = default;
 
-    protected:
-        Type type_;
+        Type type;
     };
 }
 

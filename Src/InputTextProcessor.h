@@ -8,10 +8,11 @@
 #include "SFML/Graphics.hpp"
 #include "UI/TextOutput.h"
 #include "PlayerState.h"
+#include "Event/Subscriber.h"
 
 namespace sd {
 
-    class InputTextProcessor {
+    class InputTextProcessor : public Subscriber {
     private:
     //Fight* fight;
     TextOutput* output;
@@ -20,7 +21,7 @@ namespace sd {
 
     public:
         InputTextProcessor();
-        ~InputTextProcessor();
+        ~InputTextProcessor() override;
 
         void SetOutput(TextOutput* _output);
         void SetRoom(Room* _room);
@@ -28,6 +29,8 @@ namespace sd {
         void ProcessInput(sf::String spell);
         std::vector<std::string> SplitBySpace(std::string string);
         PlayerState* GetPlayerState();
+
+        void Handle(std::shared_ptr<EventArgs> e) override;
     };
 }
 

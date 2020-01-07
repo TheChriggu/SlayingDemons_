@@ -18,7 +18,7 @@ void sd::EventSystem::Subscribe(std::shared_ptr<Subscriber> newSubscriber) {
     subscriber_.emplace_back(newSubscriber);
 }
 
-void sd::EventSystem::Trigger(sd::EventArgs e) const {
+void sd::EventSystem::Trigger(std::shared_ptr<sd::EventArgs> e) const {
     for (auto subscriber : subscriber_) {
         subscriber->Handle(e);
     }

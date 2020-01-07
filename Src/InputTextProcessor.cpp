@@ -135,9 +135,10 @@ sd::PlayerState *sd::InputTextProcessor::GetPlayerState() {
 }
 
 void sd::InputTextProcessor::Handle(std::shared_ptr<sd::EventArgs> e) {
+    std::cout << "Test Output" << std::endl;
     if (e->type == EventArgs::Type::TextOutputCreated) {
         auto arg = dynamic_cast<TextOutputCreatedEventArgs*>(e.get());
-        output = arg->output.get();
+        output = arg->output;
     }
 }
 

@@ -32,9 +32,7 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
         // error...
     }
 
-    auto pt = std::shared_ptr<TextOutputCreatedEventArgs>(
-            new TextOutputCreatedEventArgs(std::shared_ptr<TextOutput>(this))
-    );
+    auto pt = std::make_shared<TextOutputCreatedEventArgs>(this);
 
     EventSystem::Get().Trigger(pt);
 }

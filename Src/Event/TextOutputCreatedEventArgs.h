@@ -13,9 +13,9 @@
 namespace sd {
     class TextOutputCreatedEventArgs : public EventArgs {
     public:
-        explicit TextOutputCreatedEventArgs(std::shared_ptr<TextOutput> output);
+        explicit TextOutputCreatedEventArgs(TextOutput* output);
 
-        std::shared_ptr<TextOutput> output;
+        TextOutput* output;
     };
 }
 

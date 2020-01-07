@@ -46,6 +46,13 @@ bool sd::Application::Setup() {
     auto outputBackground = new Panel(sf::Vector2f(48.0,41.0), sf::Vector2f(1044,1008), textOutputBackground);
     drawable_objects_.emplace_back(outputBackground);
 
+    std::cout << "emplace Inputfield\n";
+    std::cout << "Create input field\n";
+    InputField* inputField = new InputField(sf::Vector2f(80,940), sf::Vector2f(1025,63), sf::Color::Magenta);
+    drawable_objects_.emplace_back(inputField);
+
+    std::cout << "Create text processor\n";
+    inputTextProcessor = new InputTextProcessor();
 
 
     std::cout << "Create words panel\n";
@@ -61,17 +68,13 @@ bool sd::Application::Setup() {
     MapWindow* mapWindow = new MapWindow(sf::Vector2f(1127.0, 41.0), sf::Vector2f(761, 558));
     drawable_objects_.emplace_back(mapWindow);
 
-    std::cout << "emplace Inputfield\n";
-    std::cout << "Create input field\n";
-    InputField* inputField = new InputField(sf::Vector2f(80,940), sf::Vector2f(1025,63), sf::Color::Magenta);
-    drawable_objects_.emplace_back(inputField);
+
 
     //std::cout << "Create button\n";
     //drawable_objects_.emplace_back(new Button(sf::Vector2f(1200.0f,500.0f), sf::Vector2f(1.0f,1.0f), [&]{clear();}));
 
 
-    std::cout << "Create text processor\n";
-    inputTextProcessor = new InputTextProcessor();
+
     //inputTextProcessor->SetOutput(output);
     inputField->SetTextProcessor(inputTextProcessor);
     mapWindow->SetPlayerState(inputTextProcessor->GetPlayerState());

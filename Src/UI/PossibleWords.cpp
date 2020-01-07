@@ -2,6 +2,7 @@
 // Created by christian.heusser on 07.01.2020.
 //
 
+#include <Event/PlayerVocabChangedEventArgs.h>
 #include "PossibleWords.h"
 
 sd::PossibleWords::PossibleWords(sf::Vector2f _position, sf::Vector2f _size, std::string pathToBackground)
@@ -59,4 +60,13 @@ void sd::PossibleWords::Update() {
         lines->push_back(new FormattedLine(action, sf::Vector2f(position + offset)));
         offset.y += 30;
     }
+}
+
+void sd::PossibleWords::Handle(std::shared_ptr<EventArgs> _e) {
+    if (_e->type == sd::EventArgs::Type::PlayerVocabChanged) {
+        auto e = dynamic_cast<PlayerVocabChangedEventArgs *>(_e.get());
+
+        Update();
+    }
+
 }

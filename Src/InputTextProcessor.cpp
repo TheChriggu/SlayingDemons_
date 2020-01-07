@@ -5,6 +5,8 @@
 #include "InputTextProcessor.h"
 #include <iostream>
 #include <Event/TextOutputCreatedEventArgs.h>
+#include <Event/EventSystem.h>
+#include <Event/NewWordCollectedEventArgs.h>
 
 sd::InputTextProcessor::InputTextProcessor() : Subscriber() {
     playerState = new PlayerState();
@@ -49,6 +51,17 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
                 output->addLine("starting fight");
                 playerState->StartNewFight(playerState->GetCurrentRoom()->GetEnemy());
             }
+        }
+
+        else if(words[0] == "pickup")
+        {
+            //TODO: Make sure that this actually is a door
+            //Door* door = (Door*) playerState->GetCurrentRoom()->GetObjectWithName(words[1]);
+            output->addLine("picked up " + words[1]);
+
+            std::shared_ptr<NewWordCollectedEventArgs> args;
+            args = std::make_shared<NewWordCollectedEventArgs>(NewWordCollectedEventArgs(words[1]));
+            EventSystem::Get().Trigger(args);
         }
             //*for(auto word : words)
             //*{

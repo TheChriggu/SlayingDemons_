@@ -3,6 +3,10 @@
 //
 
 #include <algorithm>
+#include <Event/NewWordCollectedEventArgs.h>
+#include <Event/TextOutputCreatedEventArgs.h>
+#include <Event/PlayerVocabChangedEventArgs.h>
+#include <Event/EventSystem.h>
 #include "PlayerVocabulary.h"
 
 sd::PlayerVocabulary::PlayerVocabulary() {
@@ -66,4 +70,16 @@ std::vector<std::string> *sd::PlayerVocabulary::GetModifiers() {
 
 std::vector<std::string> *sd::PlayerVocabulary::GetNavigation() {
     return navigation;
+}
+
+void sd::PlayerVocabulary::Handle(std::shared_ptr<EventArgs> _e) {
+    if (_e->type == sd::EventArgs::Type::NewWordCollected)
+    {
+        auto e = dynamic_cast<NewWordCollectedEventArgs*>(_e.get());
+        AddAction(e->word);
+
+        std::shared_ptr<PlayerVocabChangedEventArgs> args;
+        args = std::make_shared<PlayerVocabChangedEventArgs>(PlayerVocabChangedEventArgs(this));
+        EventSystem::Get().Trigger(args);
+    }
 }

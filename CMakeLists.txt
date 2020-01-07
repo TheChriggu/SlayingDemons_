@@ -99,7 +99,7 @@ add_executable(${PROJECT_NAME}
                Src/PlayerVocabulary.h
                Src/UI/PossibleWords.cpp
                Src/UI/PossibleWords.h
-               Src/Core/GlobalDefinitions.h)
+               Src/Core/GlobalDefinitions.h Src/Event/NewWordCollectedEventArgs.cpp Src/Event/NewWordCollectedEventArgs.h Src/Event/PlayerVocabChangedEventArgs.cpp Src/Event/PlayerVocabChangedEventArgs.h)
 
 target_include_directories(${PROJECT_NAME} PRIVATE Src)
 

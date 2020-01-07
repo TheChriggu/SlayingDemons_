@@ -6,9 +6,10 @@
 #define SLAYINGDEMONS_PLAYERVOCABULARY_H
 #include <iostream>
 #include <vector>
+#include <Event/Subscriber.h>
 
 namespace sd {
-    class PlayerVocabulary {
+    class PlayerVocabulary : public Subscriber{
     private:
         std::vector<std::string> *actions;
         std::vector<std::string> *modifiers;
@@ -32,6 +33,8 @@ namespace sd {
         std::vector<std::string> *GetModifiers();
 
         std::vector<std::string> *GetNavigation();
+
+        void Handle(std::shared_ptr<EventArgs> e) override;
     };
 }
 

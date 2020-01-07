@@ -11,7 +11,7 @@
 #include "PlayerVocabulary.h"
 
 namespace sd {
-    class PossibleWords: public DrawableObject {
+    class PossibleWords: public DrawableObject, public Subscriber {
     private:
         std::vector<FormattedLine*>* lines;
         PlayerVocabulary* playerVocabulary;
@@ -31,6 +31,7 @@ namespace sd {
         void SetPlayerVocab(PlayerVocabulary* _playerVocabulary);
 
         void Handle(sf::Event event) override;
+        void Handle(std::shared_ptr<EventArgs> e) override;
 
         void Update();
     };

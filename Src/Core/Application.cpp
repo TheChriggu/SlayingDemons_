@@ -5,6 +5,7 @@
 #include "Application.h"
 #include "UI/Panel.h"
 #include "IO/UserInput.h"
+#include "Event/EventSystem.h"
 #include <iostream>
 
 
@@ -23,6 +24,11 @@ bool sd::Application::Setup() {
     window_ = new sf::RenderWindow(sf::VideoMode(1920, 1080), "MyGame", sf::Style::Default);
     window_->setFramerateLimit(60);
 
+    new EventSystem();
+
+    //auto blub24 = std::make_shared<EventArgs>(new EventArgs());
+    //EventSystem::Get().Trigger(blub24);
+
     // TODO(FK)
     new UserInput(window_);
 
@@ -40,6 +46,13 @@ bool sd::Application::Setup() {
     auto outputBackground = new Panel(sf::Vector2f(48.0,41.0), sf::Vector2f(1044,1008), textOutputBackground);
     drawable_objects_.emplace_back(outputBackground);
 
+    std::cout << "emplace Inputfield\n";
+    std::cout << "Create input field\n";
+    InputField* inputField = new InputField(sf::Vector2f(80,940), sf::Vector2f(1025,63), sf::Color::Magenta);
+    drawable_objects_.emplace_back(inputField);
+
+    std::cout << "Create text processor\n";
+    inputTextProcessor = new InputTextProcessor();
 
 
     std::cout << "Create words panel\n";
@@ -55,18 +68,14 @@ bool sd::Application::Setup() {
     MapWindow* mapWindow = new MapWindow(sf::Vector2f(1127.0, 41.0), sf::Vector2f(761, 558));
     drawable_objects_.emplace_back(mapWindow);
 
-    std::cout << "emplace Inputfield\n";
-    std::cout << "Create input field\n";
-    InputField* inputField = new InputField(sf::Vector2f(80,940), sf::Vector2f(1025,63), sf::Color::Magenta);
-    drawable_objects_.emplace_back(inputField);
+
 
     //std::cout << "Create button\n";
     //drawable_objects_.emplace_back(new Button(sf::Vector2f(1200.0f,500.0f), sf::Vector2f(1.0f,1.0f), [&]{clear();}));
 
 
-    std::cout << "Create text processor\n";
-    inputTextProcessor = new InputTextProcessor();
-    inputTextProcessor->SetOutput(output);
+
+    //inputTextProcessor->SetOutput(output);
     inputField->SetTextProcessor(inputTextProcessor);
     mapWindow->SetPlayerState(inputTextProcessor->GetPlayerState());
     possibleWords->SetPlayerVocab(inputTextProcessor->GetPlayerState()->GetPlayerVocabulary());
@@ -106,6 +115,9 @@ bool sd::Application::Setup() {
         int derp = t["derp"];
         std::cout << "Table: " << derp << std::endl;
     }*/
+
+    //auto test24 = typeof(this);
+    //std::cout << " " <<  << std::endl;
 
     std::cout << "End initialization\n";
 

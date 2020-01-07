@@ -19,6 +19,7 @@
 #include "UI/MapWindow.h"
 #include "ScriptEngine/ScriptEngine.h"
 #include "InputTextProcessor.h"
+#include "UI/PossibleWords.h"
 
 namespace sd {
     class Application : public Manageable {

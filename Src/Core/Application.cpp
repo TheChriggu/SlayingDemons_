@@ -49,9 +49,8 @@ bool sd::Application::Setup() {
 
 
     std::cout << "Create words panel\n";
-    sf::Texture* wordsTexture = new sf::Texture();
-    wordsTexture->loadFromFile("../Resources/Sprites/fantasy_input.png");
-    drawable_objects_.emplace_back(new Panel(sf::Vector2f(39.0, 605.0), sf::Vector2f(1059, 445), wordsTexture));
+    auto possibleWords = new PossibleWords(sf::Vector2f(39.0, 605.0), sf::Vector2f(1059, 445), "../Resources/Sprites/fantasy_input.png");
+    drawable_objects_.emplace_back(possibleWords);
 
     std::cout << "Create text output\n";
     output = new TextOutput(sf::Vector2f(90.0,100.0), sf::Vector2f(1044,1008), sf::Color::Red);
@@ -76,6 +75,8 @@ bool sd::Application::Setup() {
     //inputTextProcessor->SetOutput(output);
     inputField->SetTextProcessor(inputTextProcessor);
     mapWindow->SetPlayerState(inputTextProcessor->GetPlayerState());
+    possibleWords->SetPlayerVocab(inputTextProcessor->GetPlayerState()->GetPlayerVocabulary());
+    possibleWords->Update();
 
 
 
@@ -116,19 +117,6 @@ bool sd::Application::Setup() {
     //std::cout << " " <<  << std::endl;
 
     std::cout << "End initialization\n";
-
-    /*
-    std::cout << "Load test csv file\n";
-    auto table = FileInput::LoadCSV("../Resources/Tables/Wordlist - Progger TestSheet.csv");
-    for(auto line : *table)
-    {
-        std::cout << "New Line\n";
-        for(auto word : line)
-        {
-            std::cout << word << "\n";
-        }
-    }
-     */
 
     return true;
 }
@@ -233,58 +221,6 @@ void sd::Application::LoadVocab() {
         }
     }
 
-    /*
-    Modifier* flirty = new Modifier();
-    flirty->SetName("flirty");
-    flirty->SetStats({3,0.5, 0.3, -2,0.5,0.5,0.5,0.5},
-            {sd::StatwiseOperation::Add,
-             sd::StatwiseOperation::Mult,
-             sd::StatwiseOperation::Mult,
-             sd::StatwiseOperation::Mult,
-             sd::StatwiseOperation::Mult,
-             sd::StatwiseOperation::Mult,
-             sd::StatwiseOperation::Mult,
-             sd::StatwiseOperation::Mult});
-    Modifier* heavy = new Modifier();
-    heavy->SetName("heavy");
-    heavy->SetStats({0.4,2, 3, 1,5,5,5,5},
-                     {sd::StatwiseOperation::Mult,
-                      sd::StatwiseOperation::Mult,
-                      sd::StatwiseOperation::Mult,
-                      sd::StatwiseOperation::Mult,
-                      sd::StatwiseOperation::Add,
-                      sd::StatwiseOperation::Add,
-                      sd::StatwiseOperation::Add,
-                      sd::StatwiseOperation::Add});
-    Modifier* monstrous = new Modifier();
-    monstrous->SetName("monstrous");
-    monstrous->SetStats({0.2, 1.5, 2,2,2,2,2,2},
-                    {sd::StatwiseOperation::Mult,
-                     sd::StatwiseOperation::Mult,
-                     sd::StatwiseOperation::Add,
-                     sd::StatwiseOperation::Mult,
-                     sd::StatwiseOperation::Add,
-                     sd::StatwiseOperation::Add,
-                     sd::StatwiseOperation::Add,
-                     sd::StatwiseOperation::Add});
-    Modifier* loud = new Modifier();
-    loud->SetName("loud");
-    loud->SetStats({10, 10, 0.1,2,5,5,5,5},
-                        {sd::StatwiseOperation::Add,
-                         sd::StatwiseOperation::Add,
-                         sd::StatwiseOperation::Mult,
-                         sd::StatwiseOperation::Mult,
-                         sd::StatwiseOperation::Add,
-                         sd::StatwiseOperation::Add,
-                         sd::StatwiseOperation::Add,
-                         sd::StatwiseOperation::Add});
-
-
-    vocab->Add("flirty",flirty);
-    vocab->Add("heavy", heavy);
-    vocab->Add("monstrous", monstrous);
-    vocab->Add("loud", loud);
-     */
 
     Word* walkTo = new Word();
     Word* jumpOver = new Word();
@@ -292,7 +228,6 @@ void sd::Application::LoadVocab() {
     vocab->Add("jump over", jumpOver);
 
     Vocabulary::allWords = vocab;
-    //add words to vocabulary
 }
 
 /*int sd::Application::Test1() {

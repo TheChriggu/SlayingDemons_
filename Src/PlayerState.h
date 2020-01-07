@@ -9,6 +9,7 @@
 #include "Dungeon/Floor.h"
 #include "Dungeon/Room.h"
 #include "Combat/Fight.h"
+#include "PlayerVocabulary.h"
 
 namespace sd {
     class PlayerState {
@@ -17,6 +18,7 @@ namespace sd {
         Fight* fight;
         Fighter* player;
         Floor* floor;
+        PlayerVocabulary* playerVocabulary;
 
     public:
         PlayerState();
@@ -29,6 +31,8 @@ namespace sd {
         void SetRoomAsCurrent(Room* room);
         void StartNewFight(Monster* enemy);
         void EndFight();
+
+        PlayerVocabulary* GetPlayerVocabulary();
 
     };
 }

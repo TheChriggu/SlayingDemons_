@@ -25,6 +25,8 @@ namespace sd {
 
         sd::Stats* GetStats();
         sf::String GetName();
+
+        type GetType() override;
     };
 }
 

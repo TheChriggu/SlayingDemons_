@@ -8,8 +8,11 @@
 namespace sd {
     class Word {
     public:
-        //TODO: I honestly don't know what all words of the game have in common -.- Maybe Stats. Or a load function
+        enum type{action, modifier, navigation, unknown};
+        //TODO: I honestly don't know what all words of the game have in common -.- Maybe Stats.
         virtual ~Word();
+
+        virtual type GetType();
     };
 }
 

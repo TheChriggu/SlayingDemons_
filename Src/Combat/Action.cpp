@@ -33,3 +33,7 @@ void sd::Action::SetName(sf::String _name) {
 sf::String sd::Action::GetName() {
     return name;
 }
+
+sd::Word::type sd::Action::GetType() {
+    return action;
+}

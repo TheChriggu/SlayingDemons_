@@ -20,6 +20,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
     {
         output->addLine(playerState->GetCurrentRoom()->GetDescription());
     }
+
     else {
         //split spell
         std::cout << "splitting input\n";
@@ -36,7 +37,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
         }
         */
 
-        if(words[0] == "move")
+        if(words[0] == "interact")
         {
             //TODO: Make sure that this actually is a door
             Door* door = (Door*) playerState->GetCurrentRoom()->GetObjectWithName(words[1]);

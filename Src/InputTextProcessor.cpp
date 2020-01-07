@@ -4,8 +4,9 @@
 
 #include "InputTextProcessor.h"
 #include <iostream>
+#include <Event/TextOutputCreatedEventArgs.h>
 
-sd::InputTextProcessor::InputTextProcessor() {
+sd::InputTextProcessor::InputTextProcessor() : Subscriber() {
     playerState = new PlayerState();
 }
 
@@ -131,6 +132,14 @@ void sd::InputTextProcessor::SetRoom(sd::Room *_room) {
 
 sd::PlayerState *sd::InputTextProcessor::GetPlayerState() {
     return playerState;
+}
+
+void sd::InputTextProcessor::Handle(std::shared_ptr<sd::EventArgs> e) {
+    std::cout << "Test Output" << std::endl;
+    if (e->type == EventArgs::Type::TextOutputCreated) {
+        auto arg = dynamic_cast<TextOutputCreatedEventArgs*>(e.get());
+        output = arg->output;
+    }
 }
 
 

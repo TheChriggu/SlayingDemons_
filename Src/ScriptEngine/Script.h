@@ -6,6 +6,7 @@
 #define SLAYINGDEMONS_SCRIPT_H
 
 #include "sol/sol.hpp"
+#include <memory>
 
 
 class Script {

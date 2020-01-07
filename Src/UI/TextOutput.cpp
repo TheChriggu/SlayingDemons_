@@ -4,6 +4,9 @@
 
 #include "TextOutput.h"
 #include <iostream>
+#include <memory>
+#include <Event/EventSystem.h>
+#include <Event/TextOutputCreatedEventArgs.h>
 
 //TODO(CH): Lines have to move up, when max is reached.
 sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color){
@@ -28,6 +31,10 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
     if (!shader->loadFromFile("../Resources/Shaders/textGlitch.frag", sf::Shader::Fragment)) {
         // error...
     }
+
+    auto pt = std::make_shared<TextOutputCreatedEventArgs>(this);
+
+    EventSystem::Get().Trigger(pt);
 }
 
 sd::TextOutput::~TextOutput() {

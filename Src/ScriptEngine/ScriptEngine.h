@@ -5,7 +5,8 @@
 #ifndef SLAYINGDEMONS_SCRIPTENGINE_H
 #define SLAYINGDEMONS_SCRIPTENGINE_H
 
-
+#include <memory>
+#include <vector>
 #include "sol/sol.hpp"
 #include "boost/filesystem.hpp"
 #include "Script.h"

@@ -9,6 +9,7 @@ sd::PlayerState::PlayerState() {
     player = new Fighter();
     floor = new Floor();
     currentRoom = floor->GetStartRoom();
+    playerVocabulary = new PlayerVocabulary();
 }
 
 sd::PlayerState::~PlayerState() {
@@ -21,6 +22,10 @@ sd::PlayerState::~PlayerState() {
 
     delete floor;
     floor = nullptr;
+    currentRoom = nullptr;
+
+    delete playerVocabulary;
+    playerVocabulary = nullptr;
 }
 
 sd::Room *sd::PlayerState::GetCurrentRoom() {
@@ -46,4 +51,8 @@ void sd::PlayerState::StartNewFight(sd::Monster *enemy) {
 void sd::PlayerState::EndFight() {
     delete fight;
     fight = nullptr;
+}
+
+sd::PlayerVocabulary *sd::PlayerState::GetPlayerVocabulary() {
+    return playerVocabulary;
 }

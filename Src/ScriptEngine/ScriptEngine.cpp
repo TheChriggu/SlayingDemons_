@@ -29,7 +29,7 @@ sd::ScriptEngine &sd::ScriptEngine::Get() {
 
 void sd::ScriptEngine::AddScript(const boost::filesystem::path& url) {
     scripts_.emplace_back(new Script(
-            url.filename().c_str(),
+            reinterpret_cast<const char *>(url.filename().c_str()),
             (*FileInput::Load(url))
     ));
 }

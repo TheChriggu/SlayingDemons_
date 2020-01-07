@@ -24,7 +24,6 @@ sd::Attack::~Attack() {
 sd::Stats sd::Attack::GetStats() {
     Stats retVal = modifier->ApplyTo(action->GetStats());
     retVal = (fighter->GetOffense())*retVal;
-    fighter->PrintToConsole();
     return retVal;
 }
 

@@ -82,7 +82,8 @@ add_executable(${PROJECT_NAME}
                Src/Event/EventArgs.cpp
                Src/Event/EventArgs.h
                Src/Event/EventSystem.cpp
-               Src/Event/EventSystem.h Src/Event/Subscriber.cpp Src/Event/TextOutputCreatedEventArgs.cpp Src/Event/TextOutputCreatedEventArgs.h)
+               Src/Event/EventSystem.h Src/Event/Subscriber.cpp Src/Event/TextOutputCreatedEventArgs.cpp Src/Event/TextOutputCreatedEventArgs.h
+               Src/PlayerState.h Src/Combat/Stats.cpp Src/Combat/Stats.h Src/Combat/StatwiseOperation.cpp Src/Combat/StatwiseOperation.h)
 
 target_include_directories(${PROJECT_NAME} PRIVATE Src)
 

@@ -9,8 +9,8 @@ sd::Fight::Fight(sd::Fighter *_player, sd::Monster *_enemy)
     : player(_player)
     , enemy(_enemy)
 {
-    Stats zeroStats = {0,0,0,0,0,0,0,0,0};
-    Stats oneStats = {1,1,1,1,1,1,1,1,1};
+    Stats zeroStats = {0,0,0,0,0,0,0,0};
+    Stats oneStats = {1,1,1,1,1,1,1,1};
     player->SetBuffs(oneStats, oneStats);
     enemy->SetBuffs(oneStats, oneStats);
 }
@@ -38,16 +38,15 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
 
      Stats playerAttackStats = playerAttack->GetStats();
      Stats enemyAttackStats = enemyAttack->GetStats();
-     std::cout << "Player speed: " << playerAttackStats.speed << "\n";
-     std::cout << "Enemy speed: " << enemyAttackStats.speed << "\n";
+
      if(playerAttackStats.speed >= enemyAttackStats.speed)
      {
          //player move
          output->addLine(playerAttack->GetSentenceSecondPerson());
          Stats damageStats = playerAttackStats - (enemy->GetDefense()) ;
-         damageStats = MinToZero(damageStats);
+         damageStats.MinToZero();
 
-         float physicalDamage = damageStats.fire+damageStats.earth+damageStats.physical+damageStats.tree+damageStats.plant+damageStats.water;
+         float physicalDamage = damageStats.fire+damageStats.earth+damageStats.physical+damageStats.tree+damageStats.water;
          output->addLine("You made " + std::to_string(physicalDamage) + " damage to your enemies hp.");
          output->addLine("You made " + std::to_string(damageStats.mental) + " damage to his mentality.");
          if(damageStats.mental < 0)
@@ -65,9 +64,9 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
          //Enemy move
          output->addLine(enemyAttack->GetSentenceThirdPerson());
          damageStats = enemyAttackStats - (player->GetDefense());
-         damageStats = MinToZero(damageStats);
+         damageStats.MinToZero();
 
-         physicalDamage = damageStats.fire+damageStats.earth+damageStats.physical+damageStats.tree+damageStats.plant+damageStats.water;
+         physicalDamage = damageStats.fire+damageStats.earth+damageStats.physical+damageStats.tree+damageStats.water;
          output->addLine("Your enemy made " + std::to_string(physicalDamage) + " damage to your hp.");
          output->addLine("He made " + std::to_string(damageStats.mental) + " damage to your mentality.\n");
 
@@ -79,9 +78,9 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
          //Enemy move
          output->addLine(enemyAttack->GetSentenceThirdPerson());
          Stats damageStats = enemyAttackStats - (player->GetDefense());
-         damageStats = MinToZero(damageStats);
+         damageStats.MinToZero();
 
-         float physicalDamage = damageStats.fire+damageStats.earth+damageStats.physical+damageStats.tree+damageStats.plant+damageStats.water;
+         float physicalDamage = damageStats.fire+damageStats.earth+damageStats.physical+damageStats.tree+damageStats.water;
          output->addLine("Your enemy made " + std::to_string(physicalDamage) + " damage to your hp.");
          output->addLine("He made " + std::to_string(damageStats.mental) + " damage to your mentality.");
 
@@ -92,9 +91,9 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
          //player move
          output->addLine(playerAttack->GetSentenceSecondPerson());
          damageStats = playerAttackStats - (enemy->GetDefense());
-         damageStats = MinToZero(damageStats);
+         damageStats.MinToZero();
 
-         physicalDamage = damageStats.fire+damageStats.earth+damageStats.physical+damageStats.tree+damageStats.plant+damageStats.water;
+         physicalDamage = damageStats.fire+damageStats.earth+damageStats.physical+damageStats.tree+damageStats.water;
          output->addLine("You made " + std::to_string(physicalDamage) + " damage to your enemies hp.");
          output->addLine("You made " + std::to_string(damageStats.mental) + " damage to his mentality.");
          if(damageStats.mental < 0)
@@ -122,33 +121,4 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
      delete(enemyAttack);
 
 
-}
-
-sd::Stats sd::Fight::MinToZero(Stats stats) {
-    if (stats.plant < 0)
-    {
-        stats.plant = 0;
-    }
-    if (stats.tree < 0)
-    {
-        stats.tree = 0;
-    }
-    if (stats.physical < 0)
-    {
-        stats.physical = 0;
-    }
-    if (stats.earth < 0)
-    {
-        stats.earth = 0;
-    }
-    if (stats.fire < 0)
-    {
-        stats.fire = 0;
-    }
-    if (stats.water< 0)
-    {
-        stats.water = 0;
-    }
-
-    return stats;
 }

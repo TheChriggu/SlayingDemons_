@@ -30,7 +30,6 @@ sd::InputField::~InputField() {
 }
 
 void sd::InputField::addText(sf::Uint32 input) {
-    std::cout << "Adding text. received character is: " << input;
     sf::String result = text->getString();
     if(input == 8 && result.getSize() > 0)
     {

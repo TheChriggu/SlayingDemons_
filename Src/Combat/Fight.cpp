@@ -38,8 +38,7 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
 
      Stats playerAttackStats = playerAttack->GetStats();
      Stats enemyAttackStats = enemyAttack->GetStats();
-     std::cout << "Player speed: " << playerAttackStats.speed << "\n";
-     std::cout << "Enemy speed: " << enemyAttackStats.speed << "\n";
+
      if(playerAttackStats.speed >= enemyAttackStats.speed)
      {
          //player move

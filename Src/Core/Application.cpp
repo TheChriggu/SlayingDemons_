@@ -81,8 +81,10 @@ bool sd::Application::Setup() {
 
     auto script_engine_ = ScriptEngine::Get();
 
-    // TODO(FK): find out why Game chrashes when tmp test var is not used
+    std::cout << "get test file\n";
+    // TODO(FK): find out why Game crashes when tmp test var is not used
     auto test = FileInput::GetFiles("../Resources/Scripts/");
+    std::cout << "add files\n";
     for (auto file : *test) {
         script_engine_.AddScript(file);
     }
@@ -105,6 +107,19 @@ bool sd::Application::Setup() {
     }*/
 
     std::cout << "End initialization\n";
+
+    /*
+    std::cout << "Load test csv file\n";
+    auto table = FileInput::LoadCSV("../Resources/Tables/Wordlist - Progger TestSheet.csv");
+    for(auto line : *table)
+    {
+        std::cout << "New Line\n";
+        for(auto word : line)
+        {
+            std::cout << word << "\n";
+        }
+    }
+     */
 
     return true;
 }
@@ -167,24 +182,53 @@ void sd::Application::LoadVocab() {
 
     Vocabulary* vocab = new Vocabulary();
 
+    auto table = FileInput::LoadCSV("../Resources/Tables/Actions.csv");
+    for(auto line : *table)
+    {
+        if(line[0] != "Name")
+        {
+            Action* action = new Action();
+            action->SetName(line[0]);
+            action->SetStats({stof(line[1]),stof(line[2]),stof(line[3])
+                              ,stof(line[4]),stof(line[5]),stof(line[6])
+                              ,stof(line[7]),stof(line[8])});
 
-    Action* honk = new Action();
-    honk->SetName("honk");
-    honk->SetStats({10,10,2,20,1,1,1,1,1});
-    Action* smash = new Action();
-    smash->SetName("smash");
-    smash->SetStats({5,10,15,2,2,5,5,10,7});
-    Action* scratch = new Action();
-    scratch->SetName("scratch");
-    scratch->SetStats({15,5,10,7,1,1,10,10,7});
-    Action* howl = new Action();
-    howl->SetName("howl");
-    howl->SetStats({5,20,3,15,1,1,1,1,2});
+            vocab->Add(line[0], action);
+        }
+    }
+
+
+
+    table = FileInput::LoadCSV("../Resources/Tables/Modifiers.csv");
+    for(auto line : *table)
+    {
+        if(line[0] != "Name")
+        {
+            Modifier* modifier = new Modifier();
+            modifier->SetName(line[0]);
+            Stats stats = {stof(line[2]),stof(line[4]),stof(line[6])
+                    ,stof(line[8]),stof(line[10]),stof(line[12])
+                    ,stof(line[14]),stof(line[16])};
+            StatwiseOperation statOps;
+            statOps.speed = statOps.FromString(line[1]);
+            statOps.accuracy = statOps.FromString(line[3]);
+            statOps.physical = statOps.FromString(line[5]);
+            statOps.mental = statOps.FromString(line[7]);
+            statOps.fire = statOps.FromString(line[9]);
+            statOps.water = statOps.FromString(line[11]);
+            statOps.tree = statOps.FromString(line[13]);
+            statOps.earth = statOps.FromString(line[15]);
+
+            modifier->SetStats(stats,statOps);
+            vocab->Add(line[0], modifier);
+        }
+    }
+
+    /*
     Modifier* flirty = new Modifier();
     flirty->SetName("flirty");
-    flirty->SetStats({3,0.5, 0.3, -2,0.5,0.5,0.5,0.5,0.5},
+    flirty->SetStats({3,0.5, 0.3, -2,0.5,0.5,0.5,0.5},
             {sd::StatwiseOperation::Add,
-             sd::StatwiseOperation::Mult,
              sd::StatwiseOperation::Mult,
              sd::StatwiseOperation::Mult,
              sd::StatwiseOperation::Mult,
@@ -194,12 +238,11 @@ void sd::Application::LoadVocab() {
              sd::StatwiseOperation::Mult});
     Modifier* heavy = new Modifier();
     heavy->SetName("heavy");
-    heavy->SetStats({0.4,2, 3, 1,5,5,5,5,5},
+    heavy->SetStats({0.4,2, 3, 1,5,5,5,5},
                      {sd::StatwiseOperation::Mult,
                       sd::StatwiseOperation::Mult,
                       sd::StatwiseOperation::Mult,
                       sd::StatwiseOperation::Mult,
-                      sd::StatwiseOperation::Add,
                       sd::StatwiseOperation::Add,
                       sd::StatwiseOperation::Add,
                       sd::StatwiseOperation::Add,
@@ -214,7 +257,6 @@ void sd::Application::LoadVocab() {
                      sd::StatwiseOperation::Add,
                      sd::StatwiseOperation::Add,
                      sd::StatwiseOperation::Add,
-                     sd::StatwiseOperation::Add,
                      sd::StatwiseOperation::Add});
     Modifier* loud = new Modifier();
     loud->SetName("loud");
@@ -226,19 +268,17 @@ void sd::Application::LoadVocab() {
                          sd::StatwiseOperation::Add,
                          sd::StatwiseOperation::Add,
                          sd::StatwiseOperation::Add,
-                         sd::StatwiseOperation::Add,
                          sd::StatwiseOperation::Add});
-    Word* walkTo = new Word();
-    Word* jumpOver = new Word();
 
-    vocab->Add("honk", honk);
-    vocab->Add("smash", smash);
-    vocab->Add("scratch", scratch);
-    vocab->Add("howl", howl);
+
     vocab->Add("flirty",flirty);
     vocab->Add("heavy", heavy);
     vocab->Add("monstrous", monstrous);
     vocab->Add("loud", loud);
+     */
+
+    Word* walkTo = new Word();
+    Word* jumpOver = new Word();
     vocab->Add("walk to", walkTo);
     vocab->Add("jump over", jumpOver);
 

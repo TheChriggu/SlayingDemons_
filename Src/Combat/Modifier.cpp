@@ -8,8 +8,8 @@ sd::Modifier::Modifier() {
     stats = new Stats();
     statwiseOperation = new StatwiseOperation();
 
-    SetStats({0,0,0,0,0,0,0,0,0}
-    ,{StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add});
+    SetStats({0,0,0,0,0,0,0,0}
+    ,{StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add});
 }
 
 sd::Modifier::~Modifier() {

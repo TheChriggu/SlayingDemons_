@@ -9,12 +9,12 @@ sd::Monster::Monster() {
 
 
     actions = new std::vector<sf::String>();
-    AddAction("scratch");
-    AddAction("howl");
+    AddAction("Kick");
+    AddAction("Slash");
 
     modifiers = new std::vector<sf::String>();
-    AddModifier("monstrous");
-    AddModifier("loud");
+    AddModifier("Frost");
+    AddModifier("Virtual");
 }
 
 sd::Monster::~Monster() {

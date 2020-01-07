@@ -15,7 +15,7 @@ sd::Floor::Floor() {
     room2->AddObject(southDoor);
 
     Monster* enemy = new Monster();
-    Stats oneStats = {1,1,1,1,1,1,1,1,1};
+    Stats oneStats = {1,1,1,1,1,1,1,1};
     enemy->SetBaseStats(oneStats, oneStats);
     enemy->SetBuffs(oneStats,oneStats);
 

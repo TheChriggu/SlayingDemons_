@@ -77,7 +77,7 @@ add_executable(${PROJECT_NAME}
                Src/Dungeon/Door.cpp
                Src/Dungeon/Door.h
                Src/PlayerState.cpp
-               Src/PlayerState.h)
+               Src/PlayerState.h Src/Combat/Stats.cpp Src/Combat/Stats.h Src/Combat/StatwiseOperation.cpp Src/Combat/StatwiseOperation.h)
 
 target_include_directories(${PROJECT_NAME} PRIVATE Src)
 

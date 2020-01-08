@@ -23,7 +23,7 @@ sd::Room::Room()
 
     //roomObjects.emplace_back(new SingleTileObject("Mushroom", 24, sf::Vector2i(3,4)));
 
-    //int castleLayout[] = {3,4,11,12};
+    //int castleLayout[] = {0,0,0,1};
     //roomObjects.emplace_back(new MultiTileObject("Castle", castleLayout,sf::Vector2i(2,2),sf::Vector2i(5,3)));
 
 

@@ -107,7 +107,7 @@ add_executable(${PROJECT_NAME}
                Src/Event/LineToOutputEventArgs.cpp
                Src/Event/LineToOutputEventArgs.h
                Src/Event/WalkedThroughDoorEventArgs.cpp
-               Src/Event/WalkedThroughDoorEventArgs.h)
+               Src/Event/WalkedThroughDoorEventArgs.h Src/Dungeon/Sofa.cpp Src/Dungeon/Sofa.h Src/Dungeon/Table.cpp Src/Dungeon/Table.h)
 
 target_include_directories(${PROJECT_NAME} PRIVATE Src)
 

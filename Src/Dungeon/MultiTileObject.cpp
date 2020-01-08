@@ -11,7 +11,7 @@ sd::MultiTileObject::MultiTileObject(std::string _name, int *_layout, sf::Vector
     ,size(_size)
     ,positionOnTileMap(_positionOnTileMap)
 {
-    layout = new int[size.x*size.y];
+    layout = new int[size.x*size.y]();
     for (int i=0; i < size.x*size.y; i++)
     {
         layout[i] = _layout[i];
@@ -40,9 +40,9 @@ void sd::MultiTileObject::PutOnLayout(int *layout, int width, int height) {
 
             int pos = startPos+col+row*width;
 
-            if(layout[i] != -1)
+            if(this->layout[i] != -1)
             {
-                layout[pos] = layout[i];
+                layout[pos] = this->layout[i];
             }
         }
 

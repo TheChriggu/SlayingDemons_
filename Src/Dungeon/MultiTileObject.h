@@ -19,8 +19,9 @@ namespace sd {
         MultiTileObject(std::string _name, int _layout[], sf::Vector2i _size, sf::Vector2i _positionOnTileMap);
         ~MultiTileObject() override;
 
-        void PutOnLayout(int* layout, int width, int height) override;
-        std::string GetName() override;
+        virtual void PutOnLayout(int* layout, int width, int height) override;
+        virtual std::string GetName() override;
+        virtual void BeInteractedWith() override;
     };
 }
 

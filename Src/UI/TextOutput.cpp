@@ -7,6 +7,7 @@
 #include <memory>
 #include <Event/EventSystem.h>
 #include <Event/TextOutputCreatedEventArgs.h>
+#include <Event/LineToOutputEventArgs.h>
 
 //TODO(CH): Lines have to move up, when max is reached.
 sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color){
@@ -138,6 +139,13 @@ void sd::TextOutput::Update(sf::RenderTarget* window) {
 
 
     glitchTexture->display();
+}
+
+void sd::TextOutput::Handle(std::shared_ptr<EventArgs> e) {
+    if (e->type == EventArgs::Type::LineToOutput) {
+        auto arg = dynamic_cast<LineToOutputEventArgs*>(e.get());
+        addLine(arg->line);
+    }
 }
 
 

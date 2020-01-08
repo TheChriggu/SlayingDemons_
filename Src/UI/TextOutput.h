@@ -7,11 +7,12 @@
 #include "Core/DrawableObject.h"
 #include "TextGlitch.h"
 #include <list>
+#include <Event/Subscriber.h>
 #include "FormattedLine.h"
 
 
 namespace sd {
-    class TextOutput: public DrawableObject {
+    class TextOutput: public DrawableObject, public Subscriber {
 
         sf::String text;
         sf::RenderTexture* glitchTexture;
@@ -34,6 +35,7 @@ namespace sd {
         void Update(sf::RenderTarget* window);
 
         void Handle(sf::Event event) override;
+        void Handle(std::shared_ptr<EventArgs> e) override;
     };
 }
 

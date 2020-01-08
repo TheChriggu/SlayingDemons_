@@ -2,6 +2,9 @@
 // Created by christian.heusser on 12.12.2019.
 //
 
+#include <Event/WalkedThroughDoorEventArgs.h>
+#include <Event/LineToOutputEventArgs.h>
+#include <Event/EventSystem.h>
 #include "PlayerState.h"
 
 sd::PlayerState::PlayerState() {
@@ -55,4 +58,24 @@ void sd::PlayerState::EndFight() {
 
 sd::PlayerVocabulary *sd::PlayerState::GetPlayerVocabulary() {
     return playerVocabulary;
+}
+
+void sd::PlayerState::Handle(std::shared_ptr<EventArgs> e) {
+    if (e->type == EventArgs::Type::WalkedThroughDoor) {
+        auto arg = dynamic_cast<WalkedThroughDoorEventArgs*>(e.get());
+        SetRoomAsCurrent(arg->door->GetConnectedRoom());
+
+        std::shared_ptr<LineToOutputEventArgs> args;
+        args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs(GetCurrentRoom()->GetEnterDescription()));
+        EventSystem::Get().Trigger(args);
+
+        if(GetCurrentRoom()->GetEnemy() != nullptr)
+        {
+            args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("Starting Fight..."));
+            EventSystem::Get().Trigger(args);
+            StartNewFight(GetCurrentRoom()->GetEnemy());
+        }
+    }
+
+
 }

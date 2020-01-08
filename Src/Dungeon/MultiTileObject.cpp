@@ -53,3 +53,7 @@ void sd::MultiTileObject::PutOnLayout(int *layout, int width, int height) {
 std::string sd::MultiTileObject::GetName() {
     return name;
 }
+
+void sd::MultiTileObject::BeInteractedWith() {
+    //yeah... whats here?
+}

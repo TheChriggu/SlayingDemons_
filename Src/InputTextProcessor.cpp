@@ -7,6 +7,7 @@
 #include <Event/TextOutputCreatedEventArgs.h>
 #include <Event/EventSystem.h>
 #include <Event/NewWordCollectedEventArgs.h>
+#include <Event/LineToOutputEventArgs.h>
 
 sd::InputTextProcessor::InputTextProcessor() : Subscriber() {
     playerState = new PlayerState();
@@ -43,14 +44,21 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
         if(words[0] == "interact")
         {
             //TODO: Make sure that this actually is a door
-            Door* door = (Door*) playerState->GetCurrentRoom()->GetObjectWithName(words[1]);
-            playerState->SetRoomAsCurrent(door->GetConnectedRoom());
-            output->addLine(playerState->GetCurrentRoom()->GetEnterDescription());
-            if(playerState->GetCurrentRoom()->GetEnemy() != nullptr)
+            RoomObject* object = playerState->GetCurrentRoom()->GetObjectWithName(words[1]);
+
+            if(object)
             {
-                output->addLine("starting fight");
-                playerState->StartNewFight(playerState->GetCurrentRoom()->GetEnemy());
+                object->BeInteractedWith();
             }
+
+            else
+            {
+                std::shared_ptr<LineToOutputEventArgs> args;
+                args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("could not find object in room."));
+                EventSystem::Get().Trigger(args);
+            }
+
+
         }
 
         else if(words[0] == "pickup")

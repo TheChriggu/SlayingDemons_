@@ -13,7 +13,9 @@ namespace sd {
             None = 0,
             TextOutputCreated,
             NewWordCollected,
-            PlayerVocabChanged
+            PlayerVocabChanged,
+            LineToOutput,
+            WalkedThroughDoor
         };
 
         EventArgs();

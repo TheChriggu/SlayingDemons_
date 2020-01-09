@@ -14,9 +14,11 @@
 namespace sd {
     class ScriptEngine {
 
-        static std::unique_ptr<sd::ScriptEngine> instance;
+        static sd::ScriptEngine* instance;
 
         std::vector<std::shared_ptr<Script>> scripts_;
+
+        int call;
 
     public:
 
@@ -24,11 +26,11 @@ namespace sd {
         ScriptEngine();
         virtual ~ScriptEngine() = default;
 
-        static ScriptEngine& Get();
+        static ScriptEngine* Get();
 
         void AddScript(const boost::filesystem::path& url);
 
-        void Broadcast(const char* function) const;
+        void Broadcast(const char* function) ;
         std::shared_ptr<Script> GetScript(const std::string& name) const;
 
         template <typename... Args, typename Key>

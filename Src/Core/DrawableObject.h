@@ -14,7 +14,7 @@ namespace sd {
     class DrawableObject {
     protected:
         std::string name_;
-        sp<ShaderProcedure> shaderProcedure_;
+        ShaderProcedure* shaderProcedure_;
 
     public:
         explicit DrawableObject(std::string name);
@@ -22,8 +22,8 @@ namespace sd {
 
         virtual void DrawTo(sf::RenderTarget *window) const = 0;
 
-        void SetShaderProcedure(sp<ShaderProcedure> shaderProcedure);
-        sp<ShaderProcedure> GetShaderProcedure() const;
+        void SetShaderProcedure(ShaderProcedure* shaderProcedure);
+        ShaderProcedure* GetShaderProcedure() const;
         const std::string& GetName() const;
         // TODO(FK) Temp
         void SetName(const char*);

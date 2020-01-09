@@ -29,8 +29,44 @@ bool sd::Application::Setup() {
     //auto blub24 = std::make_shared<EventArgs>(new EventArgs());
     //EventSystem::Get().Trigger(blub24);
 
-    shader_engine_ = std::make_shared<ShaderEngine>(ShaderEngine(drawable_objects_));
+    std::cout << "Initialize Script Engine" << std::endl;
+    new ScriptEngine();
+    auto script_engine_ = ScriptEngine::Get();
+
+    std::cout << "get test file\n";
+    // TODO(FK): find out why Game crashes when tmp test var is not used
+    auto test = FileInput::GetFiles("../Resources/Scripts/");
+    std::cout << "add files\n";
+    for (auto file : *test) {
+        script_engine_->AddScript(file);
+    }
+
+    //script_engine_.GetScript("test")->RegisterFunction("test1", &Application::Test1, this);
+    script_engine_->RegisterAll("test2", &Application::Test2, this);
+
+
+
+    /*auto s = script_engine_.GetScript("test");
+    if (s) s->Call("test");
+    auto blub = s->GetVar<std::string>("current_state");
+    auto table = s->GetTable("config");
+
+    std::cout << "Var: " << blub << std::endl;
+    if (table) {
+        auto t = table.value();
+        int derp = t["derp"];
+        std::cout << "Table: " << derp << std::endl;
+    }*/
+
+
+
+    shader_engine_ = std::make_shared<ShaderEngine>(ShaderEngine(&drawable_objects_));
     shader_engine_->SetupAllShader();
+
+
+
+    //script_engine_.RegisterAll("cancel_all_procedures_on", &ShaderEngine::CancelAllProceduresOn, shader_engine_.get());
+
 
     // TODO(FK)
     new UserInput(window_);
@@ -92,41 +128,15 @@ bool sd::Application::Setup() {
     std::cout << "Create global vocabulary containing all words\n";
     LoadVocab();
 
-    std::cout << "Initialize Script Engine" << std::endl;
-    new ScriptEngine();
 
-    auto script_engine_ = ScriptEngine::Get();
-
-    std::cout << "get test file\n";
-    // TODO(FK): find out why Game crashes when tmp test var is not used
-    auto test = FileInput::GetFiles("../Resources/Scripts/");
-    std::cout << "add files\n";
-    for (auto file : *test) {
-        script_engine_.AddScript(file);
-    }
-
-    //script_engine_.GetScript("test")->RegisterFunction("test1", &Application::Test1, this);
-    //script_engine_.RegisterAll("test2", &Application::Test2, this);
-
-    script_engine_.Broadcast("update");
-
-    /*auto s = script_engine_.GetScript("test");
-    if (s) s->Call("test");
-    auto blub = s->GetVar<std::string>("current_state");
-    auto table = s->GetTable("config");
-
-    std::cout << "Var: " << blub << std::endl;
-    if (table) {
-        auto t = table.value();
-        int derp = t["derp"];
-        std::cout << "Table: " << derp << std::endl;
-    }*/
 
     //auto test24 = typeof(this);
     //std::cout << " " <<  << std::endl;
 
     shader_engine_->SetGlitchOn("output-panel");
     shader_engine_->SetWeakglitchOn("background_panel");
+
+    script_engine_->Broadcast("update");
 
     std::cout << "End initialization\n";
 
@@ -243,10 +253,10 @@ void sd::Application::LoadVocab() {
 
 /*int sd::Application::Test1() {
     return drawable_objects_.size();
-}
+}*/
 
 void sd::Application::Test2(std::string message) {
     std::cout << message << std::endl;
-}*/
+}
 
 

@@ -4,6 +4,7 @@
 
 #include "DrawableObject.h"
 #include <utility>
+#include <iostream>
 
 sd::DrawableObject::DrawableObject(std::string name)
     : name_(std::move(name))
@@ -21,11 +22,12 @@ const std::string &sd::DrawableObject::GetName() const {
     return name_;
 }
 
-void sd::DrawableObject::SetShaderProcedure(sp<sd::ShaderProcedure> shaderProcedure) {
-    shaderProcedure_ = std::move(shaderProcedure);
+void sd::DrawableObject::SetShaderProcedure(sd::ShaderProcedure* shaderProcedure) {
+    shaderProcedure_ = shaderProcedure;
+    std::cout << "#Procedure: " << shaderProcedure << std::endl;
 }
 
-sp<sd::ShaderProcedure> sd::DrawableObject::GetShaderProcedure() const {
+sd::ShaderProcedure* sd::DrawableObject::GetShaderProcedure() const {
     return shaderProcedure_;
 }
 

@@ -49,7 +49,7 @@ namespace sd {
         void clear();
 
         //int Test1();
-        //void Test2(std::string message);
+        void Test2(std::string message);
     };
 }
 

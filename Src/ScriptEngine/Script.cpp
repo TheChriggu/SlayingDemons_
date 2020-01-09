@@ -24,13 +24,6 @@ void Script::AddContent(const char *content) {
     state_->script(content);
 }
 
-void Script::Call(const char *function) const {
-    sol::function func = (*state_)[function];
-
-    if (func.valid())
-        func();
-}
-
 const std::string &Script::GetName() const {
     return name_;
 }

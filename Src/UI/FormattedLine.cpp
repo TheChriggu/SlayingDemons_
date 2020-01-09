@@ -4,11 +4,11 @@
 
 #include "FormattedLine.h"
 
-FormattedLine::FormattedLine(sf::String string, sf::Vector2f _position) {
+FormattedLine::FormattedLine(sf::String string, sf::Vector2f _position, sf::Font* _font) {
     words = new std::list<FormattedWord*>();
     position = _position;
-    words->push_back(new FormattedWord("", false, _position));
-    formatLine(string);
+    words->push_back(new FormattedWord("", false, _position, _font));
+    formatLine(string, _font);
 
 }
 
@@ -23,7 +23,7 @@ void FormattedLine::drawTo(sf::RenderTarget* window, sf::RenderTarget* glitchWin
     }
 }
 
-void FormattedLine::formatLine(sf::String string) {
+void FormattedLine::formatLine(sf::String string, sf::Font* _font) {
     sf::String word = "";
     for(auto c = string.begin(); c != string.end(); c++)
     {
@@ -35,13 +35,13 @@ void FormattedLine::formatLine(sf::String string) {
         else
         {
             sf::Vector2f wordPosition =  sf::Vector2f(getRect().left + getRect().width,getRect().top);
-           FormattedWord* newWord = new FormattedWord(word, false, wordPosition);
+           FormattedWord* newWord = new FormattedWord(word, false, wordPosition, _font);
            words->push_back(newWord);
            word = " ";
         }
     }
 
-    FormattedWord* newWord = new FormattedWord(word, false, sf::Vector2f(getRect().left + getRect().width,getRect().top));
+    FormattedWord* newWord = new FormattedWord(word, false, sf::Vector2f(getRect().left + getRect().width,getRect().top), _font);
     words->push_back(newWord);
 }
 

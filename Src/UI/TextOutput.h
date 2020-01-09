@@ -20,6 +20,7 @@ namespace sd {
         std::list<FormattedLine*>* lines;
         sf::Vector2f maxSize;
         sf::Shader* shader;
+        sf::Font* font;
 
     public:
         TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color);

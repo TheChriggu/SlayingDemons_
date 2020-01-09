@@ -5,16 +5,11 @@
 #include "FormattedWord.h"
 #include <iostream>
 
-FormattedWord::FormattedWord(sf::String _text, bool _isGlitching, sf::Vector2f _position) {
-    sf::Font* font = new sf::Font();
-    if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
-    {
-        std::cout << "Could not load Font!\n";
-        return;
-    }
+FormattedWord::FormattedWord(sf::String _text, bool _isGlitching, sf::Vector2f _position, sf::Font* _font) {
+
 
     text = new sf::Text();
-    text->setFont(*font);
+    text->setFont(*_font);
     text->setString(_text);
     text->setCharacterSize(24);
     text->setFillColor(sf::Color::Black);

@@ -12,7 +12,7 @@ class FormattedWord {
     void format();
 
 public:
-    FormattedWord(sf::String _text, bool _isGlitching, sf::Vector2f _position);
+    FormattedWord(sf::String _text, bool _isGlitching, sf::Vector2f _position, sf::Font* _font);
     ~FormattedWord();
 
     void drawTo(sf::RenderTarget* window, sf::RenderTarget* glitchWindow);

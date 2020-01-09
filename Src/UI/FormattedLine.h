@@ -11,12 +11,12 @@
 
 class FormattedLine {
     std::list<FormattedWord*>* words;
-    void formatLine(sf::String string);
+    void formatLine(sf::String string, sf::Font* _font);
     sf::Vector2f position;
     sf::Vector2f size;
 
 public:
-    FormattedLine(sf::String string, sf::Vector2f _position);
+    FormattedLine(sf::String string, sf::Vector2f _position, sf::Font* _font);
     ~FormattedLine();
 
     void drawTo(sf::RenderTarget* window, sf::RenderTarget* glitchWindow);

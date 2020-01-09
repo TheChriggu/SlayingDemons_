@@ -5,7 +5,9 @@
 #include "InputField.h"
 #include <iostream>
 
+// TODO(FK): clean up name
 sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color)
+    : DrawableObject("input-field")
 {
     textProcessor = nullptr;
 

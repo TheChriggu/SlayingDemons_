@@ -1,5 +1,5 @@
 Name,Speed,Accuracy,Physical,Mental,Fire,Water,Tree,Earth
-Honk,10,10,2,20,1,1,1,1
+Honk,100,80,80,20,1,1,1,1
 Attack,5,5,10,1,1,1,1,1
 Hit,7,7,7,1,1,1,1,1
 Kick,7,8,12,1,1,1,1,1

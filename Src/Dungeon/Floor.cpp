@@ -6,6 +6,7 @@
 #include "Sofa.h"
 #include "Table.h"
 #include "Book.h"
+#include "Goblin.h"
 
 sd::Floor::Floor() {
     /*
@@ -52,7 +53,7 @@ sd::Floor::Floor() {
     door->SetLocked(true);
     int bookshelfLayout[] = {48,56};
     room2->AddObject(new MultiTileObject("Bookshelf", bookshelfLayout, sf::Vector2i(1,2), sf::Vector2i(6,4)));
-
+    room2->AddObject(new Goblin("Goblin", 25, sf::Vector2i(9,3)));
 
     room3->AddObject(new Door("WestDoor", 9, 3, sf::Vector2i(0,3), room1));
     room3->AddObject(new Book("Book", 34, sf::Vector2i(7,3)));

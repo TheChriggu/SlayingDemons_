@@ -94,4 +94,31 @@ void sd::Room::Handle(std::shared_ptr<EventArgs> e) {
             object->PutOnLayout(layout, 11,7);
         }
     }
+
+    if (e->type == EventArgs::Type::GoblinDefeated) {
+        RemoveObjectWithName("Goblin");
+    }
+}
+
+ void sd::Room::RemoveObjectWithName(std::string name) {
+    auto it = roomObjects.begin();
+    bool itLock = false;
+    for(auto object : roomObjects)
+    {
+        if (std::string(object->GetName()) == name)
+        {
+            itLock = true;
+        }
+        if(!itLock)
+        {
+            it.operator++();
+        }
+    }
+
+    if(it < roomObjects.end())
+    {
+        roomObjects.erase(it);
+        SingleTileObject* mushroom = new SingleTileObject("Mushroom", 24, sf::Vector2i(9,3));
+        AddObject(mushroom);
+    }
 }

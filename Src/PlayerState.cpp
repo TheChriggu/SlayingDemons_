@@ -5,6 +5,7 @@
 #include <Event/WalkedThroughDoorEventArgs.h>
 #include <Event/LineToOutputEventArgs.h>
 #include <Event/EventSystem.h>
+#include <Dungeon/Goblin.h>
 #include "PlayerState.h"
 
 sd::PlayerState::PlayerState() {
@@ -45,6 +46,13 @@ bool sd::PlayerState::IsFighting() {
 
 void sd::PlayerState::SetRoomAsCurrent(sd::Room *room) {
     currentRoom = room;
+
+    RoomObject* object = currentRoom->GetObjectWithName("Goblin");
+    if(object)
+    {
+        Goblin* goblin = (Goblin*) object;
+        goblin->SetPlayerVocab(GetPlayerVocabulary());
+    }
 }
 
 void sd::PlayerState::StartNewFight(sd::Monster *enemy) {
@@ -68,13 +76,24 @@ void sd::PlayerState::Handle(std::shared_ptr<EventArgs> e) {
         std::shared_ptr<LineToOutputEventArgs> args;
         args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs(GetCurrentRoom()->GetEnterDescription()));
         EventSystem::Get().Trigger(args);
+    }
 
-        if(GetCurrentRoom()->GetEnemy() != nullptr)
-        {
-            args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("Starting Fight..."));
-            EventSystem::Get().Trigger(args);
-            StartNewFight(GetCurrentRoom()->GetEnemy());
-        }
+    if (e->type == EventArgs::Type::StartFightWithGoblin) {
+
+        std::shared_ptr<LineToOutputEventArgs> args;
+        args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("Starting Fight."));
+        EventSystem::Get().Trigger(args);
+
+        Monster* goblin = new Monster();
+
+        StartNewFight(goblin);
+    }
+
+    if (e->type == EventArgs::Type::GoblinDefeated) {
+
+        ((Door*) currentRoom->GetObjectWithName("EastDoor"))->SetLocked(false);
+        delete fight;
+        fight = nullptr;
     }
 
 

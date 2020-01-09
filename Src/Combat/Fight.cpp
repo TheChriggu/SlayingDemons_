@@ -4,6 +4,8 @@
 
 #include "Fight.h"
 #include <iostream>
+#include <Event/NewWordCollectedEventArgs.h>
+#include <Event/EventSystem.h>
 
 sd::Fight::Fight(sd::Fighter *_player, sd::Monster *_enemy)
     : player(_player)
@@ -11,8 +13,21 @@ sd::Fight::Fight(sd::Fighter *_player, sd::Monster *_enemy)
 {
     Stats zeroStats = {0,0,0,0,0,0,0,0};
     Stats oneStats = {1,1,1,1,1,1,1,1};
-    player->SetBuffs(oneStats, oneStats);
+
+    Stats enemyOffense(1,1,1,1,1,1,1,1);
+    Stats enemyDefense(1,1,1,1,1,1,1,1);
+    Stats playerOffense(1,1,1,1,1,1,1,1);
+    Stats playerDefense(1,1,1,1,1,1,1,1);
+
+    enemy->SetBaseStats(enemyOffense, enemyDefense);
+    player->SetBaseStats(playerOffense, playerDefense);
+
+    enemy->ChangeHitPoints(100);
+    player->ChangeHitPoints(100);
+
     enemy->SetBuffs(oneStats, oneStats);
+    player->SetBuffs(oneStats, oneStats);
+
 }
 
 sd::Fight::~Fight() {
@@ -58,6 +73,8 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
              output->addLine("He glares at you.");
          }
 
+         enemy->ChangeHitPoints(-physicalDamage);
+         enemy->ChangeMentalState(-damageStats.mental);
 
 
          output->addLine("---");
@@ -68,7 +85,7 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
 
          physicalDamage = damageStats.fire+damageStats.earth+damageStats.physical+damageStats.tree+damageStats.water;
          output->addLine("Your enemy made " + std::to_string(physicalDamage) + " damage to your hp.");
-         output->addLine("He made " + std::to_string(damageStats.mental) + " damage to your mentality.\n");
+         output->addLine("He made " + std::to_string(damageStats.mental) + " damage to your mentality.");
 
          player->ChangeHitPoints(-physicalDamage);
          player->ChangeMentalState(-damageStats.mental);
@@ -98,11 +115,11 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
          output->addLine("You made " + std::to_string(damageStats.mental) + " damage to his mentality.");
          if(damageStats.mental < 0)
          {
-             output->addLine("He appears to be more friendly now.\n");
+             output->addLine("He appears to be more friendly now.");
          }
          else
          {
-             output->addLine("He glares at you.\n");
+             output->addLine("He glares at you.");
          }
 
          enemy->ChangeHitPoints(-physicalDamage);
@@ -116,9 +133,16 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
      output->addLine("Your enemy now has " + std::to_string(enemy->GetHitPoints()) + " hp and " + std::to_string(enemy->GetMentalState()) + " mentality.");
 
 
+     if(enemy->GetHitPoints() <= 0)
+     {
+         output->addLine("You defeated your enemy.");
+
+         std::shared_ptr<EventArgs> args;
+         args = std::make_shared<EventArgs>(EventArgs());
+         args->type = sd::EventArgs::Type::GoblinDefeated;
+         EventSystem::Get().Trigger(args);
+     }
 
      delete(playerAttack);
      delete(enemyAttack);
-
-
 }

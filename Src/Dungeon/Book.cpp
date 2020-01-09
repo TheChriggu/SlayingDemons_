@@ -28,7 +28,7 @@ void sd::Book::BeInteractedWith() {
     args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("As you carefuly open the book a bit more it swings open with a loud creaking noise."));
     EventSystem::Get().Trigger(args);
 
-    args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("You stare at it in suprise as the page began to shimmer. \nOver both pages are written the word \"cyber\"."));
+    args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("You stare at it in suprise as the page began to shimmer. Over both pages are written the word \"cyber\"."));
     EventSystem::Get().Trigger(args);
 
     args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("Slowly you lift your hand to touch the word and as as your fingers touch the paper the word \"cyber\" faded. Still not sure what happend you look around the room."));

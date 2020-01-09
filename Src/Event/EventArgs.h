@@ -16,7 +16,9 @@ namespace sd {
             PlayerVocabChanged,
             LineToOutput,
             WalkedThroughDoor,
-            RoomLayoutChanged
+            RoomLayoutChanged,
+            StartFightWithGoblin,
+            GoblinDefeated
         };
 
         EventArgs();

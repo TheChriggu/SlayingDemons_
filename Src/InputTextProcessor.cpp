@@ -50,15 +50,12 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
             {
                 object->BeInteractedWith();
             }
-
             else
             {
                 std::shared_ptr<LineToOutputEventArgs> args;
                 args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("could not find object in room."));
                 EventSystem::Get().Trigger(args);
             }
-
-
         }
 
         else if(words[0] == "pickup")
@@ -85,21 +82,32 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
             //check if fight spell
             std::cout << "fight not nullptr\n";
             std::cout << "making turn\n";
-            //make turn in fight
-            playerState->GetFight()->FullTurn(words[1], words[0], output);
+            if(Vocabulary::allWords->Contains(words[0]) && Vocabulary::allWords->Contains(words[1]))
+            {
+                Word* word1 = Vocabulary::allWords->Get(words[0]);
+                Word* word2 = Vocabulary::allWords->Get(words[1]);
+                if(word1->GetType() == sd::Word::type::modifier && word2->GetType() == sd::Word::type::action)
+                //make turn in fight
+                playerState->GetFight()->FullTurn(words[1], words[0], output);
 
-            //evaluate result
-            //end fight, if fight is over
-            //*delete(fight);
-            //*fight = nullptr;
+                //evaluate result
+                //end fight, if fight is over
+                //*delete(fight);
+                //*fight = nullptr;
 
-            //if not fight spell
+                //if not fight spell
 
-            //make enemy turn in fight
-            //*fight->makeEnemyTurnOnly();
-            //evaluate enemy turn result
+                //make enemy turn in fight
+                //*fight->makeEnemyTurnOnly();
+                //evaluate enemy turn result
 
-            //evaluate player
+                //evaluate player
+            }
+
+            else
+            {
+                output->addLine("Input not valid modifier+action combination");
+            }
 
         }
 

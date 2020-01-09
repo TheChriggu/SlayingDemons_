@@ -16,6 +16,7 @@ namespace sd {
 
         std::vector<sp<ShaderProcedure>> shaderProcedures_;
         sf::Shader* weakglitch;
+        sf::Shader* glitch;
 
         std::vector<DrawableObject*>& drawable_objects_;
 
@@ -26,6 +27,7 @@ namespace sd {
         void SetupAllShader();
 
         void SetWeakglitchOn(const std::string& objectName) const;
+        void SetGlitchOn(const std::string& objectName) const;
     };
 }
 

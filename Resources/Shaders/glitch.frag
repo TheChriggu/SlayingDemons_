@@ -26,4 +26,6 @@ void main()
 	float blue = texture2D(diffuseTex, gl_TexCoord[0].xy+noiseCol.yx*(noisestrength+rowGlitch) + vec2(fract(time),fract(time))*noisestrength).b;
 
 	gl_FragColor = vec4(red, green, blue, diffuseCol.a);
+
+	//gl_FragColor = vec4(0,0,0,1);
 }

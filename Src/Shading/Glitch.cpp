@@ -2,16 +2,16 @@
 // Created by felix on 09.01.20.
 //
 
-#include "WeakGlitch.h"
+#include "Glitch.h"
 #include "SFML/Graphics/Texture.hpp"
 #include "SFML/Graphics/RenderWindow.hpp"
 #include <utility>
 #include <iostream>
 #include <SFML/Graphics/Sprite.hpp>
 
-sd::WeakGlitch::WeakGlitch(sp<sf::Shader> glitchShader)
+sd::Glitch::Glitch(sp<sf::Shader> glitchShader)
     : ShaderProcedure(std::move(glitchShader))
-    {
+{
 
     // TODO(FK): Replace copy-pasta shit
     sf::Texture* noise = new sf::Texture();
@@ -21,7 +21,7 @@ sd::WeakGlitch::WeakGlitch(sp<sf::Shader> glitchShader)
     }
 
     //shader = new sf::Shader();
-    if(!shader_->loadFromFile("../Resources/Shaders/glitch.vert", "../Resources/Shaders/weakglitch.frag"))
+    if(!shader_->loadFromFile("../Resources/Shaders/glitch.vert", "../Resources/Shaders/glitch.frag"))
     {
         std::cout << "!!!!could not load shader\n";
     }
@@ -29,7 +29,7 @@ sd::WeakGlitch::WeakGlitch(sp<sf::Shader> glitchShader)
     clock_ = std::make_shared<sf::Clock>(sf::Clock());
 }
 
-void sd::WeakGlitch::Process(sf::RenderTarget *window, const sf::Drawable *drawable) const {
+void sd::Glitch::Process(sf::RenderTarget *window, const sf::Drawable *drawable) const {
     shader_->setUniform("time", clock_->getElapsedTime().asSeconds());
 
     window->draw(*drawable, shader_.get());

@@ -125,8 +125,8 @@ bool sd::Application::Setup() {
     //auto test24 = typeof(this);
     //std::cout << " " <<  << std::endl;
 
-    shader_engine_->SetWeakglitchOn("output-panel");
-    //shader_engine_->SetWeakglitchOn("background_panel");
+    shader_engine_->SetGlitchOn("output-panel");
+    shader_engine_->SetWeakglitchOn("background_panel");
 
     std::cout << "End initialization\n";
 

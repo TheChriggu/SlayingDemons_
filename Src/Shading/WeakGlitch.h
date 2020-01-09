@@ -13,10 +13,10 @@ namespace sd {
         sp<sf::Clock> clock_;
 
     public:
-        explicit WeakGlitch(sf::Shader* glitchShader);
+        explicit WeakGlitch(sp<sf::Shader> glitchShader);
         virtual ~WeakGlitch() = default;
 
-        void Process(sf::RenderTarget* window, const sf::Sprite* drawable) const override;
+        void Process(sf::RenderTarget* window, const sf::Drawable* drawable) const override;
     };
 }
 

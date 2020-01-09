@@ -10,17 +10,16 @@
 #include <functional>
 #include <SFML/Graphics/Shader.hpp>
 #include <Core/GlobalDefinitions.h>
-#include <SFML/Graphics/Sprite.hpp>
 
 namespace sd {
     class ShaderProcedure {
     protected:
-        sf::Shader* shader_;
+        sp<sf::Shader> shader_;
 
     public:
-        explicit ShaderProcedure(sf::Shader* shader);
+        explicit ShaderProcedure(sp<sf::Shader> shader);
 
-        virtual void Process(sf::RenderTarget*, const sf::Sprite*) const = 0;
+        virtual void Process(sf::RenderTarget*, const sf::Drawable*) const = 0;
     };
 }
 

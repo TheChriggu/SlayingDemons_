@@ -10,7 +10,8 @@ current_state = "blub"
 
 function update()
     --print("From Test1(): ", test1())
-    --test2("Test2() from test")
+    test2("Test2() from test")
+    cancel_all_procedures_on("output-panel")
 end
 
 config = {

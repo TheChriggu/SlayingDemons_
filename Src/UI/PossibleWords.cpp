@@ -4,8 +4,10 @@
 
 #include "PossibleWords.h"
 
+// TODO(FK): clean up name
 sd::PossibleWords::PossibleWords(sf::Vector2f _position, sf::Vector2f _size, std::string pathToBackground)
-    :position(_position)
+    : DrawableObject("possible-words")
+    ,position(_position)
     ,size(_size)
 {
     sprite = new sf::Sprite();

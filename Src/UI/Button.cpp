@@ -6,8 +6,10 @@
 #include "Button.h"
 #include "IO/UserInput.h"
 
-
-sd::Button::Button(sf::Vector2f position, sf::Vector2f scale, std::function<void()> _callback){
+// TODO(FK): clean up name
+sd::Button::Button(sf::Vector2f position, sf::Vector2f scale, std::function<void()> _callback)
+    : DrawableObject("button")
+{
     button = new sf::Sprite();;
     normalTexture = new sf::Texture();
     pressedTexture = new sf::Texture();

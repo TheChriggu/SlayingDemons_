@@ -15,7 +15,8 @@ namespace sd {
             NewWordCollected,
             PlayerVocabChanged,
             LineToOutput,
-            WalkedThroughDoor
+            WalkedThroughDoor,
+            RoomLayoutChanged
         };
 
         EventArgs();

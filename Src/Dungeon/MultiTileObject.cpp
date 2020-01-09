@@ -3,6 +3,9 @@
 //
 
 #include <iostream>
+#include <memory>
+#include <Event/EventSystem.h>
+#include <Event/LineToOutputEventArgs.h>
 #include "MultiTileObject.h"
 
 sd::MultiTileObject::MultiTileObject(std::string _name, int *_layout, sf::Vector2i _size,
@@ -55,5 +58,10 @@ std::string sd::MultiTileObject::GetName() {
 }
 
 void sd::MultiTileObject::BeInteractedWith() {
-    //yeah... whats here?
+    std::shared_ptr<LineToOutputEventArgs> args;
+    args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("You try to interact with the " + name + "."));
+    EventSystem::Get().Trigger(args);
+
+    args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("Nothing happens."));
+    EventSystem::Get().Trigger(args);
 }

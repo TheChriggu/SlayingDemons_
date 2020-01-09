@@ -10,9 +10,10 @@
 #include "SingleTileObject.h"
 #include "MultiTileObject.h"
 #include "../Monster.h"
+#include "../Event/Subscriber.h"
 
 namespace sd {
-    class Room  {
+    class Room : public Subscriber{
     private:
         std::vector<RoomObject*> roomObjects;
         int* layout;
@@ -37,6 +38,8 @@ namespace sd {
 
         RoomObject* GetObjectWithName(std::string name);
 
+
+        void Handle(std::shared_ptr<EventArgs> e) override;
     };
 }
 

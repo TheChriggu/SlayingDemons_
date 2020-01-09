@@ -7,6 +7,7 @@
 #include "IO/UserInput.h"
 #include "Event/EventSystem.h"
 #include <iostream>
+#include <map>
 
 
 sd::Vocabulary* sd::Vocabulary::allWords = nullptr;
@@ -25,9 +26,11 @@ bool sd::Application::Setup() {
     window_->setFramerateLimit(60);
 
     new EventSystem();
-
     //auto blub24 = std::make_shared<EventArgs>(new EventArgs());
     //EventSystem::Get().Trigger(blub24);
+
+    shader_engine_ = std::make_shared<ShaderEngine>(ShaderEngine(drawable_objects_));
+    shader_engine_->SetupAllShader();
 
     // TODO(FK)
     new UserInput(window_);
@@ -37,13 +40,16 @@ bool sd::Application::Setup() {
     std::cout << "Create background panel\n";
     sf::Texture* backgroundTexture = new sf::Texture();
     backgroundTexture->loadFromFile("../Resources/Sprites/fantasy_background.png");
-    drawable_objects_.emplace_back(new Panel(sf::Vector2f(0.0, 0.0), sf::Vector2f(1920, 1080), backgroundTexture));
+    auto panel = new Panel(sf::Vector2f(0.0, 0.0), sf::Vector2f(1920, 1080), backgroundTexture);
+    panel->SetName("background_panel");
+    drawable_objects_.emplace_back(panel);
     // TODO(FK): clean up this shit
 
     std::cout << "Create text output background\n";
     sf::Texture* textOutputBackground = new sf::Texture();
     textOutputBackground->loadFromFile("../Resources/Sprites/fantasy_textoutput.png");
     auto outputBackground = new Panel(sf::Vector2f(48.0,41.0), sf::Vector2f(1044,1008), textOutputBackground);
+    outputBackground->SetName("output-panel");
     drawable_objects_.emplace_back(outputBackground);
 
     std::cout << "emplace Inputfield\n";
@@ -119,6 +125,9 @@ bool sd::Application::Setup() {
     //auto test24 = typeof(this);
     //std::cout << " " <<  << std::endl;
 
+    shader_engine_->SetWeakglitchOn("output-panel");
+    //shader_engine_->SetWeakglitchOn("background_panel");
+
     std::cout << "End initialization\n";
 
     return true;
@@ -161,7 +170,6 @@ bool sd::Application::Run() {
     for (auto comp : drawable_objects_) {
         comp->DrawTo(window_);
     }
-
 
     //display
     window_->display();

@@ -94,7 +94,7 @@ add_executable(${PROJECT_NAME}
                Src/PlayerVocabulary.cpp
                Src/PlayerVocabulary.h
                Src/UI/PossibleWords.cpp
-               Src/UI/PossibleWords.h Src/Core/GlobalDefinitions.h)
+               Src/UI/PossibleWords.h Src/Core/GlobalDefinitions.h Src/Shading/ShaderProcedure.cpp Src/Shading/ShaderProcedure.h Src/Shading/ShaderEngine.cpp Src/Shading/ShaderEngine.h Src/Shading/WeakGlitch.cpp Src/Shading/WeakGlitch.h)
 
 target_include_directories(${PROJECT_NAME} PRIVATE Src)
 

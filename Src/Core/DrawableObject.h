@@ -5,18 +5,28 @@
 #ifndef UNTITLED_DISPLAYAREA_H
 #define UNTITLED_DISPLAYAREA_H
 
+#include "Core/GlobalDefinitions.h"
 #include "SFML/Graphics.hpp"
 #include "Drawable.h"
+#include "Shading/ShaderProcedure.h"
 
 namespace sd {
-    class DrawableObject : public Drawable {
+    class DrawableObject {
+    protected:
+        std::string name_;
+        sp<ShaderProcedure> shaderProcedure_;
 
     public:
-        DrawableObject();
-        virtual ~DrawableObject();
+        explicit DrawableObject(std::string name);
+        virtual ~DrawableObject() = default;
 
-        void DrawTo(sf::RenderTarget *window) const = 0;
+        virtual void DrawTo(sf::RenderTarget *window) const = 0;
 
+        void SetShaderProcedure(sp<ShaderProcedure> shaderProcedure);
+        sp<ShaderProcedure> GetShaderProcedure() const;
+        const std::string& GetName() const;
+        // TODO(FK) Temp
+        void SetName(const char*);
         virtual sf::Vector2f GetPosition();
         virtual sf::Vector2f GetSize();
 

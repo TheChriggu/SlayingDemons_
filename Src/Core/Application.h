@@ -13,6 +13,7 @@
 #include "IO/FileInput.h"
 #include "World.h"
 #include <vector>
+#include <Shading/ShaderEngine.h>
 #include "Vocabulary.h"
 #include "Combat/Action.h"
 #include "Combat/Modifier.h"
@@ -33,7 +34,7 @@ namespace sd {
         std::vector<DrawableObject*> drawable_objects_;
         InputTextProcessor* inputTextProcessor;
 
-
+        sp<ShaderEngine> shader_engine_;
 
         void LoadVocab();
 

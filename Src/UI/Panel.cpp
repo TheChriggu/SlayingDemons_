@@ -5,7 +5,10 @@
 #include "Panel.h"
 #include <iostream>
 
-sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, sf::Color color){
+// TODO(FK): clean up name
+sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, sf::Color color)
+    : DrawableObject("panel")
+{
     sf::Texture texture;
     if (!texture.create(size.x,size.y))
     {
@@ -18,7 +21,9 @@ sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, sf::Color color){
     sprite->setPosition(position);
 }
 
+// TODO(FK): clean up name
 sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, sf::Texture* texture)
+    : DrawableObject("Panel")
 {
     sprite = new sf::Sprite();
 
@@ -53,7 +58,13 @@ sf::Vector2f sd::Panel::GetSize() {
 }
 
 void sd::Panel::DrawTo(sf::RenderTarget *window) const{
-    window->draw(*sprite);
+    if (shaderProcedure_) {
+
+        shaderProcedure_->Process(window, sprite);
+    } else {
+        window->draw(*sprite);
+    }
+
 }
 
 

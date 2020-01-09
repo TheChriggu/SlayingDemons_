@@ -57,14 +57,14 @@ void sd::PossibleWords::Update() {
     sf::Vector2f offset = sf::Vector2f(50, 90);
     for(auto action : *(playerVocabulary->GetModifiers()))
     {
-        lines->push_back(new FormattedLine(action, sf::Vector2f(position + offset), font));
+        lines->push_back(new FormattedLine(action, sf::Vector2f(position + offset), font, sf::Vector2f(1000,1000)));
         offset.y += 30;
     }
 
     offset = sf::Vector2f(250, 90);
     for(auto action : *(playerVocabulary->GetActions()))
     {
-        lines->push_back(new FormattedLine(action, sf::Vector2f(position + offset), font));
+        lines->push_back(new FormattedLine(action, sf::Vector2f(position + offset), font, sf::Vector2f(1000,1000)));
         offset.y += 30;
     }
 }

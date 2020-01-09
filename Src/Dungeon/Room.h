@@ -32,7 +32,7 @@ namespace sd {
         void AddObject(RoomObject* object);
         void SetEnemy(Monster* _enemy);
 
-        std::string GetEnterDescription();
+        virtual std::string GetEnterDescription();
         Monster* GetEnemy();
 
 

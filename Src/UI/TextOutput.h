@@ -14,7 +14,6 @@
 namespace sd {
     class TextOutput: public DrawableObject, public Subscriber {
 
-        sf::String text;
         sf::RenderTexture* glitchTexture;
         sf::Sprite* glitchSprite;
         std::list<FormattedLine*>* lines;

@@ -7,6 +7,7 @@
 #include "Table.h"
 #include "Book.h"
 #include "Goblin.h"
+#include "LastRoom.h"
 
 sd::Floor::Floor() {
     /*
@@ -34,7 +35,7 @@ sd::Floor::Floor() {
     Room* room2 = new Room();
     Room* room3 = new Room();
     Room* room4 = new Room();
-    Room* room5 = new Room();
+    Room* room5 = new LastRoom();
 
 
     room1->AddObject(new Door("NorthDoor", 9, 3, sf::Vector2i(5,0), room2));

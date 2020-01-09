@@ -19,8 +19,7 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
     }
 
     lines = new std::list<FormattedLine*>();
-    lines->push_back(new FormattedLine("", sf::Vector2f(position + sf::Vector2f(20, 20)), font));
-    text = "";
+    lines->push_back(new FormattedLine("", sf::Vector2f(position + sf::Vector2f(20, 20)), font, maxSize));
 
     glitchTexture = new sf::RenderTexture();
     if(!glitchTexture->create(1920,1080))
@@ -85,7 +84,7 @@ void sd::TextOutput::DrawTo(sf::RenderTarget* window) const {
 }
 
 void sd::TextOutput::addLine(sf::String string) {
-    FormattedLine* newLine = new FormattedLine(string, sf::Vector2f(lines->back()->getRect().left, lines->back()->getRect().top+lines->back()->getRect().height), font) ;
+    FormattedLine* newLine = new FormattedLine(string, sf::Vector2f(lines->back()->getRect().left, lines->back()->getRect().top+lines->back()->getRect().height), font, maxSize) ;
     //format line
     lines->push_back(newLine);
     while(GetSize().y > maxSize.y)

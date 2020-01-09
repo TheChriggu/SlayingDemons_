@@ -7,6 +7,7 @@
 #include <Event/EventSystem.h>
 #include <Event/WalkedThroughDoorEventArgs.h>
 #include <Event/LineToOutputEventArgs.h>
+#include <ScriptEngine/ScriptEngine.h>
 #include "Door.h"
 
 sd::Door::Door(std::string _name,
@@ -16,7 +17,9 @@ sd::Door::Door(std::string _name,
         ,spriteSheetIdxOpen(_spriteSheetIdxOpen)
         ,spriteSheetIdxLocked(_spriteSheetIdxLocked)
         ,isLocked(false)
-{}
+{
+
+}
 
 sd::Room *sd::Door::GetConnectedRoom() {
     return nextRoom;
@@ -48,6 +51,8 @@ void sd::Door::BeInteractedWith() {
         args = std::make_shared<WalkedThroughDoorEventArgs>(WalkedThroughDoorEventArgs(this));
         args->type = sd::EventArgs::Type::WalkedThroughDoor;
         EventSystem::Get().Trigger(args);
+
+        ScriptEngine::Get()->Broadcast("room_changed", );
     }
 }
 

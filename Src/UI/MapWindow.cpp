@@ -6,7 +6,8 @@
 
 
 sd::MapWindow::MapWindow(sf::Vector2f _position, sf::Vector2f _size)
-    :position(_position)
+    : DrawableObject("map-window")
+    ,position(_position)
     ,size(_size)
 {
     backgroundTexture = new sf::Texture();

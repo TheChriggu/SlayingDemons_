@@ -10,7 +10,10 @@
 #include <Event/LineToOutputEventArgs.h>
 
 //TODO(CH): Lines have to move up, when max is reached.
-sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color){
+// TODO(FK): clean up name
+sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color)
+    : DrawableObject("text-output")
+{
     font = new sf::Font();
     if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
     {

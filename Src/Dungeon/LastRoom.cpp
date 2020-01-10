@@ -5,7 +5,7 @@
 #include "LastRoom.h"
 
 std::string sd::LastRoom::GetEnterDescription() {
-    return "\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+    return "You enter the room.";//\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 }
 
 sd::LastRoom::LastRoom() : Room(){

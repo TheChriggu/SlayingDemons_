@@ -52,8 +52,9 @@ void sd::Door::BeInteractedWith() {
         args->type = sd::EventArgs::Type::WalkedThroughDoor;
         EventSystem::Get().Trigger(args);
 
-        if (nextRoom)
+        if (nextRoom) {
             ScriptEngine::Get()->Broadcast("room_changed", nextRoom->is_last);
+        }
     }
 }
 

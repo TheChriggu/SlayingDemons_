@@ -31,9 +31,9 @@ namespace sd {
         template <typename... Args>
         void Broadcast(const char* function, Args&&... args) {
 
-            /*for (const auto& script : scripts_) {
+            for (const auto& script : scripts_) {
                 script->Call(function, std::forward<Args>(args)...);
-            }*/
+            }
         }
 
 

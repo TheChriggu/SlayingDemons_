@@ -20,6 +20,7 @@ sd::ShaderEngine::ShaderEngine(std::vector<DrawableObject *>* drawable_objects)
     script_engine->RegisterAll("set_weakglitch_on", &ShaderEngine::SetWeakglitchOn, this);
     script_engine->RegisterAll("set_glitch_on", &ShaderEngine::SetWeakglitchOn, this);
     script_engine->RegisterAll("cancel_all_procedures_on", &ShaderEngine::CancelAllProceduresOn, this);
+    script_engine->RegisterAll("set_demoglitch_on", &ShaderEngine::SetDemoGlitchOn, this);
 }
 
 void sd::ShaderEngine::SetupAllShader() {
@@ -72,6 +73,10 @@ void sd::ShaderEngine::CancelAllProceduresOn(std::string objectName) {
             object->SetShaderProcedure(nullptr);
         }
     }
+}
+
+void sd::ShaderEngine::SetDemoGlitchOn(std::string objectName) const {
+
 }
 
 

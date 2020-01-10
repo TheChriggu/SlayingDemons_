@@ -26,6 +26,9 @@ namespace sd {
         Room();
         ~Room();
 
+        // TODO(FK): slightly embarrassing temp variable
+        bool is_last = false;
+
         sf::String GetDescription();
         int* GetLayout();
 

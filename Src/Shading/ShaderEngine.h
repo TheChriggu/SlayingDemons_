@@ -30,6 +30,7 @@ namespace sd {
 
         void SetWeakglitchOn(std::string objectName) const;
         void SetGlitchOn(std::string objectName) const;
+        void SetDemoGlitchOn(std::string objectName) const;
 
         void CancelAllProceduresOn(std::string objectName);
     };

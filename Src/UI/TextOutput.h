@@ -26,6 +26,7 @@ namespace sd {
         ~TextOutput();
 
         void addLine(sf::String string);
+        void printLine(std::string string);
 
         void DrawTo(sf::RenderTarget* window) const override;
         sf::Vector2f GetPosition() override;

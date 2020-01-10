@@ -10,6 +10,7 @@
 namespace sd {
     class LastRoom: public Room {
     public:
+        LastRoom();
 
         std::string GetEnterDescription() override;
     };

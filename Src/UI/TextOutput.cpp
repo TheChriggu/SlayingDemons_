@@ -8,12 +8,15 @@
 #include <Event/EventSystem.h>
 #include <Event/TextOutputCreatedEventArgs.h>
 #include <Event/LineToOutputEventArgs.h>
+#include <ScriptEngine/ScriptEngine.h>
 
 //TODO(CH): Lines have to move up, when max is reached.
 // TODO(FK): clean up name
 sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color)
     : DrawableObject("text-output")
 {
+    ScriptEngine::Get()->RegisterAll("print_line", &TextOutput::printLine, this);
+
     font = new sf::Font();
     if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
     {
@@ -87,6 +90,7 @@ void sd::TextOutput::DrawTo(sf::RenderTarget* window) const {
 }
 
 void sd::TextOutput::addLine(sf::String string) {
+
     FormattedLine* newLine = new FormattedLine(string, sf::Vector2f(lines->back()->getRect().left, lines->back()->getRect().top+lines->back()->getRect().height), font, maxSize) ;
     //format line
     lines->push_back(newLine);
@@ -97,6 +101,11 @@ void sd::TextOutput::addLine(sf::String string) {
         lines->pop_front();
     }
 
+}
+
+void sd::TextOutput::printLine(std::string string) {
+    sf::String temp(string);
+    addLine(temp);
 }
 
 void sd::TextOutput::toggleGlitch() {

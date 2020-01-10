@@ -8,7 +8,7 @@
 
 sd::DrawableObject::DrawableObject(std::string name)
     : name_(std::move(name))
-{ }
+{ shaderProcedure_ = nullptr; }
 
 sf::Vector2f sd::DrawableObject::GetPosition() {
     return sf::Vector2f(-1,-1);

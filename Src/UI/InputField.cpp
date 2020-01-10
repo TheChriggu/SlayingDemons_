@@ -4,6 +4,7 @@
 
 #include "InputField.h"
 #include <iostream>
+#include <ScriptEngine/ScriptEngine.h>
 
 // TODO(FK): clean up name
 sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color)
@@ -57,6 +58,8 @@ void sd::InputField::Handle(sf::Event event) {
         std::cout << "processing input\n";
         sf::String strg = text->getString();
 
+        // TODO: TEMP
+        ScriptEngine::Get()->Broadcast("input_received");
         textProcessor->ProcessInput(strg);
         text->setString("");
 

@@ -7,7 +7,8 @@
 #include <memory>
 
 sd::ScriptEngine::ScriptEngine() {
-    if (!instance) instance = std::unique_ptr<ScriptEngine>(this);
+    if (!instance) instance = this;
+    call = 0;
     /*scripts_.emplace_back(
             Script(R"(
                     function test()
@@ -22,8 +23,9 @@ sd::ScriptEngine::ScriptEngine() {
     );*/
 }
 
-sd::ScriptEngine &sd::ScriptEngine::Get() {
-    return *instance;
+sd::ScriptEngine *sd::ScriptEngine::Get() {
+
+    return instance;
 }
 
 
@@ -34,10 +36,14 @@ void sd::ScriptEngine::AddScript(const boost::filesystem::path& url) {
     ));
 }
 
-void sd::ScriptEngine::Broadcast(const char *function) const {
+void sd::ScriptEngine::Broadcast(const char *function)  {
+    std::cout << "Go Bradcast call: " << call << std::endl;
     for (const auto& script : scripts_) {
+        std::cout << "Call: " << call << ", script: " << script->GetName() << std::endl;
         script->Call(function);
     }
+    call++;
+    std::cout << "End Bradcast: " << call << std::endl;
 }
 
 std::shared_ptr<Script> sd::ScriptEngine::GetScript(const std::string& name) const {
@@ -78,6 +84,6 @@ std::shared_ptr<Script> sd::ScriptEngine::GetScript(const std::string& name) con
     return true;
 }*/
 
-std::unique_ptr<sd::ScriptEngine> sd::ScriptEngine::instance = nullptr;
+sd::ScriptEngine* sd::ScriptEngine::instance = nullptr;
 
 

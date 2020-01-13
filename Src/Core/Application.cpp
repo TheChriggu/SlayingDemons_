@@ -7,6 +7,7 @@
 #include "IO/UserInput.h"
 #include "Event/EventSystem.h"
 #include <iostream>
+#include <map>
 
 
 sd::Vocabulary* sd::Vocabulary::allWords = nullptr;
@@ -25,9 +26,47 @@ bool sd::Application::Setup() {
     window_->setFramerateLimit(60);
 
     new EventSystem();
-
     //auto blub24 = std::make_shared<EventArgs>(new EventArgs());
     //EventSystem::Get().Trigger(blub24);
+
+    std::cout << "Initialize Script Engine" << std::endl;
+    new ScriptEngine();
+    auto script_engine_ = ScriptEngine::Get();
+
+    std::cout << "get test file\n";
+    // TODO(FK): find out why Game crashes when tmp test var is not used
+    auto test = FileInput::GetFiles("../Resources/Scripts/");
+    std::cout << "add files\n";
+    for (auto file : *test) {
+        script_engine_->AddScript(file);
+    }
+
+    //script_engine_.GetScript("test")->RegisterFunction("test1", &Application::Test1, this);
+    script_engine_->RegisterAll("test2", &Application::Test2, this);
+
+
+
+    /*auto s = script_engine_.GetScript("test");
+    if (s) s->Call("test");
+    auto blub = s->GetVar<std::string>("current_state");
+    auto table = s->GetTable("config");
+
+    std::cout << "Var: " << blub << std::endl;
+    if (table) {
+        auto t = table.value();
+        int derp = t["derp"];
+        std::cout << "Table: " << derp << std::endl;
+    }*/
+
+
+
+    shader_engine_ = std::make_shared<ShaderEngine>(ShaderEngine(&drawable_objects_));
+    shader_engine_->SetupAllShader();
+
+
+
+    //script_engine_.RegisterAll("cancel_all_procedures_on", &ShaderEngine::CancelAllProceduresOn, shader_engine_.get());
+
 
     // TODO(FK)
     new UserInput(window_);
@@ -37,13 +76,16 @@ bool sd::Application::Setup() {
     std::cout << "Create background panel\n";
     sf::Texture* backgroundTexture = new sf::Texture();
     backgroundTexture->loadFromFile("../Resources/Sprites/fantasy_background.png");
-    drawable_objects_.emplace_back(new Panel(sf::Vector2f(0.0, 0.0), sf::Vector2f(1920, 1080), backgroundTexture));
+    auto panel = new Panel(sf::Vector2f(0.0, 0.0), sf::Vector2f(1920, 1080), backgroundTexture);
+    panel->SetName("background_panel");
+    drawable_objects_.emplace_back(panel);
     // TODO(FK): clean up this shit
 
     std::cout << "Create text output background\n";
     sf::Texture* textOutputBackground = new sf::Texture();
     textOutputBackground->loadFromFile("../Resources/Sprites/fantasy_textoutput.png");
     auto outputBackground = new Panel(sf::Vector2f(48.0,41.0), sf::Vector2f(1044,1008), textOutputBackground);
+    outputBackground->SetName("output-panel");
     drawable_objects_.emplace_back(outputBackground);
 
     std::cout << "emplace Inputfield\n";
@@ -86,38 +128,15 @@ bool sd::Application::Setup() {
     std::cout << "Create global vocabulary containing all words\n";
     LoadVocab();
 
-    std::cout << "Initialize Script Engine" << std::endl;
-    new ScriptEngine();
 
-    auto script_engine_ = ScriptEngine::Get();
-
-    std::cout << "get test file\n";
-    // TODO(FK): find out why Game crashes when tmp test var is not used
-    auto test = FileInput::GetFiles("../Resources/Scripts/");
-    std::cout << "add files\n";
-    for (auto file : *test) {
-        script_engine_.AddScript(file);
-    }
-
-    //script_engine_.GetScript("test")->RegisterFunction("test1", &Application::Test1, this);
-    //script_engine_.RegisterAll("test2", &Application::Test2, this);
-
-    script_engine_.Broadcast("update");
-
-    /*auto s = script_engine_.GetScript("test");
-    if (s) s->Call("test");
-    auto blub = s->GetVar<std::string>("current_state");
-    auto table = s->GetTable("config");
-
-    std::cout << "Var: " << blub << std::endl;
-    if (table) {
-        auto t = table.value();
-        int derp = t["derp"];
-        std::cout << "Table: " << derp << std::endl;
-    }*/
 
     //auto test24 = typeof(this);
     //std::cout << " " <<  << std::endl;
+
+    shader_engine_->SetGlitchOn("output-panel");
+    shader_engine_->SetWeakglitchOn("background_panel");
+
+    script_engine_->Broadcast("update");
 
     std::cout << "End initialization\n";
 
@@ -161,7 +180,6 @@ bool sd::Application::Run() {
     for (auto comp : drawable_objects_) {
         comp->DrawTo(window_);
     }
-
 
     //display
     window_->display();
@@ -235,10 +253,10 @@ void sd::Application::LoadVocab() {
 
 /*int sd::Application::Test1() {
     return drawable_objects_.size();
-}
+}*/
 
 void sd::Application::Test2(std::string message) {
     std::cout << message << std::endl;
-}*/
+}
 
 

@@ -107,7 +107,15 @@ add_executable(${PROJECT_NAME}
                Src/Event/LineToOutputEventArgs.cpp
                Src/Event/LineToOutputEventArgs.h
                Src/Event/WalkedThroughDoorEventArgs.cpp
-               Src/Event/WalkedThroughDoorEventArgs.h)
+               Src/Event/WalkedThroughDoorEventArgs.h
+               Src/Shading/ShaderProcedure.cpp
+               Src/Shading/ShaderProcedure.h
+               Src/Shading/ShaderEngine.cpp
+               Src/Shading/ShaderEngine.h
+               Src/Shading/WeakGlitch.cpp
+               Src/Shading/WeakGlitch.h
+               Src/Shading/Glitch.cpp
+               Src/Shading/Glitch.h)
 
 target_include_directories(${PROJECT_NAME} PRIVATE Src)
 

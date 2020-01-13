@@ -11,9 +11,9 @@
 
 namespace sd {
     class Floor {
-    private:
-        std::vector<Room*> rooms;
 
+    protected:
+        std::vector<Room*> rooms;
     public:
         Floor();
         ~Floor();

@@ -47,19 +47,26 @@ void sd::PossibleWords::Handle(sf::Event event) {
 }
 
 void sd::PossibleWords::Update() {
+    sf::Font* font = new sf::Font();
+    if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
+    {
+        std::cout << "Could not load Font!\n";
+        return;
+    }
+
     lines->clear();
 
     sf::Vector2f offset = sf::Vector2f(50, 90);
     for(auto action : *(playerVocabulary->GetModifiers()))
     {
-        lines->push_back(new FormattedLine(action, sf::Vector2f(position + offset)));
+        lines->push_back(new FormattedLine(action, sf::Vector2f(position + offset), font, sf::Vector2f(1000,1000)));
         offset.y += 30;
     }
 
     offset = sf::Vector2f(250, 90);
     for(auto action : *(playerVocabulary->GetActions()))
     {
-        lines->push_back(new FormattedLine(action, sf::Vector2f(position + offset)));
+        lines->push_back(new FormattedLine(action, sf::Vector2f(position + offset), font, sf::Vector2f(1000,1000)));
         offset.y += 30;
     }
 }

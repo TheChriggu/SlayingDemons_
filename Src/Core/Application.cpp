@@ -42,7 +42,7 @@ bool sd::Application::Setup() {
     }
 
     //script_engine_.GetScript("test")->RegisterFunction("test1", &Application::Test1, this);
-    script_engine_->RegisterAll("test2", &Application::Test2, this);
+    //script_engine_->RegisterAll("test2", &Application::Test2, this);
 
 
 
@@ -133,10 +133,10 @@ bool sd::Application::Setup() {
     //auto test24 = typeof(this);
     //std::cout << " " <<  << std::endl;
 
-    shader_engine_->SetGlitchOn("output-panel");
-    shader_engine_->SetWeakglitchOn("background_panel");
+    //shader_engine_->SetGlitchOn("output-panel");
+    //shader_engine_->SetWeakglitchOn("background_panel");
 
-    script_engine_->Broadcast("update");
+    //script_engine_->Broadcast("update");
 
     std::cout << "End initialization\n";
 

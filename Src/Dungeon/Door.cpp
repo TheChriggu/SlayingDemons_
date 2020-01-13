@@ -6,13 +6,20 @@
 #include <Event/EventArgs.h>
 #include <Event/EventSystem.h>
 #include <Event/WalkedThroughDoorEventArgs.h>
+#include <Event/LineToOutputEventArgs.h>
+#include <ScriptEngine/ScriptEngine.h>
 #include "Door.h"
 
 sd::Door::Door(std::string _name,
                int _spriteSheetIdxOpen, int _spriteSheetIdxLocked, sf::Vector2i _positionOnTileMap, Room* _nextRoom)
         : SingleTileObject(_name, _spriteSheetIdxOpen, _positionOnTileMap)
         , nextRoom(_nextRoom)
-{}
+        ,spriteSheetIdxOpen(_spriteSheetIdxOpen)
+        ,spriteSheetIdxLocked(_spriteSheetIdxLocked)
+        ,isLocked(false)
+{
+
+}
 
 sd::Room *sd::Door::GetConnectedRoom() {
     return nextRoom;
@@ -32,8 +39,38 @@ std::string sd::Door::GetName() {
 }
 
 void sd::Door::BeInteractedWith() {
-    std::shared_ptr<WalkedThroughDoorEventArgs> args;
-    args = std::make_shared<WalkedThroughDoorEventArgs>(WalkedThroughDoorEventArgs(this));
-    args->type = sd::EventArgs::Type::WalkedThroughDoor;
+    if(isLocked)
+    {
+        std::shared_ptr<LineToOutputEventArgs> args;
+        args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("This door is locked."));
+        EventSystem::Get().Trigger(args);
+    }
+
+    else {
+        std::shared_ptr<WalkedThroughDoorEventArgs> args;
+        args = std::make_shared<WalkedThroughDoorEventArgs>(WalkedThroughDoorEventArgs(this));
+        args->type = sd::EventArgs::Type::WalkedThroughDoor;
+        EventSystem::Get().Trigger(args);
+
+        if (nextRoom) {
+            ScriptEngine::Get()->Broadcast("room_changed", nextRoom->is_last);
+        }
+    }
+}
+
+void sd::Door::SetLocked(bool lockState) {
+    isLocked = lockState;
+    if(isLocked)
+    {
+        spriteSheetIdx = spriteSheetIdxLocked;
+    }
+    else
+    {
+        spriteSheetIdx = spriteSheetIdxOpen;
+    }
+
+    std::shared_ptr<EventArgs> args;
+    args = std::make_shared<EventArgs>(EventArgs());
+    args->type = sd::EventArgs::Type::RoomLayoutChanged;
     EventSystem::Get().Trigger(args);
 }

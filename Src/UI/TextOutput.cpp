@@ -8,15 +8,24 @@
 #include <Event/EventSystem.h>
 #include <Event/TextOutputCreatedEventArgs.h>
 #include <Event/LineToOutputEventArgs.h>
+#include <ScriptEngine/ScriptEngine.h>
 
 //TODO(CH): Lines have to move up, when max is reached.
 // TODO(FK): clean up name
 sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color)
     : DrawableObject("text-output")
 {
+    ScriptEngine::Get()->RegisterAll("print_line", &TextOutput::printLine, this);
+
+    font = new sf::Font();
+    if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
+    {
+        std::cout << "Could not load Font!\n";
+        return;
+    }
+
     lines = new std::list<FormattedLine*>();
-    lines->push_back(new FormattedLine("", sf::Vector2f(position + sf::Vector2f(20, 20))));
-    text = "";
+    lines->push_back(new FormattedLine("", sf::Vector2f(position + sf::Vector2f(20, 20)), font, maxSize));
 
     glitchTexture = new sf::RenderTexture();
     if(!glitchTexture->create(1920,1080))
@@ -81,7 +90,8 @@ void sd::TextOutput::DrawTo(sf::RenderTarget* window) const {
 }
 
 void sd::TextOutput::addLine(sf::String string) {
-    FormattedLine* newLine = new FormattedLine(string, sf::Vector2f(lines->back()->getRect().left, lines->back()->getRect().top+lines->back()->getRect().height)) ;
+
+    FormattedLine* newLine = new FormattedLine(string, sf::Vector2f(lines->back()->getRect().left, lines->back()->getRect().top+lines->back()->getRect().height), font, maxSize) ;
     //format line
     lines->push_back(newLine);
     while(GetSize().y > maxSize.y)
@@ -91,6 +101,11 @@ void sd::TextOutput::addLine(sf::String string) {
         lines->pop_front();
     }
 
+}
+
+void sd::TextOutput::printLine(std::string string) {
+    sf::String temp(string);
+    addLine(temp);
 }
 
 void sd::TextOutput::toggleGlitch() {

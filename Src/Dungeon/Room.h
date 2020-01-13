@@ -10,9 +10,10 @@
 #include "SingleTileObject.h"
 #include "MultiTileObject.h"
 #include "../Monster.h"
+#include "../Event/Subscriber.h"
 
 namespace sd {
-    class Room  {
+    class Room : public Subscriber{
     private:
         std::vector<RoomObject*> roomObjects;
         int* layout;
@@ -25,18 +26,23 @@ namespace sd {
         Room();
         ~Room();
 
+        // TODO(FK): slightly embarrassing temp variable
+        bool is_last = false;
+
         sf::String GetDescription();
         int* GetLayout();
 
         void AddObject(RoomObject* object);
         void SetEnemy(Monster* _enemy);
 
-        std::string GetEnterDescription();
+        virtual std::string GetEnterDescription();
         Monster* GetEnemy();
 
 
         RoomObject* GetObjectWithName(std::string name);
+        void RemoveObjectWithName(std::string name);
 
+        void Handle(std::shared_ptr<EventArgs> e) override;
     };
 }
 

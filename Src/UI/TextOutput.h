@@ -14,18 +14,19 @@
 namespace sd {
     class TextOutput: public DrawableObject, public Subscriber {
 
-        sf::String text;
         sf::RenderTexture* glitchTexture;
         sf::Sprite* glitchSprite;
         std::list<FormattedLine*>* lines;
         sf::Vector2f maxSize;
         sf::Shader* shader;
+        sf::Font* font;
 
     public:
         TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color);
         ~TextOutput();
 
         void addLine(sf::String string);
+        void printLine(std::string string);
 
         void DrawTo(sf::RenderTarget* window) const override;
         sf::Vector2f GetPosition() override;

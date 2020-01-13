@@ -4,11 +4,12 @@
 
 #include "FormattedLine.h"
 
-FormattedLine::FormattedLine(sf::String string, sf::Vector2f _position) {
+FormattedLine::FormattedLine(sf::String string, sf::Vector2f _position, sf::Font* _font, sf::Vector2f _maxSize) {
     words = new std::list<FormattedWord*>();
     position = _position;
-    words->push_back(new FormattedWord("", false, _position));
-    formatLine(string);
+    maxSize = _maxSize;
+    words->push_back(new FormattedWord("", false, _position, _font));
+    FormatLine(string, _font);
 
 }
 
@@ -23,26 +24,48 @@ void FormattedLine::drawTo(sf::RenderTarget* window, sf::RenderTarget* glitchWin
     }
 }
 
-void FormattedLine::formatLine(sf::String string) {
-    sf::String word = "";
+void FormattedLine::FormatLine(sf::String string, sf::Font* _font) {
+    /*std::vector<std::string> splitVec;
+    std::string delims = " []";
+    boost::split(splitVec, string, boost::algorithm::is_any_of(delims));*/
+
+    sf::Vector2f nextPosition =  sf::Vector2f(getRect().left,getRect().top+ getRect().height);
+    sf::String word = " ";
     for(auto c = string.begin(); c != string.end(); c++)
     {
-        if(sf::String(*c) != ' ')
+        if(sf::String(*c) != ' ' && c != string.end()-1)
         {
             word += *c;
         }
 
         else
         {
-            sf::Vector2f wordPosition =  sf::Vector2f(getRect().left + getRect().width,getRect().top);
-           FormattedWord* newWord = new FormattedWord(word, false, wordPosition);
+            if(c == string.end()-1)
+            {
+                word += *c;
+            }
+
+            /*if(nextPosition.x > maxSize.x)
+            {
+                nextPosition = sf::Vector2f(getRect().left, getRect().top + getRect().height);
+            }*/
+
+           FormattedWord* newWord = new FormattedWord(word, false, nextPosition, _font);
+           nextPosition.x += newWord->getRect().width;
+            if(nextPosition.x > maxSize.x)
+            {
+                nextPosition = sf::Vector2f(getRect().left, getRect().top + getRect().height);
+                newWord->setPosition(nextPosition);
+                nextPosition.x += newWord->getRect().width;
+            }
+
            words->push_back(newWord);
            word = " ";
         }
     }
 
-    FormattedWord* newWord = new FormattedWord(word, false, sf::Vector2f(getRect().left + getRect().width,getRect().top));
-    words->push_back(newWord);
+    /*FormattedWord* newWord = new FormattedWord(word, false, sf::Vector2f(getRect().left + getRect().width,getRect().top), _font);
+    words->push_back(newWord);*/
 }
 
 sf::FloatRect FormattedLine::getRect(){

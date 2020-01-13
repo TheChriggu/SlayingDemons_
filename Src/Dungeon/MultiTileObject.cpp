@@ -3,6 +3,9 @@
 //
 
 #include <iostream>
+#include <memory>
+#include <Event/EventSystem.h>
+#include <Event/LineToOutputEventArgs.h>
 #include "MultiTileObject.h"
 
 sd::MultiTileObject::MultiTileObject(std::string _name, int *_layout, sf::Vector2i _size,
@@ -11,7 +14,7 @@ sd::MultiTileObject::MultiTileObject(std::string _name, int *_layout, sf::Vector
     ,size(_size)
     ,positionOnTileMap(_positionOnTileMap)
 {
-    layout = new int[size.x*size.y];
+    layout = new int[size.x*size.y]();
     for (int i=0; i < size.x*size.y; i++)
     {
         layout[i] = _layout[i];
@@ -40,9 +43,9 @@ void sd::MultiTileObject::PutOnLayout(int *layout, int width, int height) {
 
             int pos = startPos+col+row*width;
 
-            if(layout[i] != -1)
+            if(this->layout[i] != -1)
             {
-                layout[pos] = layout[i];
+                layout[pos] = this->layout[i];
             }
         }
 
@@ -55,5 +58,10 @@ std::string sd::MultiTileObject::GetName() {
 }
 
 void sd::MultiTileObject::BeInteractedWith() {
-    //yeah... whats here?
+    std::shared_ptr<LineToOutputEventArgs> args;
+    args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("You try to interact with the " + name + "."));
+    EventSystem::Get().Trigger(args);
+
+    args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("Nothing happens."));
+    EventSystem::Get().Trigger(args);
 }

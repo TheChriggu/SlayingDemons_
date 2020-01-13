@@ -8,7 +8,6 @@
 
 sd::ScriptEngine::ScriptEngine() {
     if (!instance) instance = this;
-    call = 0;
     /*scripts_.emplace_back(
             Script(R"(
                     function test()
@@ -36,15 +35,6 @@ void sd::ScriptEngine::AddScript(const boost::filesystem::path& url) {
     ));
 }
 
-void sd::ScriptEngine::Broadcast(const char *function)  {
-    std::cout << "Go Bradcast call: " << call << std::endl;
-    for (const auto& script : scripts_) {
-        std::cout << "Call: " << call << ", script: " << script->GetName() << std::endl;
-        script->Call(function);
-    }
-    call++;
-    std::cout << "End Bradcast: " << call << std::endl;
-}
 
 std::shared_ptr<Script> sd::ScriptEngine::GetScript(const std::string& name) const {
 

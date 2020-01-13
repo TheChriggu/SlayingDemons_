@@ -18,8 +18,6 @@ namespace sd {
 
         std::vector<std::shared_ptr<Script>> scripts_;
 
-        int call;
-
     public:
 
 
@@ -30,7 +28,15 @@ namespace sd {
 
         void AddScript(const boost::filesystem::path& url);
 
-        void Broadcast(const char* function) ;
+        template <typename... Args>
+        void Broadcast(const char* function, Args&&... args) {
+
+            for (const auto& script : scripts_) {
+                script->Call(function, std::forward<Args>(args)...);
+            }
+        }
+
+
         std::shared_ptr<Script> GetScript(const std::string& name) const;
 
         template <typename... Args, typename Key>

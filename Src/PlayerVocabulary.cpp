@@ -79,24 +79,25 @@ void sd::PlayerVocabulary::Handle(std::shared_ptr<EventArgs> _e) {
     {
         auto e = dynamic_cast<NewWordCollectedEventArgs*>(_e.get());
 
-        Word* word = sd::Vocabulary::allWords->Get(e->word);
+        if(!HasWord(e->word)) {
+            Word *word = sd::Vocabulary::allWords->Get(e->word);
 
-        switch(word->GetType())
-        {
-            case (sd::Word::type::action):
-                AddAction(e->word);
-                break;
-            case (sd::Word::type::modifier):
-                AddModifier(e->word);
-                break;
-            case (sd::Word::type::navigation):
-                AddNavigation(e->word);
-                break;
+            switch (word->GetType()) {
+                case (sd::Word::type::action):
+                    AddAction(e->word);
+                    break;
+                case (sd::Word::type::modifier):
+                    AddModifier(e->word);
+                    break;
+                case (sd::Word::type::navigation):
+                    AddNavigation(e->word);
+                    break;
+            }
+
+
+            std::shared_ptr<PlayerVocabChangedEventArgs> args;
+            args = std::make_shared<PlayerVocabChangedEventArgs>(PlayerVocabChangedEventArgs(this));
+            EventSystem::Get().Trigger(args);
         }
-
-
-        std::shared_ptr<PlayerVocabChangedEventArgs> args;
-        args = std::make_shared<PlayerVocabChangedEventArgs>(PlayerVocabChangedEventArgs(this));
-        EventSystem::Get().Trigger(args);
     }
 }

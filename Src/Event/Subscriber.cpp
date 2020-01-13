@@ -7,7 +7,6 @@
 #include <iostream>
 
 sd::Subscriber::Subscriber() {
-    std::cout << "Constructor Subscriber \n" << std::endl;
     EventSystem::Get().Subscribe(std::shared_ptr<Subscriber>(this));
 }
 

@@ -2,6 +2,9 @@
 // Created by christian.heusser on 10.12.2019.
 //
 
+#include <memory>
+#include <Event/LineToOutputEventArgs.h>
+#include <Event/EventSystem.h>
 #include "SingleTileObject.h"
 
 sd::SingleTileObject::SingleTileObject(std::string _name, int _spriteSheetIdx, sf::Vector2i _positionOnTileMap)
@@ -22,4 +25,13 @@ void sd::SingleTileObject::PutOnLayout(int *layout, int width, int height) {
 
 std::string sd::SingleTileObject::GetName() {
     return name;
+}
+
+void sd::SingleTileObject::BeInteractedWith() {
+    std::shared_ptr<LineToOutputEventArgs> args;
+    args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("You try to interact with the " + name + "."));
+    EventSystem::Get().Trigger(args);
+
+    args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("Nothing happens."));
+    EventSystem::Get().Trigger(args);
 }

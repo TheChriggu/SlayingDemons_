@@ -13,6 +13,8 @@ namespace sd {
     private:
         bool isLocked;
         Room* nextRoom;
+        int spriteSheetIdxOpen;
+        int spriteSheetIdxLocked;
 
     public:
         Door(std::string _name, int _spriteSheetIdxOpen, int _spriteSheetIdxLocked, sf::Vector2i _positionOnTileMap, Room* _nextRoom);
@@ -21,6 +23,8 @@ namespace sd {
         virtual void PutOnLayout(int* layout, int width, int height) override;
         std::string GetName() override;
         void BeInteractedWith() override;
+
+        void SetLocked(bool lockState);
 
         Room* GetConnectedRoom();
     };

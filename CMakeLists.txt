@@ -108,6 +108,18 @@ add_executable(${PROJECT_NAME}
                Src/Event/LineToOutputEventArgs.h
                Src/Event/WalkedThroughDoorEventArgs.cpp
                Src/Event/WalkedThroughDoorEventArgs.h
+               Src/Dungeon/LastRoom.cpp
+               Src/Dungeon/LastRoom.h
+               Src/Event/WalkedThroughDoorEventArgs.h
+               Src/Dungeon/Sofa.cpp
+               Src/Dungeon/Sofa.h
+               Src/Dungeon/Table.cpp
+               Src/Dungeon/Table.h
+               Src/Dungeon/Book.cpp
+               Src/Dungeon/Book.h
+               Src/Dungeon/Goblin.cpp
+               Src/Dungeon/Goblin.h
+               Src/Core/GlobalDefinitions.h
                Src/Shading/ShaderProcedure.cpp
                Src/Shading/ShaderProcedure.h
                Src/Shading/ShaderEngine.cpp
@@ -136,4 +148,5 @@ target_link_libraries(${PROJECT_NAME}
                       sfml-network
                       sfml-audio
                       lua
-                      Boost::filesystem)
+                      Boost::filesystem
+                      )

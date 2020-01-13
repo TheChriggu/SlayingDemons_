@@ -16,7 +16,13 @@ public:
     virtual ~Script() = default;
 
     void AddContent(const char* content);
-    void Call(const char* function) const;
+    template <typename... Args>
+    void Call(const char* function, Args&&... args) const {
+        sol::function func = (*state_)[function];
+
+        if (func.valid())
+            func(std::forward<Args>(args)...);
+    }
 
 
     const std::string& GetName() const;

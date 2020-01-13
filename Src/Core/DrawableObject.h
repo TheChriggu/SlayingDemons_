@@ -6,12 +6,13 @@
 #define UNTITLED_DISPLAYAREA_H
 
 #include "Core/GlobalDefinitions.h"
+#include "Core/Manageable.h"
 #include "SFML/Graphics.hpp"
 #include "Drawable.h"
 #include "Shading/ShaderProcedure.h"
 
 namespace sd {
-    class DrawableObject {
+    class DrawableObject : public Manageable {
     protected:
         std::string name_;
         ShaderProcedure* shaderProcedure_;
@@ -19,6 +20,9 @@ namespace sd {
     public:
         explicit DrawableObject(std::string name);
         virtual ~DrawableObject() = default;
+
+        bool Setup() override;
+        void Shutdown() override;
 
         virtual void DrawTo(sf::RenderTarget *window) const = 0;
 

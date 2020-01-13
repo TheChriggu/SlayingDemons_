@@ -4,18 +4,17 @@
 
 #include "InputTextProcessor.h"
 #include <iostream>
+#include <utility>
 #include <Event/TextOutputCreatedEventArgs.h>
 #include <Event/EventSystem.h>
 #include <Event/NewWordCollectedEventArgs.h>
 #include <Event/LineToOutputEventArgs.h>
+#include <Event/PlayerStateCreatedEventArgs.h>
 
 sd::InputTextProcessor::InputTextProcessor() : Subscriber() {
-    playerState = new PlayerState();
-}
-
-sd::InputTextProcessor::~InputTextProcessor() {
-    delete playerState;
-    playerState = nullptr;
+    playerState = sp<PlayerState>(new PlayerState());
+    std::cout << "~InputTextProcessor Constructor~" << std::endl;
+    EventSystem::Get().Trigger(sp<PlayerStateCreatedEventArgs>(new PlayerStateCreatedEventArgs(playerState)));
 }
 
 void sd::InputTextProcessor::ProcessInput(sf::String spell) {
@@ -88,7 +87,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
                 Word* word2 = Vocabulary::allWords->Get(words[1]);
                 if(word1->GetType() == sd::Word::type::modifier && word2->GetType() == sd::Word::type::action)
                 //make turn in fight
-                playerState->GetFight()->FullTurn(words[1], words[0], output);
+                playerState->GetFight()->FullTurn(words[1], words[0], output.get());
 
                 //evaluate result
                 //end fight, if fight is over
@@ -129,9 +128,10 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
 
         //evaluate spell
 
-
-
         //send evaluation to output
+
+
+
     }
 }
 
@@ -152,15 +152,15 @@ std::vector<std::string> sd::InputTextProcessor::SplitBySpace(std::string string
     return retVal;
 }
 
-void sd::InputTextProcessor::SetOutput(sd::TextOutput *_output) {
-    output = _output;
+void sd::InputTextProcessor::SetOutput(sp<sd::TextOutput> _output) {
+    output = std::move(_output);
 }
 
-void sd::InputTextProcessor::SetRoom(sd::Room *_room) {
-    playerState->SetRoomAsCurrent(_room);
+void sd::InputTextProcessor::SetRoom(sp<sd::Room> _room) {
+    playerState->SetRoomAsCurrent(_room.get());
 }
 
-sd::PlayerState *sd::InputTextProcessor::GetPlayerState() {
+sp<sd::PlayerState> sd::InputTextProcessor::GetPlayerState() {
     return playerState;
 }
 

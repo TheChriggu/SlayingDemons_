@@ -7,6 +7,7 @@
 
 #include <memory>
 #include "Event/EventArgs.h"
+#include "Core/GlobalDefinitions.h"
 
 namespace sd {
     class Subscriber {
@@ -15,7 +16,7 @@ namespace sd {
         // declare virtual destructor to avoid potential memory leaks
         virtual ~Subscriber() = default;
 
-        virtual void Handle(std::shared_ptr<EventArgs> e) = 0;
+        virtual void Handle(sp<EventArgs> e) = 0;
     };
 }
 

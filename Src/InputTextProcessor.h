@@ -15,22 +15,22 @@ namespace sd {
     class InputTextProcessor : public Subscriber {
     private:
     //Fight* fight;
-    TextOutput* output;
+    sp<TextOutput> output;
     //Room* room;
-    PlayerState* playerState;
+    sp<PlayerState> playerState;
 
     public:
         InputTextProcessor();
-        ~InputTextProcessor() override;
+        ~InputTextProcessor() override = default;
 
-        void SetOutput(TextOutput* _output);
-        void SetRoom(Room* _room);
+        void SetOutput(sp<TextOutput> _output);
+        void SetRoom(sp<Room> _room);
 
         void ProcessInput(sf::String spell);
         std::vector<std::string> SplitBySpace(std::string string);
-        PlayerState* GetPlayerState();
+        sp<PlayerState> GetPlayerState();
 
-        void Handle(std::shared_ptr<EventArgs> e) override;
+        void Handle(sp<EventArgs> e) override;
     };
 }
 

@@ -18,12 +18,12 @@ namespace sd {
         sf::Shader* weakglitch;
         sf::Shader* glitch;
 
-        std::vector<DrawableObject*>* drawable_objects_;
+        std::vector<sp<DrawableObject>>& drawable_objects_;
 
 
 
     public:
-        explicit ShaderEngine(std::vector<DrawableObject*>* drawable_objects);
+        explicit ShaderEngine(std::vector<sp<DrawableObject>>& drawable_objects);
         virtual ~ShaderEngine() = default;
 
         void SetupAllShader();

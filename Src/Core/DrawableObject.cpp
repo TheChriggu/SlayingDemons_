@@ -8,7 +8,8 @@
 
 sd::DrawableObject::DrawableObject(std::string name)
     : name_(std::move(name))
-{ shaderProcedure_ = nullptr; }
+    , shaderProcedure_(nullptr)
+{ is_setup_ = false; }
 
 sf::Vector2f sd::DrawableObject::GetPosition() {
     return sf::Vector2f(-1,-1);
@@ -24,7 +25,6 @@ const std::string &sd::DrawableObject::GetName() const {
 
 void sd::DrawableObject::SetShaderProcedure(sd::ShaderProcedure* shaderProcedure) {
     shaderProcedure_ = shaderProcedure;
-    std::cout << "#Procedure: " << shaderProcedure << std::endl;
 }
 
 sd::ShaderProcedure* sd::DrawableObject::GetShaderProcedure() const {
@@ -33,6 +33,14 @@ sd::ShaderProcedure* sd::DrawableObject::GetShaderProcedure() const {
 
 void sd::DrawableObject::SetName(const char *name) {
     name_ = name;
+}
+
+bool sd::DrawableObject::Setup() {
+    return is_setup_ = true;
+}
+
+void sd::DrawableObject::Shutdown() {
+    is_setup_ = false;
 }
 
 

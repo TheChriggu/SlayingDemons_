@@ -14,7 +14,7 @@ function room_changed(is_last_room)
         print_line("???: And dangerous ones...")
         print_line("\n")
 
-        --set_glitch_on("output-panel")
+        set_glitch_on("output-panel")
         --set_glitch_on("map-window")
         --set_weakglitch_on("background_panel")
 

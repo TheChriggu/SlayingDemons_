@@ -18,7 +18,8 @@ namespace sd {
             WalkedThroughDoor,
             RoomLayoutChanged,
             StartFightWithGoblin,
-            GoblinDefeated
+            GoblinDefeated,
+            PlayerStateCreated
         };
 
         EventArgs();

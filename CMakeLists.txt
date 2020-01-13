@@ -127,7 +127,7 @@ add_executable(${PROJECT_NAME}
                Src/Shading/WeakGlitch.cpp
                Src/Shading/WeakGlitch.h
                Src/Shading/Glitch.cpp
-               Src/Shading/Glitch.h)
+               Src/Shading/Glitch.h Src/Event/PlayerStateCreatedEventArgs.cpp Src/Event/PlayerStateCreatedEventArgs.h)
 
 target_include_directories(${PROJECT_NAME} PRIVATE Src)
 

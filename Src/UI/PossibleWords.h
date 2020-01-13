@@ -27,6 +27,8 @@ namespace sd {
         PossibleWords(sf::Vector2f position, sf::Vector2f size, std::string pathToBackground);
         ~PossibleWords();
 
+        bool Setup() override;
+
         void DrawTo(sf::RenderTarget* window) const override;
         void SetPlayerVocab(PlayerVocabulary* _playerVocabulary);
 

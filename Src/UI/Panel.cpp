@@ -67,4 +67,8 @@ void sd::Panel::DrawTo(sf::RenderTarget *window) const{
 
 }
 
+bool sd::Panel::Setup() {
+    return DrawableObject::Setup();
+}
+
 

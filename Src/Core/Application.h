@@ -25,14 +25,13 @@
 namespace sd {
     class Application : public Manageable {
 
-        sf::RenderWindow* window_;
-        FileInput* file_input_;
+        sp<sf::RenderWindow> window_;
+        sp<FileInput> file_input_;
 
-        World* world_;
-        TextOutput* output;
+        sp<World> world_;
+        sp<TextOutput> output;
 
-        std::vector<DrawableObject*> drawable_objects_;
-        InputTextProcessor* inputTextProcessor;
+        std::vector<sp<DrawableObject>> drawable_objects_;
 
         sp<ShaderEngine> shader_engine_;
 
@@ -40,16 +39,13 @@ namespace sd {
 
     public:
         Application();
-        virtual ~Application() = default;
+        ~Application() override = default;
 
         bool Setup() override;
         bool Run();
         void Shutdown() override;
 
         void clear();
-
-        //int Test1();
-        void Test2(std::string message);
     };
 }
 

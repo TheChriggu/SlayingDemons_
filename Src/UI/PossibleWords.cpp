@@ -2,6 +2,7 @@
 // Created by christian.heusser on 07.01.2020.
 //
 
+#include <Event/PlayerVocabChangedEventArgs.h>
 #include "PossibleWords.h"
 
 // TODO(FK): clean up name
@@ -61,4 +62,13 @@ void sd::PossibleWords::Update() {
         lines->push_back(new FormattedLine(action, sf::Vector2f(position + offset)));
         offset.y += 30;
     }
+}
+
+void sd::PossibleWords::Handle(std::shared_ptr<EventArgs> _e) {
+    if (_e->type == sd::EventArgs::Type::PlayerVocabChanged) {
+        auto e = dynamic_cast<PlayerVocabChangedEventArgs *>(_e.get());
+
+        Update();
+    }
+
 }

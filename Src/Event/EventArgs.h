@@ -11,7 +11,11 @@ namespace sd {
     public:
         enum class Type {
             None = 0,
-            TextOutputCreated
+            TextOutputCreated,
+            NewWordCollected,
+            PlayerVocabChanged,
+            LineToOutput,
+            WalkedThroughDoor
         };
 
         EventArgs();

@@ -12,7 +12,7 @@
 #include "PlayerVocabulary.h"
 
 namespace sd {
-    class PlayerState {
+    class PlayerState : public Subscriber {
     private:
         Room* currentRoom;
         Fight* fight;
@@ -33,6 +33,7 @@ namespace sd {
         void EndFight();
 
         PlayerVocabulary* GetPlayerVocabulary();
+        void Handle(std::shared_ptr<EventArgs> e) override;
 
     };
 }

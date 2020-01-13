@@ -37,3 +37,7 @@ void sd::Modifier::SetName(sf::String _name) {
 sf::String sd::Modifier::GetName() {
     return name;
 }
+
+sd::Word::type sd::Modifier::GetType() {
+    return modifier;
+}

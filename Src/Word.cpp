@@ -7,3 +7,7 @@
 sd::Word::~Word() {
 
 }
+
+sd::Word::type sd::Word::GetType() {
+    return unknown;
+}

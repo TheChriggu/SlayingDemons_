@@ -3,7 +3,13 @@
 //
 
 #include <algorithm>
+#include <Event/NewWordCollectedEventArgs.h>
+#include <Event/TextOutputCreatedEventArgs.h>
+#include <Event/PlayerVocabChangedEventArgs.h>
+#include <Event/EventSystem.h>
 #include "PlayerVocabulary.h"
+#include "Word.h"
+#include "Vocabulary.h"
 
 sd::PlayerVocabulary::PlayerVocabulary() {
     actions = new std::vector<std::string>();
@@ -66,4 +72,31 @@ std::vector<std::string> *sd::PlayerVocabulary::GetModifiers() {
 
 std::vector<std::string> *sd::PlayerVocabulary::GetNavigation() {
     return navigation;
+}
+
+void sd::PlayerVocabulary::Handle(std::shared_ptr<EventArgs> _e) {
+    if (_e->type == sd::EventArgs::Type::NewWordCollected)
+    {
+        auto e = dynamic_cast<NewWordCollectedEventArgs*>(_e.get());
+
+        Word* word = sd::Vocabulary::allWords->Get(e->word);
+
+        switch(word->GetType())
+        {
+            case (sd::Word::type::action):
+                AddAction(e->word);
+                break;
+            case (sd::Word::type::modifier):
+                AddModifier(e->word);
+                break;
+            case (sd::Word::type::navigation):
+                AddNavigation(e->word);
+                break;
+        }
+
+
+        std::shared_ptr<PlayerVocabChangedEventArgs> args;
+        args = std::make_shared<PlayerVocabChangedEventArgs>(PlayerVocabChangedEventArgs(this));
+        EventSystem::Get().Trigger(args);
+    }
 }

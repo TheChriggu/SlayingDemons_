@@ -2,6 +2,10 @@
 // Created by christian.heusser on 12.12.2019.
 //
 
+#include <memory>
+#include <Event/EventArgs.h>
+#include <Event/EventSystem.h>
+#include <Event/WalkedThroughDoorEventArgs.h>
 #include "Door.h"
 
 sd::Door::Door(std::string _name,
@@ -25,4 +29,11 @@ void sd::Door::PutOnLayout(int *layout, int width, int height) {
 
 std::string sd::Door::GetName() {
     return SingleTileObject::GetName();
+}
+
+void sd::Door::BeInteractedWith() {
+    std::shared_ptr<WalkedThroughDoorEventArgs> args;
+    args = std::make_shared<WalkedThroughDoorEventArgs>(WalkedThroughDoorEventArgs(this));
+    args->type = sd::EventArgs::Type::WalkedThroughDoor;
+    EventSystem::Get().Trigger(args);
 }

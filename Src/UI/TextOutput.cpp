@@ -14,91 +14,64 @@
 // TODO(FK): clean up name
 sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color)
     : DrawableObject("text-output")
+    , Subscriber()
+    , start_position_(position)
 {
-    ScriptEngine::Get()->RegisterAll("print_line", &TextOutput::printLine, this);
 
-    font = new sf::Font();
-    if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
-    {
-        std::cout << "Could not load Font!\n";
-        return;
-    }
-
-    lines = new std::list<FormattedLine*>();
-    lines->push_back(new FormattedLine("", sf::Vector2f(position + sf::Vector2f(20, 20)), font, maxSize));
-
-    glitchTexture = new sf::RenderTexture();
-    if(!glitchTexture->create(1920,1080))
-    {
-        std::cout << "could not create render texture for output\n";
-    }
-
-
-    glitchSprite = new sf::Sprite();
-    glitchSprite->setTexture(glitchTexture->getTexture());
 
     maxSize = size;
     maxSize.y = 450; //TODO: This is not good
-
-    shader = new sf::Shader();
-    if (!shader->loadFromFile("../Resources/Shaders/textGlitch.frag", sf::Shader::Fragment)) {
-        // error...
-    }
-
-    auto pt = std::make_shared<TextOutputCreatedEventArgs>(this);
-
-    EventSystem::Get().Trigger(pt);
 }
 
-sd::TextOutput::~TextOutput() {
-    delete lines;
-    lines = nullptr;
+bool sd::TextOutput::Setup() {
+    ScriptEngine::Get()->RegisterAll("print_line", &TextOutput::printLine, this);
 
-    delete glitchTexture;
-    glitchTexture = nullptr;
+    font = sp<sf::Font>(new sf::Font());
 
-    delete glitchSprite;
-    glitchSprite = nullptr;
+    if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
+    {
+        std::cout << "Could not load Font!\n";
+        return false;
+    }
 
-    delete shader;
-    shader = nullptr;
+    lines.push_back(sp<FormattedLine>(new FormattedLine("", sf::Vector2f(start_position_ + sf::Vector2f(20, 20)), font.get(), maxSize)));
+
+    // Trigger TextOutput Created Event
+    EventSystem::Get().Trigger(std::make_shared<TextOutputCreatedEventArgs>(sp<TextOutput>(this)));
+
+    return DrawableObject::Setup();
 }
 
 void sd::TextOutput::DrawTo(sf::RenderTarget* window) const {
-
-    if (!sf::Shader::isAvailable())
+    // TODO(CH): There is no need to query this condition. Removed because causing Output to not be drawing anymore
+    /*if (!sf::Shader::isAvailable())
     {
-        for (FormattedLine* line : *lines) {
+        for (const auto& line : lines) {
             line->drawTo(window, window);
         }
+    }*/
+    for (const auto& line : lines) {
+        line->drawTo(window, window);
     }
-    else
-    {
-        glitchTexture->clear(sf::Color::White);
-        //glitchTexture->draw(*honkerSprite, shader);
-
-        for (FormattedLine* line : *lines) {
-            line->drawTo(window, glitchTexture);
-        }
-
-
-        glitchTexture->display();
-        //shader->setUniform("texture", glitchTexture->getTexture());
-        window->draw(*glitchSprite, shader);
-    }
-
 }
 
 void sd::TextOutput::addLine(sf::String string) {
 
-    FormattedLine* newLine = new FormattedLine(string, sf::Vector2f(lines->back()->getRect().left, lines->back()->getRect().top+lines->back()->getRect().height), font, maxSize) ;
+    auto newLine = sp<FormattedLine>(
+            new FormattedLine(string, sf::Vector2f(
+                    lines.back()->getRect().left,
+                    lines.back()->getRect().top + lines.back()->getRect().height),
+                            font.get(),
+                            maxSize)
+    );
+
     //format line
-    lines->push_back(newLine);
+    lines.push_back(newLine);
     while(GetSize().y > maxSize.y)
     {
-        float distance = lines->front()->getRect().height;
+        float distance = lines.front()->getRect().height;
         MoveVertical(-distance);
-        lines->pop_front();
+        lines.pop_front();
     }
 
 }
@@ -106,12 +79,6 @@ void sd::TextOutput::addLine(sf::String string) {
 void sd::TextOutput::printLine(std::string string) {
     sf::String temp(string);
     addLine(temp);
-}
-
-void sd::TextOutput::toggleGlitch() {
-    for(FormattedLine* line : *lines){
-        line->toggleGlitch();
-    }
 }
 
 void sd::TextOutput::Handle(sf::Event event) {
@@ -128,7 +95,7 @@ sf::Vector2f sd::TextOutput::GetSize() {
     retVal.x = 0;
     retVal.y = 0;
 
-    for (FormattedLine* line : *lines)
+    for (const auto& line : lines)
     {
         sf::FloatRect rect = line->getRect();
         if (rect.width > retVal.x)
@@ -143,27 +110,20 @@ sf::Vector2f sd::TextOutput::GetSize() {
 }
 
 void sd::TextOutput::MoveVertical(float distance) {
-    for(FormattedLine* line : *lines){
+    for(const auto& line : lines){
         line->MoveVertical(distance);
     }
 }
 
-void sd::TextOutput::Update(sf::RenderTarget* window) {
-    glitchTexture->clear(sf::Color::White);
-
-    for (FormattedLine* line : *lines) {
-        line->drawTo(window, glitchTexture);
-    }
-
-
-    glitchTexture->display();
-}
-
 void sd::TextOutput::Handle(std::shared_ptr<EventArgs> e) {
     if (e->type == EventArgs::Type::LineToOutput) {
+
         auto arg = dynamic_cast<LineToOutputEventArgs*>(e.get());
+        std::cout << ">>add line: " << arg->line << std::endl;
         addLine(arg->line);
     }
 }
+
+
 
 

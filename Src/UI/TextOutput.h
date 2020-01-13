@@ -14,16 +14,18 @@
 namespace sd {
     class TextOutput: public DrawableObject, public Subscriber {
 
-        sf::RenderTexture* glitchTexture;
-        sf::Sprite* glitchSprite;
-        std::list<FormattedLine*>* lines;
+        std::list<sp<FormattedLine>> lines;
         sf::Vector2f maxSize;
-        sf::Shader* shader;
-        sf::Font* font;
+        sp<sf::Font> font;
+
+        // TODO(CH): rework this Class! Position of an asset should not be determent by "old" data!
+        sf::Vector2f start_position_;
 
     public:
         TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color);
-        ~TextOutput();
+        ~TextOutput() override = default;
+
+        bool Setup() override;
 
         void addLine(sf::String string);
         void printLine(std::string string);
@@ -31,9 +33,7 @@ namespace sd {
         void DrawTo(sf::RenderTarget* window) const override;
         sf::Vector2f GetPosition() override;
         sf::Vector2f GetSize() override;
-        void toggleGlitch();
         void MoveVertical(float distance);
-        void Update(sf::RenderTarget* window);
 
         void Handle(sf::Event event) override;
         void Handle(std::shared_ptr<EventArgs> e) override;

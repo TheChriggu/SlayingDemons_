@@ -3,19 +3,18 @@
 //
 
 #include <Event/PlayerVocabChangedEventArgs.h>
+#include <Event/PlayerStateCreatedEventArgs.h>
 #include "PossibleWords.h"
 
 // TODO(FK): clean up name
 sd::PossibleWords::PossibleWords(sf::Vector2f _position, sf::Vector2f _size, std::string pathToBackground)
     : DrawableObject("possible-words")
-    ,position(_position)
-    ,size(_size)
+    , Subscriber()
+    , position(_position)
+    , size(_size)
 {
     sprite = new sf::Sprite();
     texture = new sf::Texture();
-    texture->loadFromFile("../Resources/Sprites/fantasy_input.png");
-    sprite->setTexture(*texture, false);
-    sprite->setPosition(position);
 
     lines = new std::vector<FormattedLine*>();
 }
@@ -25,6 +24,15 @@ sd::PossibleWords::~PossibleWords() {
     lines = nullptr;
 
     playerVocabulary = nullptr;
+}
+
+bool sd::PossibleWords::Setup() {
+
+    texture->loadFromFile("../Resources/Sprites/fantasy_input.png");
+    sprite->setTexture(*texture, false);
+    sprite->setPosition(position);
+
+    return DrawableObject::Setup();
 }
 
 void sd::PossibleWords::DrawTo(sf::RenderTarget *window) const {
@@ -73,9 +81,18 @@ void sd::PossibleWords::Update() {
 
 void sd::PossibleWords::Handle(std::shared_ptr<EventArgs> _e) {
     if (_e->type == sd::EventArgs::Type::PlayerVocabChanged) {
-        auto e = dynamic_cast<PlayerVocabChangedEventArgs *>(_e.get());
+        //auto e = dynamic_cast<PlayerVocabChangedEventArgs *>(_e.get());
 
         Update();
     }
 
+    if (_e->type == sd::EventArgs::Type::PlayerStateCreated) {
+        auto e = dynamic_cast<PlayerStateCreatedEventArgs *>(_e.get());
+
+        playerVocabulary = e->player_state->GetPlayerVocabulary();
+
+        Update();
+    }
 }
+
+

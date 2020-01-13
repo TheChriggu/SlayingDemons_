@@ -17,6 +17,8 @@ namespace sd {
         Panel(sf::Vector2f position, sf::Vector2f size, sf::Texture* texture);
         ~Panel() override;
 
+        bool Setup() override;
+
         sf::Vector2f GetPosition() override;
         sf::Vector2f GetSize() override;
         void DrawTo(sf::RenderTarget *window) const override;

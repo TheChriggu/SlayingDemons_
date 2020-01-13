@@ -8,7 +8,8 @@
 #include <Dungeon/Goblin.h>
 #include "PlayerState.h"
 
-sd::PlayerState::PlayerState() {
+sd::PlayerState::PlayerState()
+    : Subscriber() {
     fight = nullptr;
     player = new Fighter();
     floor = new Floor();

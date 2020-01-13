@@ -5,7 +5,7 @@
 #include "TextOutputCreatedEventArgs.h"
 #include <utility>
 
-sd::TextOutputCreatedEventArgs::TextOutputCreatedEventArgs(TextOutput* output) {
+sd::TextOutputCreatedEventArgs::TextOutputCreatedEventArgs(sp<TextOutput> output) {
     this->type = EventArgs::Type::TextOutputCreated;
-    this->output = output;
+    this->output = std::move(output);
 }

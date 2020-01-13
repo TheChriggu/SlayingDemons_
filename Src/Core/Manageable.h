@@ -13,6 +13,8 @@ public:
     virtual bool Setup() = 0;
     virtual void Shutdown() = 0;
 
+protected:
+    bool is_setup_;
 };
 
 #endif //SLAYINGDEMONS_MANAGEABLE_H

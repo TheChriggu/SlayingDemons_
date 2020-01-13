@@ -2,23 +2,19 @@
 // Created by christian.heusser on 10.12.2019.
 //
 
+#include <Event/PlayerStateCreatedEventArgs.h>
 #include "MapWindow.h"
 
 
 sd::MapWindow::MapWindow(sf::Vector2f _position, sf::Vector2f _size)
     : DrawableObject("map-window")
-    ,position(_position)
-    ,size(_size)
+    , Subscriber()
+    , position(_position)
+    , size(_size)
 {
     backgroundTexture = new sf::Texture();
-    backgroundTexture->loadFromFile("../Resources/Sprites/fantasy_map.png");
-
     backgroundSprite = new sf::Sprite();
-    backgroundSprite->setTexture(*backgroundTexture);
-    backgroundSprite->setPosition(position);
-
     currenttileMap = new Tilemap(11,7,position + sf::Vector2f(40,44),sf::Vector2u(64,64));
-
 }
 
 sd::MapWindow::~MapWindow() {
@@ -59,4 +55,21 @@ sd::Room *sd::MapWindow::GetRoom() {
 
 void sd::MapWindow::SetPlayerState(sd::PlayerState *_playerState) {
     playerState = _playerState;
+}
+
+void sd::MapWindow::Handle(sp<sd::EventArgs> e) {
+    std::cout << "!Handle!" << std::endl;
+    if (e->type == EventArgs::Type::PlayerStateCreated) {
+        auto args = dynamic_cast<PlayerStateCreatedEventArgs*>(e.get());
+        playerState = args->player_state.get();
+    }
+}
+
+bool sd::MapWindow::Setup() {
+    backgroundTexture->loadFromFile("../Resources/Sprites/fantasy_map.png");
+
+    backgroundSprite->setTexture(*backgroundTexture);
+    backgroundSprite->setPosition(position);
+
+    return DrawableObject::Setup();
 }

@@ -10,13 +10,11 @@
 #include "ScriptEngine/ScriptEngine.h"
 
 
-sd::ShaderEngine::ShaderEngine(std::vector<DrawableObject *>* drawable_objects)
+sd::ShaderEngine::ShaderEngine(std::vector<sp<DrawableObject>>& drawable_objects)
     : drawable_objects_(drawable_objects)
     {
     auto script_engine = ScriptEngine::Get();
 
-    std::cout << "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" << std::endl;
-    //script_engine->Broadcast("update");
     script_engine->RegisterAll("set_weakglitch_on", &ShaderEngine::SetWeakglitchOn, this);
     script_engine->RegisterAll("set_glitch_on", &ShaderEngine::SetGlitchOn, this);
     script_engine->RegisterAll("cancel_all_procedures_on", &ShaderEngine::CancelAllProceduresOn, this);
@@ -47,7 +45,7 @@ void sd::ShaderEngine::SetupAllShader() {
 void sd::ShaderEngine::SetWeakglitchOn(std::string objectName) const {
     // TODO(FK): replace with propper solution
 
-    for (auto object : (*drawable_objects_)) {
+    for (auto object : drawable_objects_) {
         if (object->GetName() == objectName) {
             object->SetShaderProcedure(shaderProcedures_[0].get());
         }
@@ -56,9 +54,12 @@ void sd::ShaderEngine::SetWeakglitchOn(std::string objectName) const {
 
 void sd::ShaderEngine::SetGlitchOn(std::string objectName) const {
     // TODO(FK): replace with propper solution
+    std::cout << "--set shader: " << drawable_objects_.size() << std::endl;
 
-    for (auto object : (*drawable_objects_)) {
+    for (auto object : drawable_objects_) {
+        std::cout << "--try set shader on " << object->GetName() << std::endl;
         if (object->GetName() == objectName) {
+            std::cout << "---set shader on " << objectName << std::endl;
             object->SetShaderProcedure(shaderProcedures_[1].get());
         }
     }
@@ -66,7 +67,7 @@ void sd::ShaderEngine::SetGlitchOn(std::string objectName) const {
 
 void sd::ShaderEngine::CancelAllProceduresOn(std::string objectName) {
     std::cout << "##cancel " << objectName << std::endl;
-    for (auto object : (*drawable_objects_)) {
+    for (auto object : drawable_objects_) {
         std::cout << "--object " << object->GetName() << std::endl;
         if (object->GetName() == objectName) {
             std::cout << "--cancel on " << object->GetName() << std::endl;

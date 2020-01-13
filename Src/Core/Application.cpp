@@ -14,20 +14,15 @@ sd::Vocabulary* sd::Vocabulary::allWords = nullptr;
 
 sd::Application::Application()
 {
-    window_ = nullptr;
-    world_ = nullptr;
-    file_input_ = nullptr;
 }
 
 
 
 bool sd::Application::Setup() {
-    window_ = new sf::RenderWindow(sf::VideoMode(1920, 1080), "MyGame", sf::Style::Default);
+    window_ = sp<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(1920, 1080), "MyGame", sf::Style::Default));
     window_->setFramerateLimit(60);
 
     new EventSystem();
-    //auto blub24 = std::make_shared<EventArgs>(new EventArgs());
-    //EventSystem::Get().Trigger(blub24);
 
     std::cout << "Initialize Script Engine" << std::endl;
     new ScriptEngine();
@@ -41,35 +36,15 @@ bool sd::Application::Setup() {
         script_engine_->AddScript(file);
     }
 
-    //script_engine_.GetScript("test")->RegisterFunction("test1", &Application::Test1, this);
-    //script_engine_->RegisterAll("test2", &Application::Test2, this);
 
 
-
-    /*auto s = script_engine_.GetScript("test");
-    if (s) s->Call("test");
-    auto blub = s->GetVar<std::string>("current_state");
-    auto table = s->GetTable("config");
-
-    std::cout << "Var: " << blub << std::endl;
-    if (table) {
-        auto t = table.value();
-        int derp = t["derp"];
-        std::cout << "Table: " << derp << std::endl;
-    }*/
-
-
-
-    shader_engine_ = std::make_shared<ShaderEngine>(ShaderEngine(&drawable_objects_));
+    //shader_engine_ = std::make_shared<ShaderEngine>(ShaderEngine(drawable_objects_));
+    shader_engine_ = sp<ShaderEngine>(new ShaderEngine(drawable_objects_));
     shader_engine_->SetupAllShader();
 
 
-
-    //script_engine_.RegisterAll("cancel_all_procedures_on", &ShaderEngine::CancelAllProceduresOn, shader_engine_.get());
-
-
     // TODO(FK)
-    new UserInput(window_);
+    new UserInput(window_.get());
 
     std::cout << "Start initialization.\n";
 
@@ -78,7 +53,7 @@ bool sd::Application::Setup() {
     backgroundTexture->loadFromFile("../Resources/Sprites/fantasy_background.png");
     auto panel = new Panel(sf::Vector2f(0.0, 0.0), sf::Vector2f(1920, 1080), backgroundTexture);
     panel->SetName("background_panel");
-    drawable_objects_.emplace_back(panel);
+    drawable_objects_.emplace_back(sp<Panel>(panel));
     // TODO(FK): clean up this shit
 
     std::cout << "Create text output background\n";
@@ -86,49 +61,41 @@ bool sd::Application::Setup() {
     textOutputBackground->loadFromFile("../Resources/Sprites/fantasy_textoutput.png");
     auto outputBackground = new Panel(sf::Vector2f(48.0,41.0), sf::Vector2f(1044,1008), textOutputBackground);
     outputBackground->SetName("output-panel");
-    drawable_objects_.emplace_back(outputBackground);
+    drawable_objects_.emplace_back(sp<Panel>(outputBackground));
 
     std::cout << "emplace Inputfield\n";
     std::cout << "Create input field\n";
     InputField* inputField = new InputField(sf::Vector2f(80,940), sf::Vector2f(1025,63), sf::Color::Magenta);
-    drawable_objects_.emplace_back(inputField);
-
-    std::cout << "Create text processor\n";
-    inputTextProcessor = new InputTextProcessor();
+    drawable_objects_.emplace_back(sp<InputField>(inputField));
 
 
     std::cout << "Create words panel\n";
     auto possibleWords = new PossibleWords(sf::Vector2f(39.0, 605.0), sf::Vector2f(1059, 445), "../Resources/Sprites/fantasy_input.png");
-    drawable_objects_.emplace_back(possibleWords);
+    drawable_objects_.emplace_back(sp<PossibleWords>(possibleWords));
 
     std::cout << "Create text output\n";
-    output = new TextOutput(sf::Vector2f(90.0,100.0), sf::Vector2f(1044,1008), sf::Color::Red);
-    drawable_objects_.emplace_back(output);
-    std::cout << "emplace Window\n";
+    drawable_objects_.emplace_back(sp<TextOutput>(new TextOutput(sf::Vector2f(90.0,100.0), sf::Vector2f(1044,1008), sf::Color::Red)));
 
     std::cout << "Create Map panel\n";
     MapWindow* mapWindow = new MapWindow(sf::Vector2f(1127.0, 41.0), sf::Vector2f(761, 558));
-    drawable_objects_.emplace_back(mapWindow);
+    drawable_objects_.emplace_back(sp<MapWindow>(mapWindow));
 
 
 
     //std::cout << "Create button\n";
     //drawable_objects_.emplace_back(new Button(sf::Vector2f(1200.0f,500.0f), sf::Vector2f(1.0f,1.0f), [&]{clear();}));
 
-
-
-    //inputTextProcessor->SetOutput(output);
-    inputField->SetTextProcessor(inputTextProcessor);
-    mapWindow->SetPlayerState(inputTextProcessor->GetPlayerState());
-    possibleWords->SetPlayerVocab(inputTextProcessor->GetPlayerState()->GetPlayerVocabulary());
-    possibleWords->Update();
+    //possibleWords->SetPlayerVocab(inputTextProcessor->GetPlayerState()->GetPlayerVocabulary());
+    //possibleWords->Update();
 
 
 
     std::cout << "Create global vocabulary containing all words\n";
     LoadVocab();
 
-
+    for(const auto& object : drawable_objects_) {
+        object->Setup();
+    }
 
     //auto test24 = typeof(this);
     //std::cout << " " <<  << std::endl;
@@ -141,11 +108,6 @@ bool sd::Application::Setup() {
     std::cout << "End initialization\n";
 
     return true;
-}
-
-void sd::Application::Shutdown() {
-    delete window_;
-    window_ = nullptr;
 }
 
 bool sd::Application::Run() {
@@ -178,7 +140,7 @@ bool sd::Application::Run() {
     //Draw Components
 
     for (auto comp : drawable_objects_) {
-        comp->DrawTo(window_);
+        comp->DrawTo(window_.get());
     }
 
     //display
@@ -251,12 +213,8 @@ void sd::Application::LoadVocab() {
     Vocabulary::allWords = vocab;
 }
 
-/*int sd::Application::Test1() {
-    return drawable_objects_.size();
-}*/
+void sd::Application::Shutdown() {
 
-void sd::Application::Test2(std::string message) {
-    std::cout << message << std::endl;
 }
 
 

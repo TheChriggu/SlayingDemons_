@@ -13,9 +13,9 @@
 namespace sd {
     class TextOutputCreatedEventArgs : public EventArgs {
     public:
-        explicit TextOutputCreatedEventArgs(TextOutput* output);
+        explicit TextOutputCreatedEventArgs(sp<TextOutput> output);
 
-        TextOutput* output;
+        sp<TextOutput> output;
     };
 }
 

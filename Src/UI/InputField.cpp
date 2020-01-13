@@ -10,26 +10,30 @@
 sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color)
     : DrawableObject("input-field")
 {
-    textProcessor = nullptr;
+
+    text = sp<sf::Text>(new sf::Text());
+    text->setPosition(position + sf::Vector2f(10, 10));
+}
+
+sd::InputField::~InputField() {
+}
+
+bool sd::InputField::Setup() {
+    textProcessor = sp<InputTextProcessor>(new InputTextProcessor());
 
     sf::Font* font = new sf::Font();
     if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
     {
         std::cout << "Could not load Font!\n";
-        return;
+        return false;
     }
 
-    text = new sf::Text();
     text->setFont(*font);
     text->setString("");
     text->setCharacterSize(24);
     text->setFillColor(sf::Color::Black);
-    text->setPosition(position + sf::Vector2f(10, 10));
-}
 
-sd::InputField::~InputField() {
-    delete text;
-    text = nullptr;
+    return DrawableObject::Setup();
 }
 
 void sd::InputField::addText(sf::Uint32 input) {
@@ -58,8 +62,6 @@ void sd::InputField::Handle(sf::Event event) {
         std::cout << "processing input\n";
         sf::String strg = text->getString();
 
-        // TODO: TEMP
-        ScriptEngine::Get()->Broadcast("input_received");
         textProcessor->ProcessInput(strg);
         text->setString("");
 
@@ -88,6 +90,4 @@ void sd::InputField::Handle(sf::Event event) {
 
 }
 
-void sd::InputField::SetTextProcessor(sd::InputTextProcessor *_textProcessor) {
-    textProcessor = _textProcessor;
-}
+

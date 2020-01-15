@@ -22,6 +22,9 @@ namespace sd {
         virtual void PutOnLayout(int* layout, int width, int height) override;
         virtual std::string GetName() override;
         virtual void BeInteractedWith() override;
+        void BeInspected() override;
+        void BeOpened() override;
+        void BeFought() override;
     };
 }
 

@@ -65,3 +65,15 @@ void sd::MultiTileObject::BeInteractedWith() {
     args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("Nothing happens."));
     EventSystem::Get().Trigger(args);
 }
+
+void sd::MultiTileObject::BeInspected() {
+
+}
+
+void sd::MultiTileObject::BeOpened() {
+
+}
+
+void sd::MultiTileObject::BeFought() {
+
+}

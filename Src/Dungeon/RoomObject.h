@@ -16,6 +16,9 @@ namespace sd {
         virtual void PutOnLayout(int* layout, int width, int height) = 0;
         virtual std::string GetName() = 0;
         virtual void BeInteractedWith() = 0;
+        virtual void BeInspected() = 0;
+        virtual void BeOpened() = 0;
+        virtual void BeFought() = 0;
     };
 }
 

@@ -35,3 +35,15 @@ void sd::SingleTileObject::BeInteractedWith() {
     args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("Nothing happens."));
     EventSystem::Get().Trigger(args);
 }
+
+void sd::SingleTileObject::BeInspected() {
+dgdfg
+}
+
+void sd::SingleTileObject::BeOpened() {
+dfgdfgdg
+}
+
+void sd::SingleTileObject::BeFought() {
+fgdfgdfg
+}

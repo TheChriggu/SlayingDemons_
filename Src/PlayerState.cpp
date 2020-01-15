@@ -7,6 +7,7 @@
 #include <Event/EventSystem.h>
 #include <Dungeon/Goblin.h>
 #include <Event/FightStartedEventArgs.h>
+#include <Combat/MonsterList.h>
 #include "PlayerState.h"
 
 sd::PlayerState::PlayerState()
@@ -90,8 +91,10 @@ void sd::PlayerState::Handle(std::shared_ptr<EventArgs> e) {
         args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("Starting Fight."));
         EventSystem::Get().Trigger(args);
 
-        Monster* goblin = new Monster("../Resources/Sprites/glitchy_goblin_red.png");
+        //Monster* goblin = new Monster("../Resources/Sprites/glitchy_goblin_red.png");
 
+        auto list = MonsterList::Get();
+        Monster* goblin = list->GetMonster("Goblin");
         StartNewFight(goblin);
     }
 

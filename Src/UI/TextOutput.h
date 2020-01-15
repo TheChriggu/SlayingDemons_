@@ -27,10 +27,10 @@ namespace sd {
 
         bool Setup() override;
 
-        void addLine(sf::String string);
-        void printLine(std::string string);
+        void addLine(const sf::String& string);
+        void printLine(const std::string& string);
 
-        void DrawTo(sf::RenderTarget* window) const override;
+        void DrawTo(sp<sf::RenderTarget> window) const override;
         sf::Vector2f GetPosition() override;
         sf::Vector2f GetSize() override;
         void MoveVertical(float distance);

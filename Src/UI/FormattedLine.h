@@ -4,6 +4,7 @@
 
 #ifndef UNTITLED_FORMATTEDLINE_H
 #define UNTITLED_FORMATTEDLINE_H
+#include "Core/GlobalDefinitions.h"
 #include <list>
 #include "FormattedWord.h"
 #include <iostream>
@@ -11,23 +12,22 @@
 //#include "boost/algorithm/string.hpp"
 
 class FormattedLine {
-    std::list<FormattedWord*>* words;
+    std::list<sp<FormattedWord>> words;
 
+    sp<sf::Font> font;
     sf::Vector2f position;
     sf::Vector2f size;
     sf::Vector2f maxSize;
 
 public:
-    FormattedLine(sf::String string, sf::Vector2f _position, sf::Font* _font, sf::Vector2f _maxSize);
-    ~FormattedLine();
-    void FormatLine(sf::String string, sf::Font* _font);
+    FormattedLine(const sf::String& string, sf::Vector2f _position, const sp<sf::Font>& _font, sf::Vector2f _maxSize);
+    virtual ~FormattedLine() = default;
+    void FormatLine(sf::String string, const sp<sf::Font>& _font);
 
-    void drawTo(sf::RenderTarget* window, sf::RenderTarget* glitchWindow);
+    void drawTo(const sp<sf::RenderTarget>& window);
 
     sf::FloatRect getRect();
     void MoveVertical(float distance);
-
-    void toggleGlitch();
 };
 
 

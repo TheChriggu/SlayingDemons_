@@ -4,22 +4,19 @@
 
 #include "InputField.h"
 #include <iostream>
-#include <ScriptEngine/ScriptEngine.h>
+#include <memory>
 
 // TODO(FK): clean up name
 sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color)
     : DrawableObject("input-field")
 {
 
-    text = sp<sf::Text>(new sf::Text());
+    text = std::make_shared<sf::Text>();
     text->setPosition(position + sf::Vector2f(10, 10));
 }
 
-sd::InputField::~InputField() {
-}
-
 bool sd::InputField::Setup() {
-    textProcessor = sp<InputTextProcessor>(new InputTextProcessor());
+    textProcessor = std::make_shared<InputTextProcessor>();
 
     sf::Font* font = new sf::Font();
     if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
@@ -50,7 +47,7 @@ void sd::InputField::addText(sf::Uint32 input) {
     text->setString(result);
 }
 
-void sd::InputField::DrawTo(sf::RenderTarget *window) const {
+void sd::InputField::DrawTo(sp<sf::RenderTarget> window) const {
     window->draw(*text);
 }
 
@@ -88,6 +85,14 @@ void sd::InputField::Handle(sf::Event event) {
     //}
 
 
+}
+
+sf::Vector2f sd::InputField::GetSize() {
+    return text->getScale();
+}
+
+sf::Vector2f sd::InputField::GetPosition() {
+    return text->getPosition();
 }
 
 

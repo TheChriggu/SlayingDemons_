@@ -3,28 +3,24 @@
 //
 
 #include "FormattedLine.h"
+#include <memory>
 
-FormattedLine::FormattedLine(sf::String string, sf::Vector2f _position, sf::Font* _font, sf::Vector2f _maxSize) {
-    words = new std::list<FormattedWord*>();
+FormattedLine::FormattedLine(const sf::String& string, sf::Vector2f _position, const sp<sf::Font>& _font, sf::Vector2f _maxSize) {
+    font = _font;
     position = _position;
     maxSize = _maxSize;
-    words->push_back(new FormattedWord("", false, _position, _font));
+    words.push_back(std::make_shared<FormattedWord>("", _position, _font));
     FormatLine(string, _font);
 
 }
 
-FormattedLine::~FormattedLine() {
-    delete words;
-    words = nullptr;
-}
-
-void FormattedLine::drawTo(sf::RenderTarget* window, sf::RenderTarget* glitchWindow) {
-    for (FormattedWord* word : *words) {
-        word->drawTo(window, glitchWindow);
+void FormattedLine::drawTo(const sp<sf::RenderTarget>& window) {
+    for (const auto& word : words) {
+        word->drawTo(window);
     }
 }
 
-void FormattedLine::FormatLine(sf::String string, sf::Font* _font) {
+void FormattedLine::FormatLine(sf::String string, const sp<sf::Font>& _font) {
     /*std::vector<std::string> splitVec;
     std::string delims = " []";
     boost::split(splitVec, string, boost::algorithm::is_any_of(delims));*/
@@ -50,7 +46,7 @@ void FormattedLine::FormatLine(sf::String string, sf::Font* _font) {
                 nextPosition = sf::Vector2f(getRect().left, getRect().top + getRect().height);
             }*/
 
-           FormattedWord* newWord = new FormattedWord(word, false, nextPosition, _font);
+           sp<FormattedWord> newWord = std::make_shared<FormattedWord>(FormattedWord(word, nextPosition, _font));
            nextPosition.x += newWord->getRect().width;
             if(nextPosition.x > maxSize.x)
             {
@@ -59,7 +55,7 @@ void FormattedLine::FormatLine(sf::String string, sf::Font* _font) {
                 nextPosition.x += newWord->getRect().width;
             }
 
-           words->push_back(newWord);
+           words.push_back(newWord);
            word = " ";
         }
     }
@@ -69,9 +65,9 @@ void FormattedLine::FormatLine(sf::String string, sf::Font* _font) {
 }
 
 sf::FloatRect FormattedLine::getRect(){
-    sf::FloatRect retVal = words->front()->getRect();
+    sf::FloatRect retVal = words.front()->getRect();
 
-    for (FormattedWord* word : *words)
+    for (const auto& word : words)
     {
         sf::FloatRect rect = word->getRect();
         if (rect.top < retVal.top)
@@ -94,15 +90,9 @@ sf::FloatRect FormattedLine::getRect(){
     return retVal;
 }
 
-void FormattedLine::toggleGlitch() {
-    for (FormattedWord* word : *words) {
-        word->toggleGlitch();
-    }
-}
-
 void FormattedLine::MoveVertical(float distance) {
     position.y += distance;
-    for(FormattedWord* word : *words)
+    for(const auto& word : words)
     {
         word->MoveVertical(distance);
     }

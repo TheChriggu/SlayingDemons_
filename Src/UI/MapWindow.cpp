@@ -3,6 +3,7 @@
 //
 
 #include <Event/PlayerStateCreatedEventArgs.h>
+#include <Event/FightStartedEventArgs.h>
 #include "MapWindow.h"
 
 
@@ -14,6 +15,8 @@ sd::MapWindow::MapWindow(sf::Vector2f _position, sf::Vector2f _size)
 {
     backgroundTexture = new sf::Texture();
     backgroundSprite = new sf::Sprite();
+    monsterPortraitTexture = new sf::Texture();
+    monsterPortraitSprite = new sf::Sprite();
     currenttileMap = new Tilemap(11,7,position + sf::Vector2f(40,44),sf::Vector2u(64,64));
 }
 
@@ -24,6 +27,12 @@ sd::MapWindow::~MapWindow() {
     delete backgroundSprite;
     backgroundSprite = nullptr;
 
+    delete monsterPortraitTexture;
+    monsterPortraitTexture = nullptr;
+
+    delete monsterPortraitSprite;
+    monsterPortraitSprite = nullptr;
+
     delete currenttileMap;
     currenttileMap = nullptr;
 }
@@ -31,8 +40,16 @@ sd::MapWindow::~MapWindow() {
 void sd::MapWindow::DrawTo(sf::RenderTarget *window) const {
     window->draw(*backgroundSprite);
 
-    currenttileMap->SetLayout(playerState->GetCurrentRoom()->GetLayout(),77);
-    window->draw(*currenttileMap);
+    if(playerState->IsFighting())
+    {
+        window->draw(*monsterPortraitSprite);
+    }
+    else
+    {
+        currenttileMap->SetLayout(playerState->GetCurrentRoom()->GetLayout(),77);
+        window->draw(*currenttileMap);
+    }
+
 }
 
 sf::Vector2f sd::MapWindow::GetPosition() {
@@ -47,12 +64,6 @@ void sd::MapWindow::Handle(sf::Event event) {
     //room->Handle(event);
 }
 
-sd::Room *sd::MapWindow::GetRoom() {
-    //return room;
-    std::cout << "dont call MapWindow.GetRoom()!!\n";
-    return nullptr;
-}
-
 void sd::MapWindow::SetPlayerState(sd::PlayerState *_playerState) {
     playerState = _playerState;
 }
@@ -63,6 +74,11 @@ void sd::MapWindow::Handle(sp<sd::EventArgs> e) {
         auto args = dynamic_cast<PlayerStateCreatedEventArgs*>(e.get());
         playerState = args->player_state.get();
     }
+
+    if (e->type == EventArgs::Type::FightStarted) {
+        auto arg = dynamic_cast<FightStartedEventArgs*>(e.get());
+        monsterPortraitTexture->loadFromFile(arg->fight->GetEnemy()->GetPathToPortrait());
+    }
 }
 
 bool sd::MapWindow::Setup() {
@@ -70,6 +86,12 @@ bool sd::MapWindow::Setup() {
 
     backgroundSprite->setTexture(*backgroundTexture);
     backgroundSprite->setPosition(position);
+
+
+    monsterPortraitTexture->loadFromFile("../Resources/Sprites/glitchy_goblin_red.png");
+
+    monsterPortraitSprite->setTexture(*monsterPortraitTexture);
+    monsterPortraitSprite->setPosition(position);
 
     return DrawableObject::Setup();
 }

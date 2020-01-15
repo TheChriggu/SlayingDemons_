@@ -19,7 +19,8 @@ namespace sd {
             RoomLayoutChanged,
             StartFightWithGoblin,
             GoblinDefeated,
-            PlayerStateCreated
+            PlayerStateCreated,
+            FightStarted
         };
 
         EventArgs();

@@ -15,9 +15,10 @@ namespace sd
     private:
         std::vector<sf::String>* actions;
         std::vector<sf::String>* modifiers;
+        std::string pathToPortrait;
 
     public:
-        Monster();
+        Monster(std::string _pathToPortrait);
         ~Monster();
 
         sf::String GetAction();
@@ -25,6 +26,8 @@ namespace sd
 
         void AddAction(sf::String action);
         void AddModifier(sf::String modifier);
+
+        std::string GetPathToPortrait();
     };
 }
 

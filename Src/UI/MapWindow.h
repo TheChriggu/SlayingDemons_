@@ -18,6 +18,8 @@ namespace sd {
         sf::Sprite* backgroundSprite;
         sf::Vector2f position;
         sf::Vector2f size;
+        sf::Texture* monsterPortraitTexture;
+        sf::Sprite* monsterPortraitSprite;
 
         Tilemap* currenttileMap;
         PlayerState* playerState;
@@ -31,7 +33,6 @@ namespace sd {
 
         sf::Vector2f GetPosition() override;
         sf::Vector2f GetSize() override;
-        Room* GetRoom();
         void SetPlayerState(PlayerState* _playerState);
 
         void Handle(sf::Event event) override;

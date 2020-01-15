@@ -13,29 +13,30 @@
 namespace sd {
     class PossibleWords: public DrawableObject, public Subscriber {
     private:
-        std::vector<FormattedLine*>* lines;
-        PlayerVocabulary* playerVocabulary;
+        std::vector<sp<FormattedLine>> lines;
+        sp<PlayerVocabulary> playerVocabulary;
 
-        sf::Sprite* sprite;
-        sf::Texture* texture;
+        sp<sf::Sprite> sprite;
+        sp<sf::Texture> texture;
         sf::Vector2f position;
         sf::Vector2f size;
 
-
-
     public:
-        PossibleWords(sf::Vector2f position, sf::Vector2f size, std::string pathToBackground);
-        ~PossibleWords();
+        PossibleWords(sf::Vector2f position, sf::Vector2f size, const std::string& pathToBackground);
+        ~PossibleWords() override = default;
 
         bool Setup() override;
+        void Update();
 
-        void DrawTo(sf::RenderTarget* window) const override;
-        void SetPlayerVocab(PlayerVocabulary* _playerVocabulary);
+        void DrawTo(sp<sf::RenderTarget> window) const override;
+
+        sf::Vector2f GetPosition() override;
+        sf::Vector2f GetSize() override;
 
         void Handle(sf::Event event) override;
         void Handle(std::shared_ptr<EventArgs> e) override;
 
-        void Update();
+
     };
 }
 

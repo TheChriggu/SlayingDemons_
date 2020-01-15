@@ -47,7 +47,7 @@ void sd::ShaderEngine::SetWeakglitchOn(std::string objectName) const {
 
     for (auto object : drawable_objects_) {
         if (object->GetName() == objectName) {
-            object->SetShaderProcedure(shaderProcedures_[0].get());
+            object->SetShaderProcedure(shaderProcedures_[0]);
         }
     }
 }
@@ -60,7 +60,7 @@ void sd::ShaderEngine::SetGlitchOn(std::string objectName) const {
         std::cout << "--try set shader on " << object->GetName() << std::endl;
         if (object->GetName() == objectName) {
             std::cout << "---set shader on " << objectName << std::endl;
-            object->SetShaderProcedure(shaderProcedures_[1].get());
+            object->SetShaderProcedure(shaderProcedures_[1]);
         }
     }
 }

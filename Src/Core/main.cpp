@@ -3,7 +3,7 @@
 
 int main() {
 
-    sd::Application* app = new sd::Application();
+    sp<sd::Application> app = sp<sd::Application>(new sd::Application());
     app->Setup();
 
     while (app->Run())

@@ -8,6 +8,7 @@
 #include "Event/EventSystem.h"
 #include <iostream>
 #include <map>
+#include <memory>
 
 
 sd::Vocabulary* sd::Vocabulary::allWords = nullptr;
@@ -19,7 +20,7 @@ sd::Application::Application()
 
 
 bool sd::Application::Setup() {
-    window_ = sp<sf::RenderWindow>(new sf::RenderWindow(sf::VideoMode(1920, 1080), "MyGame", sf::Style::Default));
+    window_ = std::make_shared<sf::RenderWindow>(sf::VideoMode(1920, 1080), "MyGame", sf::Style::Default);
     window_->setFramerateLimit(60);
 
     new EventSystem();
@@ -37,9 +38,7 @@ bool sd::Application::Setup() {
     }
 
 
-
-    //shader_engine_ = std::make_shared<ShaderEngine>(ShaderEngine(drawable_objects_));
-    shader_engine_ = sp<ShaderEngine>(new ShaderEngine(drawable_objects_));
+    shader_engine_ = std::make_shared<ShaderEngine>(drawable_objects_);
     shader_engine_->SetupAllShader();
 
 
@@ -49,17 +48,13 @@ bool sd::Application::Setup() {
     std::cout << "Start initialization.\n";
 
     std::cout << "Create background panel\n";
-    sf::Texture* backgroundTexture = new sf::Texture();
-    backgroundTexture->loadFromFile("../Resources/Sprites/fantasy_background.png");
-    auto panel = new Panel(sf::Vector2f(0.0, 0.0), sf::Vector2f(1920, 1080), backgroundTexture);
+    auto panel = new Panel(sf::Vector2f(0.0, 0.0), sf::Vector2f(1920, 1080), "../Resources/Sprites/fantasy_background.png");
     panel->SetName("background_panel");
     drawable_objects_.emplace_back(sp<Panel>(panel));
     // TODO(FK): clean up this shit
 
     std::cout << "Create text output background\n";
-    sf::Texture* textOutputBackground = new sf::Texture();
-    textOutputBackground->loadFromFile("../Resources/Sprites/fantasy_textoutput.png");
-    auto outputBackground = new Panel(sf::Vector2f(48.0,41.0), sf::Vector2f(1044,1008), textOutputBackground);
+    auto outputBackground = new Panel(sf::Vector2f(48.0,41.0), sf::Vector2f(1044,1008), "../Resources/Sprites/fantasy_textoutput.png");
     outputBackground->SetName("output-panel");
     drawable_objects_.emplace_back(sp<Panel>(outputBackground));
 
@@ -70,11 +65,13 @@ bool sd::Application::Setup() {
 
 
     std::cout << "Create words panel\n";
-    auto possibleWords = new PossibleWords(sf::Vector2f(39.0, 605.0), sf::Vector2f(1059, 445), "../Resources/Sprites/fantasy_input.png");
-    drawable_objects_.emplace_back(sp<PossibleWords>(possibleWords));
+    drawable_objects_.emplace_back(std::make_shared<PossibleWords>(
+            sf::Vector2f(39.0, 605.0),
+            sf::Vector2f(1059, 445),
+            "../Resources/Sprites/fantasy_input.png"));
 
     std::cout << "Create text output\n";
-    drawable_objects_.emplace_back(sp<TextOutput>(new TextOutput(sf::Vector2f(90.0,100.0), sf::Vector2f(1044,1008), sf::Color::Red)));
+    drawable_objects_.emplace_back(std::make_shared<TextOutput>(sf::Vector2f(90.0,100.0), sf::Vector2f(1044,1008), sf::Color::Red));
 
     std::cout << "Create Map panel\n";
     MapWindow* mapWindow = new MapWindow(sf::Vector2f(1127.0, 41.0), sf::Vector2f(761, 558));
@@ -127,7 +124,7 @@ bool sd::Application::Run() {
             window_->close();
         }
 
-        for (auto object : drawable_objects_) {
+        for (const auto& object : drawable_objects_) {
             object->Handle(evt);
         }
     }
@@ -139,8 +136,8 @@ bool sd::Application::Run() {
 
     //Draw Components
 
-    for (auto comp : drawable_objects_) {
-        comp->DrawTo(window_.get());
+    for (const auto& comp : drawable_objects_) {
+        comp->DrawTo(window_);
     }
 
     //display

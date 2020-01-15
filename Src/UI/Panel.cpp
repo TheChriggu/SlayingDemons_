@@ -3,7 +3,6 @@
 //
 
 #include "Panel.h"
-#include <iostream>
 
 // TODO(FK): clean up name
 sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, sf::Color color)
@@ -15,28 +14,22 @@ sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, sf::Color color)
 
     }
 
-    sprite = new sf::Sprite();
+    sprite = std::make_shared<sf::Sprite>();
     sprite->setTexture(texture);
     sprite->setColor(color);
     sprite->setPosition(position);
 }
 
 // TODO(FK): clean up name
-sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, sf::Texture* texture)
+sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, const char* texture_path)
     : DrawableObject("Panel")
 {
-    sprite = new sf::Sprite();
-
+    texture = std::make_shared<sf::Texture>();
+    texture->loadFromFile(texture_path);
+    sprite = std::make_shared<sf::Sprite>();
     sprite->setTexture(*texture, false);
-
     sprite->setPosition(position);
 }
-
-sd::Panel::~Panel() {
-    delete sprite;
-    sprite = nullptr;
-}
-
 
 
 void sd::Panel::Handle(sf::Event event) {
@@ -57,10 +50,10 @@ sf::Vector2f sd::Panel::GetSize() {
     return size;
 }
 
-void sd::Panel::DrawTo(sf::RenderTarget *window) const{
+void sd::Panel::DrawTo(sp<sf::RenderTarget> window) const{
     if (shaderProcedure_) {
 
-        shaderProcedure_->Process(window, sprite);
+        shaderProcedure_->Process(window.get(), sprite.get());
     } else {
         window->draw(*sprite);
     }

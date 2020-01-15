@@ -64,18 +64,24 @@ void sd::PossibleWords::Update() {
 
     lines->clear();
 
-    sf::Vector2f offset = sf::Vector2f(50, 90);
-    for(auto action : *(playerVocabulary->GetModifiers()))
-    {
-        lines->push_back(new FormattedLine(action, sf::Vector2f(position + offset), font, sf::Vector2f(1000,1000)));
-        offset.y += 30;
-    }
+    if(playerState->IsFighting()) {
+        sf::Vector2f offset = sf::Vector2f(50, 90);
+        for (auto action : *(playerVocabulary->GetModifiers())) {
+            lines->push_back(
+                    new FormattedLine(action, sf::Vector2f(position + offset), font, sf::Vector2f(1000, 1000)));
+            offset.y += 30;
+        }
 
-    offset = sf::Vector2f(250, 90);
-    for(auto action : *(playerVocabulary->GetActions()))
+        offset = sf::Vector2f(250, 90);
+        for (auto action : *(playerVocabulary->GetActions())) {
+            lines->push_back(
+                    new FormattedLine(action, sf::Vector2f(position + offset), font, sf::Vector2f(1000, 1000)));
+            offset.y += 30;
+        }
+    }
+    else
     {
-        lines->push_back(new FormattedLine(action, sf::Vector2f(position + offset), font, sf::Vector2f(1000,1000)));
-        offset.y += 30;
+
     }
 }
 
@@ -86,10 +92,18 @@ void sd::PossibleWords::Handle(std::shared_ptr<EventArgs> _e) {
         Update();
     }
 
+    if (_e->type == sd::EventArgs::Type::FightStarted) {
+        Update();
+    }
+    if (_e->type == sd::EventArgs::Type::FightEnded) {
+        Update();
+    }
+
     if (_e->type == sd::EventArgs::Type::PlayerStateCreated) {
         auto e = dynamic_cast<PlayerStateCreatedEventArgs *>(_e.get());
 
         playerVocabulary = e->player_state->GetPlayerVocabulary();
+        playerState = e->player_state;
 
         Update();
     }

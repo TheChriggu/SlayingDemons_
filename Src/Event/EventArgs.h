@@ -20,7 +20,8 @@ namespace sd {
             StartFightWithGoblin,
             GoblinDefeated,
             PlayerStateCreated,
-            FightStarted
+            FightStarted,
+            FightEnded
         };
 
         EventArgs();

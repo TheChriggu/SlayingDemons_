@@ -98,9 +98,12 @@ void sd::PlayerState::Handle(std::shared_ptr<EventArgs> e) {
     if (e->type == EventArgs::Type::GoblinDefeated) {
 
         ((Door*) currentRoom->GetObjectWithName("EastDoor"))->SetLocked(false);
-        delete fight;
-        fight = nullptr;
-    }
+        EndFight();
 
+        std::shared_ptr<EventArgs> args;
+        args = std::make_shared<EventArgs>(EventArgs());
+        args->type = sd::EventArgs::Type::FightEnded;
+        EventSystem::Get().Trigger(args);
+    }
 
 }

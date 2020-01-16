@@ -5,14 +5,16 @@
 #include "Monster.h"
 #include <iostream>
 
-sd::Monster::Monster() {
+sd::Monster::Monster(std::string _pathToPortrait) {
     actions = new std::vector<sf::String>();
-    AddAction("Kick");
-    AddAction("Slash");
+    //AddAction("Kick");
+    //AddAction("Slash");
 
     modifiers = new std::vector<sf::String>();
-    AddModifier("Frost");
-    AddModifier("Virtual");
+    //AddModifier("Frost");
+    //AddModifier("Virtual");
+
+    pathToPortrait = _pathToPortrait;
 }
 
 sd::Monster::~Monster() {
@@ -44,4 +46,8 @@ void sd::Monster::AddAction(sf::String action) {
 
 void sd::Monster::AddModifier(sf::String modifier) {
     modifiers->emplace_back(modifier);
+}
+
+std::string sd::Monster::GetPathToPortrait() {
+    return pathToPortrait;
 }

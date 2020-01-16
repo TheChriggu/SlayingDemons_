@@ -49,7 +49,8 @@ void sd::PossibleWords::update() {
 
     lines_.clear();
 
-    sf::Vector2f offset = sf::Vector2f(50, 90);
+    if(playerState->IsFighting()) {
+        sf::Vector2f offset = sf::Vector2f(50, 90);
     for(const auto& action : *(player_vocabulary_->GetModifiers()))
     {
         lines_.push_back(std::make_shared<FormattedLine>(
@@ -57,17 +58,22 @@ void sd::PossibleWords::update() {
                 sf::Vector2f(position_ + offset),
                 font,
                 sf::Vector2f(1000,1000)));
-        offset.y += 30;
-    }
+            offset.y += 30;
+        }
 
-    offset = sf::Vector2f(250, 90);
+        offset = sf::Vector2f(250, 90);
     for(const auto& action : *(player_vocabulary_->GetActions()))
     {
         lines_.push_back(std::make_shared<FormattedLine>(action,
                                                          sf::Vector2f(position_ + offset),
                                                          font,
                                                          sf::Vector2f(1000,1000)));
-        offset.y += 30;
+            offset.y += 30;
+        }
+    }
+    else
+    {
+
     }
 }
 
@@ -76,10 +82,18 @@ void sd::PossibleWords::handle(std::shared_ptr<EventArgs> e) {
         update ();
     }
 
+    if (e->type == sd::EventArgs::Type::FIGHT_STARTED) {
+        update();
+    }
+    if (e->type == sd::EventArgs::Type::FIGHT_ENDED) {
+        update();
+    }
+    
     if (e->type == sd::EventArgs::Type::PLAYER_STATE_CREATED) {
         auto args = dynamic_cast<PlayerStateCreatedEventArgs *>(e.get());
 
         player_vocabulary_ = Sp<PlayerVocabulary>(args->player_state->GetPlayerVocabulary());
+        playerState = args->player_state;
 
         update ();
     }

@@ -7,7 +7,7 @@
 #include <memory>
 
 sd::ScriptEngine::ScriptEngine() {
-    if (!instance) instance = this;
+    if (!instance_) instance_ = this;
     /*scripts_.emplace_back(
             Script(R"(
                     function test()
@@ -24,22 +24,22 @@ sd::ScriptEngine::ScriptEngine() {
 
 sd::ScriptEngine *sd::ScriptEngine::Get() {
 
-    return instance;
+    return instance_;
 }
 
 
-void sd::ScriptEngine::AddScript(const boost::filesystem::path& url) {
+void sd::ScriptEngine::add_script(const boost::filesystem::path& url) {
     scripts_.emplace_back(new Script(
             reinterpret_cast<const char *>(url.filename().c_str()),
-            (*FileInput::Load(url))
+            (*FileInput::load (url))
     ));
 }
 
 
-std::shared_ptr<Script> sd::ScriptEngine::GetScript(const std::string& name) const {
+std::shared_ptr<Script> sd::ScriptEngine::get_script(const std::string& name) const {
 
     for (const auto& script : scripts_) {
-        if (script->GetName() == (name + ".lua")) {
+        if (script->get_name () == (name + ".lua")) {
             return script;
         }
     }
@@ -74,6 +74,6 @@ std::shared_ptr<Script> sd::ScriptEngine::GetScript(const std::string& name) con
     return true;
 }*/
 
-sd::ScriptEngine* sd::ScriptEngine::instance = nullptr;
+sd::ScriptEngine* sd::ScriptEngine::instance_ = nullptr;
 
 

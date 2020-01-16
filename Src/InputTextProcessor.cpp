@@ -12,16 +12,16 @@
 #include <Event/PlayerStateCreatedEventArgs.h>
 
 sd::InputTextProcessor::InputTextProcessor() : Subscriber() {
-    playerState = sp<PlayerState>(new PlayerState());
+    playerState = Sp<PlayerState>(new PlayerState());
     std::cout << "~InputTextProcessor Constructor~" << std::endl;
-    EventSystem::Get().Trigger(sp<PlayerStateCreatedEventArgs>(new PlayerStateCreatedEventArgs(playerState)));
+    EventSystem::Get().Trigger(Sp<PlayerStateCreatedEventArgs>(new PlayerStateCreatedEventArgs(playerState)));
 }
 
 void sd::InputTextProcessor::ProcessInput(sf::String spell) {
 
     if(spell == "inspect room")
     {
-        output->addLine(playerState->GetCurrentRoom()->GetDescription());
+        output->add_line (playerState->GetCurrentRoom ()->GetDescription ());
     }
 
     else {
@@ -61,7 +61,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
         {
             //TODO: Make sure that this actually is a door
             //Door* door = (Door*) playerState->GetCurrentRoom()->GetObjectWithName(words[1]);
-            output->addLine("picked up " + words[1]);
+            output->add_line ("picked up " + words[1]);
 
             std::shared_ptr<NewWordCollectedEventArgs> args;
             args = std::make_shared<NewWordCollectedEventArgs>(NewWordCollectedEventArgs(words[1]));
@@ -81,10 +81,10 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
             //check if fight spell
             std::cout << "fight not nullptr\n";
             std::cout << "making turn\n";
-            if(Vocabulary::allWords->Contains(words[0]) && Vocabulary::allWords->Contains(words[1]))
+            if(Vocabulary::all_words->Contains(words[0]) && Vocabulary::all_words->Contains(words[1]))
             {
-                Word* word1 = Vocabulary::allWords->Get(words[0]);
-                Word* word2 = Vocabulary::allWords->Get(words[1]);
+                Word* word1 = Vocabulary::all_words->Get(words[0]);
+                Word* word2 = Vocabulary::all_words->Get(words[1]);
                 if(word1->GetType() == sd::Word::type::modifier && word2->GetType() == sd::Word::type::action)
                 //make turn in fight
                 playerState->GetFight()->FullTurn(words[1], words[0], output.get());
@@ -105,14 +105,14 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
 
             else
             {
-                output->addLine("Input not valid modifier+action combination");
+                output->add_line ("Input not valid modifier+action combination");
             }
 
         }
 
         else
         {
-            output->addLine("nothing happens");
+            output->add_line ("nothing happens");
         }
 
 
@@ -152,20 +152,20 @@ std::vector<std::string> sd::InputTextProcessor::SplitBySpace(std::string string
     return retVal;
 }
 
-void sd::InputTextProcessor::SetOutput(sp<sd::TextOutput> _output) {
+void sd::InputTextProcessor::SetOutput(Sp<sd::TextOutput> _output) {
     output = std::move(_output);
 }
 
-void sd::InputTextProcessor::SetRoom(sp<sd::Room> _room) {
+void sd::InputTextProcessor::SetRoom(Sp<sd::Room> _room) {
     playerState->SetRoomAsCurrent(_room.get());
 }
 
-sp<sd::PlayerState> sd::InputTextProcessor::GetPlayerState() {
+Sp<sd::PlayerState> sd::InputTextProcessor::GetPlayerState() {
     return playerState;
 }
 
-void sd::InputTextProcessor::Handle(std::shared_ptr<sd::EventArgs> e) {
-    if (e->type == EventArgs::Type::TextOutputCreated) {
+void sd::InputTextProcessor::handle(std::shared_ptr<sd::EventArgs> e) {
+    if (e->type == EventArgs::Type::TEXT_OUTPUT_CREATED) {
         auto arg = dynamic_cast<TextOutputCreatedEventArgs*>(e.get());
         output = arg->output;
     }

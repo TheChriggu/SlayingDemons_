@@ -19,34 +19,34 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
 {
 
 
-    maxSize = size;
-    maxSize.y = 450; //TODO: This is not good
+    max_size_ = size;
+    max_size_.y = 450; //TODO: This is not good
 }
 
-bool sd::TextOutput::Setup() {
-    ScriptEngine::Get()->RegisterAll("print_line", &TextOutput::printLine, this);
+bool sd::TextOutput::setup() {
+  ScriptEngine::Get ()->register_all ("print_line", &TextOutput::print_line, this);
 
-    font = std::make_shared<sf::Font>();
+    font_ = std::make_shared<sf::Font>();
 
-    if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
+    if (!font_->loadFromFile("../Resources/Fonts/comic.ttf"))
     {
         std::cout << "Could not load Font!\n";
         return false;
     }
 
-    lines.push_back(std::make_shared<FormattedLine>(
-            "",
-            sf::Vector2f(start_position_ + sf::Vector2f(20, 20)),
-            font,
-            maxSize));
+    lines_.push_back(std::make_shared<FormattedLine>(
+        "",
+        sf::Vector2f(start_position_ + sf::Vector2f(20, 20)),
+        font_,
+        max_size_));
 
     // Trigger TextOutput Created Event
-    EventSystem::Get().Trigger(std::make_shared<TextOutputCreatedEventArgs>(sp<TextOutput>(this)));
+    EventSystem::Get().Trigger(std::make_shared<TextOutputCreatedEventArgs>(Sp<TextOutput>(this)));
 
-    return DrawableObject::Setup();
+    return DrawableObject::setup ();
 }
 
-void sd::TextOutput::DrawTo(sp<sf::RenderTarget> window) const {
+void sd::TextOutput::draw_to(Sp<sf::RenderTarget> window) const {
     // TODO(CH): There is no need to query this condition. Removed because causing Output to not be drawing anymore
     /*if (!sf::Shader::isAvailable())
     {
@@ -54,54 +54,54 @@ void sd::TextOutput::DrawTo(sp<sf::RenderTarget> window) const {
             line->drawTo(window, window);
         }
     }*/
-    for (const auto& line : lines) {
-        line->drawTo(window);
+    for (const auto& line : lines_) {
+        line->draw_to (window);
     }
 }
 
-void sd::TextOutput::addLine(const sf::String& string) {
+void sd::TextOutput::add_line(const sf::String& string) {
 
     auto newLine = std::make_shared<FormattedLine>(
-            string, sf::Vector2f(
-                    lines.back()->getRect().left,
-                    lines.back()->getRect().top + lines.back()->getRect().height),
-                            font,
-                            maxSize
+        string, sf::Vector2f(
+            lines_.back ()->get_rect ().left,
+            lines_.back ()->get_rect ().top + lines_.back ()->get_rect ().height),
+        font_,
+        max_size_
     );
 
     //format line
-    lines.push_back(newLine);
-    while(GetSize().y > maxSize.y)
+    lines_.push_back(newLine);
+    while(get_size ().y > max_size_.y)
     {
-        float distance = lines.front()->getRect().height;
-        MoveVertical(-distance);
-        lines.pop_front();
+        float distance = lines_.front ()->get_rect ().height;
+        move_vertical (-distance);
+        lines_.pop_front();
     }
 
 }
 
-void sd::TextOutput::printLine(const std::string& string) {
+void sd::TextOutput::print_line(const std::string& string) {
     sf::String temp(string);
-    addLine(temp);
+  add_line (temp);
 }
 
-void sd::TextOutput::Handle(sf::Event event) {
+void sd::TextOutput::handle(sf::Event event) {
 
 }
 
-sf::Vector2f sd::TextOutput::GetPosition() {
+sf::Vector2f sd::TextOutput::get_position() {
     //TODO(CH): GetPosition function. Based on lines? or saved in variable?
     return sf::Vector2f();
 }
 
-sf::Vector2f sd::TextOutput::GetSize() {
+sf::Vector2f sd::TextOutput::get_size() {
     sf::Vector2f retVal;
     retVal.x = 0;
     retVal.y = 0;
 
-    for (const auto& line : lines)
+    for (const auto& line : lines_)
     {
-        sf::FloatRect rect = line->getRect();
+        sf::FloatRect rect = line->get_rect ();
         if (rect.width > retVal.x)
         {
             retVal.x = rect.width;
@@ -113,17 +113,17 @@ sf::Vector2f sd::TextOutput::GetSize() {
     return retVal;
 }
 
-void sd::TextOutput::MoveVertical(float distance) {
-    for(const auto& line : lines){
-        line->MoveVertical(distance);
+void sd::TextOutput::move_vertical(float distance) {
+    for(const auto& line : lines_){
+        line->move_vertical (distance);
     }
 }
 
-void sd::TextOutput::Handle(std::shared_ptr<EventArgs> e) {
-    if (e->type == EventArgs::Type::LineToOutput) {
+void sd::TextOutput::handle(std::shared_ptr<EventArgs> e) {
+    if (e->type == EventArgs::Type::LINE_TO_OUTPUT) {
         auto arg = dynamic_cast<LineToOutputEventArgs*>(e.get());
 
-        addLine(arg->line);
+        add_line (arg->line);
     }
 }
 

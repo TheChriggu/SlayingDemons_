@@ -2,8 +2,9 @@
 // Created by christian.heusser on 05.11.2019.
 //
 
-#ifndef UNTITLED_APPLICATION_H
-#define UNTITLED_APPLICATION_H
+#ifndef _APPLICATION_H_
+#define _APPLICATION_H_
+
 #include "SFML/Graphics.hpp"
 #include "Manageable.h"
 #include "UI/Button.h"
@@ -25,28 +26,23 @@
 namespace sd {
     class Application : public Manageable {
 
-        sp<sf::RenderWindow> window_;
-        sp<FileInput> file_input_;
+        Sp<sf::RenderWindow> window_;
+        std::vector<Sp<DrawableObject>> drawable_objects_;
 
-        sp<World> world_;
-        sp<TextOutput> output;
+        Sp<ShaderEngine> shader_engine_;
 
-        std::vector<sp<DrawableObject>> drawable_objects_;
-
-        sp<ShaderEngine> shader_engine_;
-
-        void LoadVocab();
+        void load_vocab();
 
     public:
-        Application();
+        Application() = default;
         ~Application() override = default;
 
-        bool Setup() override;
-        bool Run();
-        void Shutdown() override;
+        bool setup() override;
+        bool run();
+        void shutdown() override;
 
         void clear();
     };
 }
 
-#endif //UNTITLED_APPLICATION_H
+#endif //_APPLICATION_H_

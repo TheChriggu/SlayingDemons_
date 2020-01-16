@@ -33,7 +33,7 @@ namespace sd {
         void EndFight();
 
         PlayerVocabulary* GetPlayerVocabulary();
-        void Handle(std::shared_ptr<EventArgs> e) override;
+        void handle(std::shared_ptr<EventArgs> e) override;
 
     };
 }

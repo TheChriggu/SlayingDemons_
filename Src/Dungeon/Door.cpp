@@ -49,11 +49,11 @@ void sd::Door::BeInteractedWith() {
     else {
         std::shared_ptr<WalkedThroughDoorEventArgs> args;
         args = std::make_shared<WalkedThroughDoorEventArgs>(WalkedThroughDoorEventArgs(this));
-        args->type = sd::EventArgs::Type::WalkedThroughDoor;
+        args->type = sd::EventArgs::Type::WALKED_THROUGH_DOOR;
         EventSystem::Get().Trigger(args);
 
         if (nextRoom) {
-            ScriptEngine::Get()->Broadcast("room_changed", nextRoom->is_last);
+            ScriptEngine::Get ()->broadcast ("room_changed", nextRoom->is_last);
         }
     }
 }
@@ -71,6 +71,6 @@ void sd::Door::SetLocked(bool lockState) {
 
     std::shared_ptr<EventArgs> args;
     args = std::make_shared<EventArgs>(EventArgs());
-    args->type = sd::EventArgs::Type::RoomLayoutChanged;
+    args->type = sd::EventArgs::Type::ROOM_LAYOUT_CHANGED;
     EventSystem::Get().Trigger(args);
 }

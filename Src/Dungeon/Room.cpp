@@ -87,15 +87,15 @@ sd::Monster *sd::Room::GetEnemy() {
     return enemy;
 }
 
-void sd::Room::Handle(std::shared_ptr<EventArgs> e) {
-    if (e->type == EventArgs::Type::RoomLayoutChanged) {
+void sd::Room::handle(std::shared_ptr<EventArgs> e) {
+    if (e->type == EventArgs::Type::ROOM_LAYOUT_CHANGED) {
         for (auto object : roomObjects)
         {
             object->PutOnLayout(layout, 11,7);
         }
     }
 
-    if (e->type == EventArgs::Type::GoblinDefeated) {
+    if (e->type == EventArgs::Type::GOBLIN_DEFEATED) {
         RemoveObjectWithName("Goblin");
     }
 }

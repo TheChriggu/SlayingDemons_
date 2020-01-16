@@ -2,8 +2,8 @@
 // Created by felix on 27.11.19.
 //
 
-#ifndef SLAYINGDEMONS_USERINPUT_H
-#define SLAYINGDEMONS_USERINPUT_H
+#ifndef _USERINPUT_H_
+#define _USERINPUT_H_
 
 
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -17,7 +17,7 @@ namespace sd {
 
     public:
         static UserInput* instance;
-        UserInput(sf::RenderWindow* window);
+        explicit UserInput(sf::RenderWindow* window);
         virtual ~UserInput();
 
         UserInput(UserInput const&) = delete;
@@ -25,9 +25,9 @@ namespace sd {
 
         static UserInput* GetInstance();
 
-        sf::Vector2f GetMousePosition();
+        sf::Vector2f get_mouse_position();
     };
 }
 
 
-#endif //SLAYINGDEMONS_USERINPUT_H
+#endif //_USERINPUT_H_

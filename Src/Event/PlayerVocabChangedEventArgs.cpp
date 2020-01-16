@@ -5,6 +5,6 @@
 #include "PlayerVocabChangedEventArgs.h"
 
 sd::PlayerVocabChangedEventArgs::PlayerVocabChangedEventArgs(sd::PlayerVocabulary *_vocabulary) {
-    this->type = EventArgs::Type::PlayerVocabChanged;
+    this->type = EventArgs::Type::PLAYER_VOCAB_CHANGED;
     this->vocabulary = _vocabulary;
 }

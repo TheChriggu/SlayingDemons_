@@ -2,32 +2,33 @@
 // Created by christian.heusser on 07.11.2019.
 //
 
-#ifndef UNTITLED_INPUTFIELD_H
-#define UNTITLED_INPUTFIELD_H
+#ifndef _INPUTFIELD_H_
+#define _INPUTFIELD_H_
+
 #include "Core/DrawableObject.h"
 #include "TextOutput.h"
 #include "InputTextProcessor.h"
 
 namespace sd {
     class InputField : public DrawableObject{
-        sp<sf::Text> text;
-        sp<InputTextProcessor> textProcessor;
+        Sp<sf::Text> text_;
+        Sp<InputTextProcessor> text_processor_;
 
     public:
         InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color);
         ~InputField() override = default;
 
-        bool Setup() override;
+        bool setup() override;
 
-        void addText(sf::Uint32 input);
+        void add_text(sf::Uint32 input);
 
-        sf::Vector2f GetPosition() override;
-        sf::Vector2f GetSize() override;
+        sf::Vector2f get_position() override;
+        sf::Vector2f get_size() override;
 
-        void DrawTo(sp<sf::RenderTarget> window) const override;
-        void Handle(sf::Event event) override;
+        void draw_to(Sp<sf::RenderTarget> window) const override;
+        void handle(sf::Event event) override;
     };
 }
 
 
-#endif //UNTITLED_INPUTFIELD_H
+#endif //_INPUTFIELD_H_

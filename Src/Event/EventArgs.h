@@ -2,24 +2,24 @@
 // Created by felix on 06.01.20.
 //
 
-#ifndef SLAYINGDEMONS_EVENTARGS_H
-#define SLAYINGDEMONS_EVENTARGS_H
+#ifndef _EVENTARGS_H_
+#define _EVENTARGS_H_
 
 
 namespace sd {
     class EventArgs {
     public:
         enum class Type {
-            None = 0,
-            TextOutputCreated,
-            NewWordCollected,
-            PlayerVocabChanged,
-            LineToOutput,
-            WalkedThroughDoor,
-            RoomLayoutChanged,
-            StartFightWithGoblin,
-            GoblinDefeated,
-            PlayerStateCreated
+            NONE = 0,
+            TEXT_OUTPUT_CREATED,
+            NEW_WORD_COLLECTED,
+            PLAYER_VOCAB_CHANGED,
+            LINE_TO_OUTPUT,
+            WALKED_THROUGH_DOOR,
+            ROOM_LAYOUT_CHANGED,
+            START_FIGHT_WITH_GOBLIN,
+            GOBLIN_DEFEATED,
+            PLAYER_STATE_CREATED
         };
 
         EventArgs();
@@ -30,4 +30,4 @@ namespace sd {
 }
 
 
-#endif //SLAYINGDEMONS_EVENTARGS_H
+#endif //_EVENTARGS_H_

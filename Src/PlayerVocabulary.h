@@ -34,7 +34,7 @@ namespace sd {
 
         std::vector<std::string> *GetNavigation();
 
-        void Handle(std::shared_ptr<EventArgs> e) override;
+        void handle(std::shared_ptr<EventArgs> e) override;
     };
 }
 

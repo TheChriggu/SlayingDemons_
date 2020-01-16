@@ -5,5 +5,5 @@
 #include "ShaderProcedure.h"
 #include <utility>
 
-sd::ShaderProcedure::ShaderProcedure(sp<sf::Shader> shader)
+sd::ShaderProcedure::ShaderProcedure(Sp<sf::Shader> shader)
     : shader_(std::move(shader)) { }

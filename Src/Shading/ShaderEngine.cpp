@@ -10,23 +10,22 @@
 #include "ScriptEngine/ScriptEngine.h"
 
 
-sd::ShaderEngine::ShaderEngine(std::vector<sp<DrawableObject>>& drawable_objects)
+sd::ShaderEngine::ShaderEngine(std::vector<Sp<DrawableObject>>& drawable_objects)
     : drawable_objects_(drawable_objects)
     {
     auto script_engine = ScriptEngine::Get();
 
-    script_engine->RegisterAll("set_weakglitch_on", &ShaderEngine::SetWeakglitchOn, this);
-    script_engine->RegisterAll("set_glitch_on", &ShaderEngine::SetGlitchOn, this);
-    script_engine->RegisterAll("cancel_all_procedures_on", &ShaderEngine::CancelAllProceduresOn, this);
-    script_engine->RegisterAll("set_demoglitch_on", &ShaderEngine::SetDemoGlitchOn, this);
+      script_engine->register_all ("set_weak_glitch_on", &ShaderEngine::set_weak_glitch_on, this);
+      script_engine->register_all ("set_glitch_on", &ShaderEngine::set_glitch_on, this);
+      script_engine->register_all ("cancel_all_procedures_on", &ShaderEngine::cancel_all_procedures_on, this);
 }
 
-void sd::ShaderEngine::SetupAllShader() {
+void sd::ShaderEngine::setup_all_shader() {
     //auto script_engine = ScriptEngine::Get();
     //script_engine.RegisterAll("cancel_all_procedures_on", &ShaderEngine::, this);
 
-    weakglitch = new sf::Shader();
-    glitch = new sf::Shader();
+    weakglitch_ = new sf::Shader();
+    glitch_ = new sf::Shader();
 
     /*auto shaderContent = FileInput::Load(
             boost::filesystem::path("../Resources/Shaders/weakglitch.frag")
@@ -38,46 +37,37 @@ void sd::ShaderEngine::SetupAllShader() {
     );
     weakglitch->loadFromMemory(*shaderContent, sf::Shader::Type::Vertex);*/
 
-    shaderProcedures_.emplace_back(std::make_shared<WeakGlitch>(sp<sf::Shader>(weakglitch)));
-    shaderProcedures_.emplace_back(std::make_shared<Glitch>(sp<sf::Shader>(glitch)));
+    shader_procedures_.emplace_back(std::make_shared<WeakGlitch>(Sp<sf::Shader>(weakglitch_)));
+    shader_procedures_.emplace_back(std::make_shared<Glitch>(Sp<sf::Shader>(glitch_)));
 }
 
-void sd::ShaderEngine::SetWeakglitchOn(std::string objectName) const {
+void sd::ShaderEngine::set_weak_glitch_on(std::string object_name) const {
     // TODO(FK): replace with propper solution
 
-    for (auto object : drawable_objects_) {
-        if (object->GetName() == objectName) {
-            object->SetShaderProcedure(shaderProcedures_[0]);
+    for (const auto& object : drawable_objects_) {
+        if (object->get_name () == object_name) {
+            object->set_shader_procedure (shader_procedures_[0]);
         }
     }
 }
 
-void sd::ShaderEngine::SetGlitchOn(std::string objectName) const {
+void sd::ShaderEngine::set_glitch_on(std::string object_name) const {
     // TODO(FK): replace with propper solution
-    std::cout << "--set shader: " << drawable_objects_.size() << std::endl;
 
-    for (auto object : drawable_objects_) {
-        std::cout << "--try set shader on " << object->GetName() << std::endl;
-        if (object->GetName() == objectName) {
-            std::cout << "---set shader on " << objectName << std::endl;
-            object->SetShaderProcedure(shaderProcedures_[1]);
+    for (const auto& object : drawable_objects_) {
+        if (object->get_name () == object_name) {
+            object->set_shader_procedure (shader_procedures_[1]);
         }
     }
 }
 
-void sd::ShaderEngine::CancelAllProceduresOn(std::string objectName) {
-    std::cout << "##cancel " << objectName << std::endl;
-    for (auto object : drawable_objects_) {
-        std::cout << "--object " << object->GetName() << std::endl;
-        if (object->GetName() == objectName) {
-            std::cout << "--cancel on " << object->GetName() << std::endl;
-            object->SetShaderProcedure(nullptr);
+void sd::ShaderEngine::cancel_all_procedures_on(std::string object_name) {
+
+    for (const auto& object : drawable_objects_) {
+        if (object->get_name () == object_name) {
+            object->set_shader_procedure (nullptr);
         }
     }
-}
-
-void sd::ShaderEngine::SetDemoGlitchOn(std::string objectName) const {
-
 }
 
 

@@ -3,36 +3,23 @@
 //
 
 #include "FormattedWord.h"
-#include <iostream>
 
-FormattedWord::FormattedWord(sf::String _text, bool _isGlitching, sf::Vector2f _position, sf::Font* _font) {
+FormattedWord::FormattedWord(const sf::String& _text, sf::Vector2f _position, const sp<sf::Font>& _font) {
+    font = _font;
 
-
-    text = new sf::Text();
+    text = std::make_shared<sf::Text>();
     text->setFont(*_font);
     text->setString(_text);
     text->setCharacterSize(24);
     text->setFillColor(sf::Color::Black);
     text->setPosition(_position);
 
-    isGlitching = _isGlitching;
-
     format();
 }
 
-FormattedWord::~FormattedWord() {
-    delete text;
-}
+void FormattedWord::drawTo(const sp<sf::RenderTarget>& window) {
 
-void FormattedWord::drawTo(sf::RenderTarget* window, sf::RenderTarget* glitchWindow) {
-    if(isGlitching)
-    {
-        glitchWindow->draw(*text);
-    }
-    else
-    {
-        window->draw(*text);
-    }
+    window->draw(*text);
 }
 
 void FormattedWord::setPosition(sf::Vector2f _position) {

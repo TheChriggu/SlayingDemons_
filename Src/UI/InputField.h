@@ -15,13 +15,16 @@ namespace sd {
 
     public:
         InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color);
-        ~InputField() override;
+        ~InputField() override = default;
 
         bool Setup() override;
 
         void addText(sf::Uint32 input);
 
-        void DrawTo(sf::RenderTarget* window) const override;
+        sf::Vector2f GetPosition() override;
+        sf::Vector2f GetSize() override;
+
+        void DrawTo(sp<sf::RenderTarget> window) const override;
         void Handle(sf::Event event) override;
     };
 }

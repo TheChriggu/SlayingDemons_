@@ -3,6 +3,8 @@
 //
 
 #include <iostream>
+#include <memory>
+#include <utility>
 #include "Button.h"
 #include "IO/UserInput.h"
 
@@ -10,9 +12,9 @@
 sd::Button::Button(sf::Vector2f position, sf::Vector2f scale, std::function<void()> _callback)
     : DrawableObject("button")
 {
-    button = new sf::Sprite();;
-    normalTexture = new sf::Texture();
-    pressedTexture = new sf::Texture();
+    button = std::make_shared<sf::Sprite>();
+    normalTexture = std::make_shared<sf::Texture>();
+    pressedTexture = std::make_shared<sf::Texture>();
     if (!normalTexture->loadFromFile("../Resources/Sprites/Buttons/blue_button04.png"))
     {
         std::cout << "Could not load ButtonUp!\n";
@@ -26,16 +28,7 @@ sd::Button::Button(sf::Vector2f position, sf::Vector2f scale, std::function<void
     button->setTexture(*normalTexture, false);
     button->setPosition(position);
     button->setScale(scale);
-    callback = _callback;
-}
-
-sd::Button::~Button() {
-    delete normalTexture;
-    normalTexture = nullptr;
-    delete pressedTexture;
-    pressedTexture = nullptr;
-    delete button;
-    button = nullptr;
+    callback = std::move(_callback);
 }
 
 void sd::Button::down() {
@@ -47,8 +40,8 @@ void sd::Button::up() {
     callback();
 }
 
-void sd::Button::DrawTo(sf::RenderTarget *window) const {
-    window->draw(*button);
+void sd::Button::DrawTo(sp<sf::RenderTarget> window) const {
+    window->draw(*button.get());
 }
 
 bool sd::Button::isPositionOnButton(sf::Vector2f positionToCheck) {

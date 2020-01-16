@@ -4,26 +4,28 @@
 
 #ifndef UNTITLED_FORMATTEDWORD_H
 #define UNTITLED_FORMATTEDWORD_H
+
+#include <Core/GlobalDefinitions.h>
 #include "SFML/Graphics.hpp"
 
 class FormattedWord {
-    sf::Text* text;
-    bool isGlitching;
-    void format();
+
+    sp<sf::Text> text;
+    sp<sf::Font> font;
 
 public:
-    FormattedWord(sf::String _text, bool _isGlitching, sf::Vector2f _position, sf::Font* _font);
-    ~FormattedWord();
+    FormattedWord(const sf::String& _text, sf::Vector2f _position, const sp<sf::Font>& _font);
+    virtual ~FormattedWord() = default;
 
-    void drawTo(sf::RenderTarget* window, sf::RenderTarget* glitchWindow);
+    void drawTo(const sp<sf::RenderTarget>& window);
 
     void setPosition(sf::Vector2f _position);
     sf::FloatRect getRect();
     void MoveVertical(float distance);
 
-    void toggleGlitch(){
-        isGlitching = !isGlitching;
-    }
+private:
+
+    void format();
 };
 
 

@@ -14,26 +14,28 @@
 namespace sd {
     class MapWindow : public DrawableObject, public Subscriber {
     private:
-        sf::Texture* backgroundTexture;
-        sf::Sprite* backgroundSprite;
+        sp<sf::Texture> backgroundTexture;
+        sp<sf::Sprite> backgroundSprite;
         sf::Vector2f position;
         sf::Vector2f size;
         sf::Texture* monsterPortraitTexture;
         sf::Sprite* monsterPortraitSprite;
 
-        Tilemap* currenttileMap;
-        PlayerState* playerState;
+        sp<Tilemap> currenttileMap;
+        sp<PlayerState> playerState;
     public:
         MapWindow(sf::Vector2f _position, sf::Vector2f _size);
-        ~MapWindow() override;
+        ~MapWindow() override = default;
 
         bool Setup() override;
 
-        void DrawTo(sf::RenderTarget* window) const override;
+        void DrawTo(sp<sf::RenderTarget> window) const override;
 
         sf::Vector2f GetPosition() override;
         sf::Vector2f GetSize() override;
-        void SetPlayerState(PlayerState* _playerState);
+
+        sp<Room> GetRoom();
+        void SetPlayerState(sp<PlayerState> _playerState);
 
         void Handle(sf::Event event) override;
         void Handle(sp<EventArgs> e) override;

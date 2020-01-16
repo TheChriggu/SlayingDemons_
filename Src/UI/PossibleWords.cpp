@@ -52,7 +52,7 @@ void sd::PossibleWords::Update() {
     if(playerState->IsFighting()) {
         sf::Vector2f offset = sf::Vector2f(50, 90);
     for(const auto& action : *(playerVocabulary->GetModifiers()))
-            lines->push_back(
+    {
         lines.push_back(std::make_shared<FormattedLine>(
                 action,
                 sf::Vector2f(position + offset),
@@ -63,7 +63,7 @@ void sd::PossibleWords::Update() {
 
         offset = sf::Vector2f(250, 90);
     for(const auto& action : *(playerVocabulary->GetActions()))
-            lines->push_back(
+    {
         lines.push_back(std::make_shared<FormattedLine>(action,
                 sf::Vector2f(position + offset),
                 font,

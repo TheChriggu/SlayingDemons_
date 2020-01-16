@@ -40,24 +40,6 @@ bool sd::MapWindow::Setup() {
 
 }
 
-sd::MapWindow::~MapWindow() {
-    delete backgroundTexture;
-    backgroundTexture = nullptr;
-
-    delete backgroundSprite;
-    backgroundSprite = nullptr;
-
-    delete monsterPortraitTexture;
-    monsterPortraitTexture = nullptr;
-
-    delete monsterPortraitSprite;
-    monsterPortraitSprite = nullptr;
-    
-    delete currenttileMap;
-    currenttileMap = nullptr;
-
-}
-
 void sd::MapWindow::DrawTo(sp<sf::RenderTarget> window) const {
     window->draw(*backgroundSprite);
 

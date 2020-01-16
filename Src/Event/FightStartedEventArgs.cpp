@@ -5,6 +5,6 @@
 #include "FightStartedEventArgs.h"
 
 sd::FightStartedEventArgs::FightStartedEventArgs(Fight* _fight) {
-    this->type = EventArgs::Type::FightStarted;
+    this->type = EventArgs::Type::FIGHT_STARTED;
     this->fight = _fight;
 }

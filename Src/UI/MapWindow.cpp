@@ -33,7 +33,7 @@ bool sd::MapWindow::setup() {
     monsterPortraitTexture->loadFromFile("../Resources/Sprites/glitchy_goblin_red.png");
 
     monsterPortraitSprite->setTexture(*monsterPortraitTexture);
-    monsterPortraitSprite->setPosition(position);
+    monsterPortraitSprite->setPosition(position_);
 
     return DrawableObject::setup ();
 
@@ -42,14 +42,14 @@ bool sd::MapWindow::setup() {
 void sd::MapWindow::draw_to(Sp<sf::RenderTarget> window) const {
     window->draw(*background_sprite_);
 
-    if(playerState->IsFighting())
+    if(player_state_->IsFighting())
     {
         window->draw(*monsterPortraitSprite);
     }
     else
     {
-        currenttileMap->SetLayout(playerState->GetCurrentRoom()->GetLayout(),77);
-        window->draw(*currenttileMap);
+        current_tile_map_->SetLayout(player_state_->GetCurrentRoom()->GetLayout(),77);
+        window->draw(*current_tile_map_);
     }
 }
 
@@ -82,7 +82,7 @@ void sd::MapWindow::handle(Sp<sd::EventArgs> e) {
         player_state_ = args->player_state;
     }
 
-    if (e->type == EventArgs::Type::FightStarted) {
+    if (e->type == EventArgs::Type::FIGHT_STARTED) {
         auto arg = dynamic_cast<FightStartedEventArgs*>(e.get());
         monsterPortraitTexture->loadFromFile(arg->fight->GetEnemy()->GetPathToPortrait());
     }

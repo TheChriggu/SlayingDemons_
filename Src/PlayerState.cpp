@@ -105,7 +105,7 @@ void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
 
         std::shared_ptr<EventArgs> args;
         args = std::make_shared<EventArgs>(EventArgs());
-        args->type = sd::EventArgs::Type::FightEnded;
+        args->type = sd::EventArgs::Type::FIGHT_ENDED;
         EventSystem::Get().Trigger(args);
     }
 

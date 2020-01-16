@@ -82,20 +82,18 @@ void sd::PossibleWords::handle(std::shared_ptr<EventArgs> e) {
         update ();
     }
 
-    if (_e->type == sd::EventArgs::Type::FIGHT_STARTED) {
-        Update();
+    if (e->type == sd::EventArgs::Type::FIGHT_STARTED) {
+        update();
     }
-    if (_e->type == sd::EventArgs::Type::FIGHT_ENDED) {
-        Update();
+    if (e->type == sd::EventArgs::Type::FIGHT_ENDED) {
+        update();
     }
     
     if (e->type == sd::EventArgs::Type::PLAYER_STATE_CREATED) {
         auto args = dynamic_cast<PlayerStateCreatedEventArgs *>(e.get());
 
-
-
         player_vocabulary_ = Sp<PlayerVocabulary>(args->player_state->GetPlayerVocabulary());
-        playerState = e->player_state;
+        playerState = args->player_state;
 
         update ();
     }

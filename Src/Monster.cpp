@@ -7,12 +7,12 @@
 
 sd::Monster::Monster(std::string _pathToPortrait) {
     actions = new std::vector<sf::String>();
-    AddAction("Kick");
-    AddAction("Slash");
+    //AddAction("Kick");
+    //AddAction("Slash");
 
     modifiers = new std::vector<sf::String>();
-    AddModifier("Frost");
-    AddModifier("Virtual");
+    //AddModifier("Frost");
+    //AddModifier("Virtual");
 
     pathToPortrait = _pathToPortrait;
 }

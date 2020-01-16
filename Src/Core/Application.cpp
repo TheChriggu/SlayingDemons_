@@ -90,7 +90,7 @@ bool sd::Application::Setup() {
 
     std::cout << "Create global vocabulary containing all words\n";
     LoadVocab();
-    sd::MonsterList();
+    new sd::MonsterList();
 
     for(const auto& object : drawable_objects_) {
         object->Setup();

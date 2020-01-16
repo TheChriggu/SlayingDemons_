@@ -20,6 +20,8 @@ namespace sd {
         static MonsterList* Get();
         Monster* GetMonster(std::string name);
 
+        std::vector<std::string> SplitBySlash(std::string string);
+
     };
 }
 

@@ -20,14 +20,14 @@ Script::Script(const char* name, const std::string& content) {
     state_->script(content);
 }
 
-void Script::AddContent(const char *content) {
+void Script::add_content(const char *content) {
     state_->script(content);
 }
 
-const std::string &Script::GetName() const {
+const std::string &Script::get_name() const {
     return name_;
 }
 
-sol::optional<sol::table> Script::GetTable(const char *name) const {
+sol::optional<sol::table> Script::get_table(const char *name) const {
     return (*state_)[name];
 }

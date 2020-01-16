@@ -42,7 +42,7 @@ namespace sd {
         RoomObject* GetObjectWithName(std::string name);
         void RemoveObjectWithName(std::string name);
 
-        void Handle(std::shared_ptr<EventArgs> e) override;
+        void handle(std::shared_ptr<EventArgs> e) override;
     };
 }
 

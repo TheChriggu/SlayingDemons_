@@ -69,8 +69,8 @@ sd::PlayerVocabulary *sd::PlayerState::GetPlayerVocabulary() {
     return playerVocabulary;
 }
 
-void sd::PlayerState::Handle(std::shared_ptr<EventArgs> e) {
-    if (e->type == EventArgs::Type::WalkedThroughDoor) {
+void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
+    if (e->type == EventArgs::Type::WALKED_THROUGH_DOOR) {
         auto arg = dynamic_cast<WalkedThroughDoorEventArgs*>(e.get());
         SetRoomAsCurrent(arg->door->GetConnectedRoom());
 
@@ -79,7 +79,7 @@ void sd::PlayerState::Handle(std::shared_ptr<EventArgs> e) {
         EventSystem::Get().Trigger(args);
     }
 
-    if (e->type == EventArgs::Type::StartFightWithGoblin) {
+    if (e->type == EventArgs::Type::START_FIGHT_WITH_GOBLIN) {
 
         std::shared_ptr<LineToOutputEventArgs> args;
         args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("Starting Fight."));
@@ -90,7 +90,7 @@ void sd::PlayerState::Handle(std::shared_ptr<EventArgs> e) {
         StartNewFight(goblin);
     }
 
-    if (e->type == EventArgs::Type::GoblinDefeated) {
+    if (e->type == EventArgs::Type::GOBLIN_DEFEATED) {
 
         ((Door*) currentRoom->GetObjectWithName("EastDoor"))->SetLocked(false);
         delete fight;

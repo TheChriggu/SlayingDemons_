@@ -2,8 +2,9 @@
 // Created by christian.heusser on 06.11.2019.
 //
 
-#ifndef UNTITLED_TEXTOUTPUT_H
-#define UNTITLED_TEXTOUTPUT_H
+#ifndef _TEXTOUTPUT_H_
+#define _TEXTOUTPUT_H_
+
 #include "Core/DrawableObject.h"
 #include "TextGlitch.h"
 #include <list>
@@ -14,9 +15,9 @@
 namespace sd {
     class TextOutput: public DrawableObject, public Subscriber {
 
-        std::list<sp<FormattedLine>> lines;
-        sf::Vector2f maxSize;
-        sp<sf::Font> font;
+        std::list<Sp<FormattedLine>> lines_;
+        sf::Vector2f max_size_;
+        Sp<sf::Font> font_;
 
         // TODO(CH): rework this Class! Position of an asset should not be determent by "old" data!
         sf::Vector2f start_position_;
@@ -25,20 +26,20 @@ namespace sd {
         TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color);
         ~TextOutput() override = default;
 
-        bool Setup() override;
+        bool setup() override;
 
-        void addLine(const sf::String& string);
-        void printLine(const std::string& string);
+        void add_line(const sf::String& string);
+        void print_line(const std::string& string);
 
-        void DrawTo(sp<sf::RenderTarget> window) const override;
-        sf::Vector2f GetPosition() override;
-        sf::Vector2f GetSize() override;
-        void MoveVertical(float distance);
+        void draw_to(Sp<sf::RenderTarget> window) const override;
+        sf::Vector2f get_position() override;
+        sf::Vector2f get_size() override;
+        void move_vertical(float distance);
 
-        void Handle(sf::Event event) override;
-        void Handle(std::shared_ptr<EventArgs> e) override;
+        void handle(sf::Event event) override;
+        void handle(std::shared_ptr<EventArgs> e) override;
     };
 }
 
 
-#endif //UNTITLED_TEXTOUTPUT_H
+#endif //_TEXTOUTPUT_H_

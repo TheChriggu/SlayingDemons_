@@ -1,16 +1,16 @@
-#include <iostream>
+#include <memory>
 #include "Application.h"
 
 int main() {
 
-    sp<sd::Application> app = sp<sd::Application>(new sd::Application());
-    app->Setup();
+    Sp<sd::Application> app = std::make_shared<sd::Application>();
+  app->setup ();
 
-    while (app->Run())
+    while (app->run ())
     {
     }
 
-    app->Shutdown();
+  app->shutdown ();
 
     return 0;
 }

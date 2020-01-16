@@ -2,31 +2,31 @@
 // Created by felix on 26.11.19.
 //
 
-#ifndef SLAYINGDEMONS_PANEL_H
-#define SLAYINGDEMONS_PANEL_H
+#ifndef _PANEL_H_
+#define _PANEL_H_
 
 #include "Core/DrawableObject.h"
 
 namespace sd {
     class Panel : public DrawableObject {
     private:
-        sp<sf::Sprite> sprite;
-        sp<sf::Texture> texture;
+        Sp<sf::Sprite> sprite_;
+        Sp<sf::Texture> texture_;
 
     public:
         Panel(sf::Vector2f position, sf::Vector2f size, sf::Color color);
         Panel(sf::Vector2f position, sf::Vector2f size, const char* texture_path);
         ~Panel() override = default;
 
-        bool Setup() override;
+        bool setup() override;
 
-        sf::Vector2f GetPosition() override;
-        sf::Vector2f GetSize() override;
-        void DrawTo(sp<sf::RenderTarget> window) const override;
+        sf::Vector2f get_position() override;
+        sf::Vector2f get_size() override;
+        void draw_to(Sp<sf::RenderTarget> window) const override;
 
-        void Handle(sf::Event event) override;
+        void handle(sf::Event event) override;
     };
 }
 
 
-#endif //SLAYINGDEMONS_PANEL_H
+#endif //_PANEL_H_

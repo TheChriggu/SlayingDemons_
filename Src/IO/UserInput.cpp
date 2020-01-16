@@ -16,11 +16,11 @@ sd::UserInput::~UserInput() {
     window_ = nullptr;
 }
 
-sf::Vector2f sd::UserInput::GetMousePosition() {
+sf::Vector2f sd::UserInput::get_mouse_position() {
 
-    auto mousePos = sf::Mouse::getPosition(*window_);
+    auto mouse_pos = sf::Mouse::getPosition(*window_);
 
-    return window_->mapPixelToCoords(mousePos);
+    return window_->mapPixelToCoords(mouse_pos);
 }
 
 sd::UserInput *sd::UserInput::GetInstance() {

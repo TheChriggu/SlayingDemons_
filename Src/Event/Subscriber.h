@@ -2,8 +2,8 @@
 // Created by felix on 06.01.20.
 //
 
-#ifndef SLAYINGDEMONS_SUBSCRIBER_H
-#define SLAYINGDEMONS_SUBSCRIBER_H
+#ifndef _SUBSCRIBER_H_
+#define _SUBSCRIBER_H_
 
 #include <memory>
 #include "Event/EventArgs.h"
@@ -16,9 +16,9 @@ namespace sd {
         // declare virtual destructor to avoid potential memory leaks
         virtual ~Subscriber() = default;
 
-        virtual void Handle(sp<EventArgs> e) = 0;
+        virtual void handle(Sp<EventArgs> e) = 0;
     };
 }
 
 
-#endif //SLAYINGDEMONS_SUBSCRIBER_H
+#endif //_SUBSCRIBER_H_

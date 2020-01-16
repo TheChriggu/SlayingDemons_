@@ -2,8 +2,8 @@
 // Created by christian.heusser on 05.11.2019.
 //
 
-#ifndef UNTITLED_BUTTON_H
-#define UNTITLED_BUTTON_H
+#ifndef _BUTTON_H_
+#define _BUTTON_H_
 
 #include <functional>
 #include "SFML/Graphics.hpp"
@@ -13,26 +13,26 @@
 namespace sd {
     class Button : public DrawableObject {
 
-        sp<sf::Sprite> button;
-        sp<sf::Texture> normalTexture;
-        sp<sf::Texture> pressedTexture;
+        Sp<sf::Sprite> button_;
+        Sp<sf::Texture> normal_texture_;
+        Sp<sf::Texture> pressed_texture_;
 
-        std::function<void()> callback;
+        std::function<void()> callback_;
 
 
     public:
-        Button(sf::Vector2f position, sf::Vector2f scale, std::function<void()> _callback);
+        Button(sf::Vector2f position, sf::Vector2f scale, std::function<void()> callback);
         ~Button() override = default;
 
         void down();
         void up();
 
-        void DrawTo(sp<sf::RenderTarget> window) const override;
-        bool isPositionOnButton(sf::Vector2f positionToCheck);
+        void draw_to(Sp<sf::RenderTarget> window) const override;
+        bool is_position_on_button(sf::Vector2f position_to_check);
 
-        void Handle(sf::Event event) override;
+        void handle(sf::Event event) override;
     };
 }
 
 
-#endif //UNTITLED_BUTTON_H
+#endif //_BUTTON_H_

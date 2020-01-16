@@ -13,8 +13,8 @@ namespace sd {
         World();
         virtual ~World();
 
-        bool Setup() override;
-        void Shutdown() override;
+        bool setup() override;
+        void shutdown() override;
     };
 }
 

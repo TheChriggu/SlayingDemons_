@@ -3,17 +3,15 @@
 //
 
 #include "FileInput.h"
-#include <fstream>
-#include <cstring>
 #include <iostream>
 #include <sstream>
 
 
-bool sd::FileInput::IsExisting(boost::filesystem::path url) {
+bool sd::FileInput::is_existing(boost::filesystem::path url) {
     return boost::filesystem::exists(url);
 }
 
-std::shared_ptr<std::string> sd::FileInput::Load(boost::filesystem::path url) {
+std::shared_ptr<std::string> sd::FileInput::load(boost::filesystem::path url) {
     std::shared_ptr<std::string> content(new std::string);
     std::string line;
 
@@ -28,14 +26,14 @@ std::shared_ptr<std::string> sd::FileInput::Load(boost::filesystem::path url) {
         } else {
             std::cerr << "open file " << url << " failed!" << std::endl;
         }
-    } catch (std::exception ex) {
+    } catch (std::exception& ex) {
         std::cerr << "Loading File failed due to exception: " << ex.what() << std::endl;
     }
 
     return content;
 }
 
-std::shared_ptr<std::vector<std::vector<std::string>>> sd::FileInput::LoadCSV(boost::filesystem::path url) {
+std::shared_ptr<std::vector<std::vector<std::string>>> sd::FileInput::load_csv(const boost::filesystem::path& url) {
 
     std::shared_ptr<std::vector<std::vector<std::string>>> content(new std::vector<std::vector<std::string>>);
     std::string field;
@@ -70,14 +68,14 @@ std::shared_ptr<std::vector<std::vector<std::string>>> sd::FileInput::LoadCSV(bo
         } else {
             std::cerr << "open CSV file " << url << " failed!" << std::endl;
         }
-    } catch (std::exception ex) {
+    } catch (std::exception& ex) {
         std::cerr << "Loading CSV failed due to exception: " << ex.what() << std::endl;
     }
 
     return content;
 }
 
-std::shared_ptr<std::vector<boost::filesystem::path>> sd::FileInput::GetFiles(boost::filesystem::path directory) {
+std::shared_ptr<std::vector<boost::filesystem::path>> sd::FileInput::get_files(const boost::filesystem::path& directory) {
     std::shared_ptr<std::vector<boost::filesystem::path>> content(new std::vector<boost::filesystem::path>);
 
     for (auto& entry : boost::filesystem::directory_iterator(directory)) {

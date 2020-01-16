@@ -94,7 +94,7 @@ void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
         //Monster* goblin = new Monster("../Resources/Sprites/glitchy_goblin_red.png");
 
         auto list = MonsterList::Get();
-        Monster* goblin = list->GetMonster("Goblin");
+        Monster* goblin = list->GetMonster("Cyber Hedgehog");
         StartNewFight(goblin);
     }
 

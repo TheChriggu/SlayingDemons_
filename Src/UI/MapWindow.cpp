@@ -20,6 +20,7 @@ sd::MapWindow::MapWindow(sf::Vector2f position, sf::Vector2f size)
     current_tile_map_ = std::make_shared<Tilemap>(11, 7, position_ + sf::Vector2f(40, 44), sf::Vector2u(64, 64));
     monsterPortraitTexture = new sf::Texture();
     monsterPortraitSprite = new sf::Sprite();
+    //monsterPortraitSprite->setScale(0.75,0.75);
 }
 
 bool sd::MapWindow::setup() {
@@ -30,10 +31,11 @@ bool sd::MapWindow::setup() {
 
     
 
-    monsterPortraitTexture->loadFromFile("../Resources/Sprites/glitchy_goblin_red.png");
+    monsterPortraitTexture->loadFromFile("../Resources/Sprites/goblin.png");
 
-    monsterPortraitSprite->setTexture(*monsterPortraitTexture);
+    monsterPortraitSprite->setTexture(*monsterPortraitTexture, true);
     monsterPortraitSprite->setPosition(position_);
+    //monsterPortraitSprite->setScale(0.75,0.75);
 
     return DrawableObject::setup ();
 

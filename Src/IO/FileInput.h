@@ -2,28 +2,29 @@
 // Created by felix on 27.11.19.
 //
 
-#ifndef SLAYINGDEMONS_FILEINPUT_H
-#define SLAYINGDEMONS_FILEINPUT_H
+#ifndef _FILEINPUT_H_
+#define _FILEINPUT_H_
 
 #define ASCII_NEWLINE 13
 
 #include <string>
 #include <vector>
 #include <memory>
+#include <Core/GlobalDefinitions.h>
 #include "boost/filesystem.hpp"
 
 namespace sd {
     class FileInput {
     public:
 
-        static bool IsExisting(boost::filesystem::path url);
+        static bool is_existing(boost::filesystem::path url);
 
-        static std::shared_ptr<std::vector<boost::filesystem::path>> GetFiles(boost::filesystem::path directory);
+        static Sp<std::vector<boost::filesystem::path>> get_files(const boost::filesystem::path& directory);
 
-        static std::shared_ptr<std::string> Load(boost::filesystem::path url);
-        static std::shared_ptr<std::vector<std::vector<std::string>>> LoadCSV(boost::filesystem::path url);
+        static Sp<std::string> load(boost::filesystem::path url);
+        static Sp<std::vector<std::vector<std::string>>> load_csv(const boost::filesystem::path& url);
     };
 }
 
 
-#endif //SLAYINGDEMONS_FILEINPUT_H
+#endif //_FILEINPUT_H_

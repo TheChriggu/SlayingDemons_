@@ -2,8 +2,8 @@
 // Created by felix on 09.01.20.
 //
 
-#ifndef SLAYINGDEMONS_GLITCH_H
-#define SLAYINGDEMONS_GLITCH_H
+#ifndef _GLITCH_H_
+#define _GLITCH_H_
 
 
 #include "ShaderProcedure.h"
@@ -11,15 +11,15 @@
 namespace sd {
     class Glitch : public ShaderProcedure {
 
-        sp<sf::Clock> clock_;
+        Sp<sf::Clock> clock_;
 
     public:
-        explicit Glitch(sp<sf::Shader> glitchShader);
+        explicit Glitch(Sp<sf::Shader> glitch_shader);
         virtual ~Glitch() = default;
 
-        void Process(sf::RenderTarget* window, const sf::Drawable* drawable) const override;
+        void process(sf::RenderTarget* window, const sf::Drawable* drawable) const override;
     };
 }
 
 
-#endif //SLAYINGDEMONS_GLITCH_H
+#endif //_GLITCH_H_

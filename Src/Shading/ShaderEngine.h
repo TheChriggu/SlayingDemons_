@@ -2,8 +2,8 @@
 // Created by felix on 07.01.20.
 //
 
-#ifndef SLAYINGDEMONS_SHADERENGINE_H
-#define SLAYINGDEMONS_SHADERENGINE_H
+#ifndef _SHADERENGINE_H_
+#define _SHADERENGINE_H_
 
 
 #include <vector>
@@ -14,27 +14,26 @@
 namespace sd {
     class ShaderEngine {
 
-        std::vector<sp<ShaderProcedure>> shaderProcedures_;
-        sf::Shader* weakglitch;
-        sf::Shader* glitch;
+        std::vector<Sp<ShaderProcedure>> shader_procedures_;
+        sf::Shader* weakglitch_;
+        sf::Shader* glitch_;
 
-        std::vector<sp<DrawableObject>>& drawable_objects_;
+        std::vector<Sp<DrawableObject>>& drawable_objects_;
 
 
 
     public:
-        explicit ShaderEngine(std::vector<sp<DrawableObject>>& drawable_objects);
+        explicit ShaderEngine(std::vector<Sp<DrawableObject>>& drawable_objects);
         virtual ~ShaderEngine() = default;
 
-        void SetupAllShader();
+        void setup_all_shader();
 
-        void SetWeakglitchOn(std::string objectName) const;
-        void SetGlitchOn(std::string objectName) const;
-        void SetDemoGlitchOn(std::string objectName) const;
+        void set_weak_glitch_on(std::string object_name) const;
+        void set_glitch_on(std::string object_name) const;
 
-        void CancelAllProceduresOn(std::string objectName);
+        void cancel_all_procedures_on(std::string object_name);
     };
 }
 
 
-#endif //SLAYINGDEMONS_SHADERENGINE_H
+#endif //_SHADERENGINE_H_

@@ -2,8 +2,8 @@
 // Created by felix on 30.11.19.
 //
 
-#ifndef SLAYINGDEMONS_SCRIPTENGINE_H
-#define SLAYINGDEMONS_SCRIPTENGINE_H
+#ifndef _SCRIPTENGINE_H_
+#define _SCRIPTENGINE_H_
 
 #include <memory>
 #include <vector>
@@ -14,7 +14,7 @@
 namespace sd {
     class ScriptEngine {
 
-        static sd::ScriptEngine* instance;
+        static sd::ScriptEngine* instance_;
 
         std::vector<std::shared_ptr<Script>> scripts_;
 
@@ -26,27 +26,27 @@ namespace sd {
 
         static ScriptEngine* Get();
 
-        void AddScript(const boost::filesystem::path& url);
+        void add_script(const boost::filesystem::path& url);
 
         template <typename... Args>
-        void Broadcast(const char* function, Args&&... args) {
+        void broadcast(const char* function, Args&&... args) {
 
             for (const auto& script : scripts_) {
-                script->Call(function, std::forward<Args>(args)...);
+                script->call (function, std::forward<Args> (args)...);
             }
         }
 
 
-        std::shared_ptr<Script> GetScript(const std::string& name) const;
+        [[nodiscard]] std::shared_ptr<Script> get_script(const std::string& name) const;
 
         template <typename... Args, typename Key>
-        void RegisterAll(Key&& key, Args&&... args) {
-            for (auto script : scripts_) {
-                script->RegisterFunction(std::forward<Key>(key), std::forward<Args>(args)...);
+        void register_all(Key&& key, Args&&... args) {
+            for (const auto& script : scripts_) {
+                script->register_function (std::forward<Key> (key), std::forward<Args> (args)...);
             }
         }
     };
 }
 
 
-#endif //SLAYINGDEMONS_SCRIPTENGINE_H
+#endif //_SCRIPTENGINE_H_

@@ -20,6 +20,6 @@ void sd::EventSystem::Subscribe(std::shared_ptr<Subscriber> newSubscriber) {
 
 void sd::EventSystem::Trigger(std::shared_ptr<sd::EventArgs> e) const {
     for (auto subscriber : subscriber_) {
-        subscriber->Handle(e);
+        subscriber->handle (e);
     }
 }

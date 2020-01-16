@@ -27,7 +27,6 @@ add_executable(${PROJECT_NAME}
                Src/UI/InputField.h
                Src/UI/InputField.cpp
                Src/Core/Manageable.h
-               Src/Core/Drawable.h
                Src/UI/Panel.cpp
                Src/UI/Panel.h
                Src/IO/UserInput.cpp

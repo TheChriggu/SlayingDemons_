@@ -12,15 +12,11 @@
 #include <memory>
 
 
-sd::Vocabulary* sd::Vocabulary::allWords = nullptr;
-
-sd::Application::Application()
-{
-}
+sd::Vocabulary* sd::Vocabulary::all_words = nullptr;
 
 
 
-bool sd::Application::Setup() {
+bool sd::Application::setup() {
     window_ = std::make_shared<sf::RenderWindow>(sf::VideoMode(1920, 1080), "MyGame", sf::Style::Default);
     window_->setFramerateLimit(60);
 
@@ -28,19 +24,19 @@ bool sd::Application::Setup() {
 
     std::cout << "Initialize Script Engine" << std::endl;
     new ScriptEngine();
-    auto script_engine_ = ScriptEngine::Get();
+    auto script_engine = ScriptEngine::Get();
 
     std::cout << "get test file\n";
     // TODO(FK): find out why Game crashes when tmp test var is not used
-    auto test = FileInput::GetFiles("../Resources/Scripts/");
+    auto test = FileInput::get_files ("../Resources/Scripts/");
     std::cout << "add files\n";
     for (auto file : *test) {
-        script_engine_->AddScript(file);
+        script_engine->add_script (file);
     }
 
 
     shader_engine_ = std::make_shared<ShaderEngine>(drawable_objects_);
-    shader_engine_->SetupAllShader();
+    shader_engine_->setup_all_shader();
 
 
     // TODO(FK)
@@ -50,19 +46,19 @@ bool sd::Application::Setup() {
 
     std::cout << "Create background panel\n";
     auto panel = new Panel(sf::Vector2f(0.0, 0.0), sf::Vector2f(1920, 1080), "../Resources/Sprites/fantasy_background.png");
-    panel->SetName("background_panel");
-    drawable_objects_.emplace_back(sp<Panel>(panel));
+  panel->set_name ("background_panel");
+    drawable_objects_.emplace_back(Sp<Panel>(panel));
     // TODO(FK): clean up this shit
 
     std::cout << "Create text output background\n";
     auto outputBackground = new Panel(sf::Vector2f(48.0,41.0), sf::Vector2f(1044,1008), "../Resources/Sprites/fantasy_textoutput.png");
-    outputBackground->SetName("output-panel");
-    drawable_objects_.emplace_back(sp<Panel>(outputBackground));
+  outputBackground->set_name ("output-panel");
+    drawable_objects_.emplace_back(Sp<Panel>(outputBackground));
 
     std::cout << "emplace Inputfield\n";
     std::cout << "Create input field\n";
     InputField* inputField = new InputField(sf::Vector2f(80,940), sf::Vector2f(1025,63), sf::Color::Magenta);
-    drawable_objects_.emplace_back(sp<InputField>(inputField));
+    drawable_objects_.emplace_back(Sp<InputField>(inputField));
 
 
     std::cout << "Create words panel\n";
@@ -76,7 +72,7 @@ bool sd::Application::Setup() {
 
     std::cout << "Create Map panel\n";
     MapWindow* mapWindow = new MapWindow(sf::Vector2f(1127.0, 41.0), sf::Vector2f(761, 558));
-    drawable_objects_.emplace_back(sp<MapWindow>(mapWindow));
+    drawable_objects_.emplace_back(Sp<MapWindow>(mapWindow));
 
 
 
@@ -89,11 +85,11 @@ bool sd::Application::Setup() {
 
 
     std::cout << "Create global vocabulary containing all words\n";
-    LoadVocab();
+  load_vocab ();
     new sd::MonsterList();
 
     for(const auto& object : drawable_objects_) {
-        object->Setup();
+        object->setup ();
     }
 
     //auto test24 = typeof(this);
@@ -109,7 +105,7 @@ bool sd::Application::Setup() {
     return true;
 }
 
-bool sd::Application::Run() {
+bool sd::Application::run() {
 
 
     if(!window_->isOpen())
@@ -127,7 +123,7 @@ bool sd::Application::Run() {
         }
 
         for (const auto& object : drawable_objects_) {
-            object->Handle(evt);
+            object->handle (evt);
         }
     }
 
@@ -139,7 +135,7 @@ bool sd::Application::Run() {
     //Draw Components
 
     for (const auto& comp : drawable_objects_) {
-        comp->DrawTo(window_);
+        comp->draw_to (window_);
     }
 
     //display
@@ -157,11 +153,11 @@ void sd::Application::clear() {
     //text->setString("");
 }
 
-void sd::Application::LoadVocab() {
+void sd::Application::load_vocab() {
 
     Vocabulary* vocab = new Vocabulary();
 
-    auto table = FileInput::LoadCSV("../Resources/Tables/Actions.csv");
+    auto table = FileInput::load_csv ("../Resources/Tables/Actions.csv");
     for(auto line : *table)
     {
         if(line[0] != "Name")
@@ -178,7 +174,7 @@ void sd::Application::LoadVocab() {
 
 
 
-    table = FileInput::LoadCSV("../Resources/Tables/Modifiers.csv");
+    table = FileInput::load_csv ("../Resources/Tables/Modifiers.csv");
     for(auto line : *table)
     {
         if(line[0] != "Name")
@@ -209,10 +205,10 @@ void sd::Application::LoadVocab() {
     vocab->Add("walk to", walkTo);
     vocab->Add("jump over", jumpOver);
 
-    Vocabulary::allWords = vocab;
+    Vocabulary::all_words = vocab;
 }
 
-void sd::Application::Shutdown() {
+void sd::Application::shutdown() {
 
 }
 

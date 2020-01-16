@@ -8,30 +8,30 @@
 
 sd::DrawableObject::DrawableObject(std::string name)
     : name_(std::move(name))
-    , shaderProcedure_(nullptr)
+    , shader_procedure_(nullptr)
 { is_setup_ = false; }
 
-const std::string &sd::DrawableObject::GetName() const {
+const std::string &sd::DrawableObject::get_name() const {
     return name_;
 }
 
-void sd::DrawableObject::SetShaderProcedure(sp<sd::ShaderProcedure> shaderProcedure) {
-    shaderProcedure_ = std::move(shaderProcedure);
+void sd::DrawableObject::set_shader_procedure(Sp<sd::ShaderProcedure> shader_procedure) {
+    shader_procedure_ = std::move(shader_procedure);
 }
 
-sp<sd::ShaderProcedure> sd::DrawableObject::GetShaderProcedure() const {
-    return shaderProcedure_;
+Sp<sd::ShaderProcedure> sd::DrawableObject::get_shader_procedure() const {
+    return shader_procedure_;
 }
 
-void sd::DrawableObject::SetName(const char *name) {
+void sd::DrawableObject::set_name(const char *name) {
     name_ = name;
 }
 
-bool sd::DrawableObject::Setup() {
+bool sd::DrawableObject::setup() {
     return is_setup_ = true;
 }
 
-void sd::DrawableObject::Shutdown() {
+void sd::DrawableObject::shutdown() {
     is_setup_ = false;
 }
 

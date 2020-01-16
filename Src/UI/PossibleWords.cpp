@@ -7,67 +7,67 @@
 #include "PossibleWords.h"
 
 // TODO(FK): clean up name
-sd::PossibleWords::PossibleWords(sf::Vector2f _position, sf::Vector2f _size, const std::string& pathToBackground)
+sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size, const std::string& path_to_background)
     : DrawableObject("possible-words")
     , Subscriber()
-    , position(_position)
-    , size(_size)
+    , position_(position)
+    , size_(size)
 {
-    sprite = std::make_shared<sf::Sprite>();
-    texture = std::make_shared<sf::Texture>();
+    sprite_ = std::make_shared<sf::Sprite>();
+    texture_ = std::make_shared<sf::Texture>();
 }
 
-bool sd::PossibleWords::Setup() {
+bool sd::PossibleWords::setup() {
 
-    texture->loadFromFile("../Resources/Sprites/fantasy_input.png");
-    sprite->setTexture(*texture, false);
-    sprite->setPosition(position);
+    texture_->loadFromFile("../Resources/Sprites/fantasy_input.png");
+    sprite_->setTexture(*texture_, false);
+    sprite_->setPosition(position_);
 
-    return DrawableObject::Setup();
+    return DrawableObject::setup ();
 }
 
-void sd::PossibleWords::DrawTo(sp<sf::RenderTarget> window) const {
-    window->draw(*sprite);
+void sd::PossibleWords::draw_to(Sp<sf::RenderTarget> window) const {
+    window->draw(*sprite_);
 
-    for(const auto& line : lines)
+    for(const auto& line : lines_)
     {
-        line->drawTo(window);
+        line->draw_to (window);
     }
 }
 
-void sd::PossibleWords::Handle(sf::Event event) {
+void sd::PossibleWords::handle(sf::Event event) {
 
 }
 
-void sd::PossibleWords::Update() {
-    sp<sf::Font> font = std::make_shared<sf::Font>();
+void sd::PossibleWords::update() {
+    Sp<sf::Font> font = std::make_shared<sf::Font>();
     if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
     {
         std::cout << "Could not load Font!\n";
         return;
     }
 
-    lines.clear();
+    lines_.clear();
 
     if(playerState->IsFighting()) {
         sf::Vector2f offset = sf::Vector2f(50, 90);
-    for(const auto& action : *(playerVocabulary->GetModifiers()))
+    for(const auto& action : *(player_vocabulary_->GetModifiers()))
     {
-        lines.push_back(std::make_shared<FormattedLine>(
+        lines_.push_back(std::make_shared<FormattedLine>(
                 action,
-                sf::Vector2f(position + offset),
+                sf::Vector2f(position_ + offset),
                 font,
                 sf::Vector2f(1000,1000)));
             offset.y += 30;
         }
 
         offset = sf::Vector2f(250, 90);
-    for(const auto& action : *(playerVocabulary->GetActions()))
+    for(const auto& action : *(player_vocabulary_->GetActions()))
     {
-        lines.push_back(std::make_shared<FormattedLine>(action,
-                sf::Vector2f(position + offset),
-                font,
-                sf::Vector2f(1000,1000)));
+        lines_.push_back(std::make_shared<FormattedLine>(action,
+                                                         sf::Vector2f(position_ + offset),
+                                                         font,
+                                                         sf::Vector2f(1000,1000)));
             offset.y += 30;
         }
     }
@@ -77,34 +77,36 @@ void sd::PossibleWords::Update() {
     }
 }
 
-void sd::PossibleWords::Handle(std::shared_ptr<EventArgs> _e) {
-    if (_e->type == sd::EventArgs::Type::PlayerVocabChanged) {
-        Update();
+void sd::PossibleWords::handle(std::shared_ptr<EventArgs> e) {
+    if (e->type == sd::EventArgs::Type::PLAYER_VOCAB_CHANGED) {
+        update ();
     }
 
-    if (_e->type == sd::EventArgs::Type::FightStarted) {
+    if (_e->type == sd::EventArgs::Type::FIGHT_STARTED) {
         Update();
     }
-    if (_e->type == sd::EventArgs::Type::FightEnded) {
+    if (_e->type == sd::EventArgs::Type::FIGHT_ENDED) {
         Update();
     }
+    
+    if (e->type == sd::EventArgs::Type::PLAYER_STATE_CREATED) {
+        auto args = dynamic_cast<PlayerStateCreatedEventArgs *>(e.get());
 
-    if (_e->type == sd::EventArgs::Type::PlayerStateCreated) {
-        auto e = dynamic_cast<PlayerStateCreatedEventArgs *>(_e.get());
 
-        playerVocabulary = sp<PlayerVocabulary>(e->player_state->GetPlayerVocabulary());
+
+        player_vocabulary_ = Sp<PlayerVocabulary>(args->player_state->GetPlayerVocabulary());
         playerState = e->player_state;
 
-        Update();
+        update ();
     }
 }
 
-sf::Vector2f sd::PossibleWords::GetPosition() {
-    return position;
+sf::Vector2f sd::PossibleWords::get_position() {
+    return position_;
 }
 
-sf::Vector2f sd::PossibleWords::GetSize() {
-    return size;
+sf::Vector2f sd::PossibleWords::get_size() {
+    return size_;
 }
 
 

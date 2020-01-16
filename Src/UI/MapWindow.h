@@ -2,8 +2,8 @@
 // Created by christian.heusser on 10.12.2019.
 //
 
-#ifndef SLAYINGDEMONS_MAPWINDOW_H
-#define SLAYINGDEMONS_MAPWINDOW_H
+#ifndef _MAPWINDOW_H_
+#define _MAPWINDOW_H_
 
 #include "Core/DrawableObject.h"
 #include "Dungeon/Room.h"
@@ -14,32 +14,32 @@
 namespace sd {
     class MapWindow : public DrawableObject, public Subscriber {
     private:
-        sp<sf::Texture> backgroundTexture;
-        sp<sf::Sprite> backgroundSprite;
-        sf::Vector2f position;
-        sf::Vector2f size;
+        Sp<sf::Texture> background_texture_;
+        Sp<sf::Sprite> background_sprite_;
+        sf::Vector2f position_;
+        sf::Vector2f size_;
         sf::Texture* monsterPortraitTexture;
         sf::Sprite* monsterPortraitSprite;
 
-        sp<Tilemap> currenttileMap;
-        sp<PlayerState> playerState;
+        Sp<Tilemap> current_tile_map_;
+        Sp<PlayerState> player_state_;
     public:
-        MapWindow(sf::Vector2f _position, sf::Vector2f _size);
+        MapWindow(sf::Vector2f position, sf::Vector2f size);
         ~MapWindow() override = default;
 
-        bool Setup() override;
+        bool setup() override;
 
-        void DrawTo(sp<sf::RenderTarget> window) const override;
+        void draw_to(Sp<sf::RenderTarget> window) const override;
 
-        sf::Vector2f GetPosition() override;
-        sf::Vector2f GetSize() override;
+        sf::Vector2f get_position() override;
+        sf::Vector2f get_size() override;
 
-        sp<Room> GetRoom();
-        void SetPlayerState(sp<PlayerState> _playerState);
+        Sp<Room> get_room();
+        void set_player_state(Sp<PlayerState> player_state);
 
-        void Handle(sf::Event event) override;
-        void Handle(sp<EventArgs> e) override;
+        void handle(sf::Event event) override;
+        void handle(Sp<EventArgs> e) override;
     };
 }
 
-#endif //SLAYINGDEMONS_MAPWINDOW_H
+#endif //_MAPWINDOW_H_

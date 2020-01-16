@@ -12,10 +12,10 @@ sd::World::~World() {
 
 }
 
-bool sd::World::Setup() {
+bool sd::World::setup() {
     return false;
 }
 
-void sd::World::Shutdown() {
+void sd::World::shutdown() {
 
 }

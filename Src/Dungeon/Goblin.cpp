@@ -21,7 +21,7 @@ void sd::Goblin::BeInteractedWith() {
 
         std::shared_ptr<EventArgs> args;
         args = std::make_shared<EventArgs>(EventArgs());
-        args->type = sd::EventArgs::Type::StartFightWithGoblin;
+        args->type = sd::EventArgs::Type::START_FIGHT_WITH_GOBLIN;
         EventSystem::Get().Trigger(args);
     }
     else

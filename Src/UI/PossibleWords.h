@@ -2,8 +2,8 @@
 // Created by christian.heusser on 07.01.2020.
 //
 
-#ifndef SLAYINGDEMONS_POSSIBLEWORDS_H
-#define SLAYINGDEMONS_POSSIBLEWORDS_H
+#ifndef _POSSIBLEWORDS_H_
+#define _POSSIBLEWORDS_H_
 
 #include "Core/DrawableObject.h"
 #include "FormattedLine.h"
@@ -13,32 +13,32 @@
 namespace sd {
     class PossibleWords: public DrawableObject, public Subscriber {
     private:
-        std::vector<sp<FormattedLine>> lines;
-        sp<PlayerVocabulary> playerVocabulary;
+        std::vector<Sp<FormattedLine>> lines_;
+        Sp<PlayerVocabulary> player_vocabulary_;
         std::shared_ptr<PlayerState> playerState;
 
-        sp<sf::Sprite> sprite;
-        sp<sf::Texture> texture;
-        sf::Vector2f position;
-        sf::Vector2f size;
+        Sp<sf::Sprite> sprite_;
+        Sp<sf::Texture> texture_;
+        sf::Vector2f position_;
+        sf::Vector2f size_;
 
     public:
-        PossibleWords(sf::Vector2f position, sf::Vector2f size, const std::string& pathToBackground);
+        PossibleWords(sf::Vector2f position, sf::Vector2f size, const std::string& path_to_background);
         ~PossibleWords() override = default;
 
-        bool Setup() override;
-        void Update();
+        bool setup() override;
+        void update();
 
-        void DrawTo(sp<sf::RenderTarget> window) const override;
+        void draw_to(Sp<sf::RenderTarget> window) const override;
 
-        sf::Vector2f GetPosition() override;
-        sf::Vector2f GetSize() override;
+        sf::Vector2f get_position() override;
+        sf::Vector2f get_size() override;
 
-        void Handle(sf::Event event) override;
-        void Handle(std::shared_ptr<EventArgs> e) override;
+        void handle(sf::Event event) override;
+        void handle(std::shared_ptr<EventArgs> e) override;
 
 
     };
 }
 
-#endif //SLAYINGDEMONS_POSSIBLEWORDS_H
+#endif //_POSSIBLEWORDS_H_

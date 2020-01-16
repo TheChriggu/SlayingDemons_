@@ -12,9 +12,9 @@
 namespace sd {
     class PlayerStateCreatedEventArgs : public EventArgs {
     public:
-        explicit PlayerStateCreatedEventArgs(sp<PlayerState> player_state);
+        explicit PlayerStateCreatedEventArgs(Sp<PlayerState> player_state);
 
-        sp<PlayerState> player_state;
+        Sp<PlayerState> player_state;
     };
 }
 

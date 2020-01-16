@@ -74,13 +74,13 @@ std::vector<std::string> *sd::PlayerVocabulary::GetNavigation() {
     return navigation;
 }
 
-void sd::PlayerVocabulary::Handle(std::shared_ptr<EventArgs> _e) {
-    if (_e->type == sd::EventArgs::Type::NewWordCollected)
+void sd::PlayerVocabulary::handle(std::shared_ptr<EventArgs> _e) {
+    if (_e->type == sd::EventArgs::Type::NEW_WORD_COLLECTED)
     {
         auto e = dynamic_cast<NewWordCollectedEventArgs*>(_e.get());
 
         if(!HasWord(e->word)) {
-            Word *word = sd::Vocabulary::allWords->Get(e->word);
+            Word *word = sd::Vocabulary::all_words->Get(e->word);
 
             switch (word->GetType()) {
                 case (sd::Word::type::action):

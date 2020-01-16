@@ -2,23 +2,23 @@
 // Created by felix on 09.01.20.
 //
 
-#ifndef SLAYINGDEMONS_WEAKGLITCH_H
-#define SLAYINGDEMONS_WEAKGLITCH_H
+#ifndef _WEAKGLITCH_H_
+#define _WEAKGLITCH_H_
 
 #include "ShaderProcedure.h"
 
 namespace sd {
     class WeakGlitch : public ShaderProcedure {
 
-        sp<sf::Clock> clock_;
+        Sp<sf::Clock> clock_;
 
     public:
-        explicit WeakGlitch(sp<sf::Shader> glitchShader);
+        explicit WeakGlitch(Sp<sf::Shader> glitch_shader);
         virtual ~WeakGlitch() = default;
 
-        void Process(sf::RenderTarget* window, const sf::Drawable* drawable) const override;
+        void process(sf::RenderTarget* window, const sf::Drawable* drawable) const override;
     };
 }
 
 
-#endif //SLAYINGDEMONS_WEAKGLITCH_H
+#endif //_WEAKGLITCH_H_

@@ -2,26 +2,26 @@
 // Created by christian.heusser on 07.11.2019.
 //
 
-#ifndef UNTITLED_FORMATTEDWORD_H
-#define UNTITLED_FORMATTEDWORD_H
+#ifndef _FORMATTEDWORD_H_
+#define _FORMATTEDWORD_H_
 
 #include <Core/GlobalDefinitions.h>
 #include "SFML/Graphics.hpp"
 
 class FormattedWord {
 
-    sp<sf::Text> text;
-    sp<sf::Font> font;
+    Sp<sf::Text> text_;
+    Sp<sf::Font> font_;
 
 public:
-    FormattedWord(const sf::String& _text, sf::Vector2f _position, const sp<sf::Font>& _font);
+    FormattedWord(const sf::String& text, sf::Vector2f position, const Sp<sf::Font>& font);
     virtual ~FormattedWord() = default;
 
-    void drawTo(const sp<sf::RenderTarget>& window);
+    void draw_to(const Sp<sf::RenderTarget>& window);
 
-    void setPosition(sf::Vector2f _position);
-    sf::FloatRect getRect();
-    void MoveVertical(float distance);
+    void set_position(sf::Vector2f position);
+    sf::FloatRect get_rect();
+    void move_vertical(float distance);
 
 private:
 
@@ -29,4 +29,4 @@ private:
 };
 
 
-#endif //UNTITLED_FORMATTEDWORD_H
+#endif //_FORMATTEDWORD_H_

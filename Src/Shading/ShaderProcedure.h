@@ -2,8 +2,8 @@
 // Created by felix on 07.01.20.
 //
 
-#ifndef SLAYINGDEMONS_SHADERPROCEDURE_H
-#define SLAYINGDEMONS_SHADERPROCEDURE_H
+#ifndef _SHADERPROCEDURE_H_
+#define _SHADERPROCEDURE_H_
 
 
 #include <SFML/Graphics/RenderWindow.hpp>
@@ -14,14 +14,14 @@
 namespace sd {
     class ShaderProcedure {
     protected:
-        sp<sf::Shader> shader_;
+        Sp<sf::Shader> shader_;
 
     public:
-        explicit ShaderProcedure(sp<sf::Shader> shader);
+        explicit ShaderProcedure(Sp<sf::Shader> shader);
 
-        virtual void Process(sf::RenderTarget*, const sf::Drawable*) const = 0;
+        virtual void process(sf::RenderTarget*, const sf::Drawable*) const = 0;
     };
 }
 
 
-#endif //SLAYINGDEMONS_SHADERPROCEDURE_H
+#endif //_SHADERPROCEDURE_H_

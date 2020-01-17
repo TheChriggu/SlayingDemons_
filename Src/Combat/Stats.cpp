@@ -90,7 +90,7 @@ sd::Stats::Stats(float _speed, float _accuracy, float _physical, float _mental, 
                  {}
 
 
-void sd::Stats::MinToZero() {
+void sd::Stats::min_to_zero() {
     if (tree < 0)
     {
         tree = 0;
@@ -112,4 +112,66 @@ void sd::Stats::MinToZero() {
         water = 0;
     }
 
+}
+sd::Stats::SingleStat sd::Stats::get_max_damage_stat ()
+{
+    SingleStat ret_val;
+    ret_val.type = SingleStatType::PHYSICAL;
+    ret_val.value = physical;
+    
+    if(mental >= ret_val.value)
+    {
+        ret_val.type = SingleStatType::MENTAL;
+        ret_val.value = mental;
+    }
+    if(fire >= ret_val.value)
+        {
+            ret_val.type = SingleStatType::FIRE;
+            ret_val.value = fire;
+        }
+    if(water >= ret_val.value)
+        {
+            ret_val.type = SingleStatType::WATER;
+            ret_val.value = water;
+        }
+    if(tree >= ret_val.value)
+        {
+            ret_val.type = SingleStatType::TREE;
+            ret_val.value = tree;
+        }
+    if(earth >= ret_val.value)
+        {
+            ret_val.type = SingleStatType::EARTH;
+            ret_val.value = earth;
+        }
+
+    return ret_val;
+}
+std::string sd::Stats::stat_type_to_string (sd::Stats::SingleStatType type)
+{
+    if (type == SingleStatType::PHYSICAL)
+        {
+            return "physical";
+        }
+    if (type == SingleStatType::MENTAL)
+        {
+            return "mental";
+        }
+    if (type == SingleStatType::FIRE)
+        {
+            return "fire";
+        }
+    if (type == SingleStatType::WATER)
+        {
+            return "water";
+        }
+    if (type == SingleStatType::TREE)
+        {
+            return "tree";
+        }
+    if (type == SingleStatType::EARTH)
+        {
+            return "earth";
+        }
+    return "mysterious";
 }

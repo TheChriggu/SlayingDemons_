@@ -69,7 +69,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
         }
             //*for(auto word : words)
             //*{
-            //*if(!player->HasWord(word))
+            //*if(!player_->HasWord(word))
             //*{
             //send invalid input message to output
             //*}
@@ -87,7 +87,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
                 Word* word2 = Vocabulary::all_words->Get(words[1]);
                 if(word1->GetType() == sd::Word::type::modifier && word2->GetType() == sd::Word::type::action)
                 //make turn in fight
-                playerState->GetFight()->FullTurn(words[1], words[0], output.get());
+                    playerState->GetFight ()->full_turn (words[1], words[0]);
 
                 //evaluate result
                 //end fight, if fight is over
@@ -96,11 +96,11 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
 
                 //if not fight spell
 
-                //make enemy turn in fight
+                //make enemy_ turn in fight
                 //*fight->makeEnemyTurnOnly();
-                //evaluate enemy turn result
+                //evaluate enemy_ turn result
 
-                //evaluate player
+                //evaluate player_
             }
 
             else
@@ -120,8 +120,8 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
 
         //check if it starts a fight
 
-        //create fight object with player & enemy
-        //*fight = new fight(player, enemy);
+        //create fight object with player_ & enemy_
+        //*fight = new fight(player_, enemy_);
         //evaluate spell (maybe from fight?)
 
         //if not starting fight

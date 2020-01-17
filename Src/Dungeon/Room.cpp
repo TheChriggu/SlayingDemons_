@@ -74,7 +74,7 @@ void sd::Room::SetEnemy(sd::Monster *_enemy) {
 std::string sd::Room::GetEnterDescription() {
     if(enemy != nullptr)
     {
-        return "You enter the new room. Immediately an enemy attacks you.";
+        return "You enter the new room. Immediately an enemy_ attacks you.";
     }
 
     else

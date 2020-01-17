@@ -86,7 +86,7 @@ void sd::MapWindow::handle(Sp<sd::EventArgs> e) {
 
     if (e->type == EventArgs::Type::FIGHT_STARTED) {
         auto arg = dynamic_cast<FightStartedEventArgs*>(e.get());
-        monsterPortraitTexture->loadFromFile(arg->fight->GetEnemy()->GetPathToPortrait());
+        monsterPortraitTexture->loadFromFile(arg->fight->get_enemy ()->GetPathToPortrait());
     }
 }
 

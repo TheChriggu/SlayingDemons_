@@ -19,6 +19,10 @@ door_layout = {
 book_layout = {
     tiles = {34}
 }
+bookshelf_layout = {
+    size = {1, 2},
+    tiles = {48, 56}
+}
 
 
 dungeon = {
@@ -38,10 +42,28 @@ dungeon = {
                 position = {x = 10, y = 3},
                 layout = door_layout,
                 next_room = "room3"
+            },
+            north_door = {
+                position = {x = 5, y = 0},
+                layout = door_layout,
+                next_room = "room2"
             }
         },
         room2 = {
-
+            south_door = {
+                position = {x = 5, y = 6},
+                layout = door_layout,
+                next_room = "room1"
+            },
+            east_door = {
+                position = {x = 10, y = 3},
+                layout = door_layout,
+                next_room = "room4"
+            },
+            bookshelf  = {
+                position = {x = 6, y = 4},
+                layout = bookshelf_layout
+            },
         },
         room3 = {
             west_door = {
@@ -52,6 +74,30 @@ dungeon = {
             book = {
                 position = {x = 7, y = 3},
                 layout = book_layout
+            }
+        },
+        room4 = {
+            west_door = {
+                position = {x = 0, y = 3},
+                layout = door_layout,
+                next_room = "room2"
+            },
+            north_door = {
+                position = {x = 5, y = 0},
+                layout = door_layout,
+                next_room = "room2"
+            }
+        },
+        room5 = {
+            north_door = {
+                position = {x = 5, y = 0},
+                layout = door_layout,
+                next_room = "room2"
+            },
+            south_door = {
+                position = {x = 5, y = 6},
+                layout = door_layout,
+                next_room = "room2"
             }
         }
     }

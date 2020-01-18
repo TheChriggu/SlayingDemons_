@@ -8,6 +8,6 @@ std::string sd::LastRoom::GetEnterDescription() {
     return "You enter the room.";//\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 }
 
-sd::LastRoom::LastRoom() : Room(){
+sd::LastRoom::LastRoom() : Room(""){
     is_last = true;
 }

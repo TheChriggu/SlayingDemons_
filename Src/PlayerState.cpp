@@ -6,76 +6,58 @@
 #include <Event/LineToOutputEventArgs.h>
 #include <Event/EventSystem.h>
 #include <Dungeon/Goblin.h>
+
+#include <utility>
 #include "PlayerState.h"
 
 sd::PlayerState::PlayerState()
     : Subscriber() {
-    fight = nullptr;
-    player = new Fighter();
-    floor = new Floor();
-    currentRoom = floor->GetStartRoom();
-    playerVocabulary = new PlayerVocabulary();
+    fight_ = nullptr;
+    player_ = std::make_shared<Fighter>();
+    floor_ = std::make_shared<Floor>();
+    floor_->setup();
+    current_room_ = floor_->get_start_room();
+    player_vocabulary_ = std::make_shared<PlayerVocabulary>();
 }
 
-sd::PlayerState::~PlayerState() {
-    delete fight;
-    fight = nullptr;
-    currentRoom = nullptr;
-
-    delete player;
-    player = nullptr;
-
-    delete floor;
-    floor = nullptr;
-    currentRoom = nullptr;
-
-    delete playerVocabulary;
-    playerVocabulary = nullptr;
+Sp<sd::Room> sd::PlayerState::get_current_room() {
+    return current_room_;
 }
 
-sd::Room *sd::PlayerState::GetCurrentRoom() {
-    return currentRoom;
+Sp<sd::Fight> sd::PlayerState::get_fight() {
+    return fight_;
 }
 
-sd::Fight *sd::PlayerState::GetFight() {
-    return fight;
+bool sd::PlayerState::is_fighting() {
+    return fight_ != nullptr;
 }
 
-bool sd::PlayerState::IsFighting() {
-    return fight != nullptr;
-}
+void sd::PlayerState::set_room_as_current(Sp<sd::Room> room) {
+    current_room_ = std::move(room);
 
-void sd::PlayerState::SetRoomAsCurrent(sd::Room *room) {
-    currentRoom = room;
-
-    RoomObject* object = currentRoom->GetObjectWithName("Goblin");
+    RoomObject* object = current_room_->GetObjectWithName("Goblin");
     if(object)
     {
         Goblin* goblin = (Goblin*) object;
-        goblin->SetPlayerVocab(GetPlayerVocabulary());
+        goblin->SetPlayerVocab(get_player_vocabulary().get());
     }
 }
 
-void sd::PlayerState::StartNewFight(sd::Monster *enemy) {
-    fight = new Fight(player, enemy);
+void sd::PlayerState::start_new_fight(Sp<sd::Monster> enemy) {
+    fight_ = std::make_shared<Fight>(player_.get(), enemy.get());
 }
 
-void sd::PlayerState::EndFight() {
-    delete fight;
-    fight = nullptr;
-}
-
-sd::PlayerVocabulary *sd::PlayerState::GetPlayerVocabulary() {
-    return playerVocabulary;
+Sp<sd::PlayerVocabulary> sd::PlayerState::get_player_vocabulary() {
+    return player_vocabulary_;
 }
 
 void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
     if (e->type == EventArgs::Type::WALKED_THROUGH_DOOR) {
         auto arg = dynamic_cast<WalkedThroughDoorEventArgs*>(e.get());
-        SetRoomAsCurrent(arg->door->GetConnectedRoom());
+        set_room_as_current(floor_->get_room(arg->door->GetConnectedRoom()));
 
         std::shared_ptr<LineToOutputEventArgs> args;
-        args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs(GetCurrentRoom()->GetEnterDescription()));
+        args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs(get_current_room()->GetEnterDescription()));
         EventSystem::Get().Trigger(args);
     }
 
@@ -85,16 +67,15 @@ void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
         args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("Starting Fight."));
         EventSystem::Get().Trigger(args);
 
-        Monster* goblin = new Monster();
-
-        StartNewFight(goblin);
+        //Monster* goblin = new Monster();
+    
+        start_new_fight(std::make_shared<Monster>());
     }
 
     if (e->type == EventArgs::Type::GOBLIN_DEFEATED) {
 
-        ((Door*) currentRoom->GetObjectWithName("EastDoor"))->SetLocked(false);
-        delete fight;
-        fight = nullptr;
+        ((Door*) current_room_->GetObjectWithName("EastDoor"))->SetLocked(false);
+        fight_.reset();
     }
 
 

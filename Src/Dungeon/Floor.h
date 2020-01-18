@@ -2,25 +2,29 @@
 // Created by christian.heusser on 12.12.2019.
 //
 
-#ifndef SLAYINGDEMONS_FLOOR_H
-#define SLAYINGDEMONS_FLOOR_H
+#ifndef _FLOOR_H_
+#define _FLOOR_H_
 
 #include <vector>
 #include "Room.h"
 #include "Door.h"
 
 namespace sd {
-    class Floor {
+    class Floor : public Manageable{
 
     protected:
-        std::vector<Room*> rooms;
+        std::vector<Sp<Room>> rooms_;
+        Sp<Room> start_room_;
     public:
         Floor();
-        ~Floor();
-
-        Room* GetCurrentRoom();
-        Room* GetStartRoom();
+        ~Floor() override;
+        
+        bool setup() override;
+        void shutdown() override;
+        
+        Sp<Room> get_start_room();
+        Sp<Room> get_room(const std::string& name) const;
     };
 }
 
-#endif //SLAYINGDEMONS_FLOOR_H
+#endif //_FLOOR_H_

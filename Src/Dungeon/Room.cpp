@@ -3,9 +3,11 @@
 //
 
 #include "Room.h"
+#include <utility>
 
-sd::Room::Room()
+sd::Room::Room(std::string name)
 {
+    name_ = std::move(name);
     enemy = nullptr;
     //tilemap = new Tilemap(11,7,position,sf::Vector2u(64,64));
     layout = new int[77]{
@@ -121,4 +123,9 @@ void sd::Room::handle(std::shared_ptr<EventArgs> e) {
         SingleTileObject* mushroom = new SingleTileObject("Mushroom", 24, sf::Vector2i(9,3));
         AddObject(mushroom);
     }
+}
+
+const std::string &sd::Room::get_name() const
+{
+    return name_;
 }

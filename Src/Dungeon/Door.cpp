@@ -11,7 +11,7 @@
 #include "Door.h"
 
 sd::Door::Door(std::string _name,
-               int _spriteSheetIdxOpen, int _spriteSheetIdxLocked, sf::Vector2i _positionOnTileMap, Room* _nextRoom)
+               int _spriteSheetIdxOpen, int _spriteSheetIdxLocked, sf::Vector2i _positionOnTileMap, std::string _nextRoom)
         : SingleTileObject(_name, _spriteSheetIdxOpen, _positionOnTileMap)
         , nextRoom(_nextRoom)
         ,spriteSheetIdxOpen(_spriteSheetIdxOpen)
@@ -21,7 +21,7 @@ sd::Door::Door(std::string _name,
 
 }
 
-sd::Room *sd::Door::GetConnectedRoom() {
+const std::string& sd::Door::GetConnectedRoom() const {
     return nextRoom;
 }
 
@@ -52,9 +52,9 @@ void sd::Door::BeInteractedWith() {
         args->type = sd::EventArgs::Type::WALKED_THROUGH_DOOR;
         EventSystem::Get().Trigger(args);
 
-        if (nextRoom) {
+        /*if (nextRoom) {
             ScriptEngine::Get ()->broadcast ("room_changed", nextRoom->is_last);
-        }
+        }*/
     }
 }
 

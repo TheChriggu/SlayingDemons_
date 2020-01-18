@@ -2,8 +2,8 @@
 // Created by christian.heusser on 12.12.2019.
 //
 
-#ifndef SLAYINGDEMONS_DOOR_H
-#define SLAYINGDEMONS_DOOR_H
+#ifndef _DOOR_H_
+#define _DOOR_H_
 
 #include "SingleTileObject.h"
 #include "Room.h"
@@ -12,12 +12,12 @@ namespace sd {
     class Door : public SingleTileObject {
     private:
         bool isLocked;
-        Room* nextRoom;
+        std::string nextRoom;
         int spriteSheetIdxOpen;
         int spriteSheetIdxLocked;
 
     public:
-        Door(std::string _name, int _spriteSheetIdxOpen, int _spriteSheetIdxLocked, sf::Vector2i _positionOnTileMap, Room* _nextRoom);
+        Door(std::string _name, int _spriteSheetIdxOpen, int _spriteSheetIdxLocked, sf::Vector2i _positionOnTileMap, std::string _nextRoom);
         ~Door() override;
 
         virtual void PutOnLayout(int* layout, int width, int height) override;
@@ -26,8 +26,8 @@ namespace sd {
 
         void SetLocked(bool lockState);
 
-        Room* GetConnectedRoom();
+        const std::string& GetConnectedRoom() const;
     };
 }
 
-#endif //SLAYINGDEMONS_DOOR_H
+#endif //_DOOR_H_

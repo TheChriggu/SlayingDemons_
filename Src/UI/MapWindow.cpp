@@ -41,14 +41,14 @@ bool sd::MapWindow::setup() {
 
 void sd::MapWindow::draw_to(Sp<sf::RenderTarget> window) const {
     window->draw(*background_sprite_);
-
-    if(player_state_->IsFighting())
+    
+    if(player_state_->is_fighting())
     {
         window->draw(*monsterPortraitSprite);
     }
     else
     {
-        current_tile_map_->SetLayout(player_state_->GetCurrentRoom()->GetLayout(),77);
+        current_tile_map_->SetLayout(player_state_->get_current_room()->GetLayout(),77);
         window->draw(*current_tile_map_);
     }
 }

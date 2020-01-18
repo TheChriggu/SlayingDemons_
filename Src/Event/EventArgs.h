@@ -19,7 +19,9 @@ namespace sd {
             ROOM_LAYOUT_CHANGED,
             START_FIGHT_WITH_GOBLIN,
             GOBLIN_DEFEATED,
-            PLAYER_STATE_CREATED
+            PLAYER_STATE_CREATED,
+            FIGHT_STARTED,
+            FIGHT_ENDED
         };
 
         EventArgs();

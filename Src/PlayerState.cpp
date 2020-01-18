@@ -6,8 +6,9 @@
 #include <Event/LineToOutputEventArgs.h>
 #include <Event/EventSystem.h>
 #include <Dungeon/Goblin.h>
-
 #include <utility>
+#include <Event/FightStartedEventArgs.h>
+#include <Combat/MonsterList.h>
 #include "PlayerState.h"
 
 sd::PlayerState::PlayerState()
@@ -43,8 +44,14 @@ void sd::PlayerState::set_room_as_current(Sp<sd::Room> room) {
     }
 }
 
+
 void sd::PlayerState::start_new_fight(Sp<sd::Monster> enemy) {
     fight_ = std::make_shared<Fight>(player_.get(), enemy.get());
+
+    std::shared_ptr<FightStartedEventArgs> args;
+    args = std::make_shared<FightStartedEventArgs>(FightStartedEventArgs(fight_.get()));
+    EventSystem::Get().Trigger(args);
+
 }
 
 Sp<sd::PlayerVocabulary> sd::PlayerState::get_player_vocabulary() {
@@ -66,17 +73,22 @@ void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
         std::shared_ptr<LineToOutputEventArgs> args;
         args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("Starting Fight."));
         EventSystem::Get().Trigger(args);
+        
+        //Monster* goblin = new Monster("../Resources/Sprites/glitchy_goblin_red.png");
 
-        //Monster* goblin = new Monster();
-    
-        start_new_fight(std::make_shared<Monster>());
+        auto list = MonsterList::Get();
+        Monster* goblin = list->GetMonster("Goblin");
+        start_new_fight(Sp<Monster>(goblin));
     }
 
     if (e->type == EventArgs::Type::GOBLIN_DEFEATED) {
-
-        ((Door*) current_room_->GetObjectWithName("EastDoor"))->SetLocked(false);
+        ((Door*) current_room_->GetObjectWithName("east_door"))->SetLocked(false);
         fight_.reset();
-    }
 
+        std::shared_ptr<EventArgs> args;
+        args = std::make_shared<EventArgs>(EventArgs());
+        args->type = sd::EventArgs::Type::FIGHT_ENDED;
+        EventSystem::Get().Trigger(args);
+    }
 
 }

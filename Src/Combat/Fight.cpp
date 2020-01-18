@@ -147,3 +147,7 @@ void sd::Fight::FullTurn(sf::String _action, sf::String _modifier, TextOutput* o
      delete(playerAttack);
      delete(enemyAttack);
 }
+
+sd::Monster *sd::Fight::GetEnemy() {
+    return enemy;
+}

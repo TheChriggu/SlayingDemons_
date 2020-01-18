@@ -27,6 +27,8 @@ namespace sd {
 
         void FullTurn(sf::String _action, sf::String _modifier, TextOutput* output);
 
+        Monster* GetEnemy();
+
     };
 }
 

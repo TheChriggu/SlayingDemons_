@@ -8,6 +8,7 @@
 #include "Event/EventSystem.h"
 #include <iostream>
 #include <map>
+#include <Combat/MonsterList.h>
 #include <memory>
 
 sd::Vocabulary *sd::Vocabulary::all_words = nullptr;
@@ -46,8 +47,9 @@ bool sd::Application::setup()
     if (!result) return false;
     
     std::cout << "Create global vocabulary containing all words\n";
+
     load_vocab();
-    
+    new sd::MonsterList();
     for (const auto &object : drawable_objects_)
     {
         object->setup();

@@ -15,6 +15,7 @@ namespace sd {
     private:
         std::vector<Sp<FormattedLine>> lines_;
         Sp<PlayerVocabulary> player_vocabulary_;
+        std::shared_ptr<PlayerState> playerState;
 
         Sp<sf::Sprite> sprite_;
         Sp<sf::Texture> texture_;

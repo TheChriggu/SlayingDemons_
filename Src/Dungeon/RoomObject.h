@@ -12,6 +12,7 @@ namespace sd {
         protected:
         
         sol::function be_interacted_with_signal_;
+        sol::function on_destroyed_signal_;
     
         std::string name_;
         sf::Vector2i position_on_tile_map_;
@@ -24,6 +25,7 @@ namespace sd {
         virtual std::string get_name() = 0;
         
         virtual void be_interacted_with();
+        virtual void on_destroyed();
     };
 }
 

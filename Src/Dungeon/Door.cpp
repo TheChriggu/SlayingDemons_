@@ -3,6 +3,7 @@
 //
 
 #include <memory>
+#include <utility>
 #include <Event/EventArgs.h>
 #include <Event/EventSystem.h>
 #include <Event/WalkedThroughDoorEventArgs.h>
@@ -10,36 +11,32 @@
 #include <ScriptEngine/ScriptEngine.h>
 #include "Door.h"
 
-sd::Door::Door(std::string _name,
-               int _spriteSheetIdxOpen, int _spriteSheetIdxLocked, sf::Vector2i _positionOnTileMap, Room* _nextRoom)
-        : SingleTileObject(_name, _spriteSheetIdxOpen, _positionOnTileMap)
-        , nextRoom(_nextRoom)
-        ,spriteSheetIdxOpen(_spriteSheetIdxOpen)
-        ,spriteSheetIdxLocked(_spriteSheetIdxLocked)
-        ,isLocked(false)
+sd::Door::Door(std::string name,
+               int sprite_sheet_idx_open, int sprite_sheet_idx_locked, sf::Vector2i position_on_tile_map, std::string next_room, sol::function on_interaction)
+        : SingleTileObject(std::move(name), sprite_sheet_idx_open, position_on_tile_map, std::move(on_interaction))
+        , next_room_(std::move(next_room))
+        , sprite_sheet_idx_open_(sprite_sheet_idx_open)
+        , sprite_sheet_idx_locked_(sprite_sheet_idx_locked)
+        , is_locked_(false)
 {
 
 }
 
-sd::Room *sd::Door::GetConnectedRoom() {
-    return nextRoom;
+const std::string& sd::Door::get_connected_room() const {
+    return next_room_;
 }
 
-sd::Door::~Door() {
-
-}
-
-void sd::Door::PutOnLayout(int *layout, int width, int height) {
+void sd::Door::put_on_layout(int *layout, int width, int height) {
     //TODO: make sure position is within width & height
-    SingleTileObject::PutOnLayout(layout, width, height);
+    SingleTileObject::put_on_layout(layout, width, height);
 }
 
-std::string sd::Door::GetName() {
-    return SingleTileObject::GetName();
+std::string sd::Door::get_name() {
+    return SingleTileObject::get_name();
 }
 
-void sd::Door::BeInteractedWith() {
-    if(isLocked)
+void sd::Door::be_interacted_with() {
+    if(is_locked_)
     {
         std::shared_ptr<LineToOutputEventArgs> args;
         args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("This door is locked."));
@@ -52,21 +49,21 @@ void sd::Door::BeInteractedWith() {
         args->type = sd::EventArgs::Type::WALKED_THROUGH_DOOR;
         EventSystem::Get().Trigger(args);
 
-        if (nextRoom) {
+        /*if (nextRoom) {
             ScriptEngine::Get ()->broadcast ("room_changed", nextRoom->is_last);
-        }
+        }*/
     }
 }
 
-void sd::Door::SetLocked(bool lockState) {
-    isLocked = lockState;
-    if(isLocked)
+void sd::Door::set_locked(bool lock_state) {
+    is_locked_ = lock_state;
+    if(is_locked_)
     {
-        spriteSheetIdx = spriteSheetIdxLocked;
+        sprite_sheet_idx_ = sprite_sheet_idx_locked_;
     }
     else
     {
-        spriteSheetIdx = spriteSheetIdxOpen;
+        sprite_sheet_idx_ = sprite_sheet_idx_open_;
     }
 
     std::shared_ptr<EventArgs> args;

@@ -21,7 +21,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
 
     if(spell == "inspect room")
     {
-        output->add_line (playerState->GetCurrentRoom ()->GetDescription ());
+        output->add_line (playerState->get_current_room()->GetDescription ());
     }
 
     else {
@@ -43,11 +43,11 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
         if(words[0] == "interact")
         {
             //TODO: Make sure that this actually is a door
-            RoomObject* object = playerState->GetCurrentRoom()->GetObjectWithName(words[1]);
+            RoomObject* object = playerState->get_current_room()->GetObjectWithName(words[1]);
 
             if(object)
             {
-                object->BeInteractedWith();
+                object->be_interacted_with();
             }
             else
             {
@@ -76,7 +76,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
             //*}
 
             //check if currently fighting
-        else if(playerState->IsFighting())
+        else if(playerState->is_fighting())
         {
             //check if fight spell
             std::cout << "fight not nullptr\n";
@@ -157,7 +157,7 @@ void sd::InputTextProcessor::SetOutput(Sp<sd::TextOutput> _output) {
 }
 
 void sd::InputTextProcessor::SetRoom(Sp<sd::Room> _room) {
-    playerState->SetRoomAsCurrent(_room.get());
+    playerState->set_room_as_current(_room);
 }
 
 Sp<sd::PlayerState> sd::InputTextProcessor::GetPlayerState() {

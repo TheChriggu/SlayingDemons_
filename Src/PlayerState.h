@@ -3,8 +3,8 @@
 //all fault with the name of this class goes to Felix.
 //
 
-#ifndef SLAYINGDEMONS_PLAYERSTATE_H
-#define SLAYINGDEMONS_PLAYERSTATE_H
+#ifndef _PLAYERSTATE_H_
+#define _PLAYERSTATE_H_
 
 #include "Dungeon/Floor.h"
 #include "Dungeon/Room.h"
@@ -14,28 +14,27 @@
 namespace sd {
     class PlayerState : public Subscriber {
     private:
-        Room* currentRoom;
-        Fight* fight;
-        Fighter* player;
-        Floor* floor;
-        PlayerVocabulary* playerVocabulary;
+        Sp<Room> current_room_;
+        Sp<Fight> fight_;
+        Sp<Fighter> player_;
+        Sp<Floor> floor_;
+        Sp<PlayerVocabulary> player_vocabulary_;
 
     public:
         PlayerState();
-        ~PlayerState();
+        ~PlayerState() override = default;
 
-        Room* GetCurrentRoom();
-        Fight* GetFight();
-        bool IsFighting();
+        Sp<Room> get_current_room();
+        Sp<Fight> get_fight();
+        bool is_fighting();
 
-        void SetRoomAsCurrent(Room* room);
-        void StartNewFight(Monster* enemy);
-        void EndFight();
+        void set_room_as_current(Sp<Room> room);
+        void start_new_fight(Sp<Monster> enemy);
 
-        PlayerVocabulary* GetPlayerVocabulary();
+        Sp<PlayerVocabulary> get_player_vocabulary();
         void handle(std::shared_ptr<EventArgs> e) override;
 
     };
 }
 
-#endif //SLAYINGDEMONS_PLAYERSTATE_H
+#endif //_PLAYERSTATE_H_

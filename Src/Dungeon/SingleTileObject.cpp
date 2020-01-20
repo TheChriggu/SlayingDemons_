@@ -3,35 +3,19 @@
 //
 
 #include <memory>
-#include <Event/LineToOutputEventArgs.h>
-#include <Event/EventSystem.h>
+#include <utility>
 #include "SingleTileObject.h"
 
-sd::SingleTileObject::SingleTileObject(std::string _name, int _spriteSheetIdx, sf::Vector2i _positionOnTileMap)
-        :name(_name)
-        ,spriteSheetIdx(_spriteSheetIdx)
-        ,positionOnTileMap(_positionOnTileMap)
-{
-}
+sd::SingleTileObject::SingleTileObject(std::string name, int sprite_sheet_idx, sf::Vector2i position_on_tile_map, sol::function on_interaction)
+        : RoomObject(std::move(name), position_on_tile_map, std::move(on_interaction))
+        , sprite_sheet_idx_(sprite_sheet_idx)
+{ }
 
-sd::SingleTileObject::~SingleTileObject() {
-
-}
-
-void sd::SingleTileObject::PutOnLayout(int *layout, int width, int height) {
+void sd::SingleTileObject::put_on_layout(int *layout, int width, int height) {
     //TODO: Make sure to check position against width & height
-    layout[positionOnTileMap.x + positionOnTileMap.y*width] = spriteSheetIdx;
+    layout[position_on_tile_map_.x + position_on_tile_map_.y * width] = sprite_sheet_idx_;
 }
 
-std::string sd::SingleTileObject::GetName() {
-    return name;
-}
-
-void sd::SingleTileObject::BeInteractedWith() {
-    std::shared_ptr<LineToOutputEventArgs> args;
-    args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("You try to interact with the " + name + "."));
-    EventSystem::Get().Trigger(args);
-
-    args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("Nothing happens."));
-    EventSystem::Get().Trigger(args);
+std::string sd::SingleTileObject::get_name() {
+    return name_;
 }

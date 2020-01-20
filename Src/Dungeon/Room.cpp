@@ -3,9 +3,11 @@
 //
 
 #include "Room.h"
+#include <utility>
 
-sd::Room::Room()
+sd::Room::Room(std::string name)
 {
+    name_ = std::move(name);
     enemy = nullptr;
     //tilemap = new Tilemap(11,7,position,sf::Vector2u(64,64));
     layout = new int[77]{
@@ -36,7 +38,7 @@ sf::String sd::Room::GetDescription() {
     sf::String retVal = "Inside the room there is a";
     for(auto object : roomObjects)
     {
-        retVal += " " + object->GetName() + ",";
+        retVal += " " + object->get_name() + ",";
     }
 
     retVal += ".";
@@ -45,7 +47,7 @@ sf::String sd::Room::GetDescription() {
 }
 
 void sd::Room::AddObject(sd::RoomObject *object) {
-    object->PutOnLayout(layout, 11,7);
+    object->put_on_layout(layout, 11, 7);
     roomObjects.emplace_back(object);
 }
 
@@ -57,7 +59,7 @@ sd::RoomObject *sd::Room::GetObjectWithName(std::string name) {
 
     for(auto object : roomObjects)
     {
-        if (std::string(object->GetName()) == name)
+        if (std::string(object->get_name()) == name)
         {
             return object;
         }
@@ -91,7 +93,7 @@ void sd::Room::handle(std::shared_ptr<EventArgs> e) {
     if (e->type == EventArgs::Type::ROOM_LAYOUT_CHANGED) {
         for (auto object : roomObjects)
         {
-            object->PutOnLayout(layout, 11,7);
+            object->put_on_layout(layout, 11, 7);
         }
     }
 
@@ -105,7 +107,7 @@ void sd::Room::handle(std::shared_ptr<EventArgs> e) {
     bool itLock = false;
     for(auto object : roomObjects)
     {
-        if (std::string(object->GetName()) == name)
+        if (std::string(object->get_name()) == name)
         {
             itLock = true;
         }
@@ -118,7 +120,12 @@ void sd::Room::handle(std::shared_ptr<EventArgs> e) {
     if(it < roomObjects.end())
     {
         roomObjects.erase(it);
-        SingleTileObject* mushroom = new SingleTileObject("Mushroom", 24, sf::Vector2i(9,3));
+        SingleTileObject* mushroom = new SingleTileObject("Mushroom", 24, sf::Vector2i(9,3), sol::function());
         AddObject(mushroom);
     }
+}
+
+const std::string &sd::Room::get_name() const
+{
+    return name_;
 }

@@ -2,8 +2,8 @@
 // Created by christian.heusser on 12.12.2019.
 //
 
-#ifndef SLAYINGDEMONS_DOOR_H
-#define SLAYINGDEMONS_DOOR_H
+#ifndef _DOOR_H_
+#define _DOOR_H_
 
 #include "SingleTileObject.h"
 #include "Room.h"
@@ -11,23 +11,24 @@
 namespace sd {
     class Door : public SingleTileObject {
     private:
-        bool isLocked;
-        Room* nextRoom;
-        int spriteSheetIdxOpen;
-        int spriteSheetIdxLocked;
+        bool is_locked_;
+        std::string next_room_;
+        int sprite_sheet_idx_open_;
+        int sprite_sheet_idx_locked_;
 
     public:
-        Door(std::string _name, int _spriteSheetIdxOpen, int _spriteSheetIdxLocked, sf::Vector2i _positionOnTileMap, Room* _nextRoom);
-        ~Door() override;
+        Door(std::string name, int sprite_sheet_idx_open, int sprite_sheet_idx_locked, sf::Vector2i position_on_tile_map,
+            std::string next_room, sol::function on_interaction);
+        ~Door() override = default;
 
-        virtual void PutOnLayout(int* layout, int width, int height) override;
-        std::string GetName() override;
-        void BeInteractedWith() override;
+        void put_on_layout(int* layout, int width, int height) override;
+        std::string get_name() override;
+        void be_interacted_with() override;
 
-        void SetLocked(bool lockState);
+        void set_locked(bool lock_state);
 
-        Room* GetConnectedRoom();
+        [[nodiscard]] const std::string& get_connected_room() const;
     };
 }
 
-#endif //SLAYINGDEMONS_DOOR_H
+#endif //_DOOR_H_

@@ -110,12 +110,6 @@ add_executable(${PROJECT_NAME}
                Src/Dungeon/LastRoom.cpp
                Src/Dungeon/LastRoom.h
                Src/Event/WalkedThroughDoorEventArgs.h
-               Src/Dungeon/Sofa.cpp
-               Src/Dungeon/Sofa.h
-               Src/Dungeon/Table.cpp
-               Src/Dungeon/Table.h
-               Src/Dungeon/Book.cpp
-               Src/Dungeon/Book.h
                Src/Dungeon/Goblin.cpp
                Src/Dungeon/Goblin.h
                Src/Core/GlobalDefinitions.h

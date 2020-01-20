@@ -4,9 +4,6 @@
 
 #include <ScriptEngine/ScriptEngine.h>
 #include "Floor.h"
-#include "Sofa.h"
-#include "Table.h"
-#include "Book.h"
 #include "Goblin.h"
 #include "LastRoom.h"
 
@@ -79,6 +76,7 @@ bool sd::Floor::setup()
                 object.second.as<sol::lua_table>()["layout"]["tiles"][1].get_or(0),
                 object.second.as<sol::lua_table>()["layout"]["tiles"][2].get_or(0)
             };
+            sol::function on_interaction = object.second.as<sol::lua_table>()["on_interaction"];
             
             
             
@@ -93,7 +91,8 @@ bool sd::Floor::setup()
                                 layout[0],
                                 layout[1],
                                 position,
-                            object.second.as<sol::lua_table>()["next_room"].get<std::string>())
+                            object.second.as<sol::lua_table>()["next_room"].get<std::string>(),
+                            on_interaction)
                     );
                 }
             
@@ -101,7 +100,8 @@ bool sd::Floor::setup()
                     new SingleTileObject(
                         object.first.as<std::string>(),
                             layout[0],
-                            position)
+                            position,
+                        on_interaction)
                 );
             } else {
                 std::cout << "++ Multi tile"  << std::endl;
@@ -110,7 +110,8 @@ bool sd::Floor::setup()
                         object.first.as<std::string>(),
                         layout.data(),
                         size,
-                        position)
+                        position,
+                        on_interaction)
                 );
             }
         }

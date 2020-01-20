@@ -4,48 +4,48 @@
 
 #include <iostream>
 #include <memory>
+#include <utility>
 #include <Event/EventSystem.h>
 #include <Event/LineToOutputEventArgs.h>
 #include "MultiTileObject.h"
 
-sd::MultiTileObject::MultiTileObject(std::string _name, int *_layout, sf::Vector2i _size,
-                                     sf::Vector2i _positionOnTileMap)
-    :name(_name)
-    ,size(_size)
-    ,positionOnTileMap(_positionOnTileMap)
+sd::MultiTileObject::MultiTileObject(std::string name, const int *layout, sf::Vector2i size,
+                                     sf::Vector2i position_on_tile_map, sol::function on_interaction)
+    : RoomObject(std::move(name), position_on_tile_map, std::move(on_interaction))
+    , size_(size)
 {
-    layout = new int[size.x*size.y]();
-    for (int i=0; i < size.x*size.y; i++)
+    layout_ = new int[size_.x * size_.y]();
+    for (int i=0; i < size_.x * size_.y; i++)
     {
-        layout[i] = _layout[i];
+        layout_[i] = layout[i];
     }
 }
 
 sd::MultiTileObject::~MultiTileObject() {
-    delete layout;
-    layout = nullptr;
+    delete layout_;
+    layout_ = nullptr;
 }
 
-void sd::MultiTileObject::PutOnLayout(int *layout, int width, int height) {
+void sd::MultiTileObject::put_on_layout(int *layout, int width, int height) {
 
-    if((width < positionOnTileMap.x + size.x) || (height < positionOnTileMap.y + size.y))
+    if((width < position_on_tile_map_.x + size_.x) || (height < position_on_tile_map_.y + size_.y))
     {
         std::cout << "MultiTileObject outside Room";
     }
     else
     {
-        int startPos = positionOnTileMap.x + positionOnTileMap.y*width;
+        int start_pos = position_on_tile_map_.x + position_on_tile_map_.y * width;
 
-        for(int i = 0; i < size.x * size.y;i++)
+        for(int i = 0; i < size_.x * size_.y; i++)
         {
-            int row = i/size.x;
-            int col = i%size.x;
+            int row = i / size_.x;
+            int col = i % size_.x;
 
-            int pos = startPos+col+row*width;
+            int pos = start_pos + col + row * width;
 
-            if(this->layout[i] != -1)
+            if(this->layout_[i] != -1)
             {
-                layout[pos] = this->layout[i];
+                layout[pos] = this->layout_[i];
             }
         }
 
@@ -53,15 +53,6 @@ void sd::MultiTileObject::PutOnLayout(int *layout, int width, int height) {
 
 }
 
-std::string sd::MultiTileObject::GetName() {
-    return name;
-}
-
-void sd::MultiTileObject::BeInteractedWith() {
-    std::shared_ptr<LineToOutputEventArgs> args;
-    args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("You try to interact with the " + name + "."));
-    EventSystem::Get().Trigger(args);
-
-    args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("Nothing happens."));
-    EventSystem::Get().Trigger(args);
+std::string sd::MultiTileObject::get_name() {
+    return name_;
 }

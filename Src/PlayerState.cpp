@@ -61,7 +61,7 @@ Sp<sd::PlayerVocabulary> sd::PlayerState::get_player_vocabulary() {
 void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
     if (e->type == EventArgs::Type::WALKED_THROUGH_DOOR) {
         auto arg = dynamic_cast<WalkedThroughDoorEventArgs*>(e.get());
-        set_room_as_current(floor_->get_room(arg->door->GetConnectedRoom()));
+        set_room_as_current(floor_->get_room(arg->door->get_connected_room()));
 
         std::shared_ptr<LineToOutputEventArgs> args;
         args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs(get_current_room()->GetEnterDescription()));
@@ -82,7 +82,7 @@ void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
     }
 
     if (e->type == EventArgs::Type::GOBLIN_DEFEATED) {
-        ((Door*) current_room_->GetObjectWithName("east_door"))->SetLocked(false);
+        ((Door *) current_room_->GetObjectWithName("east_door"))->set_locked(false);
         fight_.reset();
 
         std::shared_ptr<EventArgs> args;

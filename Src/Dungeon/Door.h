@@ -11,22 +11,23 @@
 namespace sd {
     class Door : public SingleTileObject {
     private:
-        bool isLocked;
-        std::string nextRoom;
-        int spriteSheetIdxOpen;
-        int spriteSheetIdxLocked;
+        bool is_locked_;
+        std::string next_room_;
+        int sprite_sheet_idx_open_;
+        int sprite_sheet_idx_locked_;
 
     public:
-        Door(std::string _name, int _spriteSheetIdxOpen, int _spriteSheetIdxLocked, sf::Vector2i _positionOnTileMap, std::string _nextRoom);
-        ~Door() override;
+        Door(std::string name, int sprite_sheet_idx_open, int sprite_sheet_idx_locked, sf::Vector2i position_on_tile_map,
+            std::string next_room, sol::function on_interaction);
+        ~Door() override = default;
 
-        virtual void PutOnLayout(int* layout, int width, int height) override;
-        std::string GetName() override;
-        void BeInteractedWith() override;
+        void put_on_layout(int* layout, int width, int height) override;
+        std::string get_name() override;
+        void be_interacted_with() override;
 
-        void SetLocked(bool lockState);
+        void set_locked(bool lock_state);
 
-        const std::string& GetConnectedRoom() const;
+        [[nodiscard]] const std::string& get_connected_room() const;
     };
 }
 

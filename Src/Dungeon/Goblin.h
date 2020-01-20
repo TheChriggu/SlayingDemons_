@@ -16,7 +16,7 @@ namespace sd {
     public:
             Goblin (std::string _name, int _spriteSheetIdx, sf::Vector2i _positionOnTileMap);
 
-            void BeInteractedWith() override;
+            void be_interacted_with() override;
 
             void SetPlayerVocab(PlayerVocabulary* _vocab);
     };

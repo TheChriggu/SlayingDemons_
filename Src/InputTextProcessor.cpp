@@ -47,7 +47,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
 
             if(object)
             {
-                object->BeInteractedWith();
+                object->be_interacted_with();
             }
             else
             {

@@ -87,7 +87,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
                 Word* word2 = Vocabulary::all_words->Get(words[1]);
                 if(word1->GetType() == sd::Word::type::modifier && word2->GetType() == sd::Word::type::action)
                 //make turn in fight
-                    playerState->GetFight ()->full_turn (words[1], words[0]);
+                    playerState->get_fight ()->full_turn (words[1], words[0]);
 
                 //evaluate result
                 //end fight, if fight is over

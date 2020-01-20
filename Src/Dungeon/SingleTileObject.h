@@ -2,8 +2,8 @@
 // Created by christian.heusser on 10.12.2019.
 //
 
-#ifndef SLAYINGDEMONS_SINGLETILEOBJECT_H
-#define SLAYINGDEMONS_SINGLETILEOBJECT_H
+#ifndef _SINGLETILEOBJECT_H_
+#define _SINGLETILEOBJECT_H_
 
 #include "RoomObject.h"
 
@@ -11,18 +11,16 @@
 namespace sd {
     class SingleTileObject : public RoomObject{
     protected:
-        int spriteSheetIdx;
-        std::string name;
-        sf::Vector2i positionOnTileMap;
+        
+        int sprite_sheet_idx_;
 
     public:
-        SingleTileObject(std::string _name, int _spriteSheetIdx, sf::Vector2i _positionOnTileMap);
-        ~SingleTileObject() override;
+        SingleTileObject(std::string name, int sprite_sheet_idx, sf::Vector2i position_on_tile_map, sol::function on_interaction);
+        ~SingleTileObject() override = default;
 
-        virtual void PutOnLayout(int* layout, int width, int height) override;
-        std::string GetName() override;
-        void BeInteractedWith() override;
+        void put_on_layout(int* layout, int width, int height) override;
+        std::string get_name() override;
     };
 }
 
-#endif //SLAYINGDEMONS_SINGLETILEOBJECT_H
+#endif //_SINGLETILEOBJECT_H_

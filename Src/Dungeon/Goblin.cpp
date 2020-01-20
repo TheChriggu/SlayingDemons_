@@ -6,14 +6,14 @@
 #include <Event/EventSystem.h>
 #include "Goblin.h"
 
-sd::Goblin::Goblin(std::string _name, int _spriteSheetIdx, sf::Vector2i _positionOnTileMap) : SingleTileObject(_name,
-                                                                                                               _spriteSheetIdx,
-                                                                                                               _positionOnTileMap) {
+sd::Goblin::Goblin(std::string _name, int _spriteSheetIdx, sf::Vector2i _positionOnTileMap)
+    : SingleTileObject(_name,_spriteSheetIdx,_positionOnTileMap, sol::function())
+    {
 
 }
 
-void sd::Goblin::BeInteractedWith() {
-    if (vocab->HasWord("Cyber"))
+void sd::Goblin::be_interacted_with() {
+    if (vocab->has_word("Cyber"))
     {
         std::shared_ptr<LineToOutputEventArgs> lineArgs;
         lineArgs = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("You attack the Goblin."));

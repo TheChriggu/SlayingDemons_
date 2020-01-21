@@ -74,7 +74,7 @@ dungeon = {
             },
 
             Tree = {
-                position={3,1},
+                position={x=3,y=1},
                 layout = tree_layout,
                 on_interaction = function ()
                     print_line("It's a tree.")
@@ -83,7 +83,7 @@ dungeon = {
             },
 
             Bushes = {
-                position = {7,1},
+                position = {x= 7,y=1},
                 layout = bushGroup_layout,
                 on_interaction= function ()
                     print_line("You can see several bushes. Some of them carry berries. ")
@@ -92,7 +92,7 @@ dungeon = {
             },
 
             Axe = {
-                position = {},
+                position = {x = 7, y = 3},
                 layout= axe_layout,
                 on_interaction = function ()
                     print_line("Through the thick moss you see something shiny. As you approach it you realize it's an axe. ")

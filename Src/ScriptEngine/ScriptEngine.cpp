@@ -30,7 +30,7 @@ sd::ScriptEngine *sd::ScriptEngine::Get() {
 
 void sd::ScriptEngine::add_script(const boost::filesystem::path& url) {
     scripts_.emplace_back(new Script(
-            reinterpret_cast<const char *>(url.filename().c_str()),
+            url.filename().string(),
             (*FileInput::load (url))
     ));
 }
@@ -39,7 +39,8 @@ void sd::ScriptEngine::add_script(const boost::filesystem::path& url) {
 std::shared_ptr<Script> sd::ScriptEngine::get_script(const std::string& name) const {
 
     for (const auto& script : scripts_) {
-        if (script->get_name () == (name + ".lua")) {
+        std::string strg = script->get_name ();
+        if (strg == (name + ".lua")) {
             return script;
         }
     }

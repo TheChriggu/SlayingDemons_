@@ -117,10 +117,10 @@ add_executable(${PROJECT_NAME}
                Src/Shading/ShaderProcedure.h
                Src/Shading/ShaderEngine.cpp
                Src/Shading/ShaderEngine.h
-               Src/Shading/WeakGlitch.cpp
-               Src/Shading/WeakGlitch.h
-               Src/Shading/Glitch.cpp
-               Src/Shading/Glitch.h Src/Event/PlayerStateCreatedEventArgs.cpp Src/Event/PlayerStateCreatedEventArgs.h Src/Event/FightStartedEventArgs.cpp Src/Event/FightStartedEventArgs.h Src/Combat/MonsterList.cpp Src/Combat/MonsterList.h)
+        Src/Shading/NoisyLinesWeak.cpp
+        Src/Shading/NoisyLinesWeak.h
+        Src/Shading/NoisyLinesMedium.cpp
+        Src/Shading/NoisyLinesMedium.h Src/Event/PlayerStateCreatedEventArgs.cpp Src/Event/PlayerStateCreatedEventArgs.h Src/Event/FightStartedEventArgs.cpp Src/Event/FightStartedEventArgs.h Src/Combat/MonsterList.cpp Src/Combat/MonsterList.h)
 
 target_include_directories(${PROJECT_NAME} PRIVATE Src)
 

@@ -41,6 +41,7 @@ dungeon = {
                     print_line("But...what's that? Are those holes? ")
                     print_line("Ugh, yes. I will definitely not try to sit on it!")
                     print_line("I'm not sure if it will hold with all those holes... ")
+                    set_glitch_on("background_panel")
                 end
             },
             table = {

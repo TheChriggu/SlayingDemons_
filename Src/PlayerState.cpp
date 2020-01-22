@@ -9,6 +9,7 @@
 #include <utility>
 #include <Event/FightStartedEventArgs.h>
 #include <Combat/MonsterList.h>
+#include <ScriptEngine/ScriptEngine.h>
 #include "PlayerState.h"
 
 sd::PlayerState::PlayerState()
@@ -19,6 +20,8 @@ sd::PlayerState::PlayerState()
     floor_->setup();
     current_room_ = floor_->get_start_room();
     player_vocabulary_ = std::make_shared<PlayerVocabulary>();
+    
+    ScriptEngine::Get()->register_all("start_new_fight", &PlayerState::start_new_fight, this);
 }
 
 Sp<sd::Room> sd::PlayerState::get_current_room() {
@@ -45,8 +48,12 @@ void sd::PlayerState::set_room_as_current(Sp<sd::Room> room) {
 }
 
 
-void sd::PlayerState::start_new_fight(Sp<sd::Monster> enemy) {
-    fight_ = std::make_shared<Fight>(player_.get(), enemy.get());
+void sd::PlayerState::start_new_fight(std::string enemy_name) {
+    auto list = MonsterList::Get();
+    Monster* goblin = list->GetMonster(std::move(enemy_name));
+    //start_new_fight(Sp<Monster>(goblin));
+    
+    fight_ = std::make_shared<Fight>(player_.get(), goblin);
 
     std::shared_ptr<FightStartedEventArgs> args;
     args = std::make_shared<FightStartedEventArgs>(FightStartedEventArgs(fight_.get()));
@@ -76,9 +83,7 @@ void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
         
         //Monster* goblin = new Monster("../Resources/Sprites/glitchy_goblin_red.png");
 
-        auto list = MonsterList::Get();
-        Monster* goblin = list->GetMonster("Goblin");
-        start_new_fight(Sp<Monster>(goblin));
+        start_new_fight("Goblin");
     }
 
     if (e->type == EventArgs::Type::GOBLIN_DEFEATED) {

@@ -27,7 +27,7 @@ void sd::Goblin::be_interacted_with() {
     else
     {
         std::shared_ptr<LineToOutputEventArgs> args;
-        args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("You're not powerful enough to fight that enemy yet."));
+        args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("You're not powerful enough to fight that enemy_ yet."));
         EventSystem::Get().Trigger(args);
     }
 }

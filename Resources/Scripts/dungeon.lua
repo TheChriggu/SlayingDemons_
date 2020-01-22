@@ -23,6 +23,9 @@ bookshelf_layout = {
     size = {1, 2},
     tiles = {48, 56}
 }
+goblin_layout = {
+    tiles = {25}
+}
 
 
 dungeon = {
@@ -75,6 +78,13 @@ dungeon = {
                 position = {x = 6, y = 4},
                 layout = bookshelf_layout
             },
+            goblin = {
+                position = {x = 9, y = 3 },
+                layout = goblin_layout,
+                on_interaction = function()
+                    start_new_fight("Goblin")
+                end
+            }
         },
         room3 = {
             west_door = {

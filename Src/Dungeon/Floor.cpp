@@ -18,12 +18,12 @@ sd::Floor::Floor() : start_room_(nullptr) {
     Door* southDoor = new Door("doorX", 9, 25, sf::Vector2i(5,6), room1);
     room2->AddObject(southDoor);
 
-    Monster* enemy = new Monster();
+    Monster* enemy_ = new Monster();
     Stats oneStats = {1,1,1,1,1,1,1,1};
-    enemy->SetBaseStats(oneStats, oneStats);
-    enemy->SetBuffs(oneStats,oneStats);
+    enemy_->SetBaseStats(oneStats, oneStats);
+    enemy_->SetBuffs(oneStats,oneStats);
 
-    room2->SetEnemy(enemy);
+    room2->SetEnemy(enemy_);
 
     rooms.emplace_back(room1);
     rooms.emplace_back(room2);

@@ -16,18 +16,21 @@ namespace sd {
 
     class Fight {
     private:
-    Fighter* player;
-    Monster* enemy;
+    Fighter* player_;
+    Monster* enemy_;
     //Attack GetAttack(Fighter* _fighter, sf::String _action, sf::String _modifier);
-    Stats MinToZero(Stats stats);
 
     public:
-        Fight(Fighter* _player, Monster* _enemy);
+        Fight(Fighter* player, Monster* enemy);
         ~Fight();
 
-        void FullTurn(sf::String _action, sf::String _modifier, TextOutput* output);
+        void full_turn(sf::String action, sf::String modifier);
 
-        Monster* GetEnemy();
+        Monster* get_enemy();
+    
+    private:
+        void player_turn(Attack* player_attack, Attack* enemy_attack);
+        void enemy_turn(Attack* player_attack, Attack* enemy_attack);
 
     };
 }

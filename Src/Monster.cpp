@@ -26,9 +26,9 @@ sd::Monster::~Monster() {
 }
 
 sf::String sd::Monster::GetAction() {
-    std::cout << "getting enemy action\n";
+    std::cout << "getting enemy_ action\n";
     int i = rand()%(actions->size());
-    //std::cout << "enemy move is: " << std::string(actions->at(i)) << "\n";
+    //std::cout << "enemy_ move is: " << std::string(actions->at(i)) << "\n";
     sf::String retVal = actions->at(i);
     //std::string strg = std::string(retVal);
     return retVal;

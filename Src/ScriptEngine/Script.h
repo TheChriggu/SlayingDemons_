@@ -11,13 +11,13 @@
 
 class Script {
 public:
-    explicit Script(const char* name);
-    Script(const char* name, const std::string& content);
+    explicit Script(const std::string& name);
+    Script(const std::string& name, const std::string& content);
     virtual ~Script() = default;
 
-    void add_content(const char* content);
+    void add_content(const std::string& content);
     template <typename... Args>
-    void call(const char* function, Args&&... args) const {
+    void call(const std::string& function, Args&&... args) const {
         sol::function func = (*state_)[function];
 
         if (func.valid())
@@ -27,10 +27,10 @@ public:
 
     const std::string& get_name() const;
 
-    sol::optional<sol::table> get_table(const char* name) const;
+    sol::optional<sol::table> get_table(const std::string& name) const;
 
     template <typename T>
-    T get_var(const char* name) const {
+    T get_var(const std::string& name) const {
         return (*state_)[name];
     }
 

@@ -63,7 +63,7 @@ dungeon = {
     floor1 = {
         
         Southern_Forest={
-            layout = { {x = 2, y = 0}, {x=10, y= 0}, {x=10, y=6}, {x=2, y= 6}},
+            --layout = { {x = 2, y = 0}, {x=10, y= 0}, {x=10, y=6}, {x=2, y= 6}},
 
             is_start = true,
 

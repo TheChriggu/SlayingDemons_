@@ -1,0 +1,7 @@
+{
+    "Lua.diagnostics.globals": [
+        "table_layout"
+    ],
+    "cmake.buildDirectory": "${workspaceRoot}/cmake-build-debug/"
+}
+ 

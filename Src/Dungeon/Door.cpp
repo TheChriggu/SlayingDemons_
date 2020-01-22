@@ -39,7 +39,7 @@ void sd::Door::be_interacted_with() {
     if(is_locked_)
     {
         std::shared_ptr<LineToOutputEventArgs> args;
-        args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("This door is locked."));
+        args = std::make_shared<LineToOutputEventArgs>("This door is locked.");
         EventSystem::Get().Trigger(args);
     }
 

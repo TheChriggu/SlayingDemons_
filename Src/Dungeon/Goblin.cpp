@@ -16,7 +16,7 @@ void sd::Goblin::be_interacted_with() {
     if (vocab->has_word("Cyber"))
     {
         std::shared_ptr<LineToOutputEventArgs> lineArgs;
-        lineArgs = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("You attack the Goblin."));
+        lineArgs = std::make_shared<LineToOutputEventArgs>("You attack the Goblin.");
         EventSystem::Get().Trigger(lineArgs);
 
         std::shared_ptr<EventArgs> args;
@@ -27,7 +27,7 @@ void sd::Goblin::be_interacted_with() {
     else
     {
         std::shared_ptr<LineToOutputEventArgs> args;
-        args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs("You're not powerful enough to fight that enemy_ yet."));
+        args = std::make_shared<LineToOutputEventArgs>("You're not powerful enough to fight that enemy_ yet.");
         EventSystem::Get().Trigger(args);
     }
 }

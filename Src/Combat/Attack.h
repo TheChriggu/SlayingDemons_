@@ -23,8 +23,8 @@ namespace sd
 
         Stats GetStats();
 
-        sf::String GetSentenceSecondPerson();
-        sf::String GetSentenceThirdPerson();
+        std::string GetSentenceSecondPerson();
+        std::string GetSentenceThirdPerson();
 
     };
 }

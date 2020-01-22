@@ -89,7 +89,7 @@ sd::Monster *sd::Fight::get_enemy() {
 void sd::Fight::player_turn (sd::Attack *player_attack, sd::Attack *enemy_attack)
 {
     std::shared_ptr<LineToOutputEventArgs> args;
-    args = std::make_shared<LineToOutputEventArgs>(LineToOutputEventArgs(player_attack->GetSentenceSecondPerson()));
+    args = std::make_shared<LineToOutputEventArgs>(player_attack->GetSentenceSecondPerson());
     EventSystem::Get().Trigger(args);
    
     Stats damage_stats = player_attack->GetStats() - (enemy_->GetDefense()) ;

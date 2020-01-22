@@ -28,4 +28,8 @@ void sd::RoomObject::be_interacted_with()
     }
     
 }
+void sd::RoomObject::on_destroyed()
+{
+
+}
 

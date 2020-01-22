@@ -29,7 +29,7 @@ namespace sd {
         bool is_fighting();
 
         void set_room_as_current(Sp<Room> room);
-        void start_new_fight(Sp<Monster> enemy);
+        void start_new_fight(std::string enemy_name);
 
         Sp<PlayerVocabulary> get_player_vocabulary();
         void handle(std::shared_ptr<EventArgs> e) override;

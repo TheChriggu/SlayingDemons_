@@ -24,6 +24,7 @@ void FormattedLine::format_line(sf::String string, const Sp<sf::Font> &font) {
     /*std::vector<std::string> splitVec;
     std::string delims = " []";
     boost::split(splitVec, string, boost::algorithm::is_any_of(delims));*/
+    
 
     sf::Vector2f next_position =  sf::Vector2f(get_rect ().left, get_rect ().top + get_rect ().height);
     sf::String word = " ";

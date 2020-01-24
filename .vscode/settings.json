@@ -2,6 +2,9 @@
     "Lua.diagnostics.globals": [
         "table_layout"
     ],
-    "cmake.buildDirectory": "${workspaceRoot}/cmake-build-debug/"
+    "cmake.buildDirectory": "${workspaceRoot}/cmake-build-debug/",
+    "cmake.preferredGenerators": [
+        "Unix Makefiles"
+    ]
 }
  

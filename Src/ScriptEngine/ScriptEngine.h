@@ -29,7 +29,7 @@ namespace sd {
         void add_script(const boost::filesystem::path& url);
 
         template <typename... Args>
-        void broadcast(const char* function, Args&&... args) {
+        void broadcast(const std::string& function, Args&&... args) {
 
             for (const auto& script : scripts_) {
                 script->call (function, std::forward<Args> (args)...);

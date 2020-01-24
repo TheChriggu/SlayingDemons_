@@ -55,11 +55,11 @@ sd::Fighter::~Fighter() {
 }
 
 sd::Stats sd::Fighter::GetOffense() {
-    return (*offensiveStats)*(*offensiveBuffs);
+    return (*offensiveStats);//*(*offensiveBuffs);
 }
 
 sd::Stats sd::Fighter::GetDefense() {
-    return (*defensiveStats)+(*defensiveBuffs);
+    return (*defensiveStats);//+(*defensiveBuffs);
 }
 
 void sd::Fighter::SetBaseStats(sd::Stats offense, sd::Stats defense) {

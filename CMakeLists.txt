@@ -123,12 +123,14 @@ add_executable(${PROJECT_NAME}
                Src/Shading/Glitch.h Src/Event/PlayerStateCreatedEventArgs.cpp Src/Event/PlayerStateCreatedEventArgs.h Src/Event/FightStartedEventArgs.cpp Src/Event/FightStartedEventArgs.h Src/Combat/MonsterList.cpp Src/Combat/MonsterList.h)
 
 target_include_directories(${PROJECT_NAME} PRIVATE Src)
+target_include_directories(${PROJECT_NAME} PRIVATE strtk)
 
 # add all libraries as subdirectories
 add_subdirectory(lua-5.3.5)
 add_subdirectory(SFML-2.5.1)
 add_subdirectory(sol2-develop)
 add_subdirectory(boost)
+add_subdirectory(strtk)
 
 # find SFML packages in SFML_DIR which was set in SFML-2.5.1 subdirectory
 find_package(SFML COMPONENTS system window graphics network audio REQUIRED)

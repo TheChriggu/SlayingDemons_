@@ -27,13 +27,14 @@ sd::Stats sd::Attack::GetStats() {
     return retVal;
 }
 
-sf::String sd::Attack::GetSentenceSecondPerson() {
-    sf::String retVal = "You attack with " + modifier->GetName() + " " + action->GetName() + ".";
+std::string sd::Attack::GetSentenceSecondPerson() {
+    
+    std::string retVal = "You attack with " + modifier->GetName().toAnsiString() + " " + action->GetName().toAnsiString() + ".";
     return retVal;
 }
 
-sf::String sd::Attack::GetSentenceThirdPerson() {
-    sf::String retVal = "Your enemy attacks you with " + modifier->GetName() + " " + action->GetName() + ".";
+std::string sd::Attack::GetSentenceThirdPerson() {
+    std::string retVal = "Your enemy attacks you with " + modifier->GetName().toAnsiString() + " " + action->GetName().toAnsiString() + ".";
     return retVal;
 }
 

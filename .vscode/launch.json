@@ -6,22 +6,10 @@
     "configurations": [
         {
             "name": "Starten - Windows",
-            "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceRoot}/cmake-build-debug/SlayingDemons.exe",
             "args": [],
-            "stopAtEntry": false,
-            "cwd": "${workspaceFolder}/cmake-build-debug/",
-            "environment": [],
-            "externalConsole": false,
-            "MIMode": "gdb",
-            "setupCommands": [
-                {
-                    "description": "Automatische Strukturierung und Einrückung für \"gdb\" aktivieren",
-                    "text": "-enable-pretty-printing",
-                    "ignoreFailures": true
-                }
-            ]
+            "cwd": "${workspaceFolder}/cmake-build-debug/"
         },
         {
             "name": "Starten - Linux",

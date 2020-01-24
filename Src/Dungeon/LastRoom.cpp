@@ -4,10 +4,9 @@
 
 #include "LastRoom.h"
 
-std::string sd::LastRoom::GetEnterDescription() {
+std::string sd::LastRoom::get_enter_description() {
     return "You enter the room.";//\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
 }
 
 sd::LastRoom::LastRoom() : Room(""){
-    is_last = true;
 }

@@ -23,7 +23,7 @@ namespace sd {
         void shutdown() override;
         
         Sp<Room> get_start_room();
-        Sp<Room> get_room(const std::string& name) const;
+        [[nodiscard]] Sp<Room> get_room(const std::string& name) const;
     };
 }
 

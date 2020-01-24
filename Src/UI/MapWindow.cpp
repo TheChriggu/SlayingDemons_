@@ -50,7 +50,7 @@ void sd::MapWindow::draw_to(Sp<sf::RenderTarget> window) const {
     }
     else
     {
-        current_tile_map_->SetLayout(player_state_->get_current_room()->GetLayout(),77);
+        current_tile_map_->set_layout(player_state_->get_current_room()->get_layout(), 77);
         window->draw(*current_tile_map_);
     }
 }

@@ -2,8 +2,8 @@
 // Created by christian.heusser on 09.01.2020.
 //
 
-#ifndef SLAYINGDEMONS_LASTROOM_H
-#define SLAYINGDEMONS_LASTROOM_H
+#ifndef _LASTROOM_H_
+#define _LASTROOM_H_
 
 #include "Room.h"
 
@@ -12,8 +12,8 @@ namespace sd {
     public:
         LastRoom();
 
-        std::string GetEnterDescription() override;
+        std::string get_enter_description() override;
     };
 }
 
-#endif //SLAYINGDEMONS_LASTROOM_H
+#endif //_LASTROOM_H_

@@ -85,8 +85,8 @@ bool sd::Floor::setup()
                 //std::cout << "++ Single tile: " << test.empty() << std::endl;
                 if (!object.second.as<sol::lua_table>()["next_room"].get_or<std::string>("").empty()) {
                     std::cout << "++ door"  << std::endl;
-                    rooms_.back()->AddObject(
-                        new Door(
+                    rooms_.back()->add_object(
+                        std::make_shared<Door>(
                             object.first.as<std::string>(),
                                 layout[0],
                                 layout[1],
@@ -96,8 +96,8 @@ bool sd::Floor::setup()
                     );
                 }
             
-                rooms_.back()->AddObject(
-                    new SingleTileObject(
+                rooms_.back()->add_object(
+                    std::make_shared<SingleTileObject>(
                         object.first.as<std::string>(),
                             layout[0],
                             position,
@@ -105,8 +105,8 @@ bool sd::Floor::setup()
                 );
             } else {
                 std::cout << "++ Multi tile"  << std::endl;
-                rooms_.back()->AddObject(
-                    new MultiTileObject(
+                rooms_.back()->add_object(
+                    std::make_shared<MultiTileObject>(
                         object.first.as<std::string>(),
                         layout.data(),
                         size,

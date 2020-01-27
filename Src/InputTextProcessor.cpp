@@ -43,7 +43,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
         if(words[0] == "interact")
         {
             //TODO: Make sure that this actually is a door
-            RoomObject* object = playerState->get_current_room()->get_object_with_name(words[1]);
+            auto object = playerState->get_current_room()->get_object_with_name(words[1]);
 
             if(object)
             {

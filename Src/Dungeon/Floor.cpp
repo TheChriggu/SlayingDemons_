@@ -64,8 +64,8 @@ bool sd::Floor::setup()
                 continue;
             
             sf::Vector2i position(
-                object.second.as<sol::lua_table>()["position"]["x"].get_or(0),
-                object.second.as<sol::lua_table>()["position"]["y"].get_or(0)
+                object.second.as<sol::lua_table>()["position"][1].get_or(0),
+                object.second.as<sol::lua_table>()["position"][2].get_or(0)
                 );
             sf::Vector2i size(
                 object.second.as<sol::lua_table>()["layout"]["size"][1].get_or(1),

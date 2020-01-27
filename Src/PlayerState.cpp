@@ -39,11 +39,11 @@ bool sd::PlayerState::is_fighting() {
 void sd::PlayerState::set_room_as_current(Sp<sd::Room> room) {
     current_room_ = std::move(room);
 
-    RoomObject* object = current_room_->GetObjectWithName("Goblin");
+    auto object = current_room_->get_object_with_name("Goblin");
     if(object)
     {
-        Goblin* goblin = (Goblin*) object;
-        goblin->SetPlayerVocab(get_player_vocabulary().get());
+        Goblin* goblin = (Goblin*) object.get();
+        goblin->set_player_vocab(get_player_vocabulary());
     }
 }
 
@@ -71,7 +71,7 @@ void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
         set_room_as_current(floor_->get_room(arg->door->get_connected_room()));
 
         std::shared_ptr<LineToOutputEventArgs> args;
-        args = std::make_shared<LineToOutputEventArgs>(get_current_room()->GetEnterDescription());
+        args = std::make_shared<LineToOutputEventArgs>(get_current_room()->get_enter_description());
         EventSystem::Get().Trigger(args);
     }
 
@@ -87,7 +87,7 @@ void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
     }
 
     if (e->type == EventArgs::Type::GOBLIN_DEFEATED) {
-        ((Door *) current_room_->GetObjectWithName("east_door"))->set_locked(false);
+        ((Door *) current_room_->get_object_with_name("east_door").get())->set_locked(false);
         fight_.reset();
 
         std::shared_ptr<EventArgs> args;

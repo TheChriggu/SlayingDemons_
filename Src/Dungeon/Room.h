@@ -15,36 +15,33 @@
 namespace sd {
     class Room : public Subscriber{
     private:
-        std::vector<RoomObject*> roomObjects;
-        int* layout;
+        std::vector<Sp<RoomObject>> room_objects_;
+        int* layout_;
 
-        Monster* enemy;
+        Sp<Monster> enemy_;
         
         std::string name_;
 
         //Tilemap* tilemap;
 
     public:
-        Room(std::string name);
-        ~Room();
+        explicit Room(std::string name);
+        ~Room() override;
 
-        // TODO(FK): slightly embarrassing temp variable
-        bool is_last = false;
+        sf::String get_description();
+        int* get_layout();
 
-        sf::String GetDescription();
-        int* GetLayout();
+        void add_object(const Sp<RoomObject>& object);
+        void set_enemy(Sp<Monster> enemy);
 
-        void AddObject(RoomObject* object);
-        void SetEnemy(Monster* _enemy);
+        virtual std::string get_enter_description();
+        Sp<Monster> get_enemy();
+        [[nodiscard]] const std::string& get_name() const;
 
-        virtual std::string GetEnterDescription();
-        Monster* GetEnemy();
-        const std::string& get_name() const;
+        Sp<RoomObject> get_object_with_name(const std::string& name);
+        void remove_object_with_name(const std::string& name);
 
-        RoomObject* GetObjectWithName(std::string name);
-        void RemoveObjectWithName(std::string name);
-
-        void handle(std::shared_ptr<EventArgs> e) override;
+        void handle(Sp<EventArgs> e) override;
     };
 }
 

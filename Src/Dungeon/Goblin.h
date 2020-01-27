@@ -2,8 +2,8 @@
 // Created by christian.heusser on 09.01.2020.
 //
 
-#ifndef SLAYINGDEMONS_GOBLIN_H
-#define SLAYINGDEMONS_GOBLIN_H
+#ifndef _GOBLIN_H_
+#define _GOBLIN_H_
 
 #include <PlayerVocabulary.h>
 #include "SingleTileObject.h"
@@ -11,15 +11,15 @@
 namespace sd {
     class Goblin : public SingleTileObject {
     private:
-        PlayerVocabulary* vocab;
+        Sp<PlayerVocabulary> vocab_;
 
     public:
-            Goblin (std::string _name, int _spriteSheetIdx, sf::Vector2i _positionOnTileMap);
+            Goblin (std::string name, int sprite_sheet_idx, sf::Vector2i position_on_tile_map);
 
             void be_interacted_with() override;
 
-            void SetPlayerVocab(PlayerVocabulary* _vocab);
+            void set_player_vocab(Sp<PlayerVocabulary> vocab);
     };
 }
 
-#endif //SLAYINGDEMONS_GOBLIN_H
+#endif //_GOBLIN_H_

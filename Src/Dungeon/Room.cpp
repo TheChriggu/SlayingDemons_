@@ -8,9 +8,9 @@
 sd::Room::Room(std::string name)
 {
     name_ = std::move(name);
-    enemy = nullptr;
+    enemy_ = nullptr;
     //tilemap = new Tilemap(11,7,position,sf::Vector2u(64,64));
-    layout = new int[77]{
+    layout_ = new int[77]{
             0,1,1,1,1,1,1,1,1,1,2,
             8,9,9,9,9,9,9,9,9,9,10,
             8,9,9,9,9,9,9,9,9,9,10,
@@ -22,42 +22,40 @@ sd::Room::Room(std::string name)
 }
 
 sd::Room::~Room() {
-    roomObjects.clear();
-    delete layout;
-    layout = nullptr;
+    room_objects_.clear();
 }
 
 
-sf::String sd::Room::GetDescription() {
-    if (roomObjects.size() == 0)
+sf::String sd::Room::get_description() {
+    if (room_objects_.empty())
     {
         return "The room is empty.";
     }
 
 
-    sf::String retVal = "Inside the room there is a";
-    for(auto object : roomObjects)
+    sf::String ret_val = "Inside the room there is a";
+    for(const auto& object : room_objects_)
     {
-        retVal += " " + object->get_name() + ",";
+        ret_val += " " + object->get_name() + ",";
     }
 
-    retVal += ".";
+    ret_val += ".";
 
-    return retVal;
+    return ret_val;
 }
 
-void sd::Room::AddObject(sd::RoomObject *object) {
-    object->put_on_layout(layout, 11, 7);
-    roomObjects.emplace_back(object);
+void sd::Room::add_object(const Sp<sd::RoomObject>& object) {
+    object->put_on_layout(layout_, 11, 7);
+    room_objects_.emplace_back(object);
 }
 
-int *sd::Room::GetLayout() {
-    return layout;
+int *sd::Room::get_layout() {
+    return layout_;
 }
 
-sd::RoomObject *sd::Room::GetObjectWithName(std::string name) {
+Sp<sd::RoomObject> sd::Room::get_object_with_name(const std::string& name) {
 
-    for(auto object : roomObjects)
+    for(auto object : room_objects_)
     {
         if (std::string(object->get_name()) == name)
         {
@@ -69,12 +67,12 @@ sd::RoomObject *sd::Room::GetObjectWithName(std::string name) {
     return nullptr;
 }
 
-void sd::Room::SetEnemy(sd::Monster *_enemy) {
-    enemy = _enemy;
+void sd::Room::set_enemy(Sp<sd::Monster> enemy) {
+    enemy_ = std::move(enemy);
 }
 
-std::string sd::Room::GetEnterDescription() {
-    if(enemy != nullptr)
+std::string sd::Room::get_enter_description() {
+    if(enemy_ != nullptr)
     {
         return "You enter the new room. Immediately an enemy_ attacks you.";
     }
@@ -85,43 +83,43 @@ std::string sd::Room::GetEnterDescription() {
     }
 }
 
-sd::Monster *sd::Room::GetEnemy() {
-    return enemy;
+Sp<sd::Monster> sd::Room::get_enemy() {
+    return enemy_;
 }
 
 void sd::Room::handle(std::shared_ptr<EventArgs> e) {
     if (e->type == EventArgs::Type::ROOM_LAYOUT_CHANGED) {
-        for (auto object : roomObjects)
+        for (const auto& object : room_objects_)
         {
-            object->put_on_layout(layout, 11, 7);
+            object->put_on_layout(layout_, 11, 7);
         }
     }
 
     if (e->type == EventArgs::Type::GOBLIN_DEFEATED) {
-        RemoveObjectWithName("Goblin");
+        remove_object_with_name("Goblin");
     }
 }
 
- void sd::Room::RemoveObjectWithName(std::string name) {
-    auto it = roomObjects.begin();
-    bool itLock = false;
-    for(auto object : roomObjects)
+ void sd::Room::remove_object_with_name(const std::string& name) {
+    auto it = room_objects_.begin();
+    bool it_lock = false;
+    for(const auto& object : room_objects_)
     {
         if (std::string(object->get_name()) == name)
         {
-            itLock = true;
+            it_lock = true;
         }
-        if(!itLock)
+        if(!it_lock)
         {
             it.operator++();
         }
     }
 
-    if(it < roomObjects.end())
+    if(it < room_objects_.end())
     {
-        roomObjects.erase(it);
-        SingleTileObject* mushroom = new SingleTileObject("Mushroom", 24, sf::Vector2i(9,3), sol::function());
-        AddObject(mushroom);
+        room_objects_.erase(it);
+        auto mushroom = std::make_shared<SingleTileObject>("Mushroom", 24, sf::Vector2i(9,3), sol::function());
+        add_object(mushroom);
     }
 }
 

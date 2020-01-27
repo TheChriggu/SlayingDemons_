@@ -5,11 +5,19 @@
 #include "FormattedLine.h"
 #include <memory>
 
+
 FormattedLine::FormattedLine(const sf::String& string, sf::Vector2f position, const Sp<sf::Font>& font, sf::Vector2f max_size) {
+    sd::Format format;
+    format.style_ = sf::Text::Italic;
+    format.size_ = 25;
+    format.is_button_ = false;
+    format.color_ = sf::Color::Red;
+    format.font_ = font_;
+    
     font_ = font;
     position_ = position;
     max_size_ = max_size;
-    words_.push_back(std::make_shared<FormattedWord>("", position, font));
+    words_.push_back(std::make_shared<FormattedWord>("", position, format));
   format_line (string, font);
 
 }
@@ -25,44 +33,32 @@ void FormattedLine::format_line(sf::String string, const Sp<sf::Font> &font) {
     std::string delims = " []";
     boost::split(splitVec, string, boost::algorithm::is_any_of(delims));*/
     
-
+    sd::Format format;
+    format.style_ = sf::Text::Regular;
+    format.size_ = 25;
+    format.is_button_ = false;
+    format.color_ = sf::Color::Black;
+    format.font_ = font_;
+    
     sf::Vector2f next_position =  sf::Vector2f(get_rect ().left, get_rect ().top + get_rect ().height);
-    sf::String word = " ";
-    for(auto c = string.begin(); c != string.end(); c++)
-    {
-        if(sf::String(*c) != ' ' && c != string.end()-1)
+    
+    std::vector<std::string> string_vector;
+    strtk::parse(string, " ", string_vector, strtk::split_options::default_mode);
+    
+    for(auto word : string_vector)
         {
-            word += *c;
-        }
-
-        else
-        {
-            if(c == string.end()-1)
-            {
-                word += *c;
-            }
-
-            /*if(nextPosition.x > maxSize.x)
-            {
-                nextPosition = sf::Vector2f(getRect().left, getRect().top + getRect().height);
-            }*/
-
-           Sp<FormattedWord> newWord = std::make_shared<FormattedWord>(FormattedWord(word, next_position, font));
-           next_position.x += newWord->get_rect ().width;
+            
+            Sp<FormattedWord> newWord = std::make_shared<FormattedWord>(FormattedWord(word, next_position, format));
+            next_position.x += newWord->get_rect ().width;
             if(next_position.x > max_size_.x)
-            {
-                next_position = sf::Vector2f(get_rect ().left, get_rect ().top + get_rect ().height);
-                newWord->set_position (next_position);
-                next_position.x += newWord->get_rect ().width;
-            }
-
-           words_.push_back(newWord);
-           word = " ";
+                {
+                    next_position = sf::Vector2f(get_rect ().left, get_rect ().top + get_rect ().height);
+                    newWord->set_position (next_position);
+                    next_position.x += newWord->get_rect ().width;
+                }
+        
+            words_.push_back(newWord);
         }
-    }
-
-    /*FormattedWord* newWord = new FormattedWord(word, false, sf::Vector2f(getRect().left + getRect().width,getRect().top), _font);
-    words->push_back(newWord);*/
 }
 
 sf::FloatRect FormattedLine::get_rect(){

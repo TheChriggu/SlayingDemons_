@@ -4,11 +4,12 @@
 
 #ifndef _FORMATTEDLINE_H_
 #define _FORMATTEDLINE_H_
-#include "Core/GlobalDefinitions.h"
+//#include "Core/GlobalDefinitions.h"
 #include <list>
 #include "FormattedWord.h"
 #include <iostream>
 #include "SFML/Graphics.hpp"
+#include <strtk.hpp>
 //#include "boost/algorithm/string.hpp"
 
 class FormattedLine {

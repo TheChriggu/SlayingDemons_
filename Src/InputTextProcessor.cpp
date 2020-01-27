@@ -52,7 +52,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
             else
             {
                 std::shared_ptr<LineToOutputEventArgs> args;
-                args = std::make_shared<LineToOutputEventArgs>("could not find object in room.");
+                args = std::make_shared<LineToOutputEventArgs>("could [b] not [/b] find [b] object in [/b] room.");
                 EventSystem::Get().Trigger(args);
             }
         }

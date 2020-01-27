@@ -7,14 +7,14 @@
 
 #include <Core/GlobalDefinitions.h>
 #include "SFML/Graphics.hpp"
+#include "Format.h"
 
 class FormattedWord {
 
     Sp<sf::Text> text_;
-    Sp<sf::Font> font_;
 
 public:
-    FormattedWord(const sf::String& text, sf::Vector2f position, const Sp<sf::Font>& font);
+    FormattedWord(const std::string& text, sf::Vector2f position, sd::Format& format);
     virtual ~FormattedWord() = default;
 
     void draw_to(const Sp<sf::RenderTarget>& window);
@@ -22,10 +22,12 @@ public:
     void set_position(sf::Vector2f position);
     sf::FloatRect get_rect();
     void move_vertical(float distance);
-
-private:
-
-    void format();
+    
+    private:
+    void apply_format_to_text(sd::Format format);
+    void apply_bb_to_format(sd::Format& format);
+    
+    bool is_bb();
 };
 
 

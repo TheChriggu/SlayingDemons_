@@ -4,7 +4,7 @@
 
 #include "FightStartedEventArgs.h"
 
-sd::FightStartedEventArgs::FightStartedEventArgs(Fight* _fight) {
+sd::FightStartedEventArgs::FightStartedEventArgs(const Sp<Fight>& fight) {
     this->type = EventArgs::Type::FIGHT_STARTED;
-    this->fight = _fight;
+    this->fight = fight;
 }

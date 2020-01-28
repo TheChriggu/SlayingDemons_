@@ -14,7 +14,7 @@
 sd::InputTextProcessor::InputTextProcessor() : Subscriber() {
     playerState = Sp<PlayerState>(new PlayerState());
     std::cout << "~InputTextProcessor Constructor~" << std::endl;
-    EventSystem::Get().Trigger(Sp<PlayerStateCreatedEventArgs>(new PlayerStateCreatedEventArgs(playerState)));
+    EventSystem::get().trigger(Sp<PlayerStateCreatedEventArgs>(new PlayerStateCreatedEventArgs(playerState)));
 }
 
 void sd::InputTextProcessor::ProcessInput(sf::String spell) {
@@ -53,7 +53,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
             {
                 std::shared_ptr<LineToOutputEventArgs> args;
                 args = std::make_shared<LineToOutputEventArgs>("could not find object in room.");
-                EventSystem::Get().Trigger(args);
+                EventSystem::get().trigger(args);
             }
         }
 
@@ -65,7 +65,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
 
             std::shared_ptr<NewWordCollectedEventArgs> args;
             args = std::make_shared<NewWordCollectedEventArgs>(NewWordCollectedEventArgs(words[1]));
-            EventSystem::Get().Trigger(args);
+            EventSystem::get().trigger(args);
         }
             //*for(auto word : words)
             //*{
@@ -81,11 +81,11 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
             //check if fight spell
             std::cout << "fight not nullptr\n";
             std::cout << "making turn\n";
-            if(Vocabulary::all_words->Contains(words[0]) && Vocabulary::all_words->Contains(words[1]))
+            if(Vocabulary::all_words->contains(words[0]) && Vocabulary::all_words->contains(words[1]))
             {
-                Word* word1 = Vocabulary::all_words->Get(words[0]);
-                Word* word2 = Vocabulary::all_words->Get(words[1]);
-                if(word1->GetType() == sd::Word::type::modifier && word2->GetType() == sd::Word::type::action)
+                auto word_1 = Vocabulary::all_words->get(words[0]);
+                auto word_2 = Vocabulary::all_words->get(words[1]);
+                if(word_1->get_type() == sd::Word::Type::MODIFIER && word_2->get_type() == sd::Word::Type::ACTION)
                 //make turn in fight
                     playerState->get_fight ()->full_turn (words[1], words[0]);
 

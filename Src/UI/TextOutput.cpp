@@ -41,7 +41,7 @@ bool sd::TextOutput::setup() {
         max_size_));
 
     // Trigger TextOutput Created Event
-    EventSystem::Get().Trigger(std::make_shared<TextOutputCreatedEventArgs>(Sp<TextOutput>(this)));
+    EventSystem::get().trigger(std::make_shared<TextOutputCreatedEventArgs>(Sp<TextOutput>(this)));
 
     return DrawableObject::setup ();
 }

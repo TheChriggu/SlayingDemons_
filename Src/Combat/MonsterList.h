@@ -2,28 +2,29 @@
 // Created by christian.heusser on 15.01.2020.
 //
 
-#ifndef SLAYINGDEMONS_MONSTERLIST_H
-#define SLAYINGDEMONS_MONSTERLIST_H
+#ifndef _MONSTERLIST_H_
+#define _MONSTERLIST_H_
+
 #include <map>
 #include "Monster.h"
 #include "../IO/FileInput.h"
 
 namespace sd {
     class MonsterList {
-        static sd::MonsterList* instance;
-        std::map<std::string, Monster*> monsters;
+        static Sp<sd::MonsterList> instance_;
+        std::map<std::string, Sp<Monster>> monsters_;
 
     public:
         MonsterList();
         ~MonsterList() = default;
 
-        static MonsterList* Get();
-        Monster* GetMonster(std::string name);
+        static Sp<MonsterList> get();
+        Sp<Monster> get_monster(const std::string& name);
 
-        std::vector<std::string> SplitBySlash(std::string string);
+        static std::vector<std::string> split_by_slash(std::string string);
 
     };
 }
 
 
-#endif //SLAYINGDEMONS_MONSTERLIST_H
+#endif //_MONSTERLIST_H_

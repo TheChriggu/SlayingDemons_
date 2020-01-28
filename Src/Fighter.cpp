@@ -14,23 +14,23 @@ sd::Fighter::Fighter() {
     //TODO: Load stat values from file or something like that. Buffs should probably be 0
     Stats stats1 = {1,1,1,1,1,1,1,1};
     Stats stats2 = {8,7,6,5,4,3,2,1};
-    StatwiseOperation ops1 = {StatwiseOperation::OperationType::Add
-                              , StatwiseOperation::OperationType::Add
-                              ,StatwiseOperation::OperationType::Add
-                              ,StatwiseOperation::OperationType::Add
-                              ,StatwiseOperation::OperationType::Add
-                              ,StatwiseOperation::OperationType::Add
-                              ,StatwiseOperation::OperationType::Add
-                              ,StatwiseOperation::OperationType::Add
+    StatwiseOperation ops1 = {StatwiseOperation::OperationType::ADD
+                              , StatwiseOperation::OperationType::ADD
+                              ,StatwiseOperation::OperationType::ADD
+                              ,StatwiseOperation::OperationType::ADD
+                              ,StatwiseOperation::OperationType::ADD
+                              ,StatwiseOperation::OperationType::ADD
+                              ,StatwiseOperation::OperationType::ADD
+                              ,StatwiseOperation::OperationType::ADD
     };
-    StatwiseOperation ops2 = {StatwiseOperation::OperationType::Mult
-                                , StatwiseOperation::OperationType::Mult
-                                ,StatwiseOperation::OperationType::Mult
-                                ,StatwiseOperation::OperationType::Mult
-                                ,StatwiseOperation::OperationType::Mult
-                                ,StatwiseOperation::OperationType::Mult
-                                ,StatwiseOperation::OperationType::Mult
-                                ,StatwiseOperation::OperationType::Mult
+    StatwiseOperation ops2 = {StatwiseOperation::OperationType::MULT
+                                , StatwiseOperation::OperationType::MULT
+                                ,StatwiseOperation::OperationType::MULT
+                                ,StatwiseOperation::OperationType::MULT
+                                ,StatwiseOperation::OperationType::MULT
+                                ,StatwiseOperation::OperationType::MULT
+                                ,StatwiseOperation::OperationType::MULT
+                                ,StatwiseOperation::OperationType::MULT
     };
 
 
@@ -73,13 +73,13 @@ void sd::Fighter::SetBuffs(sd::Stats offense, sd::Stats defense) {
 }
 
 void sd::Fighter::ChangeBaseStats(Stats offense, StatwiseOperation offenseOps, Stats defense, StatwiseOperation defenseOps) {
-    *offensiveStats = offenseOps.Operate(*offensiveStats, offense);
-    *defensiveStats = defenseOps.Operate(*defensiveStats, defense);
+    *offensiveStats = offenseOps.operate(*offensiveStats, offense);
+    *defensiveStats = defenseOps.operate(*defensiveStats, defense);
 }
 
 void sd::Fighter::ChangeBuffs(sd::Stats offense, sd::StatwiseOperation offenseOps, sd::Stats defense,sd::StatwiseOperation defenseOps) {
-    *offensiveBuffs = offenseOps.Operate(*offensiveBuffs, offense);
-    *defensiveBuffs = defenseOps.Operate(*defensiveBuffs, defense);
+    *offensiveBuffs = offenseOps.operate(*offensiveBuffs, offense);
+    *defensiveBuffs = defenseOps.operate(*defensiveBuffs, defense);
 }
 
 void sd::Fighter::PrintToConsole() {

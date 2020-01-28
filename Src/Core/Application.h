@@ -43,8 +43,6 @@ namespace sd {
         bool setup() override;
         bool run();
         void shutdown() override;
-
-        void clear();
         
         bool setup_window();
         bool setup_scene();

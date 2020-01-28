@@ -4,24 +4,18 @@
 
 #include "Vocabulary.h"
 
-sd::Vocabulary::Vocabulary() {
+Sp<sd::Vocabulary> sd::Vocabulary::all_words = nullptr;
 
+bool sd::Vocabulary::contains(const std::string& word) {
+    return words_.find(word) != words_.end();
 }
 
-sd::Vocabulary::~Vocabulary() {
-
+Sp<sd::Word> sd::Vocabulary::get(const std::string& word) {
+    return words_.at(word);
 }
 
-bool sd::Vocabulary::Contains(sf::String word) {
-    return words.find(word) != words.end();
-}
-
-sd::Word *sd::Vocabulary::Get(sf::String word) {
-    return words.at(word);
-}
-
-void sd::Vocabulary::Add(sf::String word, sd::Word* value) {
-    words.insert({word, value});
+void sd::Vocabulary::add(const std::string& word, const Sp<sd::Word>& value) {
+    words_.insert({word, value});
 }
 
 

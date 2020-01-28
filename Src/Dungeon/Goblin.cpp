@@ -19,18 +19,18 @@ void sd::Goblin::be_interacted_with() {
     {
         std::shared_ptr<LineToOutputEventArgs> line_args;
         line_args = std::make_shared<LineToOutputEventArgs>("You attack the Goblin.");
-        EventSystem::Get().Trigger(line_args);
+        EventSystem::get().trigger(line_args);
 
         std::shared_ptr<EventArgs> args;
         args = std::make_shared<EventArgs>(EventArgs());
         args->type = sd::EventArgs::Type::START_FIGHT_WITH_GOBLIN;
-        EventSystem::Get().Trigger(args);
+        EventSystem::get().trigger(args);
     }
     else
     {
         std::shared_ptr<LineToOutputEventArgs> args;
         args = std::make_shared<LineToOutputEventArgs>("You're not powerful enough to fight that enemy_ yet.");
-        EventSystem::Get().Trigger(args);
+        EventSystem::get().trigger(args);
     }
 }
 

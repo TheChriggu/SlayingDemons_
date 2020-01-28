@@ -2,28 +2,29 @@
 // Created by christian.heusser on 28.11.2019.
 //
 
-#ifndef SLAYINGDEMONS_VOCABULARY_H
-#define SLAYINGDEMONS_VOCABULARY_H
+#ifndef _VOCABULARY_H_
+#define _VOCABULARY_H_
 
 #include <map>
+#include "Core/GlobalDefinitions.h"
 #include "SFML/Graphics.hpp"
 #include "Word.h"
 
 namespace sd {
     class Vocabulary {
     private:
-        std::map<sf::String, Word*> words;
+        std::map<sf::String, Sp<Word>> words_;
 
     public:
-        Vocabulary();
-        ~Vocabulary();
+        Vocabulary() = default;
+        virtual ~Vocabulary() = default;
 
-        bool Contains(sf::String word);
-        Word* Get(sf::String word);
-        void Add(sf::String word, Word* );
+        bool contains(const std::string& word);
+        Sp<Word> get(const std::string& word);
+        void add(const std::string& word, const Sp<Word>& value);
 
-        static Vocabulary* all_words;
+        static Sp<Vocabulary> all_words;
     };
 }
 
-#endif //SLAYINGDEMONS_VOCABULARY_H
+#endif //_VOCABULARY_H_

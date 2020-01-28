@@ -2,8 +2,8 @@
 // Created by christian.heusser on 06.01.2020.
 //
 
-#ifndef SLAYINGDEMONS_STATS_H
-#define SLAYINGDEMONS_STATS_H
+#ifndef _STATS_H_
+#define _STATS_H_
 #include <iostream>
 
 namespace sd {
@@ -32,10 +32,10 @@ namespace sd {
             SingleStatType type;
         };
 
-        Stats();
+        Stats() = default;
         Stats(float speed, float accuracy, float physical, float mental, float fire, float water, float tree
                 , float earth);
-        ~Stats();
+        virtual ~Stats() = default;
 
         Stats operator+(const Stats &other);
         Stats operator-(const Stats &other);
@@ -49,4 +49,4 @@ namespace sd {
     };
 }
 
-#endif //SLAYINGDEMONS_STATS_H
+#endif //_STATS_H_

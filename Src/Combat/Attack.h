@@ -2,8 +2,9 @@
 // Created by christian.heusser on 03.12.2019.
 //
 
-#ifndef SLAYINGDEMONS_ATTACK_H
-#define SLAYINGDEMONS_ATTACK_H
+#ifndef _ATTACK_H_
+#define _ATTACK_H_
+
 #include "Fighter.h"
 #include "Modifier.h"
 #include "Action.h"
@@ -12,23 +13,23 @@ namespace sd
 {
     class Attack {
     private:
-        Fighter* fighter;
-        Modifier* modifier;
-        Action* action;
+        Sp<Fighter> fighter_;
+        Sp<Modifier> modifier_;
+        Sp<Action> action_;
 
 
     public:
-        Attack(Fighter* _fighter, Modifier* _modifier, Action* _action);
-        ~Attack();
+        Attack(Sp<Fighter> fighter, const Sp<Modifier>& modifier, const Sp<Action>& action);
+        virtual ~Attack() = default;
 
-        Stats GetStats();
+        Stats get_stats();
 
-        std::string GetSentenceSecondPerson();
-        std::string GetSentenceThirdPerson();
+        std::string get_sentence_second_person();
+        std::string get_sentence_third_person();
 
     };
 }
 
 
 
-#endif //SLAYINGDEMONS_ATTACK_H
+#endif //_ATTACK_H_

@@ -49,15 +49,15 @@ void sd::PlayerState::set_room_as_current(Sp<sd::Room> room) {
 
 
 void sd::PlayerState::start_new_fight(std::string enemy_name) {
-    auto list = MonsterList::Get();
-    Monster* goblin = list->GetMonster(std::move(enemy_name));
+    auto list = MonsterList::get();
+    auto goblin = list->get_monster(enemy_name);
     //start_new_fight(Sp<Monster>(goblin));
     
-    fight_ = std::make_shared<Fight>(player_.get(), goblin);
+    fight_ = std::make_shared<Fight>(player_, goblin);
 
     std::shared_ptr<FightStartedEventArgs> args;
-    args = std::make_shared<FightStartedEventArgs>(FightStartedEventArgs(fight_.get()));
-    EventSystem::Get().Trigger(args);
+    args = std::make_shared<FightStartedEventArgs>(fight_);
+    EventSystem::get().trigger(args);
 
 }
 
@@ -72,14 +72,14 @@ void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
 
         std::shared_ptr<LineToOutputEventArgs> args;
         args = std::make_shared<LineToOutputEventArgs>(get_current_room()->get_enter_description());
-        EventSystem::Get().Trigger(args);
+        EventSystem::get().trigger(args);
     }
 
     if (e->type == EventArgs::Type::START_FIGHT_WITH_GOBLIN) {
 
         std::shared_ptr<LineToOutputEventArgs> args;
         args = std::make_shared<LineToOutputEventArgs>("Starting Fight.");
-        EventSystem::Get().Trigger(args);
+        EventSystem::get().trigger(args);
         
         //Monster* goblin = new Monster("../Resources/Sprites/glitchy_goblin_red.png");
 
@@ -93,7 +93,7 @@ void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
         std::shared_ptr<EventArgs> args;
         args = std::make_shared<EventArgs>(EventArgs());
         args->type = sd::EventArgs::Type::FIGHT_ENDED;
-        EventSystem::Get().Trigger(args);
+        EventSystem::get().trigger(args);
     }
 
 }

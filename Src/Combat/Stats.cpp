@@ -4,13 +4,6 @@
 
 #include "Stats.h"
 
-sd::Stats::Stats() {
-
-}
-
-sd::Stats::~Stats() {
-
-}
 
 sd::Stats sd::Stats::operator+(const sd::Stats &other) {
     sd::Stats res;

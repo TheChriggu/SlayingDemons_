@@ -5,7 +5,6 @@
 #include <ScriptEngine/ScriptEngine.h>
 #include "Floor.h"
 #include "Goblin.h"
-#include "LastRoom.h"
 
 sd::Floor::Floor() : start_room_(nullptr) {
     /*

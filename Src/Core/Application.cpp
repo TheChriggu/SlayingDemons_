@@ -11,7 +11,6 @@
 #include <Combat/MonsterList.h>
 #include <memory>
 
-sd::Vocabulary *sd::Vocabulary::all_words = nullptr;
 
 bool sd::Application::setup()
 {
@@ -104,28 +103,22 @@ bool sd::Application::run()
     
 }
 
-void sd::Application::clear()
-{
-    //textOutput->toggleGlitch();
-    //text->setString("");
-}
-
 void sd::Application::load_vocab()
 {
     
-    Vocabulary *vocab = new Vocabulary();
+    auto vocab = std::make_shared<Vocabulary>();
     
     auto table = FileInput::load_csv("../Resources/Tables/Actions.csv");
     for (auto line : *table)
     {
         if (line[0] != "Name")
         {
-            Action *action = new Action();
-            action->SetName(line[0]);
-            action->SetStats({stof(line[1]), stof(line[2]), stof(line[3]), stof(line[4]), stof(line[5]),
-                                 stof(line[6]), stof(line[7]), stof(line[8])});
-            
-            vocab->Add(line[0], action);
+            auto action = std::make_shared<Action>();
+            action->set_name(line[0]);
+            action->set_stats({stof(line[1]), stof(line[2]), stof(line[3]), stof(line[4]), stof(line[5]),
+                                  stof(line[6]), stof(line[7]), stof(line[8])});
+    
+            vocab->add(line[0], action);
         }
     }
     
@@ -134,29 +127,29 @@ void sd::Application::load_vocab()
     {
         if (line[0] != "Name")
         {
-            Modifier *modifier = new Modifier();
-            modifier->SetName(line[0]);
+            auto modifier = std::make_shared<Modifier>();
+            modifier->set_name(line[0]);
             Stats stats = {stof(line[2]), stof(line[4]), stof(line[6]), stof(line[8]), stof(line[10]),
                 stof(line[12]), stof(line[14]), stof(line[16])};
-            StatwiseOperation statOps;
-            statOps.speed = statOps.FromString(line[1]);
-            statOps.accuracy = statOps.FromString(line[3]);
-            statOps.physical = statOps.FromString(line[5]);
-            statOps.mental = statOps.FromString(line[7]);
-            statOps.fire = statOps.FromString(line[9]);
-            statOps.water = statOps.FromString(line[11]);
-            statOps.tree = statOps.FromString(line[13]);
-            statOps.earth = statOps.FromString(line[15]);
-            
-            modifier->SetStats(stats, statOps);
-            vocab->Add(line[0], modifier);
+            StatwiseOperation stat_ops;
+            stat_ops.speed = stat_ops.from_string(line[1]);
+            stat_ops.accuracy = stat_ops.from_string(line[3]);
+            stat_ops.physical = stat_ops.from_string(line[5]);
+            stat_ops.mental = stat_ops.from_string(line[7]);
+            stat_ops.fire = stat_ops.from_string(line[9]);
+            stat_ops.water = stat_ops.from_string(line[11]);
+            stat_ops.tree = stat_ops.from_string(line[13]);
+            stat_ops.earth = stat_ops.from_string(line[15]);
+    
+            modifier->set_stats(stats, stat_ops);
+            vocab->add(line[0], modifier);
         }
     }
     
-    Word *walkTo = new Word();
-    Word *jumpOver = new Word();
-    vocab->Add("walk to", walkTo);
-    vocab->Add("jump over", jumpOver);
+    auto walk_to = std::make_shared<Word>();
+    auto jump_over = std::make_shared<Word>();
+    vocab->add("walk to", walk_to);
+    vocab->add("jump over", jump_over);
     
     Vocabulary::all_words = vocab;
 }
@@ -165,6 +158,7 @@ void sd::Application::shutdown()
 {
 
 }
+
 bool sd::Application::setup_window()
 {
     auto config = ScriptEngine::Get()->get_script("config");

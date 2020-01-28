@@ -4,7 +4,7 @@
 
 #include "LineToOutputEventArgs.h"
 
-sd::LineToOutputEventArgs::LineToOutputEventArgs(std::string _line) {
+sd::LineToOutputEventArgs::LineToOutputEventArgs(const std::string& line)
+    : line(line) {
     this->type = EventArgs::Type::LINE_TO_OUTPUT;
-    this->line = _line;
 }

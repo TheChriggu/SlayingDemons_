@@ -5,39 +5,35 @@
 #include "Modifier.h"
 
 sd::Modifier::Modifier() {
-    stats = new Stats();
-    statwiseOperation = new StatwiseOperation();
-
-    SetStats({0,0,0,0,0,0,0,0}
-    ,{StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add,StatwiseOperation::Add});
+    stats_ = std::make_shared<Stats>();
+    statwise_operation_ = std::make_shared<StatwiseOperation>();
+    
+    set_stats({0, 0, 0, 0, 0, 0, 0, 0}, {StatwiseOperation::ADD, StatwiseOperation::ADD, StatwiseOperation::ADD,
+        StatwiseOperation::ADD, StatwiseOperation::ADD, StatwiseOperation::ADD, StatwiseOperation::ADD,
+        StatwiseOperation::ADD});
 }
 
-sd::Modifier::~Modifier() {
-
-}
-
-void sd::Modifier::LoadFrom(sf::String source) {
+void sd::Modifier::load_from(std::string source) {
 
 }
 
-void sd::Modifier::SetStats(sd::Stats _stats, sd::StatwiseOperation _statwiseOperation) {
-    *stats = _stats;
-    *statwiseOperation = _statwiseOperation;
+void sd::Modifier::set_stats(sd::Stats stats, sd::StatwiseOperation statwise_operation) {
+    *stats_ = stats;
+    *statwise_operation_ = statwise_operation;
 }
 
-sd::Stats sd::Modifier::ApplyTo(sd::Stats *_stats) {
-    Stats retVal = statwiseOperation->Operate(*_stats, *stats);
-    return retVal;
+sd::Stats sd::Modifier::apply_to(const Sp<sd::Stats>& stats) {
+    return statwise_operation_->operate(*stats, *stats_);;
 }
 
-void sd::Modifier::SetName(sf::String _name) {
-    name = _name;
+void sd::Modifier::set_name(const std::string& name) {
+    name_ = name;
 }
 
-sf::String sd::Modifier::GetName() {
-    return name;
+std::string sd::Modifier::get_name() {
+    return name_;
 }
 
-sd::Word::type sd::Modifier::GetType() {
-    return modifier;
+sd::Word::Type sd::Modifier::get_type() {
+    return MODIFIER;
 }

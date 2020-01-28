@@ -2,8 +2,8 @@
 // Created by felix on 07.01.20.
 //
 
-#ifndef SLAYINGDEMONS_EVENTSYSTEM_H
-#define SLAYINGDEMONS_EVENTSYSTEM_H
+#ifndef _EVENTSYSTEM_H_
+#define _EVENTSYSTEM_H_
 
 #include <memory>
 #include <vector>
@@ -12,23 +12,23 @@
 
 namespace sd {
     class EventSystem {
-        static std::unique_ptr<sd::EventSystem> instance;
+        static Up<sd::EventSystem> instance_;
 
     public:
-        static EventSystem& Get();
+        static EventSystem& get();
 
         EventSystem();
         virtual ~EventSystem() = default;
         EventSystem(const EventSystem&) = delete;
         void operator=(const EventSystem&) = delete;
 
-        void Subscribe(std::shared_ptr<Subscriber> newSubscriber);
-        void Trigger(std::shared_ptr<EventArgs> e) const;
+        void subscribe(const Sp<Subscriber>& new_subscriber);
+        void trigger(const Sp<EventArgs>& e) const;
 
     private:
-        std::vector<std::shared_ptr<Subscriber>> subscriber_;
+        std::vector<Sp<Subscriber>> subscriber_;
     };
 }
 
 
-#endif //SLAYINGDEMONS_EVENTSYSTEM_H
+#endif //_EVENTSYSTEM_H_

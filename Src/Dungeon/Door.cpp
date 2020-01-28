@@ -26,7 +26,7 @@ const std::string& sd::Door::get_connected_room() const {
     return next_room_;
 }
 
-void sd::Door::put_on_layout(int *layout, int width, int height) {
+void sd::Door::put_on_layout(std::vector<int>& layout, int width, int height) {
     //TODO: make sure position is within width & height
     SingleTileObject::put_on_layout(layout, width, height);
 }

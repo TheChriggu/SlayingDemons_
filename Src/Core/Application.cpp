@@ -16,20 +16,19 @@ bool sd::Application::setup()
 {
     bool result = false;
     
-    event_system_ = std::make_shared<EventSystem>();
+    new EventSystem();
+    new ScriptEngine();
     
     std::cout << "Initialize Script Engine" << std::endl;
     
-    auto script_engine = new ScriptEngine();
-    
     // Add Config file to engine
-    script_engine->add_script("../Resources/config.lua");
+    ScriptEngine::get().add_script("../Resources/config.lua");
     // Add other scripts
     // TODO(FK): find out why Game crashes when tmp test var is not used
     auto files = FileInput::get_files("../Resources/Scripts/");
     for (const auto &file : *files)
     {
-        script_engine->add_script(file);
+        ScriptEngine::get().add_script(file);
     }
     
     result = setup_window();
@@ -161,7 +160,7 @@ void sd::Application::shutdown()
 
 bool sd::Application::setup_window()
 {
-    auto config = ScriptEngine::Get()->get_script("config");
+    auto config = ScriptEngine::get().get_script("config");
     if (!config) return false;
     
     auto window_info = config->get_table("window");

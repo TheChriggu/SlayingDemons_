@@ -42,7 +42,7 @@ bool sd::Floor::setup()
 {
     int counter = 0;
     
-    auto d = ScriptEngine::Get()->get_script("dungeon")->get_table("dungeon");
+    auto d = ScriptEngine::get().get_script("dungeon")->get_table("dungeon");
     if (!d) return false;
     sol::lua_table floor = d.value()["floor1"];
     

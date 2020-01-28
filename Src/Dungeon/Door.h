@@ -21,7 +21,7 @@ namespace sd {
             std::string next_room, sol::function on_interaction);
         ~Door() override = default;
 
-        void put_on_layout(int* layout, int width, int height) override;
+        void put_on_layout(std::vector<int>& layout, int width, int height) override;
         std::string get_name() override;
         void be_interacted_with() override;
 

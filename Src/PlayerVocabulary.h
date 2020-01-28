@@ -12,28 +12,27 @@
 namespace sd {
     class PlayerVocabulary : public Subscriber{
     private:
-        std::vector<std::string> *actions_;
-        std::vector<std::string> *modifiers_;
-        std::vector<std::string> *navigation_;
+        std::vector<std::string> actions_;
+        std::vector<std::string> modifiers_;
+        std::vector<std::string> navigation_;
 
     public:
         PlayerVocabulary();
+        ~PlayerVocabulary() override = default;
 
-        ~PlayerVocabulary() override;
+        bool has_word(const std::string& word);
 
-        bool has_word(std::string word);
+        void add_action(const std::string& action);
 
-        void add_action(std::string action);
+        void add_modifier(const std::string& modifier);
 
-        void add_modifier(std::string modifier);
+        void add_navigation(const std::string& word);
 
-        void add_navigation(std::string word);
+        std::vector<std::string>& get_actions();
 
-        std::vector<std::string> *get_actions();
+        std::vector<std::string>& get_modifiers();
 
-        std::vector<std::string> *GetModifiers();
-
-        std::vector<std::string> *GetNavigation();
+        std::vector<std::string>& get_navigation();
 
         void handle(std::shared_ptr<EventArgs> e) override;
     };

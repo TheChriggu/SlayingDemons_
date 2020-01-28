@@ -18,7 +18,7 @@ sd::Attack::Attack(Sp<sd::Fighter> fighter, const Sp<sd::Modifier>& modifier, co
 
 sd::Stats sd::Attack::get_stats() {
     Stats ret_val = modifier_->apply_to(action_->get_stats());
-    ret_val = (fighter_->GetOffense()) * ret_val;
+    ret_val = (fighter_->get_offense()) * ret_val;
     return ret_val;
 }
 

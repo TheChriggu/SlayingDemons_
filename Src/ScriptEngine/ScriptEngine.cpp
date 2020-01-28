@@ -7,24 +7,13 @@
 #include <memory>
 
 sd::ScriptEngine::ScriptEngine() {
-    if (!instance_) instance_ = this;
-    /*scripts_.emplace_back(
-            Script(R"(
-                    function test()
-                        print("Test")
-                     end
-            )"),
-            Script(R"(
-                    function blub()
-                        print("blub")
-                     end
-            )")
-    );*/
+    if (!instance_)
+        instance_ = Up<ScriptEngine>(this);
 }
 
-sd::ScriptEngine *sd::ScriptEngine::Get() {
+sd::ScriptEngine& sd::ScriptEngine::get() {
 
-    return instance_;
+    return *instance_;
 }
 
 
@@ -75,6 +64,6 @@ std::shared_ptr<Script> sd::ScriptEngine::get_script(const std::string& name) co
     return true;
 }*/
 
-sd::ScriptEngine* sd::ScriptEngine::instance_ = nullptr;
+Up<sd::ScriptEngine> sd::ScriptEngine::instance_ = nullptr;
 
 

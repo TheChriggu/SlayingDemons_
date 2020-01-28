@@ -10,7 +10,7 @@ sd::Room::Room(std::string name)
     name_ = std::move(name);
     enemy_ = nullptr;
     //tilemap = new Tilemap(11,7,position,sf::Vector2u(64,64));
-    layout_ = new int[77]{
+    layout_ = {
             0,1,1,1,1,1,1,1,1,1,2,
             8,9,9,9,9,9,9,9,9,9,10,
             8,9,9,9,9,9,9,9,9,9,10,
@@ -49,7 +49,7 @@ void sd::Room::add_object(const Sp<sd::RoomObject>& object) {
     room_objects_.emplace_back(object);
 }
 
-int *sd::Room::get_layout() {
+std::vector<int>& sd::Room::get_layout() {
     return layout_;
 }
 

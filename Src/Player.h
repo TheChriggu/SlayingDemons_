@@ -2,8 +2,8 @@
 // Created by christian.heusser on 28.11.2019.
 //
 
-#ifndef SLAYINGDEMONS_PLAYER_H
-#define SLAYINGDEMONS_PLAYER_H
+#ifndef _PLAYER_H_
+#define _PLAYER_H_
 
 #include "Vocabulary.h"
 #include "Fighter.h"
@@ -16,14 +16,14 @@ namespace sd {
         //std::vector<sf::String>* world;
 
     public:
-        Player();
-        ~Player();
+        Player() = default;
+        ~Player() override = default;
 
-        bool HasWord(sf::String word);
-        void AddAction(sf::String action);
-        void AddModifier(sf::String modifier);
-        void AddWorld(sf::String word);
+        bool has_word(std::string word);
+        void add_action(std::string action);
+        void add_modifier(std::string modifier);
+        void add_world(std::string word);
     };
 }
 
-#endif //SLAYINGDEMONS_PLAYER_H
+#endif //_PLAYER_H_

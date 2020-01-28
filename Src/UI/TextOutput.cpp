@@ -24,7 +24,7 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
 }
 
 bool sd::TextOutput::setup() {
-  ScriptEngine::Get ()->register_all ("print_line", &TextOutput::print_line, this);
+  ScriptEngine::get().register_all ("print_line", &TextOutput::print_line, this);
 
     font_ = std::make_shared<sf::Font>();
 
@@ -61,7 +61,7 @@ void sd::TextOutput::draw_to(Sp<sf::RenderTarget> window) const {
 
 void sd::TextOutput::add_line(const sf::String& string) {
 
-    auto newLine = std::make_shared<FormattedLine>(
+    auto new_line = std::make_shared<FormattedLine>(
         string, sf::Vector2f(
             lines_.back ()->get_rect ().left,
             lines_.back ()->get_rect ().top + lines_.back ()->get_rect ().height),
@@ -70,7 +70,7 @@ void sd::TextOutput::add_line(const sf::String& string) {
     );
 
     //format line
-    lines_.push_back(newLine);
+    lines_.push_back(new_line);
     while(get_size ().y > max_size_.y)
     {
         float distance = lines_.front ()->get_rect ().height;
@@ -95,22 +95,22 @@ sf::Vector2f sd::TextOutput::get_position() {
 }
 
 sf::Vector2f sd::TextOutput::get_size() {
-    sf::Vector2f retVal;
-    retVal.x = 0;
-    retVal.y = 0;
+    sf::Vector2f ret_val;
+    ret_val.x = 0;
+    ret_val.y = 0;
 
     for (const auto& line : lines_)
     {
         sf::FloatRect rect = line->get_rect ();
-        if (rect.width > retVal.x)
+        if (rect.width > ret_val.x)
         {
-            retVal.x = rect.width;
+            ret_val.x = rect.width;
         }
 
-        retVal.y += rect.height;
+        ret_val.y += rect.height;
     }
 
-    return retVal;
+    return ret_val;
 }
 
 void sd::TextOutput::move_vertical(float distance) {

@@ -18,8 +18,8 @@ namespace sd {
         Sp<sf::Sprite> background_sprite_;
         sf::Vector2f position_;
         sf::Vector2f size_;
-        sf::Texture* monsterPortraitTexture;
-        sf::Sprite* monsterPortraitSprite;
+        Sp<sf::Texture> monster_portrait_texture_;
+        Sp<sf::Sprite> monster_portrait_sprite_;
 
         Sp<Tilemap> current_tile_map_;
         Sp<PlayerState> player_state_;

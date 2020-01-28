@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <vector>
+#include <Core/GlobalDefinitions.h>
 #include "sol/sol.hpp"
 #include "boost/filesystem.hpp"
 #include "Script.h"
@@ -14,7 +15,7 @@
 namespace sd {
     class ScriptEngine {
 
-        static sd::ScriptEngine* instance_;
+        static Up<sd::ScriptEngine> instance_;
 
         std::vector<std::shared_ptr<Script>> scripts_;
 
@@ -24,7 +25,7 @@ namespace sd {
         ScriptEngine();
         virtual ~ScriptEngine() = default;
 
-        static ScriptEngine* Get();
+        static ScriptEngine& get();
 
         void add_script(const boost::filesystem::path& url);
 

@@ -28,8 +28,8 @@ namespace sd {
 
         bool setup() override;
 
-        void add_line(const sf::String& string);
-        void print_line(const std::string& string);
+        void add_line(std::string string);
+        void print_line(std::string string);
 
         void draw_to(Sp<sf::RenderTarget> window) const override;
         sf::Vector2f get_position() override;

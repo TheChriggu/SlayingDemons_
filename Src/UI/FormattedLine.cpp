@@ -6,7 +6,7 @@
 #include <memory>
 
 
-FormattedLine::FormattedLine(const sf::String& string, sf::Vector2f position, const Sp<sf::Font>& font, sf::Vector2f max_size) {
+FormattedLine::FormattedLine(std::string string, sf::Vector2f position, const Sp<sf::Font>& font, sf::Vector2f max_size) {
     sd::Format format;
     format.style_ = sf::Text::Italic;
     format.size_ = 25;
@@ -18,8 +18,7 @@ FormattedLine::FormattedLine(const sf::String& string, sf::Vector2f position, co
     position_ = position;
     max_size_ = max_size;
     words_.push_back(std::make_shared<FormattedWord>("", position, format));
-  format_line (string, font);
-
+    format_line (string, font);
 }
 
 void FormattedLine::draw_to(const Sp<sf::RenderTarget>& window) {
@@ -28,7 +27,7 @@ void FormattedLine::draw_to(const Sp<sf::RenderTarget>& window) {
     }
 }
 
-void FormattedLine::format_line(sf::String string, const Sp<sf::Font> &font) {
+void FormattedLine::format_line(std::string string, const Sp<sf::Font> &font) {
     /*std::vector<std::string> splitVec;
     std::string delims = " []";
     boost::split(splitVec, string, boost::algorithm::is_any_of(delims));*/

@@ -21,9 +21,9 @@ class FormattedLine {
     sf::Vector2f max_size_;
 
 public:
-    FormattedLine(const sf::String& string, sf::Vector2f position, const Sp<sf::Font>& font, sf::Vector2f max_size);
+    FormattedLine(std::string string, sf::Vector2f position, const Sp<sf::Font>& font, sf::Vector2f max_size);
     virtual ~FormattedLine() = default;
-    void format_line(sf::String string, const Sp<sf::Font> &font);
+    void format_line(std::string string, const Sp<sf::Font> &font);
 
     void draw_to(const Sp<sf::RenderTarget>& window);
 

@@ -24,7 +24,7 @@ FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Format
     
     if(word != " ")
         {
-            text_->setString (word);
+            text_->setString (sf::String(word));
             apply_format_to_text (format);
         }
         
@@ -39,7 +39,7 @@ FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Format
     //add trailing spaces or punctuation if not included in word
     if(text.size() > 0 && word.size() > 0)
         {
-            text_->setString (text_->getString() + text);
+            text_->setString (text_->getString() + sf::String(text));
         }
 }
 

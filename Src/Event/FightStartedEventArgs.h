@@ -2,20 +2,22 @@
 // Created by christian.heusser on 15.01.2020.
 //
 
-#ifndef SLAYINGDEMONS_FIGHTSTARTEDEVENTARGS_H
-#define SLAYINGDEMONS_FIGHTSTARTEDEVENTARGS_H
+#ifndef _FIGHTSTARTEDEVENTARGS_H_
+#define _FIGHTSTARTEDEVENTARGS_H_
+
 #include "EventArgs.h"
-#include "../Combat/Fight.h"
+#include "Combat/Fight.h"
 
 
 namespace sd {
 class FightStartedEventArgs : public EventArgs {
 public:
-    explicit FightStartedEventArgs(Fight* _fight);
+    explicit FightStartedEventArgs(const Sp<Fight>& fight);
+    ~FightStartedEventArgs() override = default;
 
-    Fight* fight;
+    Sp<Fight> fight;
 };
 }
 
 
-#endif //SLAYINGDEMONS_FIGHTSTARTEDEVENTARGS_H
+#endif //_FIGHTSTARTEDEVENTARGS_H_

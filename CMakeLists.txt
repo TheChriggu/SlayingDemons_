@@ -107,8 +107,6 @@ add_executable(${PROJECT_NAME}
                Src/Event/LineToOutputEventArgs.h
                Src/Event/WalkedThroughDoorEventArgs.cpp
                Src/Event/WalkedThroughDoorEventArgs.h
-               Src/Dungeon/LastRoom.cpp
-               Src/Dungeon/LastRoom.h
                Src/Event/WalkedThroughDoorEventArgs.h
                Src/Dungeon/Goblin.cpp
                Src/Dungeon/Goblin.h

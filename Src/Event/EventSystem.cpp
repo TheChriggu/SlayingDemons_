@@ -5,21 +5,22 @@
 #include "EventSystem.h"
 
 sd::EventSystem::EventSystem() {
-    if (!instance) sd::EventSystem::instance = std::unique_ptr<EventSystem>(this);
+    if (!instance_)
+        sd::EventSystem::instance_ = std::unique_ptr<EventSystem>(this);
 }
 
-std::unique_ptr<sd::EventSystem> sd::EventSystem::instance = nullptr;
+std::unique_ptr<sd::EventSystem> sd::EventSystem::instance_ = nullptr;
 
-sd::EventSystem &sd::EventSystem::Get() {
-    return *instance;
+sd::EventSystem &sd::EventSystem::get() {
+    return *instance_;
 }
 
-void sd::EventSystem::Subscribe(std::shared_ptr<Subscriber> newSubscriber) {
-    subscriber_.emplace_back(newSubscriber);
+void sd::EventSystem::subscribe(const Sp<Subscriber>& new_subscriber) {
+    subscriber_.emplace_back(new_subscriber);
 }
 
-void sd::EventSystem::Trigger(std::shared_ptr<sd::EventArgs> e) const {
-    for (auto subscriber : subscriber_) {
+void sd::EventSystem::trigger(const Sp<sd::EventArgs>& e) const {
+    for (const auto& subscriber : subscriber_) {
         subscriber->handle (e);
     }
 }

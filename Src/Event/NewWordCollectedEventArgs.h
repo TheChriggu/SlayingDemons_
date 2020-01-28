@@ -2,18 +2,20 @@
 // Created by christian.heusser on 07.01.2020.
 //
 
-#ifndef SLAYINGDEMONS_NEWWORDCOLLECTEDEVENTARGS_H
-#define SLAYINGDEMONS_NEWWORDCOLLECTEDEVENTARGS_H
+#ifndef _NEWWORDCOLLECTEDEVENTARGS_H_
+#define _NEWWORDCOLLECTEDEVENTARGS_H_
+
 #include "EventArgs.h"
 #include <iostream>
 
 namespace sd {
     class NewWordCollectedEventArgs : public EventArgs{
     public:
-        explicit NewWordCollectedEventArgs(std::string _word);
+        explicit NewWordCollectedEventArgs(const std::string& word);
+        ~NewWordCollectedEventArgs() override = default;
 
-        std::string word;
+        const std::string& word;
     };
 }
 
-#endif //SLAYINGDEMONS_NEWWORDCOLLECTEDEVENTARGS_H
+#endif //_NEWWORDCOLLECTEDEVENTARGS_H_

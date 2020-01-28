@@ -2,8 +2,9 @@
 // Created by christian.heusser on 08.01.2020.
 //
 
-#ifndef SLAYINGDEMONS_LINETOOUTPUTEVENTARGS_H
-#define SLAYINGDEMONS_LINETOOUTPUTEVENTARGS_H
+#ifndef _LINETOOUTPUTEVENTARGS_H_
+#define _LINETOOUTPUTEVENTARGS_H_
+
 #include "EventArgs.h"
 #include <iostream>
 
@@ -11,10 +12,11 @@
 namespace sd {
     class LineToOutputEventArgs: public EventArgs {
     public:
-        explicit LineToOutputEventArgs(std::string _line);
+        explicit LineToOutputEventArgs(const std::string& line);
+        ~LineToOutputEventArgs() override = default;
 
-        std::string line;
+        const std::string& line;
     };
 }
 
-#endif //SLAYINGDEMONS_LINETOOUTPUTEVENTARGS_H
+#endif //_LINETOOUTPUTEVENTARGS_H_

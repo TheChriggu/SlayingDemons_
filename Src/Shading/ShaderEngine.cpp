@@ -13,11 +13,10 @@
 sd::ShaderEngine::ShaderEngine(std::vector<Sp<DrawableObject>>& drawable_objects)
     : drawable_objects_(drawable_objects)
     {
-    auto script_engine = ScriptEngine::Get();
 
-      script_engine->register_all ("set_weak_glitch_on", &ShaderEngine::set_weak_glitch_on, this);
-      script_engine->register_all ("set_glitch_on", &ShaderEngine::set_glitch_on, this);
-      script_engine->register_all ("cancel_all_procedures_on", &ShaderEngine::cancel_all_procedures_on, this);
+    ScriptEngine::get().register_all ("set_weak_glitch_on", &ShaderEngine::set_weak_glitch_on, this);
+    ScriptEngine::get().register_all ("set_glitch_on", &ShaderEngine::set_glitch_on, this);
+    ScriptEngine::get().register_all ("cancel_all_procedures_on", &ShaderEngine::cancel_all_procedures_on, this);
 }
 
 void sd::ShaderEngine::setup_all_shader() {

@@ -29,10 +29,8 @@ namespace sd {
 
         Sp<sf::RenderWindow> window_;
         std::vector<Sp<DrawableObject>> drawable_objects_;
-
+        
         Sp<ShaderEngine> shader_engine_;
-        Sp<EventSystem> event_system_;
-        Sp<ScriptEngine> script_system_;
 
         void load_vocab();
 
@@ -43,8 +41,6 @@ namespace sd {
         bool setup() override;
         bool run();
         void shutdown() override;
-
-        void clear();
         
         bool setup_window();
         bool setup_scene();

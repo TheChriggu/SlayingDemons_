@@ -4,61 +4,59 @@
 
 #include "MonsterList.h"
 
-sd::MonsterList* sd::MonsterList::instance = nullptr;
+Sp<sd::MonsterList> sd::MonsterList::instance_ = nullptr;
 
 sd::MonsterList::MonsterList() {
-    if (!instance)
+    if (!instance_)
     {
-        instance = this;
+        instance_ = Sp<MonsterList>(this);
 
         auto table = FileInput::load_csv("../Resources/Tables/Monsters.csv");
         for(auto line : *table)
         {
             if(line[0] != "Name")
             {
-                Monster* monster = new Monster("../Resources/" + line[17]);
+                auto monster = std::make_shared<Monster>("../Resources/" + line[17]);
                 //action->SetName(line[0]);
-                monster->SetBaseStats({stof(line[1]),stof(line[2]),stof(line[3])
-                                         ,stof(line[4]),stof(line[5]),stof(line[6])
-                                         ,stof(line[7]),stof(line[8])}
-                                         ,{stof(line[9]),stof(line[10]),stof(line[11])
-                                              ,stof(line[12]),stof(line[13]),stof(line[14])
-                                              ,stof(line[15]),stof(line[16])});
+                monster->set_base_stats({stof(line[1]), stof(line[2]), stof(line[3]), stof(line[4]), stof(line[5]),
+                                            stof(line[6]), stof(line[7]), stof(line[8])}, {stof(line[9]),
+                                            stof(line[10]), stof(line[11]), stof(line[12]), stof(line[13]),
+                                            stof(line[14]), stof(line[15]), stof(line[16])});
 
-                auto modifiers = SplitBySlash(line[18]);
-                auto actions = SplitBySlash(line[19]);
+                auto modifiers = split_by_slash(line[18]);
+                auto actions = split_by_slash(line[19]);
 
-                for(auto modifier : modifiers)
+                for(const auto& modifier : modifiers)
                 {
-                    if (modifier != "")
+                    if (!modifier.empty())
                     {
-                        monster->AddModifier(modifier);
+                        monster->add_modifier(modifier);
                     }
                 }
-                for(auto action : actions)
+                for(const auto& action : actions)
                 {
-                    if (action != "")
+                    if (!action.empty())
                     {
-                        monster->AddAction(action);
+                        monster->add_action(action);
                     }
 
                 }
-                monsters.emplace(line[0], monster);
+                monsters_.emplace(line[0], monster);
             }
         }
     }
 }
 
-sd::MonsterList *sd::MonsterList::Get() {
-    return instance;
+Sp<sd::MonsterList> sd::MonsterList::get() {
+    return instance_;
 }
 
-sd::Monster *sd::MonsterList::GetMonster(std::string name) {
-    return monsters.at(name);;
+Sp<sd::Monster> sd::MonsterList::get_monster(const std::string& name) {
+    return monsters_.at(name);;
 }
 
-std::vector<std::string> sd::MonsterList::SplitBySlash(std::string string) {
-    std::vector<std::string> retVal;
+std::vector<std::string> sd::MonsterList::split_by_slash(std::string string) {
+    std::vector<std::string> ret_val;
     std::string delimiter = "/";
 
     size_t pos = 0;
@@ -66,10 +64,10 @@ std::vector<std::string> sd::MonsterList::SplitBySlash(std::string string) {
     while ((pos = string.find(delimiter)) != std::string::npos) {
         token = string.substr(0, pos);
 
-        retVal.emplace_back(token);
+        ret_val.emplace_back(token);
         string.erase(0, pos + delimiter.size());
     }
-    retVal.emplace_back(string);
+    ret_val.emplace_back(string);
 
-    return retVal;
+    return ret_val;
 }

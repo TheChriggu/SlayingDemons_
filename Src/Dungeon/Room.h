@@ -16,7 +16,7 @@ namespace sd {
     class Room : public Subscriber{
     private:
         std::vector<Sp<RoomObject>> room_objects_;
-        int* layout_;
+        std::vector<int> layout_;
 
         Sp<Monster> enemy_;
         
@@ -29,7 +29,7 @@ namespace sd {
         ~Room() override;
 
         sf::String get_description();
-        int* get_layout();
+        std::vector<int>& get_layout();
 
         void add_object(const Sp<RoomObject>& object);
         void set_enemy(Sp<Monster> enemy);

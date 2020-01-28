@@ -3,25 +3,18 @@
 //
 
 #include "NavigationWord.h"
+#include <utility>
 
-sd::NavigationWord::NavigationWord() {
-
+sd::Word::Type sd::NavigationWord::get_type() {
+    return NAVIGATION;
 }
 
-sd::NavigationWord::~NavigationWord() {
-
+void sd::NavigationWord::set_name(std::string name) {
+    name_ = std::move(name);
 }
 
-sd::Word::type sd::NavigationWord::GetType() {
-    return navigation;
-}
-
-void sd::NavigationWord::SetName(std::string _name) {
-    name = _name;
-}
-
-std::string sd::NavigationWord::GetName() {
-    return name;
+std::string sd::NavigationWord::get_name() {
+    return name_;
 }
 
 

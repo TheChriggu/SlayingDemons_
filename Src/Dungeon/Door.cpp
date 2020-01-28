@@ -26,7 +26,7 @@ const std::string& sd::Door::get_connected_room() const {
     return next_room_;
 }
 
-void sd::Door::put_on_layout(int *layout, int width, int height) {
+void sd::Door::put_on_layout(std::vector<int>& layout, int width, int height) {
     //TODO: make sure position is within width & height
     SingleTileObject::put_on_layout(layout, width, height);
 }
@@ -40,14 +40,16 @@ void sd::Door::be_interacted_with() {
     {
         std::shared_ptr<LineToOutputEventArgs> args;
         args = std::make_shared<LineToOutputEventArgs>("This door is locked.");
-        EventSystem::Get().Trigger(args);
+        EventSystem::get().trigger(args);
     }
 
     else {
         std::shared_ptr<WalkedThroughDoorEventArgs> args;
-        args = std::make_shared<WalkedThroughDoorEventArgs>(WalkedThroughDoorEventArgs(this));
+        args = std::make_shared<WalkedThroughDoorEventArgs>(
+            Sp<Door>(this)
+                );
         args->type = sd::EventArgs::Type::WALKED_THROUGH_DOOR;
-        EventSystem::Get().Trigger(args);
+        EventSystem::get().trigger(args);
 
         /*if (nextRoom) {
             ScriptEngine::Get ()->broadcast ("room_changed", nextRoom->is_last);
@@ -69,5 +71,5 @@ void sd::Door::set_locked(bool lock_state) {
     std::shared_ptr<EventArgs> args;
     args = std::make_shared<EventArgs>(EventArgs());
     args->type = sd::EventArgs::Type::ROOM_LAYOUT_CHANGED;
-    EventSystem::Get().Trigger(args);
+    EventSystem::get().trigger(args);
 }

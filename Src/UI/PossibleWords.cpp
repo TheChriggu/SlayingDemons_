@@ -49,9 +49,9 @@ void sd::PossibleWords::update() {
 
     lines_.clear();
 
-    if(playerState->is_fighting()) {
+    if(player_state_->is_fighting()) {
         sf::Vector2f offset = sf::Vector2f(50, 90);
-    for(const auto& action : *(player_vocabulary_->GetModifiers()))
+    for(const auto& action : player_vocabulary_->get_modifiers())
     {
         lines_.push_back(std::make_shared<FormattedLine>(
                 action,
@@ -62,7 +62,7 @@ void sd::PossibleWords::update() {
         }
 
         offset = sf::Vector2f(250, 90);
-    for(const auto& action : *(player_vocabulary_->get_actions()))
+    for(const auto& action : player_vocabulary_->get_actions())
     {
         lines_.push_back(std::make_shared<FormattedLine>(action,
                                                          sf::Vector2f(position_ + offset),
@@ -93,10 +93,10 @@ void sd::PossibleWords::handle(std::shared_ptr<EventArgs> e) {
         auto args = dynamic_cast<PlayerStateCreatedEventArgs *>(e.get());
         
         player_vocabulary_ = args->player_state->get_player_vocabulary();
-        playerState = args->player_state;
+        player_state_ = args->player_state;
         
         std::cout << "~~Words: " << std::endl;
-        for (const auto& word : *(player_vocabulary_->GetModifiers()))
+        for (const auto& word : player_vocabulary_->get_modifiers())
             std::cout << "~" << word << std::endl;
 
         update ();

@@ -4,36 +4,33 @@
 
 #include "Action.h"
 #include <iostream>
+#include <utility>
 
 sd::Action::Action() {
-    stats = new Stats();
-    SetStats( {0,0,0,0,0,0,0,0});
+    stats_ = std::make_shared<Stats>();
+    set_stats({0, 0, 0, 0, 0, 0, 0, 0});
 }
 
-sd::Action::~Action() {
-
-}
-
-void sd::Action::LoadFrom(sf::String source) {
+void sd::Action::load_from(std::string source) {
 
 }
 
-void sd::Action::SetStats(sd::Stats _stats) {
-    *stats = _stats;
+void sd::Action::set_stats(const sd::Stats& stats) {
+    *stats_ = stats;
 }
 
-sd::Stats *sd::Action::GetStats() {
-    return stats;
+Sp<sd::Stats> sd::Action::get_stats() {
+    return stats_;
 }
 
-void sd::Action::SetName(sf::String _name) {
-    name = _name;
+void sd::Action::set_name(std::string name) {
+    name_ = std::move(name);
 }
 
-sf::String sd::Action::GetName() {
-    return name;
+std::string sd::Action::get_name() {
+    return name_;
 }
 
-sd::Word::type sd::Action::GetType() {
-    return action;
+sd::Word::Type sd::Action::get_type() {
+    return ACTION;
 }

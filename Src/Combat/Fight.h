@@ -2,8 +2,9 @@
 // Created by christian.heusser on 02.12.2019.
 //
 
-#ifndef SLAYINGDEMONS_FIGHT_H
-#define SLAYINGDEMONS_FIGHT_H
+#ifndef _FIGHT_H_
+#define _FIGHT_H_
+
 #include "Fighter.h"
 #include "SFML/Graphics.hpp"
 #include "Vocabulary.h"
@@ -16,24 +17,24 @@ namespace sd {
 
     class Fight {
     private:
-    Fighter* player_;
-    Monster* enemy_;
+    Sp<Fighter> player_;
+    Sp<Monster> enemy_;
     //Attack GetAttack(Fighter* _fighter, sf::String _action, sf::String _modifier);
 
     public:
-        Fight(Fighter* player, Monster* enemy);
-        ~Fight();
+        Fight(Sp<Fighter> player, Sp<Monster> enemy);
+        virtual ~Fight() = default;
 
-        void full_turn(sf::String action, sf::String modifier);
+        void full_turn(std::string action, std::string modifier);
 
-        Monster* get_enemy();
+        Sp<Monster> get_enemy();
     
     private:
-        void player_turn(Attack* player_attack, Attack* enemy_attack);
-        void enemy_turn(Attack* player_attack, Attack* enemy_attack);
+        void player_turn(const Sp<Attack>& player_attack, const Sp<Attack>& enemy_attack);
+        void enemy_turn(const Sp<Attack>& player_attack, const Sp<Attack>& enemy_attack);
 
     };
 }
 
 
-#endif //SLAYINGDEMONS_FIGHT_H
+#endif //_FIGHT_H_

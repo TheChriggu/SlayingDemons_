@@ -4,6 +4,7 @@
 
 #include "InputTextProcessor.h"
 #include <iostream>
+#include <memory>
 #include <utility>
 #include <Event/TextOutputCreatedEventArgs.h>
 #include <Event/EventSystem.h>
@@ -12,22 +13,22 @@
 #include <Event/PlayerStateCreatedEventArgs.h>
 
 sd::InputTextProcessor::InputTextProcessor() : Subscriber() {
-    playerState = Sp<PlayerState>(new PlayerState());
+    player_state_ = std::make_shared<PlayerState>();
     std::cout << "~InputTextProcessor Constructor~" << std::endl;
-    EventSystem::Get().Trigger(Sp<PlayerStateCreatedEventArgs>(new PlayerStateCreatedEventArgs(playerState)));
+    EventSystem::get().trigger(std::make_shared<PlayerStateCreatedEventArgs>(player_state_));
 }
 
-void sd::InputTextProcessor::ProcessInput(sf::String spell) {
+void sd::InputTextProcessor::process_input(const std::string& spell) {
 
     if(spell == "inspect room")
     {
-        output->add_line (playerState->get_current_room()->get_description());
+        output_->add_line (player_state_->get_current_room()->get_description());
     }
 
     else {
         //split spell
         std::cout << "splitting input\n";
-        std::vector<std::string> words = SplitBySpace(spell.toAnsiString());
+        std::vector<std::string> words = split_by_space(spell);
 
         //TODO: Sort words in array to be modifier first, then action(or other way round)
 
@@ -43,7 +44,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
         if(words[0] == "interact")
         {
             //TODO: Make sure that this actually is a door
-            auto object = playerState->get_current_room()->get_object_with_name(words[1]);
+            auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
 
             if(object)
             {
@@ -53,7 +54,7 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
             {
                 std::shared_ptr<LineToOutputEventArgs> args;
                 args = std::make_shared<LineToOutputEventArgs>("could [b][i]not[/b] find [/i] [b] object in [/b] room.");
-                EventSystem::Get().Trigger(args);
+                EventSystem::get().trigger(args);
             }
         }
 
@@ -61,11 +62,11 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
         {
             //TODO: Make sure that this actually is a door
             //Door* door = (Door*) playerState->GetCurrentRoom()->GetObjectWithName(words[1]);
-            output->add_line ("picked up " + words[1]);
+            output_->add_line ("picked up " + words[1]);
 
             std::shared_ptr<NewWordCollectedEventArgs> args;
             args = std::make_shared<NewWordCollectedEventArgs>(NewWordCollectedEventArgs(words[1]));
-            EventSystem::Get().Trigger(args);
+            EventSystem::get().trigger(args);
         }
             //*for(auto word : words)
             //*{
@@ -76,18 +77,18 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
             //*}
 
             //check if currently fighting
-        else if(playerState->is_fighting())
+        else if(player_state_->is_fighting())
         {
             //check if fight spell
             std::cout << "fight not nullptr\n";
             std::cout << "making turn\n";
-            if(Vocabulary::all_words->Contains(words[0]) && Vocabulary::all_words->Contains(words[1]))
+            if(Vocabulary::all_words->contains(words[0]) && Vocabulary::all_words->contains(words[1]))
             {
-                Word* word1 = Vocabulary::all_words->Get(words[0]);
-                Word* word2 = Vocabulary::all_words->Get(words[1]);
-                if(word1->GetType() == sd::Word::type::modifier && word2->GetType() == sd::Word::type::action)
+                auto word_1 = Vocabulary::all_words->get(words[0]);
+                auto word_2 = Vocabulary::all_words->get(words[1]);
+                if(word_1->get_type() == sd::Word::Type::MODIFIER && word_2->get_type() == sd::Word::Type::ACTION)
                 //make turn in fight
-                    playerState->get_fight ()->full_turn (words[1], words[0]);
+                    player_state_->get_fight ()->full_turn (words[1], words[0]);
 
                 //evaluate result
                 //end fight, if fight is over
@@ -105,14 +106,14 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
 
             else
             {
-                output->add_line ("Input not valid modifier+action combination");
+                output_->add_line ("Input not valid modifier+action combination");
             }
 
         }
 
         else
         {
-            output->add_line ("nothing happens");
+            output_->add_line ("nothing happens");
         }
 
 
@@ -135,8 +136,8 @@ void sd::InputTextProcessor::ProcessInput(sf::String spell) {
     }
 }
 
-std::vector<std::string> sd::InputTextProcessor::SplitBySpace(std::string string) {
-    std::vector<std::string> retVal;
+std::vector<std::string> sd::InputTextProcessor::split_by_space(std::string string) {
+    std::vector<std::string> ret_val;
     std::string delimiter = " ";
 
     size_t pos = 0;
@@ -144,30 +145,30 @@ std::vector<std::string> sd::InputTextProcessor::SplitBySpace(std::string string
     while ((pos = string.find(delimiter)) != std::string::npos) {
         token = string.substr(0, pos);
 
-        retVal.emplace_back(token);
+        ret_val.emplace_back(token);
         string.erase(0, pos + delimiter.size());
     }
-    retVal.emplace_back(string);
+    ret_val.emplace_back(string);
 
-    return retVal;
+    return ret_val;
 }
 
-void sd::InputTextProcessor::SetOutput(Sp<sd::TextOutput> _output) {
-    output = std::move(_output);
+void sd::InputTextProcessor::set_output(Sp<sd::TextOutput> output) {
+    output_ = std::move(output);
 }
 
-void sd::InputTextProcessor::SetRoom(Sp<sd::Room> _room) {
-    playerState->set_room_as_current(_room);
+void sd::InputTextProcessor::set_room(Sp<sd::Room> room) {
+    player_state_->set_room_as_current(std::move(room));
 }
 
-Sp<sd::PlayerState> sd::InputTextProcessor::GetPlayerState() {
-    return playerState;
+Sp<sd::PlayerState> sd::InputTextProcessor::get_player_state() {
+    return player_state_;
 }
 
 void sd::InputTextProcessor::handle(std::shared_ptr<sd::EventArgs> e) {
     if (e->type == EventArgs::Type::TEXT_OUTPUT_CREATED) {
         auto arg = dynamic_cast<TextOutputCreatedEventArgs*>(e.get());
-        output = arg->output;
+        output_ = arg->output;
     }
 }
 

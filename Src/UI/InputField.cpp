@@ -58,8 +58,8 @@ void sd::InputField::handle(sf::Event event) {
         {
         
         sf::String strg = text_->getString();
-
-        text_processor_->ProcessInput(strg);
+    
+        text_processor_->process_input(strg.toAnsiString());
         text_->setString("");
 
         //std::vector<sf::String> strings = textProcessor->SplitBySpace(text->getString());

@@ -2,8 +2,8 @@
 // Created by christian.heusser on 03.12.2019.
 //
 
-#ifndef SLAYINGDEMONS_MONSTER_H
-#define SLAYINGDEMONS_MONSTER_H
+#ifndef _MONSTER_H_
+#define _MONSTER_H_
 
 #include "Fighter.h"
 #include "Vocabulary.h"
@@ -13,22 +13,22 @@ namespace sd
 {
     class Monster : public Fighter{
     private:
-        std::vector<sf::String>* actions;
-        std::vector<sf::String>* modifiers;
-        std::string pathToPortrait;
+        std::vector<std::string> actions_;
+        std::vector<std::string> modifiers_;
+        std::string path_to_portrait_;
 
     public:
-        Monster(std::string _pathToPortrait);
-        ~Monster();
+        explicit Monster(std::string path_to_portrait);
+        ~Monster() override = default;
 
-        sf::String GetAction();
-        sf::String GetModifier();
+        std::string get_action();
+        std::string get_modifier();
 
-        void AddAction(sf::String action);
-        void AddModifier(sf::String modifier);
+        void add_action(const std::string& action);
+        void add_modifier(const std::string& modifier);
 
-        std::string GetPathToPortrait();
+        std::string get_path_to_portrait();
     };
 }
 
-#endif //SLAYINGDEMONS_MONSTER_H
+#endif //_MONSTER_H_

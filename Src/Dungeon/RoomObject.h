@@ -4,6 +4,7 @@
 
 #ifndef _ROOMOBJECT_H_
 #define _ROOMOBJECT_H_
+
 #include <sol/function.hpp>
 #include "Tilemap.h"
 
@@ -21,7 +22,7 @@ namespace sd {
         RoomObject(std::string name, sf::Vector2i position, sol::function be_interacted_with_signal);
         virtual ~RoomObject() = default;
 
-        virtual void put_on_layout(int* layout, int width, int height) = 0;
+        virtual void put_on_layout(std::vector<int>& layout, int width, int height) = 0;
         virtual std::string get_name() = 0;
         
         virtual void be_interacted_with();

@@ -43,21 +43,20 @@ void FormattedLine::format_line(sf::String string, const Sp<sf::Font> &font) {
     sf::Vector2f next_position =  sf::Vector2f(get_rect ().left, get_rect ().top + get_rect ().height);
     
     std::vector<std::string> string_vector;
-    strtk::parse(string, " ", string_vector, strtk::split_options::default_mode);
+    strtk::parse(string, " ", string_vector, strtk::split_options::include_all_delimiters);
     
     for(auto word : string_vector)
         {
-            
-            Sp<FormattedWord> newWord = std::make_shared<FormattedWord>(FormattedWord(word, next_position, format));
-            next_position.x += newWord->get_rect ().width;
-            if(next_position.x > max_size_.x)
-                {
-                    next_position = sf::Vector2f(get_rect ().left, get_rect ().top + get_rect ().height);
-                    newWord->set_position (next_position);
+                    Sp<FormattedWord> newWord = std::make_shared<FormattedWord> (FormattedWord (word, next_position, format));
                     next_position.x += newWord->get_rect ().width;
-                }
-        
-            words_.push_back(newWord);
+                    if (next_position.x > max_size_.x)
+                        {
+                            next_position = sf::Vector2f (get_rect ().left, get_rect ().top + get_rect ().height);
+                            newWord->set_position (next_position);
+                            next_position.x += newWord->get_rect ().width;
+                        }
+                
+                    words_.push_back (newWord);
         }
 }
 

@@ -8,13 +8,14 @@
 #include <Core/GlobalDefinitions.h>
 #include "SFML/Graphics.hpp"
 #include "Format.h"
+#include <strtk.hpp>
 
 class FormattedWord {
 
     Sp<sf::Text> text_;
 
 public:
-    FormattedWord(const std::string& text, sf::Vector2f position, sd::Format& format);
+    FormattedWord(std::string text, sf::Vector2f position, sd::Format& format);
     virtual ~FormattedWord() = default;
 
     void draw_to(const Sp<sf::RenderTarget>& window);
@@ -25,7 +26,7 @@ public:
     
     private:
     void apply_format_to_text(sd::Format format);
-    void apply_bb_to_format(sd::Format& format);
+    void apply_bb_to_format(std::string code, sd::Format& format);
     
     bool is_bb();
 };

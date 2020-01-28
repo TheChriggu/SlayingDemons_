@@ -4,19 +4,42 @@
 
 #include "FormattedWord.h"
 
-FormattedWord::FormattedWord(const std::string& text, sf::Vector2f position, sd::Format& format) {
+FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Format& format) {
     
-    text_ = std::make_shared<sf::Text>();
-    text_->setString(text);
-    text_->setPosition(position);
+    text_ = std::make_shared<sf::Text> ();
+    text_->setPosition (position);
     
-    if(is_bb())
+
+    //apply prerunning bb-codes
+    while (text.size() > 0 && text.at (0) == '[')
         {
-            apply_bb_to_format (format);
+            std::string code = std::string (text, 0, text.find_first_of (']') + 1);
+            text.erase (0, code.size ());
+            apply_bb_to_format (code, format);
         }
-    else
+    
+    //set the actual word
+    std::string word = std::string (text, 0, text.find_first_of ('['));
+    text.erase (0, word.size ());
+    
+    if(word != " ")
         {
+            text_->setString (word);
             apply_format_to_text (format);
+        }
+        
+    //apply trailing bb-codes
+    while (text.size () > 0 && text.at (0) == '[')
+        {
+            std::string code = std::string (text, 0, text.find_first_of (']') + 1);
+            text.erase (0, code.size ());
+            apply_bb_to_format (code, format);
+        }
+        
+    //add trailing spaces or punctuation if not included in word
+    if(text.size() > 0 && word.size() > 0)
+        {
+            text_->setString (text_->getString() + text);
         }
 }
 
@@ -60,10 +83,8 @@ void FormattedWord::apply_format_to_text (sd::Format format)
         }
 
 }
-void FormattedWord::apply_bb_to_format (sd::Format &format)
+void FormattedWord::apply_bb_to_format (std::string code, sd::Format &format)
 {
-    sf::String code = text_->getString ();
-
     if(code == "[b]")
         {
             format.style_ = format.style_ | sf::Text::Style::Bold;
@@ -71,5 +92,13 @@ void FormattedWord::apply_bb_to_format (sd::Format &format)
     if(code == "[/b]")
         {
             format.style_ = format.style_ & ~(sf::Text::Style::Bold);
+        }
+    if(code == "[i]")
+        {
+            format.style_ = format.style_ | sf::Text::Style::Italic;
+        }
+    if(code == "[/i]")
+        {
+            format.style_ = format.style_ & ~(sf::Text::Style::Italic);
         }
 }

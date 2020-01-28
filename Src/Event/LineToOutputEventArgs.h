@@ -12,10 +12,10 @@
 namespace sd {
     class LineToOutputEventArgs: public EventArgs {
     public:
-        explicit LineToOutputEventArgs(const std::string& line);
+        explicit LineToOutputEventArgs(std::string line);
         ~LineToOutputEventArgs() override = default;
 
-        const std::string& line;
+        std::string line;
     };
 }
 

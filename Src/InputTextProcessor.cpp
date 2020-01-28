@@ -53,7 +53,7 @@ void sd::InputTextProcessor::process_input(const std::string& spell) {
             else
             {
                 std::shared_ptr<LineToOutputEventArgs> args;
-                args = std::make_shared<LineToOutputEventArgs>("could not find object in room.");
+                args = std::make_shared<LineToOutputEventArgs>("could [b][i]not[/b] find [/i] [b] object in [/b] room.");
                 EventSystem::get().trigger(args);
             }
         }

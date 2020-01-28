@@ -59,7 +59,7 @@ void sd::TextOutput::draw_to(Sp<sf::RenderTarget> window) const {
     }
 }
 
-void sd::TextOutput::add_line(const sf::String& string) {
+void sd::TextOutput::add_line(std::string string) {
 
     auto new_line = std::make_shared<FormattedLine>(
         string, sf::Vector2f(
@@ -80,9 +80,9 @@ void sd::TextOutput::add_line(const sf::String& string) {
 
 }
 
-void sd::TextOutput::print_line(const std::string& string) {
-    sf::String temp(string);
-  add_line (temp);
+void sd::TextOutput::print_line(std::string string) {
+    //sf::String temp(string);
+  add_line (string);
 }
 
 void sd::TextOutput::handle(sf::Event event) {

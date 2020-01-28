@@ -56,7 +56,7 @@ void sd::InputField::handle(sf::Event event) {
     {
         if(event.type == sf::Event::KeyPressed)
         {
-        std::cout << "processing input\n";
+        
         sf::String strg = text_->getString();
     
         text_processor_->process_input(strg.toAnsiString());

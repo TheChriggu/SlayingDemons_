@@ -26,14 +26,14 @@ sd::Room::~Room() {
 }
 
 
-sf::String sd::Room::get_description() {
+std::string sd::Room::get_description() {
     if (room_objects_.empty())
     {
         return "The room is empty.";
     }
 
 
-    sf::String ret_val = "Inside the room there is a";
+    std::string ret_val = "Inside the room there is a";
     for(const auto& object : room_objects_)
     {
         ret_val += " " + object->get_name() + ",";

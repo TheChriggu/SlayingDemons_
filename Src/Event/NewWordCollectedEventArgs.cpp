@@ -4,7 +4,7 @@
 
 #include "NewWordCollectedEventArgs.h"
 
-sd::NewWordCollectedEventArgs::NewWordCollectedEventArgs(std::string _word) {
+sd::NewWordCollectedEventArgs::NewWordCollectedEventArgs(const std::string& word)
+    : word(word) {
     this->type = EventArgs::Type::NEW_WORD_COLLECTED;
-    this->word = _word;
 }

@@ -4,10 +4,7 @@
 
 #include "Word.h"
 
-sd::Word::~Word() {
 
-}
-
-sd::Word::type sd::Word::GetType() {
-    return unknown;
+sd::Word::Type sd::Word::get_type() {
+    return UNKNOWN;
 }

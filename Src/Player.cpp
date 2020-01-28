@@ -18,16 +18,7 @@
     //AddWorld("jump over");
 //}
 
-sd::Player::~Player() {
-   // delete (actions);
-    //delete (modifiers);
-    //delete (world);
-    //actions = nullptr;
-    //modifiers = nullptr;
-    //world = nullptr;
-}
-
-bool sd::Player::HasWord(sf::String word) {
+bool sd::Player::has_word(std::string word) {
     //if(std::count(actions->begin(),actions->end(),word))
     //{
     //    return true;
@@ -43,14 +34,14 @@ bool sd::Player::HasWord(sf::String word) {
     return false;
 }
 
-void sd::Player::AddAction(sf::String action) {
+void sd::Player::add_action(std::string action) {
     //actions->emplace_back(action);
 }
 
-void sd::Player::AddModifier(sf::String modifier) {
+void sd::Player::add_modifier(std::string modifier) {
     //modifiers->emplace_back(modifier);
 }
 
-void sd::Player::AddWorld(sf::String word) {
+void sd::Player::add_world(std::string word) {
     //world->emplace_back(word);
 }

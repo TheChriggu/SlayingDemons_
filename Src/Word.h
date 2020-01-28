@@ -2,18 +2,18 @@
 // Created by christian.heusser on 28.11.2019.
 //
 
-#ifndef SLAYINGDEMONS_WORD_H
-#define SLAYINGDEMONS_WORD_H
+#ifndef _WORD_H_
+#define _WORD_H_
 
 namespace sd {
     class Word {
     public:
-        enum type{action, modifier, navigation, unknown};
+        enum Type {ACTION, MODIFIER, NAVIGATION, UNKNOWN};
         //TODO: I honestly don't know what all words of the game have in common -.- Maybe Stats.
-        virtual ~Word();
+        virtual ~Word() = default;
 
-        virtual type GetType();
+        virtual Type get_type();
     };
 }
 
-#endif //SLAYINGDEMONS_WORD_H
+#endif //_WORD_H_

@@ -4,50 +4,35 @@
 
 #include "Monster.h"
 #include <iostream>
+#include <utility>
 
-sd::Monster::Monster(std::string _pathToPortrait) {
-    actions = new std::vector<sf::String>();
-    //AddAction("Kick");
-    //AddAction("Slash");
-
-    modifiers = new std::vector<sf::String>();
-    //AddModifier("Frost");
-    //AddModifier("Virtual");
-
-    pathToPortrait = _pathToPortrait;
+sd::Monster::Monster(std::string path_to_portrait) {
+    path_to_portrait_ = std::move(path_to_portrait);
 }
 
-sd::Monster::~Monster() {
-    delete(actions);
-    actions = nullptr;
-
-    delete(modifiers);
-    modifiers = nullptr;
-}
-
-sf::String sd::Monster::GetAction() {
+std::string sd::Monster::get_action() {
     std::cout << "getting enemy_ action\n";
-    int i = rand()%(actions->size());
+    int i = rand()%(actions_.size());
     //std::cout << "enemy_ move is: " << std::string(actions->at(i)) << "\n";
-    sf::String retVal = actions->at(i);
+    std::string ret_val = actions_.at(i);
     //std::string strg = std::string(retVal);
-    return retVal;
+    return ret_val;
 }
 
-sf::String sd::Monster::GetModifier() {
-    int i = rand()%(modifiers->size());
+std::string sd::Monster::get_modifier() {
+    int i = rand()%(modifiers_.size());
 
-    return modifiers->at(i);
+    return modifiers_.at(i);
 }
 
-void sd::Monster::AddAction(sf::String action) {
-    actions->emplace_back(action);
+void sd::Monster::add_action(const std::string& action) {
+    actions_.emplace_back(action);
 }
 
-void sd::Monster::AddModifier(sf::String modifier) {
-    modifiers->emplace_back(modifier);
+void sd::Monster::add_modifier(const std::string& modifier) {
+    modifiers_.emplace_back(modifier);
 }
 
-std::string sd::Monster::GetPathToPortrait() {
-    return pathToPortrait;
+std::string sd::Monster::get_path_to_portrait() {
+    return path_to_portrait_;
 }

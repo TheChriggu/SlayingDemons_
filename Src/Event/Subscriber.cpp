@@ -6,6 +6,6 @@
 #include "EventSystem.h"
 
 sd::Subscriber::Subscriber() {
-    EventSystem::Get().Subscribe(std::shared_ptr<Subscriber>(this));
+    EventSystem::get().subscribe(std::shared_ptr<Subscriber>(this));
 }
 

@@ -11,10 +11,10 @@ class Tilemap : public sf::Drawable, public sf::Transformable{
 
 public:
     Tilemap(unsigned int width, unsigned int height, sf::Vector2f position, sf::Vector2u tile_size);
-    ~Tilemap() override;
-    void load_sprite_sheet(std::string path);
-    void set_layout(int *layout, int size);
-    int* get_layout();
+    ~Tilemap() override = default;
+    void load_sprite_sheet(const std::string& path);
+    void set_layout(std::vector<int>& layout, int size);
+    std::vector<int>& get_layout();
     int get_width();
     int get_height();
 
@@ -24,13 +24,13 @@ private:
     sf::VertexArray vertices_;
     sf::Texture tileset_;
     sf::Vector2f position_;
-    int* layout_;
+    std::vector<int> layout_;
     int width_;
     int height_;
     sf::Vector2u tile_size_;
 
-    void SetAllQuadPositions();
-    void UpdateTiles();
+    void set_all_quad_positions();
+    void update_tiles();
 };
 
 

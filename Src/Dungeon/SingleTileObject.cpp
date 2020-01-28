@@ -11,7 +11,7 @@ sd::SingleTileObject::SingleTileObject(std::string name, int sprite_sheet_idx, s
         , sprite_sheet_idx_(sprite_sheet_idx)
 { }
 
-void sd::SingleTileObject::put_on_layout(int *layout, int width, int height) {
+void sd::SingleTileObject::put_on_layout(std::vector<int>& layout, int width, int height) {
     //TODO: Make sure to check position against width & height
     layout[position_on_tile_map_.x + position_on_tile_map_.y * width] = sprite_sheet_idx_;
 }

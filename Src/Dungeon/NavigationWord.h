@@ -2,8 +2,8 @@
 // Created by christian.heusser on 07.01.2020.
 //
 
-#ifndef SLAYINGDEMONS_NAVIGATIONWORD_H
-#define SLAYINGDEMONS_NAVIGATIONWORD_H
+#ifndef _NAVIGATIONWORD_H_
+#define _NAVIGATIONWORD_H_
 
 #include "../Word.h"
 #include <iostream>
@@ -11,18 +11,18 @@
 namespace sd {
     class NavigationWord : public Word {
     private:
-        std::string name;
+        std::string name_;
 
     public:
-        NavigationWord();
-        ~NavigationWord() override;
+        NavigationWord() = default;
+        ~NavigationWord() override = default;
 
-        type GetType() override;
+        Type get_type() override;
 
-        void SetName(std::string _name);
-        std::string GetName();
+        void set_name(std::string name);
+        std::string get_name();
 
     };
 }
 
-#endif //SLAYINGDEMONS_NAVIGATIONWORD_H
+#endif //_NAVIGATIONWORD_H_

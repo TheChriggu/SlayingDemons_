@@ -3,8 +3,9 @@
 //
 
 #include "PlayerVocabChangedEventArgs.h"
+#include <utility>
 
-sd::PlayerVocabChangedEventArgs::PlayerVocabChangedEventArgs(sd::PlayerVocabulary *_vocabulary) {
+sd::PlayerVocabChangedEventArgs::PlayerVocabChangedEventArgs(Sp<sd::PlayerVocabulary> vocabulary)
+    : vocabulary(std::move(vocabulary)) {
     this->type = EventArgs::Type::PLAYER_VOCAB_CHANGED;
-    this->vocabulary = _vocabulary;
 }

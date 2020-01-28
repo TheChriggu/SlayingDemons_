@@ -4,38 +4,33 @@
 
 #include "Attack.h"
 #include <iostream>
+#include <utility>
 
-sd::Attack::Attack(sd::Fighter *_fighter, sd::Modifier *_modifier, sd::Action *_action)
-    :fighter(_fighter)
-    ,modifier(_modifier)
-    ,action(_action)
+sd::Attack::Attack(Sp<sd::Fighter> fighter, const Sp<sd::Modifier>& modifier, const Sp<sd::Action>& action)
+    : fighter_(std::move(fighter))
+    , modifier_(modifier)
+    , action_(action)
     {
-        Modifier mod = *_modifier;
-        Action act = *_action;
+        Modifier mod = *modifier;
+        Action act = *action;
 
     }
 
-sd::Attack::~Attack() {
-    fighter = nullptr;
-    modifier = nullptr;
-    action = nullptr;
+sd::Stats sd::Attack::get_stats() {
+    Stats ret_val = modifier_->apply_to(action_->get_stats());
+    ret_val = (fighter_->get_offense()) * ret_val;
+    return ret_val;
 }
 
-sd::Stats sd::Attack::GetStats() {
-    Stats retVal = modifier->ApplyTo(action->GetStats());
-    retVal = (fighter->GetOffense())*retVal;
-    return retVal;
-}
-
-std::string sd::Attack::GetSentenceSecondPerson() {
+std::string sd::Attack::get_sentence_second_person() {
     
-    std::string retVal = "You attack with " + modifier->GetName().toAnsiString() + " " + action->GetName().toAnsiString() + ".";
-    return retVal;
+    std::string ret_val = "You attack with " + modifier_->get_name() + " " + action_->get_name() + ".";
+    return ret_val;
 }
 
-std::string sd::Attack::GetSentenceThirdPerson() {
-    std::string retVal = "Your enemy attacks you with " + modifier->GetName().toAnsiString() + " " + action->GetName().toAnsiString() + ".";
-    return retVal;
+std::string sd::Attack::get_sentence_third_person() {
+    std::string ret_val = "Your enemy attacks you with " + modifier_->get_name() + " " + action_->get_name() + ".";
+    return ret_val;
 }
 
 

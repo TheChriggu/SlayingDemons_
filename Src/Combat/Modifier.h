@@ -2,33 +2,34 @@
 // Created by christian.heusser on 28.11.2019.
 //
 
-#ifndef SLAYINGDEMONS_MODIFIER_H
-#define SLAYINGDEMONS_MODIFIER_H
+#ifndef _MODIFIER_H_
+#define _MODIFIER_H_
 
 #include <SFML/System/String.hpp>
+#include <Core/GlobalDefinitions.h>
 #include "Fighter.h"
 #include "Word.h"
 
 namespace sd {
     class Modifier : public Word{
     private:
-        Stats* stats;
-        StatwiseOperation* statwiseOperation;
-        sf::String name;
+        Sp<Stats> stats_;
+        Sp<StatwiseOperation> statwise_operation_;
+        std::string name_;
 
     public:
         Modifier();
-        ~Modifier() override;
+        ~Modifier() override = default;
 
-        void LoadFrom(sf::String source);
-        void SetStats(Stats _stats, StatwiseOperation _statwiseOperation);
-        void SetName(sf::String _name);
+        void load_from(std::string source);
+        void set_stats(Stats stats, StatwiseOperation statwise_operation);
+        void set_name(const std::string& name);
 
-        Stats ApplyTo(Stats* _stats);
-        sf::String GetName();
+        Stats apply_to(const Sp<Stats>& stats);
+        std::string get_name();
 
-        type GetType() override;
+        Type get_type() override;
     };
 }
 
-#endif //SLAYINGDEMONS_MODIFIER_H
+#endif //_MODIFIER_H_

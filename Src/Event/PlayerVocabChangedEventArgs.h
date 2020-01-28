@@ -2,8 +2,8 @@
 // Created by christian.heusser on 07.01.2020.
 //
 
-#ifndef SLAYINGDEMONS_PLAYERVOCABCHANGEDEVENTARGS_H
-#define SLAYINGDEMONS_PLAYERVOCABCHANGEDEVENTARGS_H
+#ifndef _PLAYERVOCABCHANGEDEVENTARGS_H_
+#define _PLAYERVOCABCHANGEDEVENTARGS_H_
 
 #include <PlayerVocabulary.h>
 #include "EventArgs.h"
@@ -11,10 +11,11 @@
 namespace sd {
     class PlayerVocabChangedEventArgs : public EventArgs {
     public:
-        explicit PlayerVocabChangedEventArgs(PlayerVocabulary* _vocabulary);
+        explicit PlayerVocabChangedEventArgs(Sp<PlayerVocabulary> vocabulary);
+        ~PlayerVocabChangedEventArgs() override = default;
 
-        PlayerVocabulary* vocabulary;
+        Sp<PlayerVocabulary> vocabulary;
     };
 }
 
-#endif //SLAYINGDEMONS_PLAYERVOCABCHANGEDEVENTARGS_H
+#endif //_PLAYERVOCABCHANGEDEVENTARGS_H_

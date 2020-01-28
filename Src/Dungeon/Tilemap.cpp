@@ -11,24 +11,20 @@ Tilemap::Tilemap(unsigned int width, unsigned int height, sf::Vector2f position,
     , tile_size_(tile_size)
 {
     std::cout << "Start contructor Tilemap\n";
-    layout_ = new int[width_ * height_];
+    //layout_ = new int[width_ * height_];
+    layout_ = std::vector<int>(width_ * height_);
     position_ = position;
 
     // resize the vertex array to fit the level size
     vertices_.setPrimitiveType(sf::Quads);
     vertices_.resize(width_ * height_ * 4);
-
-
-    int defaultLayout[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    
+    
+    std::vector<int> default_layout = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
     load_sprite_sheet("../Resources/Sprites/fantasy_tilemap.png");
-    set_layout(defaultLayout, width_ * height_);
-    SetAllQuadPositions();
+    set_layout(default_layout, width_ * height_);
+    set_all_quad_positions();
     std::cout << "End contructor Tilemap\n";
-}
-
-Tilemap::~Tilemap() {
-    delete layout_;
-    layout_ = nullptr;
 }
 
 
@@ -44,29 +40,29 @@ void Tilemap::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(vertices_, states);
 }
 
-int *Tilemap::get_layout() {
+std::vector<int>& Tilemap::get_layout() {
     return layout_;
 }
 
-void Tilemap::load_sprite_sheet(std::string path) {
+void Tilemap::load_sprite_sheet(const std::string& path) {
     // load the tileset texture
     if (!tileset_.loadFromFile(path)) {
         //error
     }
-
-    UpdateTiles();
+    
+    update_tiles();
 
 }
 
-void Tilemap::set_layout(int *layout, int size) {
+void Tilemap::set_layout(std::vector<int>& layout, int size) {
     if(width_ * height_ == size)
     {
         for (int i=0; i< size; i++)
         {
             layout_[i] = layout[i];
         }
-
-        UpdateTiles();
+    
+        update_tiles();
     }
     else
     {
@@ -74,7 +70,7 @@ void Tilemap::set_layout(int *layout, int size) {
     }
 }
 
-void Tilemap::SetAllQuadPositions() {
+void Tilemap::set_all_quad_positions() {
     // populate the vertex array, with one quad per tile
     for (unsigned int i = 0; i < width_; ++i) {
         for (unsigned int j = 0; j < height_; ++j) {
@@ -91,17 +87,17 @@ void Tilemap::SetAllQuadPositions() {
     }
 }
 
-void Tilemap::UpdateTiles() {
+void Tilemap::update_tiles() {
     for (unsigned int i = 0; i < width_; ++i)
     {
         for (unsigned int j = 0; j < height_; ++j)
         {
             // get the current tile number
-            int tileNumber = layout_[i + j * width_];
+            int tile_number = layout_[i + j * width_];
 
             // find its position in the tileset texture
-            int tu = tileNumber % (tileset_.getSize().x / (tile_size_.x));
-            int tv = tileNumber / (tileset_.getSize().x / (tile_size_.x));
+            int tu = tile_number % (tileset_.getSize().x / (tile_size_.x));
+            int tv = tile_number / (tileset_.getSize().x / (tile_size_.x));
 
             // get a pointer to the current tile's quad
             sf::Vertex* quad = &vertices_[(i + j * width_) * 4];

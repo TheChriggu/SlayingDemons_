@@ -17,14 +17,14 @@ void sd::RoomObject::be_interacted_with()
 {
     std::shared_ptr<LineToOutputEventArgs> args;
     args = std::make_shared<LineToOutputEventArgs>("You try to interact with the " + name_ + ".");
-    EventSystem::Get().Trigger(args);
+    EventSystem::get().trigger(args);
     
     if (be_interacted_with_signal_.valid())
     {
         be_interacted_with_signal_();
     } else {
         args = std::make_shared<LineToOutputEventArgs>("Nothing happens.");
-        EventSystem::Get().Trigger(args);
+        EventSystem::get().trigger(args);
     }
     
 }

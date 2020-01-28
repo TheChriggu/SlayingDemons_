@@ -26,7 +26,7 @@ sd::MultiTileObject::~MultiTileObject() {
     layout_ = nullptr;
 }
 
-void sd::MultiTileObject::put_on_layout(int *layout, int width, int height) {
+void sd::MultiTileObject::put_on_layout(std::vector<int>& layout, int width, int height) {
 
     if((width < position_on_tile_map_.x + size_.x) || (height < position_on_tile_map_.y + size_.y))
     {

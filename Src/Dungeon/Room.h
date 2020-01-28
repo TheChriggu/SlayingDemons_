@@ -28,7 +28,7 @@ namespace sd {
         explicit Room(std::string name);
         ~Room() override;
 
-        sf::String get_description();
+        std::string get_description();
         std::vector<int>& get_layout();
 
         void add_object(const Sp<RoomObject>& object);

@@ -63,18 +63,19 @@ bool sd::Floor::setup()
                 continue;
             
             sf::Vector2i position(
-                object.second.as<sol::lua_table>()["position"][1].get_or(0),
-                object.second.as<sol::lua_table>()["position"][2].get_or(0)
+                object.second.as<sol::lua_table>()["position"]["x"].get_or(0),
+                object.second.as<sol::lua_table>()["position"]["y"].get_or(0)
                 );
             sf::Vector2i size(
                 object.second.as<sol::lua_table>()["layout"]["size"][1].get_or(1),
                 object.second.as<sol::lua_table>()["layout"]["size"][2].get_or(1)
             );
-            // TODO(FK): Remove because mem-leak
-            std::vector<int> layout = {
-                object.second.as<sol::lua_table>()["layout"]["tiles"][1].get_or(0),
-                object.second.as<sol::lua_table>()["layout"]["tiles"][2].get_or(0)
-            };
+    
+            std::vector<int> layout;
+            for (int i=1 ; i <= (size.x * size.y) ; i++) {
+                layout.emplace_back(object.second.as<sol::lua_table>()["layout"]["tiles"][i].get_or(-1));
+            }
+            
             sol::function on_interaction = object.second.as<sol::lua_table>()["on_interaction"];
             
             

@@ -16,6 +16,7 @@ namespace sd {
         std::vector<Sp<FormattedLine>> lines_;
         Sp<PlayerVocabulary> player_vocabulary_;
         Sp<PlayerState> player_state_;
+        Sp<Font> fonts_;
 
         Sp<sf::Sprite> sprite_;
         Sp<sf::Texture> texture_;

@@ -44,14 +44,16 @@ bool sd::Application::setup()
     result = setup_scene();
     if (!result) return false;
     
-    std::cout << "Create global vocabulary containing all words\n";
-
     load_vocab();
     new sd::MonsterList();
+    new sd::Font();
+
     for (const auto &object : drawable_objects_)
     {
         object->setup();
     }
+
+
     
     std::cout << "End initialization\n";
     

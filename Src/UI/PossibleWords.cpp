@@ -40,13 +40,6 @@ void sd::PossibleWords::handle(sf::Event event) {
 }
 
 void sd::PossibleWords::update() {
-    Sp<sf::Font> font = std::make_shared<sf::Font>();
-    if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
-    {
-        std::cout << "Could not load Font!\n";
-        return;
-    }
-
     lines_.clear();
 
     if(player_state_->is_fighting()) {
@@ -56,8 +49,8 @@ void sd::PossibleWords::update() {
         lines_.push_back(std::make_shared<FormattedLine>(
                 action,
                 sf::Vector2f(position_ + offset),
-                font,
-                sf::Vector2f(1000,1000)));
+                sf::Vector2f(1000,1000),
+                        fonts_));
             offset.y += 30;
         }
 
@@ -66,8 +59,7 @@ void sd::PossibleWords::update() {
     {
         lines_.push_back(std::make_shared<FormattedLine>(action,
                                                          sf::Vector2f(position_ + offset),
-                                                         font,
-                                                         sf::Vector2f(1000,1000)));
+                                                         sf::Vector2f(1000,1000),fonts_));
             offset.y += 30;
         }
     }

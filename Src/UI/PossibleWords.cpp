@@ -4,6 +4,7 @@
 
 #include <Event/PlayerVocabChangedEventArgs.h>
 #include <Event/PlayerStateCreatedEventArgs.h>
+#include <Event/FontsCreatedEventArgs.h>
 #include "PossibleWords.h"
 
 // TODO(FK): clean up name
@@ -93,6 +94,11 @@ void sd::PossibleWords::handle(std::shared_ptr<EventArgs> e) {
 
         update ();
     }
+
+    if (e->type == EventArgs::Type::FONTS_CREATED) {
+        auto arg = dynamic_cast<FontsCreatedEventArgs*>(e.get());
+        fonts_ = arg->fonts;
+     }
 }
 
 sf::Vector2f sd::PossibleWords::get_position() {

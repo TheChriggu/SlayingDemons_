@@ -23,6 +23,7 @@ namespace sd {
 
         static Sp<std::string> load(boost::filesystem::path url);
         static Sp<std::vector<std::vector<std::string>>> load_csv(const boost::filesystem::path& url);
+        static Sp<std::vector<std::vector<std::string>>> load_tsv(const boost::filesystem::path& url);
     };
 }
 

@@ -109,7 +109,7 @@ void sd::Application::load_vocab()
     
     auto vocab = std::make_shared<Vocabulary>();
     
-    auto table = FileInput::load_csv("../Resources/Tables/Actions.csv");
+    auto table = FileInput::load_tsv("../Resources/Tables/Actions.tsv");
     for (auto line : *table)
     {
         if (line[0] != "Name")
@@ -123,7 +123,7 @@ void sd::Application::load_vocab()
         }
     }
     
-    table = FileInput::load_csv("../Resources/Tables/Modifiers.csv");
+    table = FileInput::load_tsv("../Resources/Tables/Modifiers.tsv");
     for (auto line : *table)
     {
         if (line[0] != "Name")

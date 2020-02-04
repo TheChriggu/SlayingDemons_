@@ -11,7 +11,7 @@ sd::MonsterList::MonsterList() {
     {
         instance_ = Sp<MonsterList>(this);
 
-        auto table = FileInput::load_csv("../Resources/Tables/Monsters.csv");
+        auto table = FileInput::load_tsv("../Resources/Tables/Monsters.tsv");
         for(auto line : *table)
         {
             if(line[0] != "Name")

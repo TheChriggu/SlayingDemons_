@@ -13,6 +13,7 @@ namespace sd {
     private:
         Sp<sf::Font> fantasy_font_;
         Sp<sf::Font> cyber_font_;
+        Sp<sf::Font> code_font_;
 
     public:
         Font();
@@ -20,6 +21,7 @@ namespace sd {
         ~Font();
 
         Sp<sf::Font> GetFont(std::string font);
+        Sp<sf::Font> GetCurrentFont();
     };
 }
 

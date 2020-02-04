@@ -2,21 +2,29 @@
 // Created by felix on 27.11.19.
 //
 
-#ifndef SLAYINGDEMONS_WORLD_H
-#define SLAYINGDEMONS_WORLD_H
+#ifndef _WORLD_H_
+#define _WORLD_H_
 
 #include "Core/Manageable.h"
+#include "PlayerState.h"
 
 namespace sd {
-    class World : public Manageable {
+    class World : public Manageable, public Subscriber {
+        
+        Sp<PlayerState> player_state_;
+        
+        std::vector<Sp<Floor>> floors_;
+        
     public:
         World();
-        virtual ~World();
+        ~World() override = default;
 
         bool setup() override;
         void shutdown() override;
+        
+        void handle(Sp<EventArgs> e) override;
     };
 }
 
 
-#endif //SLAYINGDEMONS_WORLD_H
+#endif //_WORLD_H_

@@ -195,16 +195,18 @@ bool sd::Application::setup_scene()
     outputBackground->set_name("output-panel");
     drawable_objects_.emplace_back(Sp<Panel>(outputBackground));
     
+    std::cout << "Create words panel\n";
+    drawable_objects_.emplace_back(std::make_shared<PossibleWords>(
+        sf::Vector2f(39.0, 575.0),
+        sf::Vector2f(1059, 445),
+        "../Resources/Sprites/fantasy_input.png"));
+    
     std::cout << "emplace Inputfield\n";
     std::cout << "Create input field\n";
     InputField *inputField = new InputField(sf::Vector2f(80, 940), sf::Vector2f(1025, 63), sf::Color::Magenta);
     drawable_objects_.emplace_back(Sp<InputField>(inputField));
     
-    std::cout << "Create words panel\n";
-    drawable_objects_.emplace_back(std::make_shared<PossibleWords>(
-        sf::Vector2f(39.0, 605.0),
-        sf::Vector2f(1059, 445),
-        "../Resources/Sprites/fantasy_input.png"));
+    
     
     std::cout << "Create text output\n";
     drawable_objects_.emplace_back(std::make_shared<TextOutput>(sf::Vector2f(90.0, 100.0), sf::Vector2f(1044, 1008), sf::Color::Red));

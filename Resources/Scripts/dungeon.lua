@@ -70,6 +70,14 @@ dungeon = {
 
             is_start = true,
 
+            Goblin = {
+                position = {x = 2, y = 5},
+                layout = goblin_layout,
+                on_interaction = function()
+                    start_new_fight("Goblin")
+                end
+            },
+
             Nothern_Way = {
                 position = {x = 5,y = 0},
                 layout = door_layout,

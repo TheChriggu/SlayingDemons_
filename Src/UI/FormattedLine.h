@@ -10,26 +10,31 @@
 #include <iostream>
 #include "SFML/Graphics.hpp"
 #include <strtk.hpp>
+#include "Font.h"
 //#include "boost/algorithm/string.hpp"
 
-class FormattedLine {
-    std::list<Sp<FormattedWord>> words_;
+namespace sd {
+    class FormattedLine {
 
-    Sp<sf::Font> font_;
-    sf::Vector2f position_;
-    sf::Vector2f size_;
-    sf::Vector2f max_size_;
+        std::list<Sp<FormattedWord>> words_;
 
-public:
-    FormattedLine(std::string string, sf::Vector2f position, const Sp<sf::Font>& font, sf::Vector2f max_size);
-    virtual ~FormattedLine() = default;
-    void format_line(std::string string, const Sp<sf::Font> &font);
+        sf::Vector2f position_;
+        sf::Vector2f size_;
+        sf::Vector2f max_size_;
 
-    void draw_to(const Sp<sf::RenderTarget>& window);
+    public:
+        FormattedLine(std::string string, sf::Vector2f position, sf::Vector2f max_size, Sp<Font> fonts);
 
-    sf::FloatRect get_rect();
-    void move_vertical(float distance);
-};
+        virtual ~FormattedLine() = default;
 
+        void format_line(std::string string, Sp<Font> fonts);
+
+        void draw_to(const Sp<sf::RenderTarget> &window);
+
+        sf::FloatRect get_rect();
+
+        void move_vertical(float distance);
+    };
+}
 
 #endif //_FORMATTEDLINE_H_

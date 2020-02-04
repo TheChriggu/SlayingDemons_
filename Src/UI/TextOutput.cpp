@@ -9,6 +9,7 @@
 #include <Event/TextOutputCreatedEventArgs.h>
 #include <Event/LineToOutputEventArgs.h>
 #include <ScriptEngine/ScriptEngine.h>
+#include <Event/FontsCreatedEventArgs.h>
 
 //TODO(CH): Lines have to move up, when max is reached.
 // TODO(FK): clean up name
@@ -26,19 +27,18 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
 bool sd::TextOutput::setup() {
   ScriptEngine::get().register_all ("print_line", &TextOutput::print_line, this);
 
-    font_ = std::make_shared<sf::Font>();
+    //font_ = std::make_shared<sf::Font>();
 
-    if (!font_->loadFromFile("../Resources/Fonts/comic.ttf"))
+    /*if (!font_->loadFromFile("../Resources/Fonts/comic.ttf"))
     {
         std::cout << "Could not load Font!\n";
         return false;
-    }
+    }*/
 
     lines_.push_back(std::make_shared<FormattedLine>(
         "",
         sf::Vector2f(start_position_ + sf::Vector2f(20, 20)),
-        font_,
-        max_size_));
+        max_size_, fonts_));
 
     // Trigger TextOutput Created Event
     EventSystem::get().trigger(std::make_shared<TextOutputCreatedEventArgs>(Sp<TextOutput>(this)));
@@ -65,8 +65,7 @@ void sd::TextOutput::add_line(std::string string) {
         string, sf::Vector2f(
             lines_.back ()->get_rect ().left,
             lines_.back ()->get_rect ().top + lines_.back ()->get_rect ().height),
-        font_,
-        max_size_
+        max_size_,fonts_
     );
 
     //format line
@@ -122,8 +121,11 @@ void sd::TextOutput::move_vertical(float distance) {
 void sd::TextOutput::handle(std::shared_ptr<EventArgs> e) {
     if (e->type == EventArgs::Type::LINE_TO_OUTPUT) {
         auto arg = dynamic_cast<LineToOutputEventArgs*>(e.get());
-
         add_line (arg->line);
+    }
+    if (e->type == EventArgs::Type::FONTS_CREATED) {
+        auto arg = dynamic_cast<FontsCreatedEventArgs*>(e.get());
+        fonts_ = arg->fonts;
     }
 }
 

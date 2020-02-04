@@ -8,6 +8,7 @@
 #include <Event/NewWordCollectedEventArgs.h>
 #include <Event/EventSystem.h>
 #include <Event/LineToOutputEventArgs.h>
+#include <ScriptEngine/ScriptEngine.h>
 
 sd::Fight::Fight(Sp<sd::Fighter> player, Sp<sd::Monster> enemy)
     : player_(std::move(player))
@@ -113,6 +114,8 @@ void sd::Fight::player_turn (const Sp<sd::Attack>& player_attack, const Sp<sd::A
     EventSystem::get().trigger(args);
     
     enemy_->change_hit_points(-damage.value);
+    
+    ScriptEngine::get().broadcast("player_attacked", player_attack->get_sentence_second_person());
 }
 
 void sd::Fight::enemy_turn (const Sp<sd::Attack>& player_attack, const Sp<sd::Attack>& enemy_attack)
@@ -134,4 +137,6 @@ void sd::Fight::enemy_turn (const Sp<sd::Attack>& player_attack, const Sp<sd::At
     EventSystem::get().trigger(args);
     
     player_->change_hit_points(-damage.value);
+    
+    ScriptEngine::get().broadcast("enemy_attacked", enemy_attack->get_sentence_second_person());
 }

@@ -39,6 +39,9 @@ bool sd::PlayerState::is_fighting() {
 void sd::PlayerState::set_room_as_current(Sp<sd::Room> room) {
     current_room_ = std::move(room);
 
+    ScriptEngine::get().broadcast("room_changed", current_room_->get_name());
+    
+    // TODO: change/delete Goblin code
     auto object = current_room_->get_object_with_name("Goblin");
     if(object)
     {
@@ -59,6 +62,7 @@ void sd::PlayerState::start_new_fight(const std::string& enemy_name) {
     args = std::make_shared<FightStartedEventArgs>(fight_);
     EventSystem::get().trigger(args);
 
+    ScriptEngine::get().broadcast("fight_started_with", enemy_name);
 }
 
 Sp<sd::PlayerVocabulary> sd::PlayerState::get_player_vocabulary() {
@@ -94,6 +98,8 @@ void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
         args = std::make_shared<EventArgs>(EventArgs());
         args->type = sd::EventArgs::Type::FIGHT_ENDED;
         EventSystem::get().trigger(args);
+    
+        ScriptEngine::get().broadcast("fight_stopped");
     }
 
 }

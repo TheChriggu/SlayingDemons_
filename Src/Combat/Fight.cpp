@@ -89,7 +89,7 @@ Sp<sd::Monster> sd::Fight::get_enemy() {
 void sd::Fight::player_turn (const Sp<sd::Attack>& player_attack, const Sp<sd::Attack>& enemy_attack)
 {
     std::shared_ptr<LineToOutputEventArgs> args;
-    args = std::make_shared<LineToOutputEventArgs>(player_attack->get_sentence_second_person());
+    args = std::make_shared<LineToOutputEventArgs>(player_attack->get_sentence(2, enemy_));
     EventSystem::get().trigger(args);
    
     Stats damage_stats = player_attack->get_stats() - (enemy_->get_defense()) ;
@@ -115,13 +115,13 @@ void sd::Fight::player_turn (const Sp<sd::Attack>& player_attack, const Sp<sd::A
     
     enemy_->change_hit_points(-damage.value);
     
-    ScriptEngine::get().broadcast("player_attacked", player_attack->get_sentence_second_person());
+    ScriptEngine::get().broadcast("player_attacked", player_attack->get_sentence(2, enemy_));
 }
 
 void sd::Fight::enemy_turn (const Sp<sd::Attack>& player_attack, const Sp<sd::Attack>& enemy_attack)
 {
     std::shared_ptr<LineToOutputEventArgs> args;
-    args = std::make_shared<LineToOutputEventArgs>(enemy_attack->get_sentence_third_person());
+    args = std::make_shared<LineToOutputEventArgs>(enemy_attack->get_sentence(3, enemy_));
     EventSystem::get().trigger(args);
     
     Stats damage_stats = enemy_attack->get_stats() - (player_->get_defense());
@@ -138,5 +138,5 @@ void sd::Fight::enemy_turn (const Sp<sd::Attack>& player_attack, const Sp<sd::At
     
     player_->change_hit_points(-damage.value);
     
-    ScriptEngine::get().broadcast("enemy_attacked", enemy_attack->get_sentence_second_person());
+    ScriptEngine::get().broadcast("enemy_attacked", enemy_attack->get_sentence(2,enemy_));
 }

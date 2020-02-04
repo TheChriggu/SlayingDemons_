@@ -16,7 +16,7 @@ sd::MonsterList::MonsterList() {
         {
             if(line[0] != "Name")
             {
-                auto monster = std::make_shared<Monster>("../Resources/" + line[17]);
+                auto monster = std::make_shared<Monster>("../Resources/" + line[17], line[20], line[21]);
                 //action->SetName(line[0]);
                 monster->set_base_stats({stof(line[1]), stof(line[2]), stof(line[3]), stof(line[4]), stof(line[5]),
                                             stof(line[6]), stof(line[7]), stof(line[8])}, {stof(line[9]),

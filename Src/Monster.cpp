@@ -6,8 +6,10 @@
 #include <iostream>
 #include <utility>
 
-sd::Monster::Monster(std::string path_to_portrait) {
+sd::Monster::Monster(std::string path_to_portrait, std::string alias, std::string gender) {
     path_to_portrait_ = std::move(path_to_portrait);
+    alias_ = alias;
+    gender_ = gender;
 }
 
 std::string sd::Monster::get_action() {
@@ -35,4 +37,12 @@ void sd::Monster::add_modifier(const std::string& modifier) {
 
 std::string sd::Monster::get_path_to_portrait() {
     return path_to_portrait_;
+}
+
+std::string sd::Monster::get_alias() {
+    return alias_;
+}
+
+std::string sd::Monster::get_gender() {
+    return gender_;
 }

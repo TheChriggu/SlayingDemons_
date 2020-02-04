@@ -114,11 +114,8 @@ void sd::Application::load_vocab()
     {
         if (line[0] != "Name")
         {
-            auto action = std::make_shared<Action>();
-            action->set_name(line[0]);
-            action->set_stats({stof(line[1]), stof(line[2]), stof(line[3]), stof(line[4]), stof(line[5]),
-                                  stof(line[6]), stof(line[7]), stof(line[8])});
-    
+            auto action = std::make_shared<Action>(line);
+
             vocab->add(line[0], action);
         }
     }
@@ -128,21 +125,7 @@ void sd::Application::load_vocab()
     {
         if (line[0] != "Name")
         {
-            auto modifier = std::make_shared<Modifier>();
-            modifier->set_name(line[0]);
-            Stats stats = {stof(line[2]), stof(line[4]), stof(line[6]), stof(line[8]), stof(line[10]),
-                stof(line[12]), stof(line[14]), stof(line[16])};
-            StatwiseOperation stat_ops;
-            stat_ops.speed = stat_ops.from_string(line[1]);
-            stat_ops.accuracy = stat_ops.from_string(line[3]);
-            stat_ops.physical = stat_ops.from_string(line[5]);
-            stat_ops.mental = stat_ops.from_string(line[7]);
-            stat_ops.fire = stat_ops.from_string(line[9]);
-            stat_ops.water = stat_ops.from_string(line[11]);
-            stat_ops.tree = stat_ops.from_string(line[13]);
-            stat_ops.earth = stat_ops.from_string(line[15]);
-    
-            modifier->set_stats(stats, stat_ops);
+            auto modifier = std::make_shared<Modifier>(line);
             vocab->add(line[0], modifier);
         }
     }

@@ -79,9 +79,6 @@ void sd::InputTextProcessor::process_input(const std::string& spell) {
             //check if currently fighting
         else if(player_state_->is_fighting())
         {
-            //check if fight spell
-            std::cout << "fight not nullptr\n";
-            std::cout << "making turn\n";
             if(Vocabulary::all_words->contains(words[0]) && Vocabulary::all_words->contains(words[1]))
             {
                 auto word_1 = Vocabulary::all_words->get(words[0]);

@@ -7,6 +7,7 @@
 
 #include <SFML/System/String.hpp>
 #include <Core/GlobalDefinitions.h>
+#include <vector>
 #include "Fighter.h"
 #include "Word.h"
 
@@ -15,17 +16,19 @@ namespace sd {
     private:
         Sp<Stats> stats_;
         std::string name_;
+        std::string description_2nd_person;
+        std::string description_3rd_person;
 
     public:
-        Action();
+        Action(std::vector<std::string> line);
         ~Action() override = default;
 
-        void load_from(std::string source);
         void set_stats(const Stats& stats);
-        void set_name(std::string name);
 
         Sp<sd::Stats> get_stats();
         std::string get_name();
+        std::string get_sentence_2nd_person();
+        std::string get_sentence_3rd_person();
 
         Type get_type() override;
     };

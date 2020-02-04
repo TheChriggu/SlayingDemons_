@@ -16,9 +16,7 @@ sd::PlayerState::PlayerState()
     : Subscriber() {
     fight_ = nullptr;
     player_ = std::make_shared<Fighter>();
-    floor_ = std::make_shared<Floor>();
-    floor_->setup();
-    current_room_ = floor_->get_start_room();
+    //current_room_ = current_floor_->get_start_room();
     player_vocabulary_ = std::make_shared<PlayerVocabulary>();
     
     ScriptEngine::get().register_all("start_new_fight", &PlayerState::start_new_fight, this);
@@ -36,7 +34,7 @@ bool sd::PlayerState::is_fighting() {
     return fight_ != nullptr;
 }
 
-void sd::PlayerState::set_room_as_current(Sp<sd::Room> room) {
+void sd::PlayerState::set_current_room(Sp<sd::Room> room) {
     current_room_ = std::move(room);
 
     auto object = current_room_->get_object_with_name("Goblin");
@@ -45,6 +43,11 @@ void sd::PlayerState::set_room_as_current(Sp<sd::Room> room) {
         auto goblin = std::dynamic_pointer_cast<Goblin>(object);
         goblin->set_player_vocab(get_player_vocabulary());
     }
+}
+
+void sd::PlayerState::set_current_floor(Sp<sd::Floor> floor)
+{
+    current_floor_ = std::move(floor);
 }
 
 
@@ -68,7 +71,7 @@ Sp<sd::PlayerVocabulary> sd::PlayerState::get_player_vocabulary() {
 void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
     if (e->type == EventArgs::Type::WALKED_THROUGH_DOOR) {
         auto arg = dynamic_cast<WalkedThroughDoorEventArgs*>(e.get());
-        set_room_as_current(floor_->get_room(arg->door->get_connected_room()));
+        set_current_room(current_floor_->get_room(arg->door->get_connected_room()));
 
         std::shared_ptr<LineToOutputEventArgs> args;
         args = std::make_shared<LineToOutputEventArgs>(get_current_room()->get_enter_description());
@@ -97,3 +100,4 @@ void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
     }
 
 }
+

@@ -30,6 +30,8 @@ namespace sd {
         Sp<sf::RenderWindow> window_;
         std::vector<Sp<DrawableObject>> drawable_objects_;
         
+        Sp<World> world_;
+        
         Sp<ShaderEngine> shader_engine_;
 
         void load_vocab();

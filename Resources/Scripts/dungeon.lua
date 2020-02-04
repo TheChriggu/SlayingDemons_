@@ -64,7 +64,7 @@ path_layout={
 
 dungeon = {
     floor1 = {
-        
+        is_start = true,
         Southern_Forest={
             --layout = { {x = 2, y = 0}, {x=10, y= 0}, {x=10, y=6}, {x=2, y= 6}},
 

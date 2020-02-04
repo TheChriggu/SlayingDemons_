@@ -15,9 +15,10 @@ namespace sd {
     class PlayerState : public Subscriber {
     private:
         Sp<Room> current_room_;
+        Sp<Floor> current_floor_;
         Sp<Fight> fight_;
         Sp<Fighter> player_;
-        Sp<Floor> floor_;
+        
         Sp<PlayerVocabulary> player_vocabulary_;
 
     public:
@@ -28,7 +29,8 @@ namespace sd {
         Sp<Fight> get_fight();
         bool is_fighting();
 
-        void set_room_as_current(Sp<Room> room);
+        void set_current_room(Sp<Room> room);
+        void set_current_floor(Sp<Floor> floor);
         void start_new_fight(const std::string& enemy_name);
 
         Sp<PlayerVocabulary> get_player_vocabulary();

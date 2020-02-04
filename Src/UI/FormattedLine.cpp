@@ -36,7 +36,7 @@ void sd::FormattedLine::format_line(std::string string, Sp<Font> fonts) {
     format.size_ = 25;
     format.is_button_ = false;
     format.color_ = sf::Color::Black;
-    format.font_ = fonts->GetFont("fantasy");
+    format.font_ = fonts->GetCurrentFont();
     
     sf::Vector2f next_position =  sf::Vector2f(get_rect ().left, get_rect ().top + get_rect ().height);
     

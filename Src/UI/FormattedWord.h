@@ -9,27 +9,33 @@
 #include "SFML/Graphics.hpp"
 #include "Format.h"
 #include <strtk.hpp>
+#include "Font.h"
 
-class FormattedWord {
+namespace sd {
+    class FormattedWord {
 
-    Sp<sf::Text> text_;
+        Sp<sf::Text> text_;
 
-public:
-    FormattedWord(std::string text, sf::Vector2f position, sd::Format& format);
-    virtual ~FormattedWord() = default;
+    public:
+        FormattedWord(std::string text, sf::Vector2f position, sd::Format &format, Sp<Font> fonts);
 
-    void draw_to(const Sp<sf::RenderTarget>& window);
+        virtual ~FormattedWord() = default;
 
-    void set_position(sf::Vector2f position);
-    sf::FloatRect get_rect();
-    void move_vertical(float distance);
-    
+        void draw_to(const Sp<sf::RenderTarget> &window);
+
+        void set_position(sf::Vector2f position);
+
+        sf::FloatRect get_rect();
+
+        void move_vertical(float distance);
+
     private:
-    void apply_format_to_text(sd::Format format);
-    void apply_bb_to_format(std::string code, sd::Format& format);
-    
-    bool is_bb();
-};
+        void apply_format_to_text(sd::Format format);
 
+        void apply_bb_to_format(std::string code, sd::Format &format, Sp<Font> fonts);
+
+        bool is_bb();
+    };
+}
 
 #endif //_FORMATTEDWORD_H_

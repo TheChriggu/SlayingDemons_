@@ -21,7 +21,8 @@ namespace sd {
             GOBLIN_DEFEATED,
             PLAYER_STATE_CREATED,
             FIGHT_STARTED,
-            FIGHT_ENDED
+            FIGHT_ENDED,
+            FONTS_CREATED
         };
 
         EventArgs();

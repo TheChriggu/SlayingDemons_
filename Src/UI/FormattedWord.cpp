@@ -4,7 +4,7 @@
 
 #include "FormattedWord.h"
 
-FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Format& format) {
+sd::FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Format& format, Sp<Font> fonts) {
     
     text_ = std::make_shared<sf::Text> ();
     text_->setPosition (position);
@@ -15,7 +15,7 @@ FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Format
         {
             std::string code = std::string (text, 0, text.find_first_of (']') + 1);
             text.erase (0, code.size ());
-            apply_bb_to_format (code, format);
+            apply_bb_to_format (code, format, fonts);
         }
     
     //set the actual word
@@ -33,7 +33,7 @@ FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Format
         {
             std::string code = std::string (text, 0, text.find_first_of (']') + 1);
             text.erase (0, code.size ());
-            apply_bb_to_format (code, format);
+            apply_bb_to_format (code, format, fonts);
         }
         
     //add trailing spaces or punctuation if not included in word
@@ -43,7 +43,7 @@ FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Format
         }
 }
 
-void FormattedWord::draw_to(const Sp<sf::RenderTarget>& window) {
+void sd::FormattedWord::draw_to(const Sp<sf::RenderTarget>& window) {
 
     if(!is_bb ())
     {
@@ -51,26 +51,26 @@ void FormattedWord::draw_to(const Sp<sf::RenderTarget>& window) {
     }
 }
 
-void FormattedWord::set_position(sf::Vector2f position) {
+void sd::FormattedWord::set_position(sf::Vector2f position) {
     text_->setPosition(position);
 }
 
-sf::FloatRect FormattedWord::get_rect() {
+sf::FloatRect sd::FormattedWord::get_rect() {
     return text_->getGlobalBounds();
 }
 
-void FormattedWord::move_vertical(float distance) {
+void sd::FormattedWord::move_vertical(float distance) {
     sf::Vector2f position = text_->getPosition();
     position.y += distance;
     text_->setPosition(position);
 }
 
-bool FormattedWord::is_bb ()
+bool sd::FormattedWord::is_bb ()
 {
     return text_->getString ()[0] == '[';
 }
 
-void FormattedWord::apply_format_to_text (sd::Format format)
+void sd::FormattedWord::apply_format_to_text (sd::Format format)
 {
     text_->setFont(*(format.font_));
     text_->setCharacterSize(format.size_);
@@ -83,7 +83,7 @@ void FormattedWord::apply_format_to_text (sd::Format format)
         }
 
 }
-void FormattedWord::apply_bb_to_format (std::string code, sd::Format &format)
+void sd::FormattedWord::apply_bb_to_format (std::string code, sd::Format &format, Sp<Font> fonts)
 {
     if(code == "[b]")
         {
@@ -101,4 +101,13 @@ void FormattedWord::apply_bb_to_format (std::string code, sd::Format &format)
         {
             format.style_ = format.style_ & ~(sf::Text::Style::Italic);
         }
+    if(code.find("[size=") != std::string::npos)
+    {
+        int size = std::stoi(code.substr(6, code.length()-7));
+        format.size_ = size;
+    }
+    if(code.find("[font=") != std::string::npos)
+    {
+        format.font_ = fonts->GetFont(code.substr(6, code.length()-7));
+    }
 }

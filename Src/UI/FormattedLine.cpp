@@ -6,28 +6,27 @@
 #include <memory>
 
 
-FormattedLine::FormattedLine(std::string string, sf::Vector2f position, const Sp<sf::Font>& font, sf::Vector2f max_size) {
+sd::FormattedLine::FormattedLine(std::string string, sf::Vector2f position, sf::Vector2f max_size, Sp<Font> fonts) {
     sd::Format format;
     format.style_ = sf::Text::Italic;
     format.size_ = 25;
     format.is_button_ = false;
     format.color_ = sf::Color::Red;
-    format.font_ = font_;
-    
-    font_ = font;
+    format.font_ = fonts->GetFont("fantasy");
+
     position_ = position;
     max_size_ = max_size;
-    words_.push_back(std::make_shared<FormattedWord>("", position, format));
-    format_line (string, font);
+    words_.push_back(std::make_shared<FormattedWord>("", position, format, fonts));
+    format_line (string, fonts);
 }
 
-void FormattedLine::draw_to(const Sp<sf::RenderTarget>& window) {
+void sd::FormattedLine::draw_to(const Sp<sf::RenderTarget>& window) {
     for (const auto& word : words_) {
         word->draw_to (window);
     }
 }
 
-void FormattedLine::format_line(std::string string, const Sp<sf::Font> &font) {
+void sd::FormattedLine::format_line(std::string string, Sp<Font> fonts) {
     /*std::vector<std::string> splitVec;
     std::string delims = " []";
     boost::split(splitVec, string, boost::algorithm::is_any_of(delims));*/
@@ -37,7 +36,7 @@ void FormattedLine::format_line(std::string string, const Sp<sf::Font> &font) {
     format.size_ = 25;
     format.is_button_ = false;
     format.color_ = sf::Color::Black;
-    format.font_ = font_;
+    format.font_ = fonts->GetFont("fantasy");
     
     sf::Vector2f next_position =  sf::Vector2f(get_rect ().left, get_rect ().top + get_rect ().height);
     
@@ -46,7 +45,7 @@ void FormattedLine::format_line(std::string string, const Sp<sf::Font> &font) {
     
     for(auto word : string_vector)
         {
-                    Sp<FormattedWord> newWord = std::make_shared<FormattedWord> (FormattedWord (word, next_position, format));
+                    Sp<FormattedWord> newWord = std::make_shared<FormattedWord> (FormattedWord (word, next_position, format, fonts));
                     next_position.x += newWord->get_rect ().width;
                     if (next_position.x > max_size_.x)
                         {
@@ -59,7 +58,7 @@ void FormattedLine::format_line(std::string string, const Sp<sf::Font> &font) {
         }
 }
 
-sf::FloatRect FormattedLine::get_rect(){
+sf::FloatRect sd::FormattedLine::get_rect(){
     sf::FloatRect ret_val = words_.front ()->get_rect ();
 
     for (const auto& word : words_)
@@ -85,11 +84,12 @@ sf::FloatRect FormattedLine::get_rect(){
     return ret_val;
 }
 
-void FormattedLine::move_vertical(float distance) {
+void sd::FormattedLine::move_vertical(float distance) {
     position_.y += distance;
     for(const auto& word : words_)
     {
         word->move_vertical (distance);
     }
 }
+
 

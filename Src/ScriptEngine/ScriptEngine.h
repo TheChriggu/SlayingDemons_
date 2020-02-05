@@ -18,6 +18,8 @@ namespace sd {
         static Up<sd::ScriptEngine> instance_;
 
         std::vector<std::shared_ptr<Script>> scripts_;
+        
+        bool broadcast_locked_ = true;
 
     public:
 
@@ -28,10 +30,13 @@ namespace sd {
         static ScriptEngine& get();
 
         void add_script(const boost::filesystem::path& url);
+        void set_broadcast_locked(bool locked);
 
         template <typename... Args>
         void broadcast(const std::string& function, Args&&... args) {
 
+            if (broadcast_locked_) return;
+            
             for (const auto& script : scripts_) {
                 script->call (function, std::forward<Args> (args)...);
             }

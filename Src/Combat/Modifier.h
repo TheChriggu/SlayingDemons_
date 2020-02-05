@@ -7,6 +7,7 @@
 
 #include <SFML/System/String.hpp>
 #include <Core/GlobalDefinitions.h>
+#include <vector>
 #include "Fighter.h"
 #include "Word.h"
 
@@ -16,19 +17,24 @@ namespace sd {
         Sp<Stats> stats_;
         Sp<StatwiseOperation> statwise_operation_;
         std::string name_;
+        std::string adjective_;
+        std::string adverbial_;
+        std::string material_;
 
     public:
-        Modifier();
+        Modifier(std::vector<std::string> line);
         ~Modifier() override = default;
 
-        void load_from(std::string source);
         void set_stats(Stats stats, StatwiseOperation statwise_operation);
-        void set_name(const std::string& name);
 
         Stats apply_to(const Sp<Stats>& stats);
         std::string get_name();
 
         Type get_type() override;
+
+        std::string get_adjective();
+        std::string get_adverbial();
+        std::string get_material();
     };
 }
 

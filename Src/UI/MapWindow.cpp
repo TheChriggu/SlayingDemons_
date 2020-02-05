@@ -81,7 +81,7 @@ void sd::MapWindow::handle(Sp<sd::EventArgs> e) {
 
     if (e->type == EventArgs::Type::PLAYER_STATE_CREATED) {
         auto args = dynamic_cast<PlayerStateCreatedEventArgs*>(e.get());
-        player_state_ = args->player_state;
+        player_state_ = Sp<PlayerState>(args->player_state);
     }
 
     if (e->type == EventArgs::Type::FIGHT_STARTED) {

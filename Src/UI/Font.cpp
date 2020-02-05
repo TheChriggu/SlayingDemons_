@@ -16,7 +16,7 @@ sd::Font::Font() {
     code_font_->loadFromFile("../Resources/Fonts/webdings.ttf");
 
 
-    EventSystem::get().trigger(std::make_shared<FontsCreatedEventArgs>(Sp<Font>(this)));
+    EventSystem::get().trigger(std::make_shared<FontsCreatedEventArgs>(this));
 
 }
 

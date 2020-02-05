@@ -5,7 +5,7 @@
 #include "WalkedThroughDoorEventArgs.h"
 #include <utility>
 
-sd::WalkedThroughDoorEventArgs::WalkedThroughDoorEventArgs(Sp<sd::Door> door)
-    : door(std::move(door)) {
+sd::WalkedThroughDoorEventArgs::WalkedThroughDoorEventArgs(sd::Door* door)
+    : door(door) {
     this->type = EventArgs::Type::WALKED_THROUGH_DOOR;
 }

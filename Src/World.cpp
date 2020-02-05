@@ -15,7 +15,7 @@ bool sd::World::setup() {
     player_state_ = std::make_shared<PlayerState>();
     
     EventSystem& event_system = EventSystem::get();
-    event_system.trigger(std::make_shared<PlayerStateCreatedEventArgs>(player_state_));
+    event_system.trigger(std::make_shared<PlayerStateCreatedEventArgs>(player_state_.get()));
     
     
     auto dungeon_script = ScriptEngine::get().get_script("dungeon");

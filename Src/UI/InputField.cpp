@@ -5,6 +5,7 @@
 #include "InputField.h"
 #include <iostream>
 #include <memory>
+#include <ScriptEngine/ScriptEngine.h>
 
 // TODO(FK): clean up name
 sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color)
@@ -59,10 +60,12 @@ void sd::InputField::handle(sf::Event event) {
         if(event.type == sf::Event::KeyPressed)
         {
         
-        sf::String strg = text_->getString();
+            sf::String strg = text_->getString();
     
-        text_processor_->process_input(strg.toAnsiString());
-        text_->setString("");
+            text_processor_->process_input(strg.toAnsiString());
+            text_->setString("");
+    
+            ScriptEngine::get().broadcast("input_received", strg.toAnsiString());
 
         //std::vector<sf::String> strings = textProcessor->SplitBySpace(text->getString());
 

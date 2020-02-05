@@ -1,0 +1,27 @@
+Name	Speed	Accuracy	Physical	Mental	Fire	Water	Tree	Earth	2nd person description	3rd person description
+Arrow	1	5	5	5	5	5	5	5	You draw the string of your bow far back and let it go. With your eyes you follow the trajectory of the [adjective] arrow you just shot as it flies towards the [monster]	The [monster] draws the string of [his] bow far back and lets it go. With [his] eyes [he] follow the trajectory of the [adjective] arrow [he] just shot.
+Attack	5	5	7	1	1	1	1	1	You charge at the [monster] and attack [him] [adverbial].	The [monster] charges at you and attacks you [adverbial].
+Bat	1	5	7	3	3	3	3	3	You take aim and then swing your bat of [material] at the [monster].	The [monster] takes aim and swings [his] bat of [material] at you.
+Branch	1	5	5	5	5	5	5	5	You pick up a nearby tree branch and imbue it with the powers of [material], before throwing it at the [monster].	The [monster] picks up a nearby tree branch, imbues it with the powers of [material], and then throws it at you.
+Catapult	1	5	5	5	5	5	5	5	It takes a lot of time to load the catapult of [material] up with a heavy rock. Nevertheless, it is very staisfying to see the [adjective] projectile fly towards the [monster].	The [monster] rolls up a catapult of [material], then slowly loads it up with a [adjective] rock. [he] then pulls the lever, and you see the projectile flying towards you.
+Curse	1	5	0.1	5	5	5	5	5	You wiggle your hands around in the air, and bestow a curse of [material] upon the [monster].	Wiggling [his] hands around for a while, the [monster] bestows upon you the curse of [material].
+Eye	1	5	5	5	5	5	5	5	You look at the [monster] [adverbial].	The monster looks at you [adverbial].
+Hit	7	7	7	1	1	1	1	1	You charge at the [monster] and hit [him] [adverbial].	The [monster] charges at you and hits [adverbial].
+Honk	20	20	1	10	2	2	2	2	You honk at the [monster] [adverbial].	The [monster] honks at you [adverbial].
+Howl	1	5	5	5	5	5	5	5	You howl at the [monster] [adverbial].	The [monster] howls at you [adverbial].
+Kick	7	8	12	1	1	1	1	1	You kick the [monster] [adverbial].	The [monster] kicks you [adverbial].
+Orb	1	5	5	5	5	5	5	5	You summon an orb of [material] in your hands and throw it at the [monster].	The [monster] summons an orb of [material] in [his] hands and throws it at you.
+Herb	1	5	5	5	5	5	5	5	Somewhere in your pouch you find a mysterious herb. You eat it. It tastes horrible, and causes you to spit [material] at the [monster].	Out of nowhere the [monster] takes a mysterious herb. [he] puts it in [his] mouth, which causes [him] to spit [material] at you.
+Poke	4	2	6	10	3.5	3	3	3	You point with your left index at the [monster], walk towards [him] and slightly poke [him] [adverbial].	The [monster] points with [his] left index at you, walks towards you and slightly pokes you [adverbial].
+Shot	1	5	5	5	5	5	5	5	You make a finger gun and shoot the [monster] with [material].	The [monster] makes a finger gun and shoots you with [material].
+Slash	10	4	9	2	1	1	1	1	Taking out your blade, you swiftly slash the [monster] [adverbial]	The [monster] takes out [his] blade and swiftly slashes you [adverbial].
+Smash	2	5	8	3	2	2	2	2	You lift your fists, jump up and pound everything below you with [a] [adjective] smash.	The [monster] lifts his fists, jumps into the air and pounds the ground with [a] [adjective] smash.
+Smite	1	5	5	5	5	5	5	5	You smite the [monster] [adverbial].	The [monster] smites you [adverbial].
+Scream	1	5	5	5	5	5	5	5	After taking a deep breath, you open your mouth and scream at the [monster] [adverbial].	The ]monster] takes a deep breath and screms at you [adverbial].
+Spell	1	5	5	5	5	5	5	5	Focusing your magic powers in your hands, you call upon the powers of [material] and cast a [adjective] spell onto the [monster].	The [monster] focuses all [his] magic power into [his] hands, calls upon the powers of [material] and casts [a] adjective spell onto you.
+Storm	1	5	5	5	5	5	5	5	You summon a [adjective] storm. Windy clouds of [material] surround the [monster].	The [monster] summons a [adjective] storm. Windy clouds of [material] surround you.
+Sword	1	5	5	5	5	5	5	5	You quickly draw your [adjective] sword, aim it at the [monster] and slash [him] with it.	The [monster] quickly draws [his] [adjective] sword and swings it at you.
+Tree	1	5	5	5	5	5	5	5	Praying to the Goddess of Nature makes [a] [adjective] tree grow next to the [monster]. Its leaves are made of [material].	Praying to the Goddess of Nature makes [a] [adjective] tree grow next you. Its leaves are made of [material].
+Wall	1	5	5	5	5	5	5	5	Walls of [material] surround the [monster].	You are surrounded by walls of [material]
+Whip	1	5	5	5	5	5	5	5	You grab the whip hanging on your belt, and swing it towards the [monster]. [a] [adjective] bang can be heard everywhere.	The [monster] grabs a whip hanging from [his] belt and swings it at you. [a] [adjective] bang can be heard everywhere.
+Whisper	1	5	5	5	5	5	5	5	A silent call of [material] reaches the ears of the [monster]	A silent call of [material] reaches your ears.

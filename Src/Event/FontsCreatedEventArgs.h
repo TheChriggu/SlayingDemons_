@@ -12,10 +12,10 @@
 namespace sd {
     class FontsCreatedEventArgs : public EventArgs {
     public:
-        explicit FontsCreatedEventArgs(Sp<Font> fonts);
+        explicit FontsCreatedEventArgs(Font* fonts);
         ~FontsCreatedEventArgs() override = default;
 
-        Sp<Font> fonts;
+        Font* fonts;
     };
 }
 

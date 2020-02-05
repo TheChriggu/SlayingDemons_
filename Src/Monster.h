@@ -16,9 +16,11 @@ namespace sd
         std::vector<std::string> actions_;
         std::vector<std::string> modifiers_;
         std::string path_to_portrait_;
+        std::string alias_;
+        std::string gender_;
 
     public:
-        explicit Monster(std::string path_to_portrait);
+        explicit Monster(std::string path_to_portrait, std::string alias, std::string gender);
         ~Monster() override = default;
 
         std::string get_action();
@@ -28,6 +30,8 @@ namespace sd
         void add_modifier(const std::string& modifier);
 
         std::string get_path_to_portrait();
+        std::string get_alias();
+        std::string get_gender();
     };
 }
 

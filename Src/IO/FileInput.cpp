@@ -87,3 +87,41 @@ std::shared_ptr<std::vector<boost::filesystem::path>> sd::FileInput::get_files(c
     return content;
 }
 
+Sp<std::vector<std::vector<std::string>>> sd::FileInput::load_tsv(const boost::filesystem::path &url) {
+
+    std::shared_ptr<std::vector<std::vector<std::string>>> content(new std::vector<std::vector<std::string>>);
+    std::string field;
+    std::string row;
+
+    try {
+        std::ifstream file(url.string());
+
+        if (file.is_open()) {
+
+            while(std::getline(file,row,'\n')) {
+
+                content->emplace_back(std::vector<std::string>());
+                std::stringstream cheat(row);
+                while (std::getline(cheat, field, '\t')) {
+                    if (field.empty()) continue;
+/*                    if (field[0] == ASCII_NEWLINE) {
+                        content->emplace_back(std::vector<std::string>());
+                        continue;
+                    }
+*/
+                    content->back().emplace_back(field);
+                }
+
+            }
+
+            file.close();
+        } else {
+            std::cerr << "open TSV file " << url << " failed!" << std::endl;
+        }
+    } catch (std::exception& ex) {
+        std::cerr << "Loading TSV failed due to exception: " << ex.what() << std::endl;
+    }
+
+    return content;
+}
+

@@ -90,3 +90,4 @@ float sd::Fighter::get_mental_state() {
 float sd::Fighter::get_hit_points() {
     return hit_points_;
 }
+

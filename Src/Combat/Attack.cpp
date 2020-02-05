@@ -99,6 +99,10 @@ std::string sd::Attack::substitute(std::string search_in, std::string search_for
     return retVal;
 }
 
+std::string sd::Attack::get_attack_name() {
+    return modifier_->get_name() + " " + action_->get_name();
+}
+
 
 
 

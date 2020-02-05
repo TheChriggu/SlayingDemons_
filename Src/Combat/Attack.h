@@ -25,11 +25,9 @@ namespace sd
 
         Stats get_stats();
 
-        //std::string get_sentence_second_person(Sp<Monster> attacked_monster);
-        //std::string get_sentence_third_person(Sp<Monster> attacking_monster);
-
         std::string get_sentence(int perspective, Sp<Monster> monster);
         std::string substitute(std::string search_in, std::string search_for, std::string replace_with);
+        std::string get_attack_name();
 
 
 

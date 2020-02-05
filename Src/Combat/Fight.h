@@ -19,7 +19,6 @@ namespace sd {
     private:
     Sp<Fighter> player_;
     Sp<Monster> enemy_;
-    //Attack GetAttack(Fighter* _fighter, sf::String _action, sf::String _modifier);
 
     public:
         Fight(Sp<Fighter> player, Sp<Monster> enemy);
@@ -30,8 +29,9 @@ namespace sd {
         Sp<Monster> get_enemy();
     
     private:
-        void player_turn(const Sp<Attack>& player_attack, const Sp<Attack>& enemy_attack);
-        void enemy_turn(const Sp<Attack>& player_attack, const Sp<Attack>& enemy_attack);
+        void player_turn(const Sp<Attack>& player_attack);
+        void enemy_turn(const Sp<Attack>& enemy_attack);
+        std::string get_enemy_pronoun(std::string declination);
 
     };
 }

@@ -15,9 +15,7 @@ sd::Monster::Monster(std::string path_to_portrait, std::string alias, std::strin
 std::string sd::Monster::get_action() {
     std::cout << "getting enemy_ action\n";
     int i = rand()%(actions_.size());
-    //std::cout << "enemy_ move is: " << std::string(actions->at(i)) << "\n";
     std::string ret_val = actions_.at(i);
-    //std::string strg = std::string(retVal);
     return ret_val;
 }
 

@@ -46,9 +46,9 @@ void sd::Door::be_interacted_with() {
     else {
         std::shared_ptr<WalkedThroughDoorEventArgs> args;
         args = std::make_shared<WalkedThroughDoorEventArgs>(
-            Sp<Door>(this)
+            this
                 );
-        args->type = sd::EventArgs::Type::WALKED_THROUGH_DOOR;
+        //args->type = sd::EventArgs::Type::WALKED_THROUGH_DOOR;
         EventSystem::get().trigger(args);
 
         /*if (nextRoom) {

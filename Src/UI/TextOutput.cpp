@@ -41,7 +41,7 @@ bool sd::TextOutput::setup() {
         max_size_, fonts_));
 
     // Trigger TextOutput Created Event
-    EventSystem::get().trigger(std::make_shared<TextOutputCreatedEventArgs>(Sp<TextOutput>(this)));
+    EventSystem::get().trigger(std::make_shared<TextOutputCreatedEventArgs>(this));
 
     return DrawableObject::setup ();
 }
@@ -125,7 +125,7 @@ void sd::TextOutput::handle(std::shared_ptr<EventArgs> e) {
     }
     if (e->type == EventArgs::Type::FONTS_CREATED) {
         auto arg = dynamic_cast<FontsCreatedEventArgs*>(e.get());
-        fonts_ = arg->fonts;
+        fonts_ = Sp<Font>(arg->fonts);
     }
 }
 

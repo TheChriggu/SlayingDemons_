@@ -115,7 +115,7 @@ dungeon = {
         },
 
         Western_Forest = {
-            layout = { {x = 2, y = 0}, {x=10, y= 0}, {x=10, y=6}, {x=2, y= 6}},
+            --layout = { {x = 2, y = 0}, {x=10, y= 0}, {x=10, y=6}, {x=2, y= 6}},
 
             Way_back_down = {
                 position = {x = 5,y = 6},
@@ -184,7 +184,7 @@ dungeon = {
         },
 
         Eastern_Forest = {
-            layout = { {x = 0, y = 0}, {x=7, y= 0}, {x=7, y=6}, {x=0, y= 6}},
+            --layout = { {x = 0, y = 0}, {x=7, y= 0}, {x=7, y=6}, {x=0, y= 6}},
 
             Southern_Way = {
                 position = {x = 1,y = 6},
@@ -203,19 +203,19 @@ dungeon = {
         },
 
         Deep_Forest = {
-            layout = { {x = 0, y = 0}, {x=10, y= 0}, {x=10, y=4}, {x=0, y= 4}},
+            --layout = { {x = 0, y = 0}, {x=10, y= 0}, {x=10, y=4}, {x=0, y= 4}},
 
-                Nothern_Way = {
-                position = {x = 5,y = 0},
+            Nothern_Way = {
+            position = {x = 5,y = 0},
+            layout = door_layout,
+            next_room = "Clearing",
+            },
+
+            Western_Way = {
+                position = {x = 0,y = 3},
                 layout = door_layout,
-                next_room = "Clearing",
-                },
-
-                Western_Way = {
-                    position = {x = 0,y = 3},
-                    layout = door_layout,
-                    next_room = "Western_Forest",
-                },
+                next_room = "Western_Forest",
+            },
 
 
             Chest = {
@@ -249,6 +249,7 @@ dungeon = {
             },
         },
 
+        --[[
         room1 = {
 
             sofa = {
@@ -364,6 +365,7 @@ dungeon = {
                 next_room = "room2"
             }
         },
+        ]]
     }
 }
 

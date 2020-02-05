@@ -86,7 +86,7 @@ void sd::PossibleWords::handle(std::shared_ptr<EventArgs> e) {
         auto args = dynamic_cast<PlayerStateCreatedEventArgs *>(e.get());
         
         player_vocabulary_ = args->player_state->get_player_vocabulary();
-        player_state_ = args->player_state;
+        player_state_ = Sp<PlayerState>(args->player_state);
         
         std::cout << "~~Words: " << std::endl;
         for (const auto& word : player_vocabulary_->get_modifiers())
@@ -97,7 +97,7 @@ void sd::PossibleWords::handle(std::shared_ptr<EventArgs> e) {
 
     if (e->type == EventArgs::Type::FONTS_CREATED) {
         auto arg = dynamic_cast<FontsCreatedEventArgs*>(e.get());
-        fonts_ = arg->fonts;
+        fonts_ = Sp<Font>(arg->fonts);
      }
 }
 

@@ -38,14 +38,6 @@ void sd::PlayerState::set_current_room(Sp<sd::Room> room) {
     current_room_ = std::move(room);
 
     ScriptEngine::get().broadcast("room_changed", current_room_->get_name());
-    
-    // TODO: change/delete Goblin code
-    auto object = current_room_->get_object_with_name("Goblin");
-    if(object)
-    {
-        auto goblin = std::dynamic_pointer_cast<Goblin>(object);
-        goblin->set_player_vocab(get_player_vocabulary());
-    }
 }
 
 void sd::PlayerState::set_current_floor(Sp<sd::Floor> floor)
@@ -62,7 +54,7 @@ void sd::PlayerState::start_new_fight(const std::string& enemy_name) {
     fight_ = std::make_shared<Fight>(player_, goblin);
 
     std::shared_ptr<FightStartedEventArgs> args;
-    args = std::make_shared<FightStartedEventArgs>(fight_);
+    args = std::make_shared<FightStartedEventArgs>(fight_.get());
     EventSystem::get().trigger(args);
 
     ScriptEngine::get().broadcast("fight_started_with", enemy_name);
@@ -94,7 +86,7 @@ void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
     }
 
     if (e->type == EventArgs::Type::GOBLIN_DEFEATED) {
-        ((Door *) current_room_->get_object_with_name("east_door").get())->set_locked(false);
+        //((Door *) current_room_->get_object_with_name("east_door").get())->set_locked(false);
         fight_.reset();
 
         std::shared_ptr<EventArgs> args;

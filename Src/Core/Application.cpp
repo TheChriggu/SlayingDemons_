@@ -55,7 +55,7 @@ bool sd::Application::setup()
         object->setup();
     }
 
-
+    ScriptEngine::get().set_broadcast_locked(false);
     
     std::cout << "End initialization\n";
     

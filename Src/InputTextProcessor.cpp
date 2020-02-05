@@ -163,13 +163,13 @@ Sp<sd::PlayerState> sd::InputTextProcessor::get_player_state() {
 void sd::InputTextProcessor::handle(std::shared_ptr<sd::EventArgs> e) {
     if (e->type == EventArgs::Type::TEXT_OUTPUT_CREATED) {
         auto arg = dynamic_cast<TextOutputCreatedEventArgs*>(e.get());
-        output_ = arg->output;
+        output_ = Sp<TextOutput>(arg->output);
     }
     
     if (e->type == EventArgs::Type::PLAYER_STATE_CREATED) {
         auto arg = std::dynamic_pointer_cast<PlayerStateCreatedEventArgs>(e);
         
-        player_state_ = arg->player_state;
+        player_state_ = Sp<PlayerState>(arg->player_state);
     }
 }
 

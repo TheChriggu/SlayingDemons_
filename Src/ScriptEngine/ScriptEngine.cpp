@@ -66,4 +66,7 @@ std::shared_ptr<Script> sd::ScriptEngine::get_script(const std::string& name) co
 
 Up<sd::ScriptEngine> sd::ScriptEngine::instance_ = nullptr;
 
-
+void sd::ScriptEngine::set_broadcast_locked(bool locked)
+{
+    broadcast_locked_ = locked;
+}

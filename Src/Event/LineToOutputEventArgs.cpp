@@ -3,8 +3,9 @@
 //
 
 #include "LineToOutputEventArgs.h"
+#include <utility>
 
 sd::LineToOutputEventArgs::LineToOutputEventArgs(std::string line)
-    : line(line) {
+    : line(std::move(line)) {
     this->type = EventArgs::Type::LINE_TO_OUTPUT;
 }

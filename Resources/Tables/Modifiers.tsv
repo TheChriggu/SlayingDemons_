@@ -1,40 +1,40 @@
-Name	SpeedOp	Speed	AccOp	Accuracy	PhysOp	Physical	MentOp	Mental	FirOp	Fire	WatOp	Water	TreeOp	Tree	EarthOp	Earth	Adjective	Adverbial Phrase	Material	
-Acid	+	56	+	7	*	4	*	3	*	1	*	1	*	1	*	1	highly acidic	with a lot of acid	everburning acid	
-Amorous	*	56	+	56	*	4	*	1	*	1	*	1	*	1	*	1	loving	with a lot of love	overflowing love	
-Animalistic	+	756	+	1	*	3	*	1	+	46	*	0.1	*	1	*	1	wild	like a wild beast	pure animal instinct	
-Animated	*	7	*	23	v	5	*	1	*	4	*	1	*	1	*	1	non-stop moving	while jumping around	the joy of movement	
-Booming	*	6	+	576	+	1	*	5	+	6	*	1	*	1	*	3	incredibly loud	with an ear shattering noise	ear shattering sound	
-Bright	*	6	*	1	+	4	*	1	*	1	*	1	*	1	*	1	blinding	with a blinding light	pure light	
-Chaotic	*	6	+	5	*	4	*	1	+	45	*	1	*	1	*	1	chaotic	in an incomprehensible manner	chaos	
-Chromatic	*	6	*	6	*	2	*	1	*	1	*	1	*	1	*	1	colorful	with all the colors of the rainbow	paint	
-Cyber	*	1.5	*	0.7	*	0	+	10	*	1	*	1	*	1	*	1	digital	like [a] true hacker	binary code	
-Dancing	*	1	+	567	*	4	*	1	*	4	*	1	*	5	*	1	annoying	annoyingly	a pink tutu	
-Dissonant	*	67	+	6	+	7	*	4	*	1	*	1	*	1	*	5	uncomfortably sounding	in a way that hurts the ears.	wrong notes	
-Divine	*	7	+	567	+	1	+	2	+	45	*	1	*	5	*	1	holy	godly	the spirit of belief	
-Fake	*	7	+	7	+	34	*	1	*	2	*	6	*	1	*	1	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-False	*	5	*	6	*	1	+	2	*	4	*	1	*	1	*	1	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Fire	+	567	+	6	*	0.5	*	1	*	5	*	0	*	0	*	0	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Flirty	+	3	*	0.5	*	0.3	*	2	*	0.5	*	0.5	*	0.5	*	0.5	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Frost	+	0	+	0	*	1.5	+	5	*	0.1	*	2	+	0	+	0	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Healing	*	1	*	1	*	-6	*	-2	*	-2	*	-2	*	-2	*	-2	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Heat	+	56	+	9	*	1	*	1	+	34	*	1	*	1	*	5	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Heavy	*	0.4	*	3	+	1	*	5	+	5	+	5	+	5	+	5	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Insulting	*	1	*	2	*	0.5	+	50	*	1	*	1	*	1	*	1	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Intimidating	*	5	*	1	*	0.5	*	4	*	1	*	5	*	1	*	1	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Light	*	1	*	3	*	2	*	1	*	4	*	1	*	1	*	5	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Magical	+	67	+	6	+	5	*	1	*	5	*	1	*	1	*	1	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Minor	+	67	*	56	*	0.75	*	0.75	*	0.75	*	0.75	*	0.75	*	0.75	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Mirror	*	2	*	3	*	4	*	5	*	6	*	7	*	8	*	9	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Purifying	*	7	+	76	+	4	*	6	*	5	*	1	*	1	*	1	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Pyro	*	5	+	5	*	1.5	*	1.5	+	20	*	1	*	1	*	1	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Red	*	2	*	3	*	4	*	5	*	6	*	7	*	8	*	9	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Smiteful	*	1	*	1	*	1	*	1	*	1	*	1	*	1	*	1	smiteful	smitefully	smite	
-Sparkling	*	1	*	6	+	3	*	0	*	1	*	1	*	5	*	1	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Sparky	*	56	+	6	+	3	*	1	*	4	*	1	*	1	+	44	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Spikey	*	67	*	6	+	64	*	1	*	2	*	1	*	1	*	1	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Stinky	+	6	*	4	*	4	*	1	*	1	*	1	*	3	*	1	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Thorny	*	6	+	6	+	1	+	8	+	9	*	0.5	+	9	+	9	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Unimplemented	*	5	*	67	*	4	*	5	*	5	*	5	*	1	*	1	[font=code]ERROR 42: unimplemented[font=current]	[font=code]ERROR 42: unimplemented[font=current]	[font=code]ERROR 42: unimplemented[font=current]	[font=code]ERROR 42: unimplemented[font=current]
-Virtouus	*	6	+	1	*	5	+	1	*	6	*	1	*	1	*	1	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Virtual	+	76	*	1	*	4	*	1	*	3	*	5	*	1	*	1	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
-Water	*	1	*	1	*	1	*	1	*	1	*	1	*	1	*	1	Not Yet Implemented	Not Yet Implemented	Not Yet Implemented	
+Name	SpeedOp	Speed	AccOp	Accuracy	PhysOp	Physical	MentOp	Mental	FirOp	Fire	WatOp	Water	TreeOp	Tree	EarthOp	Earth	Adjective	Adverbial Phrase	Material
+Acid	+	1	+	1	*	4	*	3	*	1	*	1	*	1	*	1	highly acidic	with a lot of acid	everburning acid
+Amorous	*	1	+	1	*	4	*	1	*	1	*	1	*	1	*	1	loving	with a lot of love	overflowing love
+Animalistic	+	1	+	1	*	3	*	1	+	46	*	0.1	*	1	*	1	wild	like a wild beast	pure animal instinct
+Animated	*	1	*	1	v	5	*	1	*	4	*	1	*	1	*	1	non-stop moving	while jumping around	the joy of movement
+Booming	*	1	+	1	+	1	*	5	+	6	*	1	*	1	*	3	incredibly loud	with an ear shattering noise	ear shattering sound
+Bright	*	1	*	1	+	4	*	1	*	1	*	1	*	1	*	1	blinding	with a blinding light	pure light
+Chaotic	*	1	+	1	*	4	+	10	+	20	+	20	+	20	+	20	chaotic	in an incomprehensible manner	chaos
+Chromatic	*	1	*	1	*	2	*	1	*	1	*	1	*	1	*	1	colorful	with all the colors of the rainbow	paint
+Cyber	*	1	*	1	*	0	+	10	*	1	*	1	*	1	*	1	digital	like a true hacker	binary code
+Dancing	*	1	+	1	*	4	*	3	*	2	*	2	*	2	*	2	annoying	annoyingly	a pink tutu
+Dissonant	*	1	+	1	+	7	*	4	*	1	*	1	*	1	*	5	uncomfortably sounding	in a way that hurts the ears.	wrong notes
+Divine	*	1	+	1	+	1	+	2	+	45	*	1	*	5	*	1	holy	godly	the spirit of belief
+Fake	*	1	+	1	+	34	*	1	*	2	*	6	*	1	*	1	unreal	, but not really	cheap imports
+False	*	1	*	1	*	1	+	2	*	4	*	1	*	1	*	1	non	negatively	boolean untruth
+Fire	+	11	+	1	*	0.5	*	1	*	5	*	0	*	0	*	0	burning	with some flames	burning coals
+Flirty	+	1	*	1	*	0.3	*	2	*	0.5	*	0.5	*	0.5	*	0.5	enticing	in a suggestive Way	rose petals
+Frost	+	1	+	1	*	1.5	+	5	*	0.1	*	2	+	0	+	0	cold	frosty	shivering cold of the antarctic ice shelf
+Healing	*	1	*	1	*	-6	*	-2	*	-2	*	-2	*	-2	*	-2	healing	in a soothing manner	medicine
+Heat	+	1	+	1	*	1	*	1	+	34	*	1	*	1	*	5	warm	with the temperature of a campfire in the evening	a sunny day
+Heavy	*	1	*	1	+	1	*	5	+	5	+	5	+	5	+	5	weighty	with a lot of weight	a huge dumbbell
+Insulting	*	1	*	1	*	0.5	+	20	*	1	*	1	*	1	*	1	berating	in a highly emotionally offesive manner	pure internet saltiness
+Intimidating	*	1	*	1	*	0.5	*	7	*	1	*	1	*	1	*	1	fear inducing	menacingly	flight reflex
+Light	*	1	*	1	*	2	*	1	*	4	*	1	*	1	*	5	mild	with a light touch	almost weightlessness
+Magical	+	1	+	1	+	5	*	1	*	5	*	1	*	1	*	1	wand wiggling	like a wizard	phoenix feathers and rainbow pooping unicorns
+Minor	+	1	*	1	*	0.75	*	0.75	*	0.75	*	0.75	*	0.75	*	0.75	weak	inconveniently	something, that is almost, but not quite, entirely unlike something important
+Purifying	*	1	+	1	+	4	*	6	*	5	*	1	*	1	*	1	soul cleaning	with a lot of soap	religious sincerity
+Pyro	*	1	+	1	*	1.5	*	1.5	+	20	*	1	*	1	*	1	enflamed	with an unholy shit-ton of fire	the deepest magma of the hottest volcano in all planes of existence
+Red	*	1	*	1	*	4	*	5	*	6	*	7	*	8	*	9	red	blody	not green paint
+Smiteful	*	1	*	1	*	1	*	1	*	1	*	1	*	1	*	1	smiteful	smitefully	smite
+Sparkling	*	1	*	1	+	3	*	0	*	1	*	4	*	2	*	1	refreshing	refreshingly	water, which has been in the mountainous stones for thousands of years, and is now being sold everywhere - now with extra strong bubbles
+Sparky	*	1	+	1	+	3	*	1	*	4	*	1	*	1	+	44	spark throwing	joyous	small and mostly harmless fire
+Spikey	*	1	*	1	+	50	*	1	*	2	*	1	*	1	*	1	thorny	with a lot of spikes	barbed wire
+Stinky	+	1	*	1	*	2	*	1	*	1	*	1	*	10	*	1	malodorous	with nose shattering gas	an unhygienic orcs disgestive mistakes
+Thorny	*	1	+	1	+	1	+	8	+	9	*	0.5	+	9	+	9	spikey	with a lot of thorns	blood on roses
+Unimplemented	*	1	*	1	*	1	*	1	*	1	*	1	*	1	*	1	[font=code]ERROR 42: unimplemented[font=current]	[font=code]ERROR 42: unimplemented[font=current]	[font=code]ERROR 42: unimplemented[font=current]
+Useless	*	0	*	0	*	0	*	0	*	0	*	0	*	0	*	0	useless	more ineffectively than what should be humanly possible	absolute non-existence
+Virtouus	*	1	+	1	*	5	+	1	*	6	*	1	*	1	*	1	brave	galantly	old fashioned chivalery
+Virtual	+	1	*	1	*	4	*	1	*	3	*	5	*	1	*	1	simulated	vaporwavy	VR goggles
+Water	*	1	*	1	*	1	*	1	*	1	*	1	*	1	*	1	wet	moistening	dihydrogenmonoxyde

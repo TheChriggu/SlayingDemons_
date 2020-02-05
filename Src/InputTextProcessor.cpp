@@ -13,9 +13,7 @@
 #include <Event/PlayerStateCreatedEventArgs.h>
 
 sd::InputTextProcessor::InputTextProcessor() : Subscriber() {
-    player_state_ = std::make_shared<PlayerState>();
-    std::cout << "~InputTextProcessor Constructor~" << std::endl;
-    EventSystem::get().trigger(std::make_shared<PlayerStateCreatedEventArgs>(player_state_));
+
 }
 
 void sd::InputTextProcessor::process_input(const std::string& spell) {
@@ -155,7 +153,7 @@ void sd::InputTextProcessor::set_output(Sp<sd::TextOutput> output) {
 }
 
 void sd::InputTextProcessor::set_room(Sp<sd::Room> room) {
-    player_state_->set_room_as_current(std::move(room));
+    player_state_->set_current_room(std::move(room));
 }
 
 Sp<sd::PlayerState> sd::InputTextProcessor::get_player_state() {
@@ -166,6 +164,12 @@ void sd::InputTextProcessor::handle(std::shared_ptr<sd::EventArgs> e) {
     if (e->type == EventArgs::Type::TEXT_OUTPUT_CREATED) {
         auto arg = dynamic_cast<TextOutputCreatedEventArgs*>(e.get());
         output_ = arg->output;
+    }
+    
+    if (e->type == EventArgs::Type::PLAYER_STATE_CREATED) {
+        auto arg = std::dynamic_pointer_cast<PlayerStateCreatedEventArgs>(e);
+        
+        player_state_ = arg->player_state;
     }
 }
 

@@ -37,6 +37,7 @@ bool sd::Application::setup()
     shader_engine_ = std::make_shared<ShaderEngine>(drawable_objects_);
     shader_engine_->setup_all_shader();
     
+    world_ = std::make_shared<World>();
     
     // TODO(FK)
     new UserInput(window_.get());
@@ -48,6 +49,7 @@ bool sd::Application::setup()
     new sd::MonsterList();
     new sd::Font();
 
+    world_->setup();
     for (const auto &object : drawable_objects_)
     {
         object->setup();

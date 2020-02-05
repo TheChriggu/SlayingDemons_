@@ -83,10 +83,7 @@ void sd::PlayerVocabulary::handle(std::shared_ptr<EventArgs> e) {
             }
 
 
-            std::shared_ptr<PlayerVocabChangedEventArgs> event;
-            event = std::make_shared<PlayerVocabChangedEventArgs>(
-                Sp<PlayerVocabulary>(this)
-                    );
+            std::shared_ptr<PlayerVocabChangedEventArgs> event = std::make_shared<PlayerVocabChangedEventArgs>();
             EventSystem::get().trigger(event);
         }
     }

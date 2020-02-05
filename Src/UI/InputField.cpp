@@ -14,10 +14,12 @@ sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color c
 
     text_ = std::make_shared<sf::Text>();
     text_->setPosition(position + sf::Vector2f(10, 10));
+    
+    text_processor_ = std::make_shared<InputTextProcessor>();
 }
 
 bool sd::InputField::setup() {
-    text_processor_ = std::make_shared<InputTextProcessor>();
+    
 
     auto* font = new sf::Font();
     if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))

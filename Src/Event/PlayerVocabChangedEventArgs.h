@@ -11,10 +11,8 @@
 namespace sd {
     class PlayerVocabChangedEventArgs : public EventArgs {
     public:
-        explicit PlayerVocabChangedEventArgs(Sp<PlayerVocabulary> vocabulary);
+        PlayerVocabChangedEventArgs();
         ~PlayerVocabChangedEventArgs() override = default;
-
-        Sp<PlayerVocabulary> vocabulary;
     };
 }
 

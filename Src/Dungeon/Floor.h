@@ -10,17 +10,16 @@
 #include "Door.h"
 
 namespace sd {
-    class Floor : public Manageable{
+    class Floor{
 
     protected:
+        
+        std::string name_;
         std::vector<Sp<Room>> rooms_;
         Sp<Room> start_room_;
     public:
-        Floor();
-        ~Floor() override;
-        
-        bool setup() override;
-        void shutdown() override;
+        Floor(const std::string& name, sol::table& floor_data);
+        virtual ~Floor() = default;
         
         Sp<Room> get_start_room();
         [[nodiscard]] Sp<Room> get_room(const std::string& name) const;

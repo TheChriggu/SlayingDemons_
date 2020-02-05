@@ -15,7 +15,24 @@ int main() {
     {
     }
 
-  app->shutdown ();
+    app->shutdown ();
+    
+    /*Trie trie;
+    
+    auto lines = sd::FileInput::load_tsv("../Resources/Tables/Actions.tsv");
+    
+    for(const auto& content : *lines) {
+        //std::cout << "add word: " << content[0] << std::endl;
+        if (content[0] != "Name"){
+            trie.add_word(content[0]);
+        }
+    }
+    
+    auto result = trie.get_all_that_starts_with("bR");
+    
+    for (const auto& word : *result) {
+        std::cout << word << std::endl;
+    }*/
 
     return 0;
 }

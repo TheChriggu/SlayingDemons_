@@ -10,9 +10,8 @@
 #include "MultiTileObject.h"
 
 sd::MultiTileObject::MultiTileObject(std::string name, const int *layout, sf::Vector2i size,
-                                     sf::Vector2i position_on_tile_map, sol::function on_interaction, sol::function on_open,
-                                     sol::function on_inspection, sol::function on_fight, sol::function on_enter)
-    : RoomObject(std::move(name), position_on_tile_map, std::move(on_interaction), std::move(on_open), std::move(on_inspection), std::move(on_fight), std::move(on_enter))
+                                     sf::Vector2i position_on_tile_map, Sp<FunctionCollection> function_collection)
+    : RoomObject(std::move(name), position_on_tile_map, function_collection)
     , size_(size)
 {
     layout_ = new int[size_.x * size_.y]();
@@ -56,4 +55,30 @@ void sd::MultiTileObject::put_on_layout(std::vector<int>& layout, int width, int
 
 std::string sd::MultiTileObject::get_name() {
     return name_;
+}
+
+void sd::MultiTileObject::remove_from_layout(std::vector<int> &layout, int width, int height) {
+
+    if((width < position_on_tile_map_.x + size_.x) || (height < position_on_tile_map_.y + size_.y))
+    {
+        std::cout << "MultiTileObject outside Room";
+    }
+    else
+    {
+        int start_pos = position_on_tile_map_.x + position_on_tile_map_.y * width;
+
+        for(int i = 0; i < size_.x * size_.y; i++)
+        {
+            int row = i / size_.x;
+            int col = i % size_.x;
+
+            int pos = start_pos + col + row * width;
+
+            if(this->layout_[i] != -1)
+            {
+                layout[pos] = 9;
+            }
+        }
+
+    }
 }

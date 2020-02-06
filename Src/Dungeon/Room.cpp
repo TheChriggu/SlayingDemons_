@@ -3,7 +3,9 @@
 //
 
 #include "Room.h"
+#include "Door.h"
 #include <utility>
+#include <Event/DoorUnlockedEventArgs.h>
 
 sd::Room::Room(std::string name)
 {
@@ -95,6 +97,14 @@ void sd::Room::handle(std::shared_ptr<EventArgs> e) {
         }
     }
 
+    if (e->type == EventArgs::Type::DOOR_UNLOCKED) {
+        auto arg = dynamic_cast<DoorUnlockedEventArgs*>(e.get());
+        if(arg->room_name == name_)
+        {
+            std::dynamic_pointer_cast<Door>( get_object_with_name(arg->door_name))->set_locked(false);
+        }
+    }
+
     if (e->type == EventArgs::Type::GOBLIN_DEFEATED) {
         remove_object_with_name("Goblin");
     }
@@ -117,9 +127,9 @@ void sd::Room::handle(std::shared_ptr<EventArgs> e) {
 
     if(it < room_objects_.end())
     {
+        (*it)->be_destroyed();
+        (*it)->remove_from_layout(layout_, 11, 7);
         room_objects_.erase(it);
-        auto mushroom = std::make_shared<SingleTileObject>("Mushroom", 24, sf::Vector2i(9,3), sol::function(), sol::function(), sol::function(), sol::function(),sol::function());
-        add_object(mushroom);
     }
 }
 

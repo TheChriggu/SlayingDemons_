@@ -18,36 +18,49 @@ sd::InputTextProcessor::InputTextProcessor() : Subscriber() {
 
 void sd::InputTextProcessor::process_input(const std::string& spell) {
 
-    if(spell == "Inspect Room")
-    {
-        output_->add_line (player_state_->get_current_room()->get_description());
-    }
-
-    else {
         //split spell
         std::vector<std::string> words = split_by_space(spell);
 
-        //check spell validity (or do this in input field already?)
-        /*
-        if (!Vocabulary::allWords->Contains(words[0]) || !Vocabulary::allWords->Contains(words[1])) {
-            output->addLine("Input not understood.");
-        }
-        */
-
-        if(words[0] == "Inspect")
+        //check if currently fighting
+        if(player_state_->is_fighting())
         {
-            auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
-
-            if(object)
+            if(player_state_->get_player_vocabulary()->has_word(words[0]) && player_state_->get_player_vocabulary()->has_word(words[1]))
             {
-                object->be_inspected();
+                auto word_1 = Vocabulary::all_words->get(words[0]);
+                auto word_2 = Vocabulary::all_words->get(words[1]);
+                if(word_1->get_type() == sd::Word::Type::MODIFIER && word_2->get_type() == sd::Word::Type::ACTION)
+                //make turn in fight
+                    player_state_->get_fight ()->full_turn (words[1], words[0]);
             }
+
             else
             {
-                std::shared_ptr<LineToOutputEventArgs> args;
-                args = std::make_shared<LineToOutputEventArgs>("Could not find object in room.");
-                EventSystem::get().trigger(args);
+                output_->add_line ("You are currently in combat, you should probably use some combat spells you know of.");
             }
+        }
+
+        else if(words[0] == "Inspect")
+        {
+            if(words[1] == "Room")
+            {
+                output_->add_line (player_state_->get_current_room()->get_description());
+            }
+            else
+                {
+                auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
+
+                if(object)
+                {
+                    object->be_inspected();
+                }
+                else
+                {
+                    std::shared_ptr<LineToOutputEventArgs> args;
+                    args = std::make_shared<LineToOutputEventArgs>("Could not find object in room.");
+                    EventSystem::get().trigger(args);
+                }
+            }
+
         }
 
         else if(words[0] == "Interact")
@@ -112,79 +125,11 @@ void sd::InputTextProcessor::process_input(const std::string& spell) {
             }
         }
 
-        /*else if(words[0] == "Pickup")
-        {
-            //TODO: Make sure that this actually is a door
-            //Door* door = (Door*) playerState->GetCurrentRoom()->GetObjectWithName(words[1]);
-            output_->add_line ("picked up " + words[1]);
-
-            std::shared_ptr<NewWordCollectedEventArgs> args;
-            args = std::make_shared<NewWordCollectedEventArgs>(NewWordCollectedEventArgs(words[1]));
-            EventSystem::get().trigger(args);
-        }*/
-            //*for(auto word : words)
-            //*{
-            //*if(!player_->HasWord(word))
-            //*{
-            //send invalid input message to output
-            //*}
-            //*}
-
-            //check if currently fighting
-        else if(player_state_->is_fighting())
-        {
-            if(Vocabulary::all_words->contains(words[0]) && Vocabulary::all_words->contains(words[1]))
-            {
-                auto word_1 = Vocabulary::all_words->get(words[0]);
-                auto word_2 = Vocabulary::all_words->get(words[1]);
-                if(word_1->get_type() == sd::Word::Type::MODIFIER && word_2->get_type() == sd::Word::Type::ACTION)
-                //make turn in fight
-                    player_state_->get_fight ()->full_turn (words[1], words[0]);
-
-                //evaluate result
-                //end fight, if fight is over
-                //*delete(fight);
-                //*fight = nullptr;
-
-                //if not fight spell
-
-                //make enemy_ turn in fight
-                //*fight->makeEnemyTurnOnly();
-                //evaluate enemy_ turn result
-
-                //evaluate player_
-            }
-
-            else
-            {
-                output_->add_line ("Input not valid modifier + action combination");
-            }
-
-        }
-
         else
         {
             output_->add_line ("nothing happens");
         }
 
-
-        //if not fighting
-
-        //check if it starts a fight
-
-        //create fight object with player_ & enemy_
-        //*fight = new fight(player_, enemy_);
-        //evaluate spell (maybe from fight?)
-
-        //if not starting fight
-
-        //evaluate spell
-
-        //send evaluation to output
-
-
-
-    }
 }
 
 std::vector<std::string> sd::InputTextProcessor::split_by_space(std::string string) {

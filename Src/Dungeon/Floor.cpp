@@ -44,60 +44,59 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
             for (int i=1 ; i <= (size.x * size.y) ; i++) {
                 layout.emplace_back(object.second.as<sol::lua_table>()["layout"]["tiles"][i].get_or(-1));
             }
-            
-            sol::function on_interaction = object.second.as<sol::lua_table>()["on_interaction"];
-            sol::function on_open = object.second.as<sol::lua_table>()["on_open"];
-            sol::function on_inspection = object.second.as<sol::lua_table>()["on_inspection"];
-            sol::function on_fight = object.second.as<sol::lua_table>()["on_fight"];
-            sol::function on_enter = object.second.as<sol::lua_table>()["on_enter"];
+
+            auto function_collection = std::make_shared<FunctionCollection>(
+                object.second.as<sol::lua_table>()["on_interaction"],
+                object.second.as<sol::lua_table>()["on_open"],
+                object.second.as<sol::lua_table>()["on_inspection"],
+                object.second.as<sol::lua_table>()["on_fight"],
+                object.second.as<sol::lua_table>()["on_enter"],
+                object.second.as<sol::lua_table>()["on_destroy"]
+                );
+
             
             
             
             if (size.x == 1 && size.y == 1) {
                 //sol::lua_table test = object.second.as<sol::lua_table>()["next_room"];
                 //std::cout << "++ Single tile: " << test.empty() << std::endl;
-                if (!object.second.as<sol::lua_table>()["next_room"].get_or<std::string>("").empty()) {
-                    std::cout << "++ door"  << std::endl;
-                    rooms_.back()->add_object(
-                        std::make_shared<Door>(
-                            object.first.as<std::string>(),
-                            layout[0],
-                            layout[1],
-                            position,
-                            object.second.as<sol::lua_table>()["next_room"].get<std::string>(),
-                            on_interaction,
-                            on_open,
-                            on_inspection,
-                            on_fight,
-                            on_enter)
-                    );
-                }
-                
+
                 rooms_.back()->add_object(
                     std::make_shared<SingleTileObject>(
                         object.first.as<std::string>(),
                         layout[0],
                         position,
-                        on_interaction,
-                        on_open,
-                        on_inspection,
-                        on_fight,
-                        on_enter)
+                        function_collection)
                 );
             } else {
-                std::cout << "++ Multi tile"  << std::endl;
-                rooms_.back()->add_object(
-                    std::make_shared<MultiTileObject>(
-                        object.first.as<std::string>(),
-                        layout.data(),
-                        size,
-                        position,
-                        on_interaction,
-                        on_open,
-                        on_inspection,
-                        on_fight,
-                        on_enter)
-                );
+
+                if (!object.second.as<sol::lua_table>()["next_room"].get_or<std::string>("").empty()) {
+                    std::cout << "++ door"  << std::endl;
+
+
+                    rooms_.back()->add_object(
+                            std::make_shared<Door>(
+                                    object.first.as<std::string>(),
+                                    layout[0],
+                                    layout[1],
+                                    position,
+                                    object.second.as<sol::lua_table>()["next_room"].get<std::string>(),
+                                    object.second.as<sol::lua_table>()["is_locked"].get<bool>(),
+                                    function_collection)
+                    );
+                }
+
+                else {
+                    std::cout << "++ Multi tile" << std::endl;
+                    rooms_.back()->add_object(
+                            std::make_shared<MultiTileObject>(
+                                    object.first.as<std::string>(),
+                                    layout.data(),
+                                    size,
+                                    position,
+                                    function_collection)
+                    );
+                }
             }
         }
     }

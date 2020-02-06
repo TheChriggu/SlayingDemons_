@@ -6,6 +6,7 @@
 #include <ScriptEngine/ScriptEngine.h>
 #include <Event/PlayerStateCreatedEventArgs.h>
 #include "World.h"
+#include <Event/DoorUnlockedEventArgs.h>
 
 sd::World::World() {
 
@@ -38,7 +39,9 @@ bool sd::World::setup() {
             player_state_->set_current_room(floors_.back()->get_start_room());
         }
     }
-    
+
+    ScriptEngine::get().register_all("unlock_door", &World::unlock_door, this);
+
     return true;
 }
 
@@ -47,4 +50,10 @@ void sd::World::shutdown() { }
 void sd::World::handle(Sp<sd::EventArgs> e)
 {
 
+}
+
+void sd::World::unlock_door(std::string room_name, std::string door_name) {
+    std::shared_ptr<DoorUnlockedEventArgs> args;
+    args = std::make_shared<DoorUnlockedEventArgs>(room_name, door_name);
+    EventSystem::get().trigger(args);
 }

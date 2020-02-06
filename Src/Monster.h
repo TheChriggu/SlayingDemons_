@@ -18,9 +18,10 @@ namespace sd
         std::string path_to_portrait_;
         std::string alias_;
         std::string gender_;
+        std::string name_;
 
     public:
-        explicit Monster(std::string path_to_portrait, std::string alias, std::string gender);
+        explicit Monster(std::string path_to_portrait, std::string alias, std::string gender, std::string name);
         ~Monster() override = default;
 
         std::string get_action();
@@ -32,6 +33,7 @@ namespace sd
         std::string get_path_to_portrait();
         std::string get_alias();
         std::string get_gender();
+        std::string get_name();
     };
 }
 

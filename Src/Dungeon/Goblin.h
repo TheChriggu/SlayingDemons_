@@ -14,11 +14,11 @@ namespace sd {
         Sp<PlayerVocabulary> vocab_;
 
     public:
-            Goblin (std::string name, int sprite_sheet_idx, sf::Vector2i position_on_tile_map);
+            //Goblin (std::string name, int sprite_sheet_idx, sf::Vector2i position_on_tile_map);
 
-            void be_interacted_with() override;
+            //void be_interacted_with() override;
 
-            void set_player_vocab(Sp<PlayerVocabulary> vocab);
+            //void set_player_vocab(Sp<PlayerVocabulary> vocab);
     };
 }
 

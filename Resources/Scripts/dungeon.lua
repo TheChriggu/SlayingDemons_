@@ -17,6 +17,7 @@ table_layout = {
     tiles = {33, 41}
 }
 door_layout = {
+    size = {2,1},
     tiles = {9, 3}
 }
 book_layout = {
@@ -87,6 +88,7 @@ dungeon = {
 
                 on_inspection = function()
                     print_line("It's a small, hairy, wild, angry Goblin. Nothing too dangerous. Probably...")
+                    -- unlock_door("Southern_Forest", "Northern_Way")
                 end,
 
                 on_fight = function()
@@ -99,15 +101,24 @@ dungeon = {
                     print_line("He attacks you.")
                     print_line("What the hell were you expecting to happen?")
                     start_new_fight("Goblin")
-                end
+                end,
 
+                on_destroy = function()
+                    print_line("The door to the north opens")
+                    unlock_door("Southern_Forest", "Northern_Way")
+                end
 
             },
 
-            Nothern_Way = {
+            Northern_Way = {
                 position = {x = 5,y = 0},
                 layout = door_layout,
+                is_locked = true,
                 next_room = "Western_Forest",
+
+                on_enter = function()
+                    print_line("You try to enter the door.")
+                end
             },
 
             Tree = {
@@ -150,7 +161,7 @@ dungeon = {
             },
 
             -- Door unlocks only when the bush in front of it is removed
-            Nothern_Way = {
+            Northern_Way = {
                 position = {x = 9,y = 0},
                 layout = door_layout,
                 next_room = "Eastern_Forest",
@@ -178,7 +189,7 @@ dungeon = {
                 end
             },
 
-            Buttom_Bush = {
+            Bottom_Bush = {
                 position = {x = 9, y = 5},
                 layout= bush_layout,
                 on_interaction = function ()
@@ -218,7 +229,7 @@ dungeon = {
                 next_room = "Western_Forest",
             },
 
-            Nothern_Way = {
+            Northern_Way = {
                 position = {x = 1,y = 0},
                 layout = door_layout,
                 next_room = "Western_Forest",
@@ -231,7 +242,7 @@ dungeon = {
         Deep_Forest = {
             --layout = { {x = 0, y = 0}, {x=10, y= 0}, {x=10, y=4}, {x=0, y= 4}},
 
-            Nothern_Way = {
+            Northern_Way = {
             position = {x = 5,y = 0},
             layout = door_layout,
             next_room = "Clearing",

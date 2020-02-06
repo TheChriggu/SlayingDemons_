@@ -118,7 +118,27 @@ add_executable(${PROJECT_NAME}
                Src/Shading/WeakGlitch.cpp
                Src/Shading/WeakGlitch.h
                Src/Shading/Glitch.cpp
-               Src/Shading/Glitch.h Src/Event/PlayerStateCreatedEventArgs.cpp Src/Event/PlayerStateCreatedEventArgs.h Src/Event/FightStartedEventArgs.cpp Src/Event/FightStartedEventArgs.h Src/Combat/MonsterList.cpp Src/Combat/MonsterList.h Src/UI/Font.cpp Src/UI/Font.h Src/Event/FontsCreatedEventArgs.cpp Src/Event/FontsCreatedEventArgs.h Src/Trie.cpp Src/Trie.h Src/Event/PossibleWordsCreatedEventArgs.cpp Src/Event/PossibleWordsCreatedEventArgs.h)
+               Src/Shading/Glitch.h
+               Src/Event/PlayerStateCreatedEventArgs.cpp
+               Src/Event/PlayerStateCreatedEventArgs.h
+               Src/Event/FightStartedEventArgs.cpp
+               Src/Event/FightStartedEventArgs.h
+               Src/Combat/MonsterList.cpp
+               Src/Combat/MonsterList.h
+               Src/UI/Font.cpp
+               Src/UI/Font.h
+               Src/Event/FontsCreatedEventArgs.cpp
+               Src/Event/FontsCreatedEventArgs.h
+               Src/Trie.cpp
+               Src/Trie.h
+               Src/Event/DoorUnlockedEventArgs.cpp
+               Src/Event/DoorUnlockedEventArgs.h
+               Src/ScriptEngine/FunctionCollection.cpp
+               Src/ScriptEngine/FunctionCollection.h
+               Src/Event/CurrentEnemyDefeatedEventArgs.cpp
+               Src/Event/CurrentEnemyDefeatedEventArgs.h
+               Src/Event/PossibleWordsCreatedEventArgs.cpp
+               Src/Event/PossibleWordsCreatedEventArgs.h)
 
 target_include_directories(${PROJECT_NAME} PRIVATE Src)
 target_include_directories(${PROJECT_NAME} PRIVATE strtk)

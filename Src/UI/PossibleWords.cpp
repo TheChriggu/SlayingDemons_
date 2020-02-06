@@ -19,6 +19,7 @@ sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size, const
 {
     sprite_ = std::make_shared<sf::Sprite>();
     texture_ = std::make_shared<sf::Texture>();
+    search_prefix_ = "";
 }
 
 bool sd::PossibleWords::setup() {
@@ -155,6 +156,12 @@ void sd::PossibleWords::set_search_prefix(const std::string &prefix)
             update(*(player_vocabulary_->get_commands_starting_with(prefix)));
             break;
     }
+}
+
+void sd::PossibleWords::add_to_search_prefix(const std::string &prefix)
+{
+    search_prefix_ += prefix;
+    set_search_prefix(search_prefix_);
 }
 
 const std::string &sd::PossibleWords::get_search_prefix() const

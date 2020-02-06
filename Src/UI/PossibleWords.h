@@ -40,6 +40,7 @@ namespace sd {
         void display_commands();
         
         void set_search_prefix(const std::string& prefix);
+        void add_to_search_prefix(const std::string& prefix);
         [[nodiscard]] const std::string& get_search_prefix() const;
         
         [[nodiscard]] Word::Type get_current_list_type() const;

@@ -70,24 +70,36 @@ void sd::InputField::handle(sf::Event event) {
             ScriptEngine::get().broadcast("input_received", strg.toAnsiString());
         }
     }
-    else if (event.type == sf::Event::TextEntered)
+    else if (event.key.code == sf::Keyboard::Space)
     {
-        if (event.key.code == sf::Keyboard::Space) {
+        if (event.type == sf::Event::KeyPressed) {
             if(possible_words_->get_current_list_type() == Word::Type::MODIFIER) {
+                //Complete Word
                 possible_words_->display_actions();
-            } else if(possible_words_->get_current_list_type() == Word::Type::COMMAND) { }
-            
-            possible_words_->set_search_prefix("");
-            add_text (event.text.unicode);
-        } else {
-            
-            
-            possible_words_->set_search_prefix(text_->getString().toAnsiString());
-            add_text (event.text.unicode);
+                possible_words_->set_search_prefix("");
+            }
+            else if(possible_words_->get_current_list_type() == Word::Type::ACTION)
+            {
+                possible_words_->display_commands(); //placeholder to check if this line is reached
+
+                //Complete word
+                possible_words_->set_search_prefix("");
+            }
+            else if(possible_words_->get_current_list_type() == Word::Type::COMMAND)
+            {
+                possible_words_->display_modifiers(); //placeholder to check if this line is reached
+
+                //Complete word
+                //switch to list of room objects
+                possible_words_->set_search_prefix("");
+            }
         }
     }
-
-
+    else if(event.type == sf::Event::TextEntered)
+    {
+        //possible_words_->add_to_search_prefix(std::string(1, static_cast<char>(event.text.unicode)));
+        add_text (event.text.unicode);
+    }
 }
 
 sf::Vector2f sd::InputField::get_size() {

@@ -12,8 +12,17 @@
 #include "Door.h"
 
 sd::Door::Door(std::string name,
-               int sprite_sheet_idx_open, int sprite_sheet_idx_locked, sf::Vector2i position_on_tile_map, std::string next_room, sol::function on_interaction)
-        : SingleTileObject(std::move(name), sprite_sheet_idx_open, position_on_tile_map, std::move(on_interaction))
+               int sprite_sheet_idx_open, int sprite_sheet_idx_locked, sf::Vector2i position_on_tile_map,
+               std::string next_room, sol::function on_interaction, sol::function on_open,
+               sol::function on_inspection, sol::function on_fight, sol::function on_enter)
+        : SingleTileObject(std::move(name)
+                , sprite_sheet_idx_open
+                , position_on_tile_map
+                , std::move(on_interaction)
+                , std::move(on_open)
+                , std::move(on_inspection)
+                , std::move(on_fight)
+                , std::move(on_enter))
         , next_room_(std::move(next_room))
         , sprite_sheet_idx_open_(sprite_sheet_idx_open)
         , sprite_sheet_idx_locked_(sprite_sheet_idx_locked)

@@ -46,6 +46,10 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
             }
             
             sol::function on_interaction = object.second.as<sol::lua_table>()["on_interaction"];
+            sol::function on_open = object.second.as<sol::lua_table>()["on_open"];
+            sol::function on_inspection = object.second.as<sol::lua_table>()["on_inspection"];
+            sol::function on_fight = object.second.as<sol::lua_table>()["on_fight"];
+            sol::function on_enter = object.second.as<sol::lua_table>()["on_enter"];
             
             
             
@@ -61,7 +65,11 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                             layout[1],
                             position,
                             object.second.as<sol::lua_table>()["next_room"].get<std::string>(),
-                            on_interaction)
+                            on_interaction,
+                            on_open,
+                            on_inspection,
+                            on_fight,
+                            on_enter)
                     );
                 }
                 
@@ -70,7 +78,11 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                         object.first.as<std::string>(),
                         layout[0],
                         position,
-                        on_interaction)
+                        on_interaction,
+                        on_open,
+                        on_inspection,
+                        on_fight,
+                        on_enter)
                 );
             } else {
                 std::cout << "++ Multi tile"  << std::endl;
@@ -80,7 +92,11 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                         layout.data(),
                         size,
                         position,
-                        on_interaction)
+                        on_interaction,
+                        on_open,
+                        on_inspection,
+                        on_fight,
+                        on_enter)
                 );
             }
         }

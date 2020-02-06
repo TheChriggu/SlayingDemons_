@@ -118,7 +118,7 @@ void sd::Room::handle(std::shared_ptr<EventArgs> e) {
     if(it < room_objects_.end())
     {
         room_objects_.erase(it);
-        auto mushroom = std::make_shared<SingleTileObject>("Mushroom", 24, sf::Vector2i(9,3), sol::function());
+        auto mushroom = std::make_shared<SingleTileObject>("Mushroom", 24, sf::Vector2i(9,3), sol::function(), sol::function(), sol::function(), sol::function(),sol::function());
         add_object(mushroom);
     }
 }

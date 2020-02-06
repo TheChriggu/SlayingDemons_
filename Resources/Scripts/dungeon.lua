@@ -74,8 +74,34 @@ dungeon = {
                 position = {x = 2, y = 5},
                 layout = goblin_layout,
                 on_interaction = function()
+                    print_line("You walk to the Goblin, wanting to wish him a merry day.")
+                    print_line("He does not understand your intentions. A fight ensues.")
+                    start_new_fight("Goblin")
+                end,
+
+                on_open = function()
+                    print_line("You try to open the Goblin. This fails, for obvious reasons.")
+                    print_line("Disturbed by your strange behaviour, the Goblin attacks you.")
+                    start_new_fight("Goblin")
+                end,
+
+                on_inspection = function()
+                    print_line("It's a small, hairy, wild, angry Goblin. Nothing too dangerous. Probably...")
+                end,
+
+                on_fight = function()
+                    print_line("You take charge and attack the Goblin.")
+                    start_new_fight("Goblin")
+                end,
+
+                on_enter = function()
+                    print_line("You try to enter the Goblin, which enrages him a lot.")
+                    print_line("He attacks you.")
+                    print_line("What the hell were you expecting to happen?")
                     start_new_fight("Goblin")
                 end
+
+
             },
 
             Nothern_Way = {
@@ -107,7 +133,7 @@ dungeon = {
                 layout= axe_layout,
                 on_interaction = function ()
                     print_line("Through the thick moss you see something shiny. As you approach it you realize it's an axe. ")
-                    print_line("An old axe. I don't think it will be useful. ")
+                    print_line("[i]An old axe. I don't think it will be useful. ")
                     print_line("The blade is broken. There is a long crack in it. ")
                     print_line("As fast as you discover your new find, as fast you leave it again. It's not gonna help you anyway. ")
                 end

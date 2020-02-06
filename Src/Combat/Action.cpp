@@ -31,7 +31,7 @@ std::string sd::Action::get_name() {
 }
 
 sd::Word::Type sd::Action::get_type() {
-    return ACTION;
+    return Type::ACTION;
 }
 
 std::string sd::Action::get_sentence_2nd_person() {

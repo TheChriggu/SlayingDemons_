@@ -50,7 +50,7 @@ std::string sd::Modifier::get_name() {
 }
 
 sd::Word::Type sd::Modifier::get_type() {
-    return MODIFIER;
+    return Type::MODIFIER;
 }
 
 std::string sd::Modifier::get_adjective() {

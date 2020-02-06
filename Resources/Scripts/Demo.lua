@@ -6,9 +6,9 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-encounter = false
+--encounter = false
 
-function room_changed(is_last_room)
+--[[function room_changed(is_last_room)
     if is_last_room then
         print_line("???: Nosiness and Stubbornness are disturbing human characteristics")
         print_line("???: And dangerous ones...")
@@ -34,5 +34,5 @@ function input_received()
         --set_demoglitch_on("")
         --print_line("")
     end
-end
+end]]
 

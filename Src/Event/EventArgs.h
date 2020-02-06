@@ -23,6 +23,7 @@ namespace sd {
             FIGHT_STARTED,
             FIGHT_ENDED,
             FONTS_CREATED,
+            POSSIBLE_WORDS_CREATED
             DOOR_UNLOCKED,
             CURRENT_ENEMY_DEFEATED
         };

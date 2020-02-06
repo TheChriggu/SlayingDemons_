@@ -5,6 +5,8 @@
 #include <Event/PlayerVocabChangedEventArgs.h>
 #include <Event/PlayerStateCreatedEventArgs.h>
 #include <Event/FontsCreatedEventArgs.h>
+#include <Event/PossibleWordsCreatedEventArgs.h>
+#include <Event/EventSystem.h>
 #include "PossibleWords.h"
 
 // TODO(FK): clean up name
@@ -13,7 +15,7 @@ sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size, const
     , Subscriber()
     , position_(position)
     , size_(size)
-    , current_list_type_(Word::UNKNOWN)
+    , current_list_type_(Word::Type::COMMAND)
 {
     sprite_ = std::make_shared<sf::Sprite>();
     texture_ = std::make_shared<sf::Texture>();
@@ -24,7 +26,10 @@ bool sd::PossibleWords::setup() {
     texture_->loadFromFile("../Resources/Sprites/fantasy_input.png");
     sprite_->setTexture(*texture_, false);
     sprite_->setPosition(position_);
-
+    
+    auto event = std::make_shared<PossibleWordsCreatedEventArgs>(this);
+    EventSystem::get().trigger(event);
+    
     return DrawableObject::setup ();
 }
 
@@ -84,10 +89,10 @@ void sd::PossibleWords::handle(std::shared_ptr<EventArgs> e) {
     }*/
 
     if (e->type == sd::EventArgs::Type::FIGHT_STARTED) {
-        update(player_vocabulary_->get_modifiers());
+        display_modifiers();
     }
     if (e->type == sd::EventArgs::Type::FIGHT_ENDED) {
-        update(player_vocabulary_->get_commands());
+        display_commands();
     }
     
     if (e->type == sd::EventArgs::Type::PLAYER_STATE_CREATED) {
@@ -115,6 +120,50 @@ sf::Vector2f sd::PossibleWords::get_position() {
 
 sf::Vector2f sd::PossibleWords::get_size() {
     return size_;
+}
+
+void sd::PossibleWords::display_modifiers()
+{
+    current_list_type_ = Word::Type::MODIFIER;
+    update(player_vocabulary_->get_modifiers());
+}
+
+void sd::PossibleWords::display_actions()
+{
+    current_list_type_ = Word::Type::ACTION;
+    update(player_vocabulary_->get_actions());
+}
+
+void sd::PossibleWords::display_commands()
+{
+    current_list_type_ = Word::Type::COMMAND;
+    update(player_vocabulary_->get_commands());
+}
+
+void sd::PossibleWords::set_search_prefix(const std::string &prefix)
+{
+    search_prefix_ = prefix;
+    
+    switch (current_list_type_) {
+        case Word::Type::ACTION:
+            update(*(player_vocabulary_->get_actions_starting_with(prefix)));
+            break;
+        case Word::Type::MODIFIER:
+            update(*(player_vocabulary_->get_modifiers_starting_with(prefix)));
+            break;
+        case Word::Type::COMMAND:
+            update(*(player_vocabulary_->get_commands_starting_with(prefix)));
+            break;
+    }
+}
+
+const std::string &sd::PossibleWords::get_search_prefix() const
+{
+    return search_prefix_;
+}
+sd::Word::Type sd::PossibleWords::get_current_list_type() const
+{
+    return current_list_type_;
 }
 
 

@@ -6,7 +6,7 @@
 -- To change this template use File | Settings | File Templates.
 --
 
-current_state = "blub"
+--[[current_state = "blub"
 
 function update()
     --print("From Test1(): ", test1())
@@ -17,4 +17,4 @@ end
 config = {
     derp = 5,
     pos = { x = 1.1, z = 2.2}
-}
+}]]

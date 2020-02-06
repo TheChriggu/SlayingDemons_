@@ -12,12 +12,9 @@ namespace sd{
     class Fighter {
     protected:
         float hit_points_;
-        float mental_state_;
 
         Sp<Stats> offensive_stats_;
-        Sp<Stats> offensive_buffs_;
-        Sp<Stats> defensive_stats_;
-        Sp<Stats> defensive_buffs_;
+        Sp<Stats> defensive_stats_;;
 
     public:
         Fighter();
@@ -27,15 +24,11 @@ namespace sd{
         Stats get_defense();
 
         void set_base_stats(const Stats& offense, const Stats& defense);
-        void set_buffs(const Stats& offense, const Stats& defense);
         void change_base_stats(const Stats& offense, StatwiseOperation offense_ops, const Stats& defense, StatwiseOperation defense_ops);
-        void change_buffs(const Stats& offense, StatwiseOperation offense_ops, const Stats& defense, StatwiseOperation defense_ops);
 
         void change_hit_points(float value);
-        void change_mental_state(float value);
 
         float get_hit_points();
-        float get_mental_state();
 
         void print_to_console();
     };

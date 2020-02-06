@@ -8,6 +8,7 @@
 #include <Event/PlayerVocabChangedEventArgs.h>
 #include <Event/EventSystem.h>
 #include <ScriptEngine/ScriptEngine.h>
+#include <IO/FileInput.h>
 #include "PlayerVocabulary.h"
 #include "Word.h"
 #include "Vocabulary.h"
@@ -16,16 +17,20 @@ sd::PlayerVocabulary::PlayerVocabulary() {
     actions_trie_ = std::make_shared<Trie>();
     modifiers_trie_ = std::make_shared<Trie>();
     commands_trie_ = std::make_shared<Trie>();
-    
-    // TODO: Remove hardcoded add-statements
-    add_action("Honk");
-    add_action("Poke");
-    
-    add_modifier("Flirty");
-    add_modifier("Pyro");
-    
-    add_command("inspect");
-    add_command("interact");
+
+    auto table = FileInput::load_tsv("../Resources/Tables/PlayerVocab.tsv");
+    for(const auto& word : (*table)[0])
+    {
+        add_action(word);
+    }
+    for(const auto& word : (*table)[1])
+    {
+        add_modifier(word);
+    }
+    for(const auto& word : (*table)[2])
+    {
+        add_command(word);
+    }
     
     ScriptEngine::get().register_all("add_action", &PlayerVocabulary::add_action, this);
     ScriptEngine::get().register_all("add_modifier", &PlayerVocabulary::add_modifier, this);

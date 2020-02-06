@@ -24,6 +24,8 @@ namespace sd {
         sf::Vector2f size_;
         
         Word::Type current_list_type_;
+        
+        std::string search_prefix_;
 
     public:
         PossibleWords(sf::Vector2f position, sf::Vector2f size, const std::string& path_to_background);
@@ -31,6 +33,13 @@ namespace sd {
 
         bool setup() override;
         void update(std::vector<std::string>& content);
+        
+        void display_modifiers();
+        void display_actions();
+        void display_commands();
+        
+        void set_search_prefix(const std::string& prefix);
+        [[nodiscard]] const std::string& get_search_prefix() const;
 
         void draw_to(Sp<sf::RenderTarget> window) const override;
 

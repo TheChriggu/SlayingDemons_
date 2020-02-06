@@ -8,13 +8,18 @@
 #include <iostream>
 #include <vector>
 #include <Event/Subscriber.h>
+#include "Trie.h"
 
 namespace sd {
     class PlayerVocabulary : public Subscriber{
     private:
         std::vector<std::string> actions_;
         std::vector<std::string> modifiers_;
-        std::vector<std::string> navigation_;
+        std::vector<std::string> commands_;
+        
+        Sp<Trie> actions_trie_;
+        Sp<Trie> modifiers_trie_;
+        Sp<Trie> commands_trie_;
 
     public:
         PlayerVocabulary();
@@ -23,16 +28,16 @@ namespace sd {
         bool has_word(const std::string& word);
 
         void add_action(const std::string& action);
-
         void add_modifier(const std::string& modifier);
-
-        void add_navigation(const std::string& word);
+        void add_command(const std::string& word);
 
         std::vector<std::string>& get_actions();
-
         std::vector<std::string>& get_modifiers();
-
-        std::vector<std::string>& get_navigation();
+        std::vector<std::string>& get_commands();
+    
+        Sp<std::vector<std::string>> get_actions_starting_with(const std::string& prefix);
+        Sp<std::vector<std::string>> get_modifiers_starting_with(const std::string& prefix);
+        Sp<std::vector<std::string>> get_commands_starting_with(const std::string& prefix);
 
         void handle(std::shared_ptr<EventArgs> e) override;
     };

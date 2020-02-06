@@ -6,6 +6,7 @@
 #define _PLAYERVOCABCHANGEDEVENTARGS_H_
 
 #include <PlayerVocabulary.h>
+#include <Word.h>
 #include "EventArgs.h"
 
 namespace sd {
@@ -13,6 +14,8 @@ namespace sd {
     public:
         PlayerVocabChangedEventArgs();
         ~PlayerVocabChangedEventArgs() override = default;
+        
+        Word::Type change_type;
     };
 }
 

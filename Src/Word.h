@@ -8,7 +8,7 @@
 namespace sd {
     class Word {
     public:
-        enum Type {ACTION, MODIFIER, NAVIGATION, UNKNOWN};
+        enum Type {ACTION, MODIFIER, COMMAND, UNKNOWN};
         //TODO: I honestly don't know what all words of the game have in common -.- Maybe Stats.
         virtual ~Word() = default;
 

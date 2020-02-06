@@ -22,13 +22,15 @@ namespace sd {
         Sp<sf::Texture> texture_;
         sf::Vector2f position_;
         sf::Vector2f size_;
+        
+        Word::Type current_list_type_;
 
     public:
         PossibleWords(sf::Vector2f position, sf::Vector2f size, const std::string& path_to_background);
         ~PossibleWords() override = default;
 
         bool setup() override;
-        void update();
+        void update(std::vector<std::string>& content);
 
         void draw_to(Sp<sf::RenderTarget> window) const override;
 

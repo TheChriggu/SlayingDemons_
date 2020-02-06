@@ -71,49 +71,11 @@ dungeon = {
 
             is_start = true,
 
-            Goblin = {
-                position = {x = 2, y = 5},
-                layout = goblin_layout,
-                on_interaction = function()
-                    print_line("You walk to the Goblin, wanting to wish him a merry day.")
-                    print_line("He does not understand your intentions. A fight ensues.")
-                    start_new_fight("Goblin")
-                end,
-
-                on_open = function()
-                    print_line("You try to open the Goblin. This fails, for obvious reasons.")
-                    print_line("Disturbed by your strange behaviour, the Goblin attacks you.")
-                    start_new_fight("Goblin")
-                end,
-
-                on_inspection = function()
-                    print_line("It's a small, hairy, wild, angry Goblin. Nothing too dangerous. Probably...")
-                    -- unlock_door("Southern_Forest", "Northern_Way")
-                end,
-
-                on_fight = function()
-                    print_line("You take charge and attack the Goblin.")
-                    start_new_fight("Goblin")
-                end,
-
-                on_enter = function()
-                    print_line("You try to enter the Goblin, which enrages him a lot.")
-                    print_line("He attacks you.")
-                    print_line("What the hell were you expecting to happen?")
-                    start_new_fight("Goblin")
-                end,
-
-                on_destroy = function()
-                    print_line("The door to the north opens")
-                    unlock_door("Southern_Forest", "Northern_Way")
-                end
-
-            },
-
-            Northern_Way = {
+            
+            northern_way = {
                 position = {x = 5,y = 0},
                 layout = door_layout,
-                is_locked = true,
+                is_locked = false,
                 next_room = "Western_Forest",
 
                 on_enter = function()
@@ -177,8 +139,42 @@ dungeon = {
             Eastern_Way = {
                 position = {x = 10,y = 3},
                 layout = door_layout,
-                next_room = "",
+                next_room = "Deep_Forest",
             },
+
+            Goblin = {
+                position = {x = 5, y = 3},
+                layout = goblin_layout,
+                on_interaction = function()
+                    print_line("You walk to the Goblin, wanting to wish him a merry day.")
+                    print_line("He does not understand your intentions. A fight ensues.")
+                    start_new_fight("Goblin")
+                end,
+
+                on_open = function()
+                    print_line("You try to open the Goblin. This fails, for obvious reasons.")
+                    print_line("Disturbed by your strange behaviour, the Goblin attacks you.")
+                    start_new_fight("Goblin")
+                end,
+
+                on_inspection = function()
+                    print_line("It's a small, hairy, wild, angry Goblin. Nothing too dangerous. Probably...")
+                    -- unlock_door("Southern_Forest", "Northern_Way")
+                end,
+
+                on_fight = function()
+                    print_line("You take charge and attack the Goblin.")
+                    start_new_fight("Goblin")
+                end,
+
+                on_enter = function()
+                    print_line("You try to enter the Goblin, which enrages him a lot.")
+                    print_line("He attacks you.")
+                    print_line("What the hell were you expecting to happen?")
+                    start_new_fight("Goblin")
+                end
+            },
+
 
             Upper_Bush = {
                 position = {x = 9, y = 1},
@@ -208,7 +204,7 @@ dungeon = {
             }, 
             
             Skeleton = {
-                position = {x = 8, y = 3},
+                position = {x = 6, y = 1},
                 layout= skeleton_layout,
                 on_interaction = function ()
                     print_line("Uagh! It's a skeleton. I mean like a real skeleton! ")
@@ -256,7 +252,7 @@ dungeon = {
 
 
             Chest = {
-                position = {x = 8, y = 3},
+                position = {x = 2, y = 1},
                 layout= chest_layout,
                 on_interaction = function ()
                     print_line("It's an old chest. Not really big. You could maybe fit a book inside? I think. ")
@@ -271,19 +267,68 @@ dungeon = {
                     
                     add_modifier ("Water")
                 end
-            }, 
+            },
 
             -- Enemy Fire Goblin
+            Goblin = {
+                position = {x = 7, y = 2},
+                layout = goblin_layout,
+                on_interaction = function()
+                    print_line("You walk to the Goblin, wanting to wish him a merry day.")
+                    print_line("Maybe you should mention he is burning.")
+                    print_line("He does not understand your intentions. A fight ensues.")
+                    start_new_fight("Goblin")
+                end,
+
+                on_open = function()
+                    print_line("You try to open the Goblin. This fails, for obvious reasons.")
+                    print_line("Disturbed by your strange behaviour, the Goblin attacks you.")
+                    start_new_fight("Goblin")
+                end,
+
+                on_inspection = function()
+                    print_line("It's a small, hairy, wild, angry and burning Goblin. Nothing too dangerous. Probably...")
+                    -- unlock_door("Southern_Forest", "Northern_Way")
+                end,
+
+                on_fight = function()
+                    print_line("You take charge and attack the Goblin.")
+                    start_new_fight("Goblin")
+                end,
+
+                on_enter = function()
+                    print_line("You try to enter the Goblin, which enrages him a lot.")
+                    print_line("He attacks you.")
+                    print_line("What the hell were you expecting to happen?")
+                    start_new_fight("Goblin")
+                end
+            },
         },
 
         Clearing = {
-            layout = { {x = 3, y = 0}, {x=7, y= 0}, {x=7, y=6}, {x=3, y= 6}},
+            -- layout = { {x = 3, y = 0}, {x=7, y= 0}, {x=7, y=6}, {x=3, y= 6}},
 
-                Southern_Way = {
+            Southern_Way = {
                 position = {x = 5,y = 6},
                 layout = door_layout,
                 next_room = "Deep_Forest",
             },
+
+            Chest = {
+                position = {x = 5, y = 1},
+                layout= chest_layout,
+                on_interspect = function ()
+                    print_line("It's an old chest. Again. You are kind of afraid what is going to happen this time when you open it. ")
+                    print_line("Slowly you approach the chest and open it.")
+                    -- crackling noises and squeaking
+                    print_line("At the buttom of the chest lays a piece of paper. It looks similar to a map.")
+                    print_line("You take a closer look at it and it's a map of the forest. The marked location is a bit more eastern from your place.")
+                    print_line("But it's in walking distance. You could reach it in maybe 30 minutes.")
+
+                end
+            },
+
+
         },
 
         --[[

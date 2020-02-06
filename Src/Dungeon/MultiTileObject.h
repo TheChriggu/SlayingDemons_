@@ -16,10 +16,11 @@ namespace sd {
 
     public:
         MultiTileObject(std::string name, const int layout[], sf::Vector2i size, sf::Vector2i position_on_tile_map,
-                sol::function on_interaction, sol::function on_open,  sol::function on_inspection, sol::function on_fight, sol::function on_enter);
+                Sp<FunctionCollection> function_collection);
         ~MultiTileObject() override;
 
         void put_on_layout(std::vector<int>& layout, int width, int height) override;
+        void remove_from_layout(std::vector<int>& layout, int width, int height) override;
         std::string get_name() override;
         //virtual void be_interacted_with() override;
     };

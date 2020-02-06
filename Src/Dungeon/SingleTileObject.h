@@ -6,7 +6,7 @@
 #define _SINGLETILEOBJECT_H_
 
 #include "RoomObject.h"
-
+#include "Core/GlobalDefinitions.h"
 
 namespace sd {
     class SingleTileObject : public RoomObject{
@@ -15,12 +15,11 @@ namespace sd {
         int sprite_sheet_idx_;
 
     public:
-        SingleTileObject(std::string name, int sprite_sheet_idx, sf::Vector2i position_on_tile_map
-                , sol::function on_interaction, sol::function on_open,  sol::function on_inspection
-                , sol::function on_fight, sol::function on_enter);
+        SingleTileObject(std::string name, int sprite_sheet_idx, sf::Vector2i position_on_tile_map, Sp<FunctionCollection> function_collection);
         ~SingleTileObject() override = default;
 
         void put_on_layout(std::vector<int>& layout, int width, int height) override;
+        void remove_from_layout(std::vector<int>& layout, int width, int height) override;
         std::string get_name() override;
     };
 }

@@ -85,8 +85,8 @@ void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
         start_new_fight("Goblin");
     }
 
-    if (e->type == EventArgs::Type::GOBLIN_DEFEATED) {
-        //((Door *) current_room_->get_object_with_name("east_door").get())->set_locked(false);
+    if (e->type == EventArgs::Type::CURRENT_ENEMY_DEFEATED) {
+        current_room_->remove_object_with_name(fight_->get_enemy()->get_name());
         fight_.reset();
 
         std::shared_ptr<EventArgs> args;

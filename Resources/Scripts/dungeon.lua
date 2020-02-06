@@ -80,19 +80,20 @@ dungeon = {
 
                 on_enter = function()
                     print_line("You try to enter the door.")
+                    
                 end
             },
 
-            Tree = {
+            tree = {
                 position={x=3,y=1},
                 layout = tree_layout,
-                on_interaction = function ()
+                on_interspect = function ()
                     print_line("It's a tree.")
                     print_line("Not astounding, when you consider I'm in a forest right now... ")
                 end
             },
 
-            Bushes = {
+            bushes = {
                 position = {x= 7,y=1},
                 layout = bushGroup_layout,
                 on_interaction= function ()
@@ -101,7 +102,7 @@ dungeon = {
                 end
             },
 
-            Axe = {
+            axe = {
                 position = {x = 7, y = 3},
                 layout= axe_layout,
                 on_interaction = function ()
@@ -113,7 +114,7 @@ dungeon = {
             },
         },
 
-        Western_Forest = {
+        western_forest = {
             --layout = { {x = 2, y = 0}, {x=10, y= 0}, {x=10, y=6}, {x=2, y= 6}},
 
             Way_back_down = {
@@ -123,20 +124,20 @@ dungeon = {
             },
 
             -- Door unlocks only when the bush in front of it is removed
-            Northern_Way = {
+            northern_way = {
                 position = {x = 9,y = 0},
                 layout = door_layout,
                 next_room = "Eastern_Forest",
             },
 
             -- Door unlocks only when the bush in front of it is removed
-            Southern_Way = {
+            southern_say = {
                 position = {x = 9,y = 6},
                 layout = door_layout,
                 next_room = "Eastern_Forest",
             },
 
-            Eastern_Way = {
+            eastern_way = {
                 position = {x = 10,y = 3},
                 layout = door_layout,
                 next_room = "Deep_Forest",
@@ -176,7 +177,7 @@ dungeon = {
             },
 
 
-            Upper_Bush = {
+            upper_bush = {
                 position = {x = 9, y = 1},
                 layout= bush_layout,
                 on_interaction = function ()
@@ -185,7 +186,7 @@ dungeon = {
                 end
             },
 
-            Bottom_Bush = {
+            bottom_bush = {
                 position = {x = 9, y = 5},
                 layout= bush_layout,
                 on_interaction = function ()
@@ -194,7 +195,7 @@ dungeon = {
                 end
             },
 
-            Outworn_Path = {
+            outworn_path = {
                 position = {x = 8, y = 3},
                 layout= path_layout,
                 on_interaction = function ()
@@ -203,7 +204,7 @@ dungeon = {
                 end
             }, 
             
-            Skeleton = {
+            skeleton = {
                 position = {x = 6, y = 1},
                 layout= skeleton_layout,
                 on_interaction = function ()
@@ -213,19 +214,18 @@ dungeon = {
                 end
             },
 
-            -- Enemy Normal Goblin
         },
 
         Eastern_Forest = {
             --layout = { {x = 0, y = 0}, {x=7, y= 0}, {x=7, y=6}, {x=0, y= 6}},
 
-            Southern_Way = {
+            southern_way = {
                 position = {x = 1,y = 6},
                 layout = door_layout,
                 next_room = "Western_Forest",
             },
 
-            Northern_Way = {
+            northern_way = {
                 position = {x = 1,y = 0},
                 layout = door_layout,
                 next_room = "Western_Forest",
@@ -238,20 +238,20 @@ dungeon = {
         Deep_Forest = {
             --layout = { {x = 0, y = 0}, {x=10, y= 0}, {x=10, y=4}, {x=0, y= 4}},
 
-            Northern_Way = {
+            northern_way = {
             position = {x = 5,y = 0},
             layout = door_layout,
             next_room = "Clearing",
             },
 
-            Western_Way = {
+            western_way = {
                 position = {x = 0,y = 3},
                 layout = door_layout,
                 next_room = "Western_Forest",
             },
 
 
-            Chest = {
+            chest = {
                 position = {x = 2, y = 1},
                 layout= chest_layout,
                 on_interaction = function ()
@@ -308,13 +308,13 @@ dungeon = {
         Clearing = {
             -- layout = { {x = 3, y = 0}, {x=7, y= 0}, {x=7, y=6}, {x=3, y= 6}},
 
-            Southern_Way = {
+            southern_way = {
                 position = {x = 5,y = 6},
                 layout = door_layout,
                 next_room = "Deep_Forest",
             },
 
-            Chest = {
+            chest = {
                 position = {x = 5, y = 1},
                 layout= chest_layout,
                 on_interspect = function ()
@@ -331,6 +331,7 @@ dungeon = {
 
         },
 
+        -- Demo Dungeon 
         --[[
         room1 = {
 

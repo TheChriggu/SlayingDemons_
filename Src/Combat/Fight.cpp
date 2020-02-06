@@ -81,7 +81,7 @@ void sd::Fight::full_turn(std::string action, std::string modifier) {
 
         std::shared_ptr<EventArgs> defeated_args;
         defeated_args = std::make_shared<EventArgs>(EventArgs());
-        defeated_args->type = sd::EventArgs::Type::GOBLIN_DEFEATED;
+        defeated_args->type = sd::EventArgs::Type::CURRENT_ENEMY_DEFEATED;
         EventSystem::get().trigger(defeated_args);
     }
 

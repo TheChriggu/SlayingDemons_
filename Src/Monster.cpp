@@ -6,10 +6,11 @@
 #include <iostream>
 #include <utility>
 
-sd::Monster::Monster(std::string path_to_portrait, std::string alias, std::string gender) {
+sd::Monster::Monster(std::string path_to_portrait, std::string alias, std::string gender, std::string name) {
     path_to_portrait_ = std::move(path_to_portrait);
     alias_ = alias;
     gender_ = gender;
+    name_ = name;
 }
 
 std::string sd::Monster::get_action() {
@@ -43,4 +44,8 @@ std::string sd::Monster::get_alias() {
 
 std::string sd::Monster::get_gender() {
     return gender_;
+}
+
+std::string sd::Monster::get_name() {
+    return name_;
 }

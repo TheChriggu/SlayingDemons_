@@ -20,6 +20,7 @@ namespace sd {
     Sp<Fighter> player_;
     Sp<Monster> enemy_;
 
+
     public:
         Fight(Sp<Fighter> player, Sp<Monster> enemy);
         virtual ~Fight() = default;

@@ -7,7 +7,7 @@
 
 #include <utility>
 #include "Goblin.h"
-
+/*
 sd::Goblin::Goblin(std::string name, int sprite_sheet_idx, sf::Vector2i position_on_tile_map)
     : SingleTileObject(std::move(name), sprite_sheet_idx, position_on_tile_map, sol::function(), sol::function(), sol::function(), sol::function(), sol::function())
 {
@@ -36,3 +36,4 @@ void sd::Goblin::be_interacted_with() {
 void sd::Goblin::set_player_vocab(Sp<sd::PlayerVocabulary> vocab) {
     vocab_ = std::move(vocab);
 }
+*/

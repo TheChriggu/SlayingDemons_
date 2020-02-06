@@ -6,7 +6,7 @@
 #include <utility>
 
 sd::Word::Type sd::NavigationWord::get_type() {
-    return COMMAND;
+    return Type::COMMAND;
 }
 
 void sd::NavigationWord::set_name(std::string name) {

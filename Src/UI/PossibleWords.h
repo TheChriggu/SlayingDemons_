@@ -9,6 +9,7 @@
 #include "FormattedLine.h"
 #include <vector>
 #include "PlayerVocabulary.h"
+#include "PlayerState.h"
 
 namespace sd {
     class PossibleWords: public DrawableObject, public Subscriber {
@@ -40,6 +41,8 @@ namespace sd {
         
         void set_search_prefix(const std::string& prefix);
         [[nodiscard]] const std::string& get_search_prefix() const;
+        
+        [[nodiscard]] Word::Type get_current_list_type() const;
 
         void draw_to(Sp<sf::RenderTarget> window) const override;
 

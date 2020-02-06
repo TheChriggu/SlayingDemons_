@@ -5,6 +5,8 @@
 #include <Event/PlayerVocabChangedEventArgs.h>
 #include <Event/PlayerStateCreatedEventArgs.h>
 #include <Event/FontsCreatedEventArgs.h>
+#include <Event/PossibleWordsCreatedEventArgs.h>
+#include <Event/EventSystem.h>
 #include "PossibleWords.h"
 
 // TODO(FK): clean up name
@@ -13,7 +15,7 @@ sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size, const
     , Subscriber()
     , position_(position)
     , size_(size)
-    , current_list_type_(Word::COMMAND)
+    , current_list_type_(Word::Type::COMMAND)
 {
     sprite_ = std::make_shared<sf::Sprite>();
     texture_ = std::make_shared<sf::Texture>();
@@ -24,7 +26,10 @@ bool sd::PossibleWords::setup() {
     texture_->loadFromFile("../Resources/Sprites/fantasy_input.png");
     sprite_->setTexture(*texture_, false);
     sprite_->setPosition(position_);
-
+    
+    auto event = std::make_shared<PossibleWordsCreatedEventArgs>(this);
+    EventSystem::get().trigger(event);
+    
     return DrawableObject::setup ();
 }
 
@@ -119,19 +124,19 @@ sf::Vector2f sd::PossibleWords::get_size() {
 
 void sd::PossibleWords::display_modifiers()
 {
-    current_list_type_ = Word::MODIFIER;
+    current_list_type_ = Word::Type::MODIFIER;
     update(player_vocabulary_->get_modifiers());
 }
 
 void sd::PossibleWords::display_actions()
 {
-    current_list_type_ = Word::ACTION;
+    current_list_type_ = Word::Type::ACTION;
     update(player_vocabulary_->get_actions());
 }
 
 void sd::PossibleWords::display_commands()
 {
-    current_list_type_ = Word::COMMAND;
+    current_list_type_ = Word::Type::COMMAND;
     update(player_vocabulary_->get_commands());
 }
 
@@ -140,13 +145,13 @@ void sd::PossibleWords::set_search_prefix(const std::string &prefix)
     search_prefix_ = prefix;
     
     switch (current_list_type_) {
-        case Word::ACTION:
+        case Word::Type::ACTION:
             update(*(player_vocabulary_->get_actions_starting_with(prefix)));
             break;
-        case Word::MODIFIER:
+        case Word::Type::MODIFIER:
             update(*(player_vocabulary_->get_modifiers_starting_with(prefix)));
             break;
-        case Word::COMMAND:
+        case Word::Type::COMMAND:
             update(*(player_vocabulary_->get_commands_starting_with(prefix)));
             break;
     }
@@ -155,6 +160,10 @@ void sd::PossibleWords::set_search_prefix(const std::string &prefix)
 const std::string &sd::PossibleWords::get_search_prefix() const
 {
     return search_prefix_;
+}
+sd::Word::Type sd::PossibleWords::get_current_list_type() const
+{
+    return current_list_type_;
 }
 
 

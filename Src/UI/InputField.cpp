@@ -6,10 +6,12 @@
 #include <iostream>
 #include <memory>
 #include <ScriptEngine/ScriptEngine.h>
+#include <Event/PossibleWordsCreatedEventArgs.h>
 
 // TODO(FK): clean up name
 sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color)
     : DrawableObject("input-field")
+    , Subscriber()
 {
 
     text_ = std::make_shared<sf::Text>();
@@ -66,28 +68,24 @@ void sd::InputField::handle(sf::Event event) {
             text_->setString("");
     
             ScriptEngine::get().broadcast("input_received", strg.toAnsiString());
-
-        //std::vector<sf::String> strings = textProcessor->SplitBySpace(text->getString());
-
-
-
-        //for(sf::String string : strings)
-        //{
-        //
-        //}
         }
     }
     else if (event.type == sf::Event::TextEntered)
     {
-        sf::Uint32 input = event.text.unicode;
-        add_text (input);
+        if (event.key.code == sf::Keyboard::Space) {
+            if(possible_words_->get_current_list_type() == Word::Type::MODIFIER) {
+                possible_words_->display_actions();
+            } else if(possible_words_->get_current_list_type() == Word::Type::COMMAND) { }
+            
+            possible_words_->set_search_prefix("");
+            add_text (event.text.unicode);
+        } else {
+            
+            
+            possible_words_->set_search_prefix(text_->getString().toAnsiString());
+            add_text (event.text.unicode);
+        }
     }
-    //if(event.type == sf::Event::KeyPressed)
-    //{
-        //std::cout << "key released\n";
-
-
-    //}
 
 
 }
@@ -98,6 +96,15 @@ sf::Vector2f sd::InputField::get_size() {
 
 sf::Vector2f sd::InputField::get_position() {
     return text_->getPosition();
+}
+
+void sd::InputField::handle(Sp<sd::EventArgs> e)
+{
+    if (e->type == EventArgs::Type::POSSIBLE_WORDS_CREATED) {
+        auto args = std::dynamic_pointer_cast<PossibleWordsCreatedEventArgs>(e);
+    
+        possible_words_ = Sp<PossibleWords>(args->possible_words);
+    }
 }
 
 

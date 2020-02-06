@@ -18,19 +18,14 @@ sd::InputTextProcessor::InputTextProcessor() : Subscriber() {
 
 void sd::InputTextProcessor::process_input(const std::string& spell) {
 
-    if(spell == "inspect room")
+    if(spell == "Inspect Room")
     {
         output_->add_line (player_state_->get_current_room()->get_description());
     }
 
     else {
         //split spell
-        std::cout << "splitting input\n";
         std::vector<std::string> words = split_by_space(spell);
-
-        //TODO: Sort words in array to be modifier first, then action(or other way round)
-
-
 
         //check spell validity (or do this in input field already?)
         /*
@@ -39,9 +34,24 @@ void sd::InputTextProcessor::process_input(const std::string& spell) {
         }
         */
 
-        if(words[0] == "interact")
+        if(words[0] == "Inspect")
         {
-            //TODO: Make sure that this actually is a door
+            auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
+
+            if(object)
+            {
+                object->be_inspected();
+            }
+            else
+            {
+                std::shared_ptr<LineToOutputEventArgs> args;
+                args = std::make_shared<LineToOutputEventArgs>("Could not find object in room.");
+                EventSystem::get().trigger(args);
+            }
+        }
+
+        else if(words[0] == "Interact")
+        {
             auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
 
             if(object)
@@ -51,12 +61,58 @@ void sd::InputTextProcessor::process_input(const std::string& spell) {
             else
             {
                 std::shared_ptr<LineToOutputEventArgs> args;
-                args = std::make_shared<LineToOutputEventArgs>("could [b][i]not[/b] find [/i] [b] object in [/b] room.");
+                args = std::make_shared<LineToOutputEventArgs>("Could not find object in room.");
                 EventSystem::get().trigger(args);
             }
         }
 
-        else if(words[0] == "pickup")
+        else if(words[0] == "Open")
+        {
+            auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
+
+            if(object)
+            {
+                object->be_opened();
+            }
+            else
+            {
+                std::shared_ptr<LineToOutputEventArgs> args;
+                args = std::make_shared<LineToOutputEventArgs>("Could not find object in room.");
+                EventSystem::get().trigger(args);
+            }
+        }
+        else if(words[0] == "Fight")
+        {
+            auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
+
+            if(object)
+            {
+                object->be_fought();
+            }
+            else
+            {
+                std::shared_ptr<LineToOutputEventArgs> args;
+                args = std::make_shared<LineToOutputEventArgs>("Could not find object in room.");
+                EventSystem::get().trigger(args);
+            }
+        }
+        else if(words[0] == "Enter")
+        {
+            auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
+
+            if(object)
+            {
+                object->be_entered();
+            }
+            else
+            {
+                std::shared_ptr<LineToOutputEventArgs> args;
+                args = std::make_shared<LineToOutputEventArgs>("Could not find object in room.");
+                EventSystem::get().trigger(args);
+            }
+        }
+
+        /*else if(words[0] == "Pickup")
         {
             //TODO: Make sure that this actually is a door
             //Door* door = (Door*) playerState->GetCurrentRoom()->GetObjectWithName(words[1]);
@@ -65,7 +121,7 @@ void sd::InputTextProcessor::process_input(const std::string& spell) {
             std::shared_ptr<NewWordCollectedEventArgs> args;
             args = std::make_shared<NewWordCollectedEventArgs>(NewWordCollectedEventArgs(words[1]));
             EventSystem::get().trigger(args);
-        }
+        }*/
             //*for(auto word : words)
             //*{
             //*if(!player_->HasWord(word))
@@ -101,7 +157,7 @@ void sd::InputTextProcessor::process_input(const std::string& spell) {
 
             else
             {
-                output_->add_line ("Input not valid modifier+action combination");
+                output_->add_line ("Input not valid modifier + action combination");
             }
 
         }

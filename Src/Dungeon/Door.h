@@ -18,7 +18,8 @@ namespace sd {
 
     public:
         Door(std::string name, int sprite_sheet_idx_open, int sprite_sheet_idx_locked, sf::Vector2i position_on_tile_map,
-            std::string next_room, sol::function on_interaction);
+            std::string next_room, sol::function on_interaction, sol::function on_open
+            ,  sol::function on_inspection, sol::function on_fight, sol::function on_enter);
         ~Door() override = default;
 
         void put_on_layout(std::vector<int>& layout, int width, int height) override;

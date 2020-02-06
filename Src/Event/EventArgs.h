@@ -22,7 +22,8 @@ namespace sd {
             PLAYER_STATE_CREATED,
             FIGHT_STARTED,
             FIGHT_ENDED,
-            FONTS_CREATED
+            FONTS_CREATED,
+            POSSIBLE_WORDS_CREATED
         };
 
         EventArgs();

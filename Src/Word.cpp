@@ -6,5 +6,5 @@
 
 
 sd::Word::Type sd::Word::get_type() {
-    return UNKNOWN;
+    return Type::UNKNOWN;
 }

@@ -8,11 +8,14 @@
 #include "Core/DrawableObject.h"
 #include "TextOutput.h"
 #include "InputTextProcessor.h"
+#include "PossibleWords.h"
 
 namespace sd {
-    class InputField : public DrawableObject{
+    class InputField : public DrawableObject, public Subscriber {
         Sp<sf::Text> text_;
         Sp<InputTextProcessor> text_processor_;
+        
+        Sp<PossibleWords> possible_words_;
 
     public:
         InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color);
@@ -27,6 +30,7 @@ namespace sd {
 
         void draw_to(Sp<sf::RenderTarget> window) const override;
         void handle(sf::Event event) override;
+        void handle(Sp<EventArgs> e) override;
     };
 }
 

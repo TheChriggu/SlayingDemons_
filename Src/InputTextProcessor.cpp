@@ -18,6 +18,8 @@ sd::InputTextProcessor::InputTextProcessor() : Subscriber() {
 
 void sd::InputTextProcessor::process_input(const std::string& spell) {
 
+    output_->add_line("[b]> " + spell + "[/b]");
+    
     if(spell == "Inspect Room")
     {
         output_->add_line (player_state_->get_current_room()->get_description());

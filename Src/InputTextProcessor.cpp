@@ -24,6 +24,9 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
     //split spell
     std::vector<std::string> words = split_by_space(spell);
     
+    std::cout << "Word 1: " << words[0] << std::endl;
+    std::cout << "Word 2: " << words[1] << std::endl;
+    
     //check if currently fighting
     if (player_state_->is_fighting())
     {

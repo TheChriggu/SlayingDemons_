@@ -13,7 +13,10 @@ sd::Font::Font() {
 
     fantasy_font_->loadFromFile("../Resources/Fonts/comic.ttf");
     cyber_font_->loadFromFile("../Resources/Fonts/Alef-Regular.ttf");
-    code_font_->loadFromFile("../Resources/Fonts/webdings.ttf");
+    if(!(code_font_->loadFromFile("../Resources/Fonts/trebuc.ttf")))
+    {
+        std::cout << "could not load code font.\n";
+    }
 
 
     EventSystem::get().trigger(std::make_shared<FontsCreatedEventArgs>(this));

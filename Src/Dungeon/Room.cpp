@@ -130,6 +130,9 @@ void sd::Room::handle(std::shared_ptr<EventArgs> e) {
         (*it)->be_destroyed();
         (*it)->remove_from_layout(layout_, 11, 7);
         room_objects_.erase(it);
+    } else
+        {
+        std::cout << "object not found\n";
     }
 }
 

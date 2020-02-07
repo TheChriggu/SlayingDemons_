@@ -33,13 +33,19 @@ sd::PlayerVocabulary::PlayerVocabulary() {
         add_command(word);
     }*/
     add_modifier("Flirty");
-    add_modifier("Pyro");
+    add_modifier("Chaotic");
+    add_modifier("Fire");
+    add_modifier("Acid");
+    add_modifier("Unimplemented");
+    //add_modifier("Pyro");
     
     add_action("Honk");
     add_action("Poke");
+    add_action("Attack");
+    add_action("Kick");
+    add_action("Slash");
     
     add_command("Inspect");
-    add_command("Interact");
     add_command("Open");
     add_command("Fight");
     add_command("Enter");

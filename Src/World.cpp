@@ -7,6 +7,7 @@
 #include <Event/PlayerStateCreatedEventArgs.h>
 #include "World.h"
 #include <Event/DoorUnlockedEventArgs.h>
+#include <Event/DoorEnteredEventArgs.h>
 
 sd::World::World() {
 
@@ -41,6 +42,7 @@ bool sd::World::setup() {
     }
 
     ScriptEngine::get().register_all("unlock_door", &World::unlock_door, this);
+    //ScriptEngine::get().register_all("enter_door", &World::enter_door, this);
 
     return true;
 }
@@ -55,5 +57,11 @@ void sd::World::handle(Sp<sd::EventArgs> e)
 void sd::World::unlock_door(std::string room_name, std::string door_name) {
     std::shared_ptr<DoorUnlockedEventArgs> args;
     args = std::make_shared<DoorUnlockedEventArgs>(room_name, door_name);
+    EventSystem::get().trigger(args);
+}
+
+void sd::World::enter_door(std::string room_name, std::string door_name) {
+    std::shared_ptr<DoorEnteredEventArgs> args;
+    args = std::make_shared<DoorEnteredEventArgs>(room_name, door_name);
     EventSystem::get().trigger(args);
 }

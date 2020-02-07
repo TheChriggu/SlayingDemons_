@@ -29,13 +29,13 @@ namespace sd {
         virtual void be_interacted_with();
         virtual void be_destroyed();
 
-        void be_opened();
+        virtual void be_opened();
 
-        void be_inspected();
+        virtual void be_inspected();
 
-        void be_fought();
-
-        void be_entered();
+        virtual void be_fought();
+    
+        virtual void be_entered();
     };
 }
 

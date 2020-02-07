@@ -25,7 +25,7 @@ namespace sd {
         void put_on_layout(std::vector<int>& layout, int width, int height) override;
         void remove_from_layout(std::vector<int>& layout, int width, int height) override;
         std::string get_name() override;
-        void be_interacted_with() override;
+        void be_entered() override;
 
         void set_locked(bool lock_state);
 

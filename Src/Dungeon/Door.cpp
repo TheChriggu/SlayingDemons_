@@ -45,7 +45,7 @@ std::string sd::Door::get_name() {
     return SingleTileObject::get_name();
 }
 
-void sd::Door::be_interacted_with() {
+void sd::Door::be_entered() {
     if(is_locked_)
     {
         std::shared_ptr<LineToOutputEventArgs> args;

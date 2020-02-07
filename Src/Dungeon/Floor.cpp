@@ -115,3 +115,7 @@ Sp<sd::Room> sd::Floor::get_room(const std::string &name) const
     
     return nullptr;
 }
+
+std::string sd::Floor::get_name() {
+    return name_;
+}

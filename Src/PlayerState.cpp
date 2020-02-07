@@ -101,3 +101,17 @@ void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
 
 }
 
+void sd::PlayerState::save_current_vocab() {
+    player_vocabulary_->save_to_file();
+
+}
+
+void sd::PlayerState::load_vocab()
+{
+    player_vocabulary_->load_from_file();
+}
+
+Sp<sd::Floor> sd::PlayerState::get_current_floor() {
+    return current_floor_;
+}
+

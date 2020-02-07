@@ -35,7 +35,7 @@ sd::PlayerVocabulary::PlayerVocabulary() {
     add_modifier("Flirty");
     add_modifier("Chaotic");
     add_modifier("Fire");
-    add_modifier("Acid");
+    add_modifier("Useless");
     add_modifier("Unimplemented");
     //add_modifier("Pyro");
     
@@ -147,5 +147,24 @@ void sd::PlayerVocabulary::handle(std::shared_ptr<EventArgs> e) {
         }
     }
     
+}
+
+void sd::PlayerVocabulary::save_to_file()
+{
+    auto vec = std::make_shared<std::vector<std::vector<std::string>>>();
+    vec->emplace_back(get_modifiers());
+    vec->emplace_back(get_actions());
+    vec->emplace_back(get_commands());
+
+    FileInput::write_tsv(vec, "../Resources/Tables/PlayerVocab.tsv");
+}
+
+void sd::PlayerVocabulary::load_from_file()
+{
+    auto vec = FileInput::load_tsv("../Resources/Tables/PlayerVocab.tsv");
+
+    modifiers_ = (*vec)[0];
+    actions_ = (*vec)[1];
+    commands_ = (*vec)[2];
 }
 

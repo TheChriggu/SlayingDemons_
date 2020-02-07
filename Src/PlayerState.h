@@ -26,6 +26,7 @@ namespace sd {
         ~PlayerState() override = default;
 
         Sp<Room> get_current_room();
+        Sp<Floor> get_current_floor();
         Sp<Fight> get_fight();
         bool is_fighting();
 
@@ -35,6 +36,9 @@ namespace sd {
 
         Sp<PlayerVocabulary> get_player_vocabulary();
         void handle(std::shared_ptr<EventArgs> e) override;
+
+        void save_current_vocab();
+        void load_vocab();
 
     };
 }

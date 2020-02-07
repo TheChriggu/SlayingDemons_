@@ -70,6 +70,11 @@ void sd::Fight::full_turn(std::string action, std::string modifier) {
         std::shared_ptr<LineToOutputEventArgs> args;
         args = std::make_shared<LineToOutputEventArgs>("You died.");
         EventSystem::get().trigger(args);
+
+        std::shared_ptr<EventArgs> defeated_args;
+        defeated_args = std::make_shared<EventArgs>(EventArgs());
+        defeated_args->type = sd::EventArgs::Type::PLAYER_DIED;
+        EventSystem::get().trigger(defeated_args);
     }
 
     else if (enemy_->get_hit_points() <= 0)

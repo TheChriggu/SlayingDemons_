@@ -59,9 +59,3 @@ void sd::World::unlock_door(std::string room_name, std::string door_name) {
     args = std::make_shared<DoorUnlockedEventArgs>(room_name, door_name);
     EventSystem::get().trigger(args);
 }
-
-void sd::World::enter_door(std::string room_name, std::string door_name) {
-    std::shared_ptr<DoorEnteredEventArgs> args;
-    args = std::make_shared<DoorEnteredEventArgs>(room_name, door_name);
-    EventSystem::get().trigger(args);
-}

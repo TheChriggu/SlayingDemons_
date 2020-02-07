@@ -106,14 +106,6 @@ void sd::Room::handle(std::shared_ptr<EventArgs> e) {
         }
     }
     
-    /*if (e->type == EventArgs::Type::DOOR_ENTERED) {
-        auto arg = dynamic_cast<DoorEnteredEventArgs*>(e.get());
-        if(arg->room == name_)
-        {
-            std::dynamic_pointer_cast<Door>( get_object_with_name(arg->door))->be_interacted_with();
-        }
-    }*/
-
     if (e->type == EventArgs::Type::GOBLIN_DEFEATED) {
         remove_object_with_name("Goblin");
     }

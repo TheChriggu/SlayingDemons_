@@ -25,7 +25,6 @@ namespace sd {
         void handle(Sp<EventArgs> e) override;
 
         void unlock_door(std::string room_name, std::string door_name);
-        void enter_door(std::string room_name, std::string door_name);
     };
 }
 

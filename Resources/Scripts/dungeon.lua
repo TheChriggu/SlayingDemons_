@@ -241,7 +241,6 @@ dungeon = {
 
         Deep_Forest = {
             --layout = { {x = 0, y = 0}, {x=10, y= 0}, {x=10, y=4}, {x=0, y= 4}},
-
             northern_way = {
             position = {x = 5,y = 0},
             layout = door_layout,
@@ -281,13 +280,13 @@ dungeon = {
                     print_line("You walk to the Goblin, wanting to wish him a merry day.")
                     print_line("Maybe you should mention he is burning.")
                     print_line("He does not understand your intentions. A fight ensues.")
-                    start_new_fight("Goblin")
+                    start_new_fight("Fire Goblin")
                 end,
 
                 on_open = function()
                     print_line("You try to open the Goblin. This fails, for obvious reasons.")
                     print_line("Disturbed by your strange behaviour, the Goblin attacks you.")
-                    start_new_fight("Goblin")
+                    start_new_fight("Fire Goblin")
                 end,
 
                 on_inspection = function()
@@ -297,14 +296,14 @@ dungeon = {
 
                 on_fight = function()
                     print_line("You take charge and attack the Goblin.")
-                    start_new_fight("Goblin")
+                    start_new_fight("Fire Goblin")
                 end,
 
                 on_enter = function()
                     print_line("You try to enter the Goblin, which enrages him a lot.")
                     print_line("He attacks you.")
                     print_line("What the hell were you expecting to happen?")
-                    start_new_fight("Goblin")
+                    start_new_fight("Fire Goblin")
                 end
             },
         },

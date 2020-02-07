@@ -70,9 +70,80 @@ dungeon = {
             --layout = { {x = 2, y = 0}, {x=10, y= 0}, {x=10, y=6}, {x=2, y= 6}},
 
             is_start = true,
+            
+            northern_way = {
+                position = {x = 5,y = 0},
+                layout = door_layout,
+                is_locked = false,
+                next_room = "western_forest",
+
+                on_enter = function()
+                    print_line("You try to enter the door.")
+                    
+                end
+            },
+
+            tree = {
+                position={x=3,y=1},
+                layout = tree_layout,
+                on_interspect = function ()
+                    print_line("It's a tree.")
+                    print_line("Not astounding, when you consider I'm in a forest right now... ")
+                end
+            },
+
+            bushes = {
+                position = {x= 7,y=1},
+                layout = bushGroup_layout,
+                on_interaction= function ()
+                    print_line("You can see several bushes. Some of them carry berries. ")
+                    print_line("As you take a closer look you wouldn't consider them eatable. ")
+                end
+            },
+
+            axe = {
+                position = {x = 7, y = 3},
+                layout= axe_layout,
+                on_interaction = function ()
+                    print_line("Through the thick moss you see something shiny. As you approach it you realize it's an axe. ")
+                    print_line("[i]An old axe. I don't think it will be useful. ")
+                    print_line("The blade is broken. There is a long crack in it. ")
+                    print_line("As fast as you discover your new find, as fast you leave it again. It's not gonna help you anyway. ")
+                end
+            },
+        },
+
+        western_forest = {
+            --layout = { {x = 2, y = 0}, {x=10, y= 0}, {x=10, y=6}, {x=2, y= 6}},
+
+            Way_back_down = {
+                position = {x = 5,y = 6},
+                layout = door_layout,
+                next_room = "Southern_Forest",
+            },
+
+            -- Door unlocks only when the bush in front of it is removed
+            northern_way = {
+                position = {x = 9,y = 0},
+                layout = door_layout,
+                next_room = "Eastern_Forest",
+            },
+
+            -- Door unlocks only when the bush in front of it is removed
+            southern_say = {
+                position = {x = 9,y = 6},
+                layout = door_layout,
+                next_room = "Eastern_Forest",
+            },
+
+            eastern_way = {
+                position = {x = 10,y = 3},
+                layout = door_layout,
+                next_room = "Deep_Forest",
+            },
 
             Goblin = {
-                position = {x = 2, y = 5},
+                position = {x = 5, y = 3},
                 layout = goblin_layout,
                 on_interaction = function()
                     print_line("You walk to the Goblin, wanting to wish him a merry day.")
@@ -101,86 +172,11 @@ dungeon = {
                     print_line("He attacks you.")
                     print_line("What the hell were you expecting to happen?")
                     start_new_fight("Goblin")
-                end,
-
-                on_destroy = function()
-                    print_line("The door to the north opens")
-                    unlock_door("Southern_Forest", "Northern_Way")
-                end
-
-            },
-
-            Northern_Way = {
-                position = {x = 5,y = 0},
-                layout = door_layout,
-                is_locked = true,
-                next_room = "Western_Forest",
-
-                on_enter = function()
-                    print_line("You try to enter the door.")
                 end
             },
 
-            Tree = {
-                position={x=3,y=1},
-                layout = tree_layout,
-                on_interaction = function ()
-                    print_line("It's a tree.")
-                    print_line("Not astounding, when you consider I'm in a forest right now... ")
-                end
-            },
 
-            Bushes = {
-                position = {x= 7,y=1},
-                layout = bushGroup_layout,
-                on_interaction= function ()
-                    print_line("You can see several bushes. Some of them carry berries. ")
-                    print_line("As you take a closer look you wouldn't consider them eatable. ")
-                end
-            },
-
-            Axe = {
-                position = {x = 7, y = 3},
-                layout= axe_layout,
-                on_interaction = function ()
-                    print_line("Through the thick moss you see something shiny. As you approach it you realize it's an axe. ")
-                    print_line("[i]An old axe. I don't think it will be useful. ")
-                    print_line("The blade is broken. There is a long crack in it. ")
-                    print_line("As fast as you discover your new find, as fast you leave it again. It's not gonna help you anyway. ")
-                end
-            },
-        },
-
-        Western_Forest = {
-            --layout = { {x = 2, y = 0}, {x=10, y= 0}, {x=10, y=6}, {x=2, y= 6}},
-
-            Way_back_down = {
-                position = {x = 5,y = 6},
-                layout = door_layout,
-                next_room = "Southern_Forest",
-            },
-
-            -- Door unlocks only when the bush in front of it is removed
-            Northern_Way = {
-                position = {x = 9,y = 0},
-                layout = door_layout,
-                next_room = "Eastern_Forest",
-            },
-
-            -- Door unlocks only when the bush in front of it is removed
-            Southern_Way = {
-                position = {x = 9,y = 6},
-                layout = door_layout,
-                next_room = "Eastern_Forest",
-            },
-
-            Eastern_Way = {
-                position = {x = 10,y = 3},
-                layout = door_layout,
-                next_room = "",
-            },
-
-            Upper_Bush = {
+            upper_bush = {
                 position = {x = 9, y = 1},
                 layout= bush_layout,
                 on_interaction = function ()
@@ -189,7 +185,7 @@ dungeon = {
                 end
             },
 
-            Bottom_Bush = {
+            bottom_bush = {
                 position = {x = 9, y = 5},
                 layout= bush_layout,
                 on_interaction = function ()
@@ -198,7 +194,7 @@ dungeon = {
                 end
             },
 
-            Outworn_Path = {
+            outworn_path = {
                 position = {x = 8, y = 3},
                 layout= path_layout,
                 on_interaction = function ()
@@ -207,8 +203,8 @@ dungeon = {
                 end
             }, 
             
-            Skeleton = {
-                position = {x = 8, y = 3},
+            skeleton = {
+                position = {x = 6, y = 1},
                 layout= skeleton_layout,
                 on_interaction = function ()
                     print_line("Uagh! It's a skeleton. I mean like a real skeleton! ")
@@ -217,22 +213,21 @@ dungeon = {
                 end
             },
 
-            -- Enemy Normal Goblin
         },
 
         Eastern_Forest = {
             --layout = { {x = 0, y = 0}, {x=7, y= 0}, {x=7, y=6}, {x=0, y= 6}},
 
-            Southern_Way = {
+            southern_way = {
                 position = {x = 1,y = 6},
                 layout = door_layout,
-                next_room = "Western_Forest",
+                next_room = "western_forest",
             },
 
-            Northern_Way = {
+            northern_way = {
                 position = {x = 1,y = 0},
                 layout = door_layout,
-                next_room = "Western_Forest",
+                next_room = "western_forest",
             },
 
             -- Angucken des Raums allgemein
@@ -242,21 +237,21 @@ dungeon = {
         Deep_Forest = {
             --layout = { {x = 0, y = 0}, {x=10, y= 0}, {x=10, y=4}, {x=0, y= 4}},
 
-            Northern_Way = {
+            northern_way = {
             position = {x = 5,y = 0},
             layout = door_layout,
             next_room = "Clearing",
             },
 
-            Western_Way = {
+            western_way = {
                 position = {x = 0,y = 3},
                 layout = door_layout,
-                next_room = "Western_Forest",
+                next_room = "western_forest",
             },
 
 
-            Chest = {
-                position = {x = 8, y = 3},
+            chest = {
+                position = {x = 2, y = 1},
                 layout= chest_layout,
                 on_interaction = function ()
                     print_line("It's an old chest. Not really big. You could maybe fit a book inside? I think. ")
@@ -271,21 +266,71 @@ dungeon = {
                     
                     add_modifier ("Water")
                 end
-            }, 
+            },
 
             -- Enemy Fire Goblin
+            Goblin = {
+                position = {x = 7, y = 2},
+                layout = goblin_layout,
+                on_interaction = function()
+                    print_line("You walk to the Goblin, wanting to wish him a merry day.")
+                    print_line("Maybe you should mention he is burning.")
+                    print_line("He does not understand your intentions. A fight ensues.")
+                    start_new_fight("Goblin")
+                end,
+
+                on_open = function()
+                    print_line("You try to open the Goblin. This fails, for obvious reasons.")
+                    print_line("Disturbed by your strange behaviour, the Goblin attacks you.")
+                    start_new_fight("Goblin")
+                end,
+
+                on_inspection = function()
+                    print_line("It's a small, hairy, wild, angry and burning Goblin. Nothing too dangerous. Probably...")
+                    -- unlock_door("Southern_Forest", "Northern_Way")
+                end,
+
+                on_fight = function()
+                    print_line("You take charge and attack the Goblin.")
+                    start_new_fight("Goblin")
+                end,
+
+                on_enter = function()
+                    print_line("You try to enter the Goblin, which enrages him a lot.")
+                    print_line("He attacks you.")
+                    print_line("What the hell were you expecting to happen?")
+                    start_new_fight("Goblin")
+                end
+            },
         },
 
         Clearing = {
-            layout = { {x = 3, y = 0}, {x=7, y= 0}, {x=7, y=6}, {x=3, y= 6}},
+            -- layout = { {x = 3, y = 0}, {x=7, y= 0}, {x=7, y=6}, {x=3, y= 6}},
 
-                Southern_Way = {
+            southern_way = {
                 position = {x = 5,y = 6},
                 layout = door_layout,
                 next_room = "Deep_Forest",
             },
+
+            chest = {
+                position = {x = 5, y = 1},
+                layout= chest_layout,
+                on_interspect = function ()
+                    print_line("It's an old chest. Again. You are kind of afraid what is going to happen this time when you open it. ")
+                    print_line("Slowly you approach the chest and open it.")
+                    -- crackling noises and squeaking
+                    print_line("At the buttom of the chest lays a piece of paper. It looks similar to a map.")
+                    print_line("You take a closer look at it and it's a map of the forest. The marked location is a bit more eastern from your place.")
+                    print_line("But it's in walking distance. You could reach it in maybe 30 minutes.")
+
+                end
+            },
+
+
         },
 
+        -- Demo Dungeon 
         --[[
         room1 = {
 

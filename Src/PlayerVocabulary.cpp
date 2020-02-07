@@ -18,19 +18,31 @@ sd::PlayerVocabulary::PlayerVocabulary() {
     modifiers_trie_ = std::make_shared<Trie>();
     commands_trie_ = std::make_shared<Trie>();
 
-    auto table = FileInput::load_tsv("../Resources/Tables/PlayerVocab.tsv");
+    /*auto table = FileInput::load_tsv("../Resources/Tables/PlayerVocab.tsv");
     for(const auto& word : (*table)[0])
     {
         add_action(word);
     }
     for(const auto& word : (*table)[1])
     {
+        std::cout << "NEW MODIFIER: " << word << std::endl;
         add_modifier(word);
     }
     for(const auto& word : (*table)[2])
     {
         add_command(word);
-    }
+    }*/
+    add_modifier("Flirty");
+    add_modifier("Pyro");
+    
+    add_action("Honk");
+    add_action("Poke");
+    
+    add_command("Inspect");
+    add_command("Interact");
+    add_command("Open");
+    add_command("Fight");
+    add_command("Enter");
     
     ScriptEngine::get().register_all("add_action", &PlayerVocabulary::add_action, this);
     ScriptEngine::get().register_all("add_modifier", &PlayerVocabulary::add_modifier, this);
@@ -38,6 +50,9 @@ sd::PlayerVocabulary::PlayerVocabulary() {
 }
 
 bool sd::PlayerVocabulary::has_word(const std::string& word) {
+    for (const auto& action : modifiers_) {
+        std::cout << action << " : " << word << std::endl;
+    }
     if(std::count(actions_.begin(), actions_.end(), word))
     {
         return true;

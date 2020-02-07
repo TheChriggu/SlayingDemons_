@@ -7,6 +7,7 @@
 #include <Event/PlayerStateCreatedEventArgs.h>
 #include "World.h"
 #include <Event/DoorUnlockedEventArgs.h>
+#include <Event/DoorEnteredEventArgs.h>
 
 sd::World::World() {
 
@@ -41,6 +42,7 @@ bool sd::World::setup() {
     }
 
     ScriptEngine::get().register_all("unlock_door", &World::unlock_door, this);
+    //ScriptEngine::get().register_all("enter_door", &World::enter_door, this);
 
     return true;
 }

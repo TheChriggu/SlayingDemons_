@@ -6,6 +6,7 @@
 #include "Door.h"
 #include <utility>
 #include <Event/DoorUnlockedEventArgs.h>
+#include <Event/DoorEnteredEventArgs.h>
 
 sd::Room::Room(std::string name)
 {
@@ -104,7 +105,7 @@ void sd::Room::handle(std::shared_ptr<EventArgs> e) {
             std::dynamic_pointer_cast<Door>( get_object_with_name(arg->door_name))->set_locked(false);
         }
     }
-
+    
     if (e->type == EventArgs::Type::GOBLIN_DEFEATED) {
         remove_object_with_name("Goblin");
     }

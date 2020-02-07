@@ -47,6 +47,8 @@ sd::PlayerVocabulary::PlayerVocabulary() {
     ScriptEngine::get().register_all("add_action", &PlayerVocabulary::add_action, this);
     ScriptEngine::get().register_all("add_modifier", &PlayerVocabulary::add_modifier, this);
     ScriptEngine::get().register_all("add_command", &PlayerVocabulary::add_command, this);
+    
+    
 }
 
 bool sd::PlayerVocabulary::has_word(const std::string& word) {
@@ -138,5 +140,6 @@ void sd::PlayerVocabulary::handle(std::shared_ptr<EventArgs> e) {
             EventSystem::get().trigger(event);
         }
     }
+    
 }
 

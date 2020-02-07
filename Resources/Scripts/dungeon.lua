@@ -137,6 +137,7 @@ dungeon = {
             },
 
             eastern_way = {
+                is_locked= true,
                 position = {x = 10,y = 3},
                 layout = door_layout,
                 next_room = "Deep_Forest",
@@ -172,7 +173,11 @@ dungeon = {
                     print_line("He attacks you.")
                     print_line("What the hell were you expecting to happen?")
                     start_new_fight("Goblin")
-                end
+                end,
+
+                on_destroy = function ()
+                    unlock_door("western_forest", "eastern_way")
+                end,
             },
 
 
@@ -316,7 +321,7 @@ dungeon = {
             chest = {
                 position = {x = 5, y = 1},
                 layout= chest_layout,
-                on_interspect = function ()
+                on_open = function ()
                     print_line("It's an old chest. Again. You are kind of afraid what is going to happen this time when you open it. ")
                     print_line("Slowly you approach the chest and open it.")
                     -- crackling noises and squeaking
@@ -324,6 +329,7 @@ dungeon = {
                     print_line("You take a closer look at it and it's a map of the forest. The marked location is a bit more eastern from your place.")
                     print_line("But it's in walking distance. You could reach it in maybe 30 minutes.")
 
+                    set_glitch_on("output-panel")
                 end
             },
 

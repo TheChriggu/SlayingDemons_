@@ -56,6 +56,8 @@ void sd::PlayerState::start_new_fight(const std::string& enemy_name) {
     std::shared_ptr<FightStartedEventArgs> args;
     args = std::make_shared<FightStartedEventArgs>(fight_.get());
     EventSystem::get().trigger(args);
+    
+    
 
     ScriptEngine::get().broadcast("fight_started_with", enemy_name);
 }

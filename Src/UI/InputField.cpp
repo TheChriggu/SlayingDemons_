@@ -39,10 +39,19 @@ bool sd::InputField::setup() {
 }
 
 void sd::InputField::add_text(sf::Uint32 input) {
+    std::cout << "Code: " << input << std::endl;
+    
     sf::String result = text_->getString();
-    if(input == 8 && result.getSize() > 0)
+    if(input == 8)
     {
-        result.erase(result.getSize()-1,1);
+        if (result.getSize() > 0)
+        {
+            result.erase(result.getSize() - 1, 1);
+            text_->setString(result);
+            possible_words_->trim_last_on_search_prefix();
+        }
+        
+        return;
     }
     else if(input != 13)
     {
@@ -50,6 +59,9 @@ void sd::InputField::add_text(sf::Uint32 input) {
     }
 
     text_->setString(result);
+    
+    if (input != 32)
+        possible_words_->add_to_search_prefix(std::string(1, static_cast<char>(input)));
 }
 
 void sd::InputField::draw_to(Sp<sf::RenderTarget> window) const {
@@ -66,6 +78,19 @@ void sd::InputField::handle(sf::Event event) {
     
             text_processor_->process_input(strg.toAnsiString());
             text_->setString("");
+            
+            switch(possible_words_->get_current_list_type()) {
+                case Word::Type::ACTION:
+                    possible_words_->display_modifiers();
+                    break;
+                case Word::Type::UNKNOWN:
+                    possible_words_->display_commands();
+                    break;
+                case Word::Type::COMMAND:
+                    possible_words_->display_commands();
+                    break;
+            }
+            possible_words_->set_search_prefix("");
     
             ScriptEngine::get().broadcast("input_received", strg.toAnsiString());
         }
@@ -75,19 +100,20 @@ void sd::InputField::handle(sf::Event event) {
         if (event.type == sf::Event::KeyPressed) {
             if(possible_words_->get_current_list_type() == Word::Type::MODIFIER) {
                 //Complete Word
-                possible_words_->display_actions();
                 possible_words_->set_search_prefix("");
+                possible_words_->display_actions();
+                
             }
             else if(possible_words_->get_current_list_type() == Word::Type::ACTION)
             {
-                possible_words_->display_commands(); //placeholder to check if this line is reached
+                //possible_words_->display_commands(); //placeholder to check if this line is reached
 
                 //Complete word
                 possible_words_->set_search_prefix("");
             }
             else if(possible_words_->get_current_list_type() == Word::Type::COMMAND)
             {
-                possible_words_->display_modifiers(); //placeholder to check if this line is reached
+                //possible_words_->display_modifiers(); //placeholder to check if this line is reached
 
                 //Complete word
                 //switch to list of room objects
@@ -97,8 +123,11 @@ void sd::InputField::handle(sf::Event event) {
     }
     else if(event.type == sf::Event::TextEntered)
     {
-        //possible_words_->add_to_search_prefix(std::string(1, static_cast<char>(event.text.unicode)));
         add_text (event.text.unicode);
+    }
+    
+    if (event.key.code == sf::Keyboard::BackSpace) {
+        possible_words_->set_search_prefix(text_->getString().toAnsiString());
     }
 }
 

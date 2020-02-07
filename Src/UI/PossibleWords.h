@@ -41,6 +41,7 @@ namespace sd {
         
         void set_search_prefix(const std::string& prefix);
         void add_to_search_prefix(const std::string& prefix);
+        void trim_last_on_search_prefix();
         [[nodiscard]] const std::string& get_search_prefix() const;
         
         [[nodiscard]] Word::Type get_current_list_type() const;

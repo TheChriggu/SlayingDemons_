@@ -6,7 +6,6 @@
 #include "Door.h"
 #include <utility>
 #include <Event/DoorUnlockedEventArgs.h>
-#include <Event/DoorEnteredEventArgs.h>
 
 sd::Room::Room(std::string name)
 {

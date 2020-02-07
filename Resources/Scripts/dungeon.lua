@@ -70,13 +70,12 @@ dungeon = {
             --layout = { {x = 2, y = 0}, {x=10, y= 0}, {x=10, y=6}, {x=2, y= 6}},
 
             is_start = true,
-
             
             northern_way = {
                 position = {x = 5,y = 0},
                 layout = door_layout,
                 is_locked = false,
-                next_room = "Western_Forest",
+                next_room = "western_forest",
 
                 on_enter = function()
                     print_line("You try to enter the door.")
@@ -222,13 +221,13 @@ dungeon = {
             southern_way = {
                 position = {x = 1,y = 6},
                 layout = door_layout,
-                next_room = "Western_Forest",
+                next_room = "western_forest",
             },
 
             northern_way = {
                 position = {x = 1,y = 0},
                 layout = door_layout,
-                next_room = "Western_Forest",
+                next_room = "western_forest",
             },
 
             -- Angucken des Raums allgemein
@@ -247,7 +246,7 @@ dungeon = {
             western_way = {
                 position = {x = 0,y = 3},
                 layout = door_layout,
-                next_room = "Western_Forest",
+                next_room = "western_forest",
             },
 
 

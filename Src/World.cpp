@@ -7,7 +7,6 @@
 #include <Event/PlayerStateCreatedEventArgs.h>
 #include "World.h"
 #include <Event/DoorUnlockedEventArgs.h>
-#include <Event/DoorEnteredEventArgs.h>
 
 sd::World::World() {
 

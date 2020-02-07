@@ -61,6 +61,10 @@ path_layout={
     size = {2,1},
     tiles = {51,51},
 }
+bushDoor_layout = {
+    size = {2,1},
+    tiles = {9, 58}
+}
 
 
 dungeon = {
@@ -122,18 +126,42 @@ dungeon = {
                 next_room = "Southern_Forest",
             },
 
-            -- Door unlocks only when the bush in front of it is removed
             northern_way = {
                 position = {x = 9,y = 0},
-                layout = door_layout,
+                layout = bushDoor_layout,
                 next_room = "Eastern_Forest",
+                is_locked=true,
+
+                on_interaction = function ()
+                    print_line("I can see a path behind this bush. But I first have to remove the bush. ")
+                    print_line("I could try to use some spells on it. ")
+                end,
+
+                on_fight= function ()
+                    print_line("You use your Pyro Poke on the bush.")
+                    print_line("[b] > Pyro Poke")
+                    print_line("It burns down. The way is free now.")
+                    unlock_door("western_forest", "northern_way")
+                end,
             },
 
-            -- Door unlocks only when the bush in front of it is removed
-            southern_say = {
+            southern_way = {
                 position = {x = 9,y = 6},
-                layout = door_layout,
+                layout = bushDoor_layout,
                 next_room = "Eastern_Forest",
+                is_locked=true,
+
+                on_interaction = function ()
+                    print_line("I can see a path behind this bush. But I first have to remove the bush. ")
+                    print_line("I could try to use some spells on it. ")
+                end,
+
+                on_fight= function ()
+                    print_line("You use your Pyro Poke on the bush.")
+                    print_line("[b] > Pyro Poke")
+                    print_line("It burns down. The way is free now.")
+                    unlock_door("western_forest", "southern_way")
+                end,
             },
 
             eastern_way = {
@@ -178,25 +206,6 @@ dungeon = {
                 on_destroy = function ()
                     unlock_door("western_forest", "eastern_way")
                 end,
-            },
-
-
-            upper_bush = {
-                position = {x = 9, y = 1},
-                layout= bush_layout,
-                on_interaction = function ()
-                    print_line("I can see a path behind this bush. But I first have to remove the bush. ")
-                    print_line("I could try to use some spells on it. ")
-                end
-            },
-
-            bottom_bush = {
-                position = {x = 9, y = 5},
-                layout= bush_layout,
-                on_interaction = function ()
-                    print_line("I can see a path behind this bush. But I first have to remove the bush. ")
-                    print_line("I could try to use some spells on it. ")
-                end
             },
 
             outworn_path = {
@@ -253,7 +262,6 @@ dungeon = {
                 next_room = "western_forest",
             },
 
-
             chest = {
                 position = {x = 2, y = 1},
                 layout= chest_layout,
@@ -272,7 +280,6 @@ dungeon = {
                 end
             },
 
-            -- Enemy Fire Goblin
             Goblin = {
                 position = {x = 7, y = 2},
                 layout = goblin_layout,
@@ -331,9 +338,9 @@ dungeon = {
                     set_glitch_on("output-panel")
                 end
             },
-
-
         },
+
+
 
         -- Demo Dungeon 
         --[[

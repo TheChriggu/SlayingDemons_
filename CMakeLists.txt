@@ -3,6 +3,14 @@ project(SlayingDemons)
 
 set(CMAKE_CXX_STANDARD 17)
 
+if(CMAKE_HOST_WIN32)
+    set(HOST_OS Windows)
+elseif(CMAKE_HOST_UNIX)
+    set(HOST_OS Linux)
+elseif(CMAKE_HOST_APPLE)
+    set(HOST_OS MacOS)
+endif()
+
 # This CMake-File links all libraries for the current Host System.
 # This means the Game can only be build for a Target-System on that Target-System
 # it also sets the include directories for each library and sets the Project Target
@@ -23,9 +31,12 @@ add_subdirectory(SFML-2.5.1)
 add_subdirectory(sol2-develop)
 add_subdirectory(boost)
 add_subdirectory(strtk)
+add_subdirectory(stdlib)
 
 # find SFML packages in SFML_DIR which was set in SFML-2.5.1 subdirectory
 find_package(SFML COMPONENTS system window graphics network audio REQUIRED)
+
+
 
 # link executable to SFML Libaries
 target_link_libraries(${PROJECT_NAME}
@@ -36,3 +47,7 @@ target_link_libraries(${PROJECT_NAME}
                       sfml-audio
                       lua
                       Boost::filesystem)
+
+install(TARGETS ${PROJECT_NAME} DESTINATION ${CMAKE_SOURCE_DIR}/Build/${HOST_OS}/${CMAKE_BUILD_TYPE}/SlayingDemons/bin)
+install(DIRECTORY ${CMAKE_CURRENT_LIST_DIR}/Resources DESTINATION ${CMAKE_SOURCE_DIR}/Build/${HOST_OS}/${CMAKE_BUILD_TYPE}/SlayingDemons)
+

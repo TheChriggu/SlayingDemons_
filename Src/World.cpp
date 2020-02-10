@@ -8,7 +8,7 @@
 #include "World.h"
 #include <Event/DoorUnlockedEventArgs.h>
 
-sd::World::World() {
+sd::World::World() : Subscriber(){
 
 }
 

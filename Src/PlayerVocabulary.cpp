@@ -13,7 +13,7 @@
 #include "Word.h"
 #include "Vocabulary.h"
 
-sd::PlayerVocabulary::PlayerVocabulary() {
+sd::PlayerVocabulary::PlayerVocabulary() : Subscriber() {
     actions_trie_ = std::make_shared<Trie>();
     modifiers_trie_ = std::make_shared<Trie>();
     commands_trie_ = std::make_shared<Trie>();

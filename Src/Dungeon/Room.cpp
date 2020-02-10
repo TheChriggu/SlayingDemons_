@@ -7,7 +7,7 @@
 #include <utility>
 #include <Event/DoorUnlockedEventArgs.h>
 
-sd::Room::Room(std::string name)
+sd::Room::Room(std::string name) : Subscriber()
 {
     name_ = std::move(name);
     enemy_ = nullptr;

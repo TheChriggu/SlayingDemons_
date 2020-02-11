@@ -138,7 +138,7 @@ add_executable(${PROJECT_NAME}
                Src/Event/CurrentEnemyDefeatedEventArgs.cpp
                Src/Event/CurrentEnemyDefeatedEventArgs.h
                Src/Event/PossibleWordsCreatedEventArgs.cpp
-               Src/Event/PossibleWordsCreatedEventArgs.h )
+               Src/Event/PossibleWordsCreatedEventArgs.h Src/Dungeon/TileData.h)
 
 target_include_directories(${PROJECT_NAME} PRIVATE Src)
 target_include_directories(${PROJECT_NAME} PRIVATE strtk)

@@ -13,13 +13,14 @@ namespace sd {
     protected:
         
         int sprite_sheet_idx_;
+        int rotation_;
 
     public:
-        SingleTileObject(std::string name, int sprite_sheet_idx, sf::Vector2i position_on_tile_map, Sp<FunctionCollection> function_collection);
+        SingleTileObject(std::string name, int sprite_sheet_idx, sf::Vector2i position_on_tile_map, int rotation, Sp<FunctionCollection> function_collection);
         ~SingleTileObject() override = default;
 
-        void put_on_layout(std::vector<int>& layout, int width, int height) override;
-        void remove_from_layout(std::vector<int>& layout, int width, int height) override;
+        void put_on_layout(std::vector<TileData>& layout, int width, int height) override;
+        void remove_from_layout(std::vector<TileData>& layout, int width, int height) override;
         std::string get_name() override;
     };
 }

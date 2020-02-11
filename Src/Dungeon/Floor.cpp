@@ -66,6 +66,7 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                         object.first.as<std::string>(),
                         layout[0],
                         position,
+                        0,
                         function_collection)
                 );
             } else {
@@ -80,6 +81,7 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                                     layout[0],
                                     layout[1],
                                     position,
+                                    0,
                                     object.second.as<sol::lua_table>()["next_room"].get<std::string>(),
                                     object.second.as<sol::lua_table>()["is_locked"].get<bool>(),
                                     function_collection)
@@ -93,6 +95,7 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                                     object.first.as<std::string>(),
                                     layout.data(),
                                     size,
+                                    0,
                                     position,
                                     function_collection)
                     );

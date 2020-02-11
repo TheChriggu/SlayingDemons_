@@ -5,14 +5,14 @@
 #include <iostream>
 #include "Tilemap.h"
 
-Tilemap::Tilemap(unsigned int width, unsigned int height, sf::Vector2f position, sf::Vector2u tile_size)
+sd::Tilemap::Tilemap(unsigned int width, unsigned int height, sf::Vector2f position, sf::Vector2u tile_size)
     : width_(width)
     , height_(height)
     , tile_size_(tile_size)
 {
     std::cout << "Start contructor Tilemap\n";
     //layout_ = new int[width_ * height_];
-    layout_ = std::vector<int>(width_ * height_);
+    layout_ = std::vector<TileData>(width_ * height_);
     position_ = position;
 
     // resize the vertex array to fit the level size
@@ -20,7 +20,7 @@ Tilemap::Tilemap(unsigned int width, unsigned int height, sf::Vector2f position,
     vertices_.resize(width_ * height_ * 4);
     
     
-    std::vector<int> default_layout = {0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0};
+    std::vector<TileData> default_layout = {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
     load_sprite_sheet("../Resources/Sprites/fantasy_tilemap.png");
     set_layout(default_layout, width_ * height_);
     set_all_quad_positions();
@@ -28,7 +28,7 @@ Tilemap::Tilemap(unsigned int width, unsigned int height, sf::Vector2f position,
 }
 
 
-void Tilemap::draw(sf::RenderTarget& target, sf::RenderStates states) const
+void sd::Tilemap::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
     // apply the transform
     states.transform *= getTransform();
@@ -40,11 +40,11 @@ void Tilemap::draw(sf::RenderTarget& target, sf::RenderStates states) const
     target.draw(vertices_, states);
 }
 
-std::vector<int>& Tilemap::get_layout() {
+std::vector<sd::TileData>& sd::Tilemap::get_layout() {
     return layout_;
 }
 
-void Tilemap::load_sprite_sheet(const std::string& path) {
+void sd::Tilemap::load_sprite_sheet(const std::string& path) {
     // load the tileset texture
     if (!tileset_.loadFromFile(path)) {
         //error
@@ -54,7 +54,7 @@ void Tilemap::load_sprite_sheet(const std::string& path) {
 
 }
 
-void Tilemap::set_layout(std::vector<int>& layout, int size) {
+void sd::Tilemap::set_layout(std::vector<TileData>& layout, int size) {
     if(width_ * height_ == size)
     {
         for (int i=0; i< size; i++)
@@ -70,7 +70,7 @@ void Tilemap::set_layout(std::vector<int>& layout, int size) {
     }
 }
 
-void Tilemap::set_all_quad_positions() {
+void sd::Tilemap::set_all_quad_positions() {
     // populate the vertex array, with one quad per tile
     for (unsigned int i = 0; i < width_; ++i) {
         for (unsigned int j = 0; j < height_; ++j) {
@@ -87,13 +87,13 @@ void Tilemap::set_all_quad_positions() {
     }
 }
 
-void Tilemap::update_tiles() {
+void sd::Tilemap::update_tiles() {
     for (unsigned int i = 0; i < width_; ++i)
     {
         for (unsigned int j = 0; j < height_; ++j)
         {
             // get the current tile number
-            int tile_number = layout_[i + j * width_];
+            int tile_number = layout_[i + j * width_].tile_idx_;
 
             // find its position in the tileset texture
             int tu = tile_number % (tileset_.getSize().x / (tile_size_.x));
@@ -111,13 +111,12 @@ void Tilemap::update_tiles() {
     }
 }
 
-int Tilemap::get_width() {
+int sd::Tilemap::get_width() {
     return width_;
 }
 
-int Tilemap::get_height() {
+int sd::Tilemap::get_height() {
     return height_;
 }
 
 
-#include "Tilemap.h"

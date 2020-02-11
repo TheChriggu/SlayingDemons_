@@ -11,12 +11,13 @@
 #include "MultiTileObject.h"
 #include "../Monster.h"
 #include "../Event/Subscriber.h"
+#include "TileData.h"
 
 namespace sd {
     class Room : public Subscriber{
     private:
         std::vector<Sp<RoomObject>> room_objects_;
-        std::vector<int> layout_;
+        std::vector<TileData> layout_;
 
         Sp<Monster> enemy_;
         
@@ -29,7 +30,7 @@ namespace sd {
         ~Room() override;
 
         std::string get_description();
-        std::vector<int>& get_layout();
+        std::vector<TileData>& get_layout();
 
         void add_object(const Sp<RoomObject>& object);
         void set_enemy(Sp<Monster> enemy);

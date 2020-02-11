@@ -1,22 +1,19 @@
 
 # Link to the cmake sub-files that link the SFML libary files to the equivalent Header-files for the corresponding Host-System
 # and set include Directories
-if(CMAKE_HOST_WIN32)
-    set(SFML_DIR "SFML-2.5.1/Windows/lib/cmake/SFML" PARENT_SCOPE)
-    target_include_directories(${PROJECT_NAME} PUBLIC "Windows/include")
+set(SFML_DIR "SFML-2.5.1/${HOST_OS}/lib/cmake/SFML" PARENT_SCOPE)
+target_include_directories(${PROJECT_NAME} PUBLIC "${HOST_OS}/include")
 
-    #set option that sfml libaries get linked static
-    set(SFML_STATIC_LIBRARIES true)
+if(CMAKE_HOST_WIN32)
+    file(GLOB_RECURSE SFML_LIB_FILES ${CMAKE_CURRENT_LIST_DIR}/Windows/bin/*.dll)
 endif()
 
 if(CMAKE_HOST_UNIX)
-    set(SFML_DIR "SFML-2.5.1/Linux/lib/cmake/SFML" PARENT_SCOPE)
-    target_include_directories(${PROJECT_NAME} PUBLIC "Linux/include")
+    file(GLOB_RECURSE SFML_LIB_FILES ${CMAKE_CURRENT_LIST_DIR}/Linux/lib/*.so.2.5.1)
 endif()
 
 if(CMAKE_HOST_APPLE)
-    set(SFML_DIR "SFML-2.5.1/Windows/lib" PARENT_SCOPE)
-    target_include_directories(${PROJECT_NAME} PUBLIC "Mac/include")
+    file(GLOB_RECURSE SFML_LIB_FILES ${CMAKE_CURRENT_LIST_DIR}/Linux/lib/*.2.5.1.dylib)
 endif()
 
-
+install(FILES ${SFML_LIB_FILES} DESTINATION ${CMAKE_SOURCE_DIR}/Build/${HOST_OS}/${CMAKE_BUILD_TYPE}/SlayingDemons/bin)

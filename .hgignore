@@ -39,6 +39,9 @@ syntax: glob
 # CMake
 cmake-build-*/
 
+# Builds
+Build/
+
 # Mongo Explorer plugin
 .idea/**/mongoSettings.xml
 

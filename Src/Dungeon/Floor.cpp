@@ -39,6 +39,8 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                 object.second.as<sol::lua_table>()["layout"]["size"][1].get_or(1),
                 object.second.as<sol::lua_table>()["layout"]["size"][2].get_or(1)
             );
+
+            int rotation = object.second.as<sol::lua_table>()["rotation"].get_or(0);
             
             std::vector<int> layout;
             for (int i=1 ; i <= (size.x * size.y) ; i++) {
@@ -66,7 +68,7 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                         object.first.as<std::string>(),
                         layout[0],
                         position,
-                        0,
+                        rotation,
                         function_collection)
                 );
             } else {
@@ -81,7 +83,7 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                                     layout[0],
                                     layout[1],
                                     position,
-                                    0,
+                                    rotation,
                                     object.second.as<sol::lua_table>()["next_room"].get<std::string>(),
                                     object.second.as<sol::lua_table>()["is_locked"].get<bool>(),
                                     function_collection)
@@ -95,7 +97,7 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                                     object.first.as<std::string>(),
                                     layout.data(),
                                     size,
-                                    0,
+                                    rotation,
                                     position,
                                     function_collection)
                     );

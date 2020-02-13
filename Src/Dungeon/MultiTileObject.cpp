@@ -9,22 +9,26 @@
 #include <Event/LineToOutputEventArgs.h>
 #include "MultiTileObject.h"
 
-sd::MultiTileObject::MultiTileObject(std::string name, const int *layout, sf::Vector2i size, int rotation,
+sd::MultiTileObject::MultiTileObject(std::string name, const std::vector<int>& layout, sf::Vector2i size, int rotation,
                                      sf::Vector2i position_on_tile_map, Sp<FunctionCollection> function_collection)
     : RoomObject(std::move(name), position_on_tile_map, function_collection)
     , rotation_(rotation)
 {
-    layout_ = new int[size_.x * size_.y]();
+    int i=0;
+
+    layout_ = std::vector<int>(size.x*size.y);//int[size_.x * size_.y]();
 
     switch(rotation%4)
     {
         case 0:
             size_ = size;
-            for(int row = 0; row < size_.x;row++)
+            for(int row = 0; row < size_.y;row++)
             {
-                for(int col = 0; col < size_.y; col++)
+                for(int col = 0; col < size_.x; col++)
                 {
-                    layout_[row*size_.x+col] = layout[row*size_.x+col];
+                    int o_row = row;
+                    int o_col = col;
+                    layout_[row*size_.x+col] = layout[o_row*size.x+o_col];
                 }
             }
             break;
@@ -32,9 +36,9 @@ sd::MultiTileObject::MultiTileObject(std::string name, const int *layout, sf::Ve
         case 1:
             size_.x = size.y;
             size_.y = size.x;
-            for(int row = 0; row < size_.x;row++)
+            for(int row = 0; row < size_.y;row++)
             {
-                for(int col = 0; col < size_.y; col++)
+                for(int col = 0; col < size_.x; col++)
                 {
                     int o_row = size_.x - 1 - col;
                     int o_col = row;
@@ -45,12 +49,12 @@ sd::MultiTileObject::MultiTileObject(std::string name, const int *layout, sf::Ve
 
         case 2:
             size_ = size;
-            for(int row = 0; row < size_.x;row++)
+            for(int row = 0; row < size_.y;row++)
             {
-                for(int col = 0; col < size_.y; col++)
+                for(int col = 0; col < size_.x; col++)
                 {
-                    int o_row = size_.x - 1 - row;
-                    int o_col = size_.y - 1 - col;
+                    int o_row = size_.y - 1 - row;
+                    int o_col = size_.x - 1 - col;
                     layout_[row*size_.x+col] = layout[o_row * size.x + o_col];
                 }
             }
@@ -59,9 +63,9 @@ sd::MultiTileObject::MultiTileObject(std::string name, const int *layout, sf::Ve
         case 3:
             size_.x = size.y;
             size_.y = size.x;
-            for(int row = 0; row < size_.x;row++)
+            for(int row = 0; row < size_.y;row++)
             {
-                for(int col = 0; col < size_.y; col++)
+                for(int col = 0; col < size_.x; col++)
                 {
                     int o_row = col;
                     int o_col = size_.y - 1 - row;
@@ -73,16 +77,16 @@ sd::MultiTileObject::MultiTileObject(std::string name, const int *layout, sf::Ve
 
 
 
-    for (int i=0; i < size_.x * size_.y; i++)
+    /*for (int i=0; i < size_.x * size_.y; i++)
     {
         layout_[i] = layout[i];
-    }
+    }*/
 
 }
 
 sd::MultiTileObject::~MultiTileObject() {
-    delete layout_;
-    layout_ = nullptr;
+    /*delete layout_;
+    layout_ = nullptr;*/
 }
 
 void sd::MultiTileObject::put_on_layout(std::vector<TileData>& layout, int width, int height) {

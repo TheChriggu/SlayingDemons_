@@ -39,13 +39,19 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                 object.second.as<sol::lua_table>()["layout"]["size"][1].get_or(1),
                 object.second.as<sol::lua_table>()["layout"]["size"][2].get_or(1)
             );
-
-            int rotation = object.second.as<sol::lua_table>()["rotation"].get_or(0);
             
             std::vector<int> layout;
             for (int i=1 ; i <= (size.x * size.y) ; i++) {
                 layout.emplace_back(object.second.as<sol::lua_table>()["layout"]["tiles"][i].get_or(-1));
             }
+
+            int rotation = 2;
+            /*std::string strg = object.first.as<std::string>();
+            int test = object.second.as<sol::lua_table>()["rotation"];
+            if(strg == "rotation")
+            {
+                rotation = object.second.as<int>();
+            }*/
 
             auto function_collection = std::make_shared<FunctionCollection>(
                 object.second.as<sol::lua_table>()["on_interaction"],
@@ -95,7 +101,7 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                     rooms_.back()->add_object(
                             std::make_shared<MultiTileObject>(
                                     object.first.as<std::string>(),
-                                    layout.data(),
+                                    layout,
                                     size,
                                     rotation,
                                     position,

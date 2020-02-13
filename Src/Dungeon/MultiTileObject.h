@@ -12,11 +12,11 @@ namespace sd {
     private:
         
         sf::Vector2i size_;
-        int* layout_;
+        std::vector<int> layout_;
         int rotation_;
 
     public:
-        MultiTileObject(std::string name, const int layout[], sf::Vector2i size, int rotation, sf::Vector2i position_on_tile_map,
+        MultiTileObject(std::string name, const std::vector<int>& layout, sf::Vector2i size, int rotation, sf::Vector2i position_on_tile_map,
                 Sp<FunctionCollection> function_collection);
         ~MultiTileObject() override;
 

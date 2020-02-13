@@ -102,11 +102,17 @@ void sd::Tilemap::update_tiles() {
             // get a pointer to the current tile's quad
             sf::Vertex* quad = &vertices_[(i + j * width_) * 4];
 
+
             // define its 4 texture coordinates
-            quad[0].texCoords = sf::Vector2f(tu * (tile_size_.x), tv * (tile_size_.y));
-            quad[1].texCoords = sf::Vector2f((tu + 1) * tile_size_.x, tv * tile_size_.y);
-            quad[2].texCoords = sf::Vector2f((tu + 1) * tile_size_.x, (tv + 1) * tile_size_.y);
-            quad[3].texCoords = sf::Vector2f(tu * tile_size_.x, (tv + 1) * tile_size_.y);
+            int rotation = layout_[i + j * width_].rotation_;
+
+            quad[rotation%4].texCoords = sf::Vector2f(tu * (tile_size_.x), tv * (tile_size_.y));
+            quad[(rotation+1)%4].texCoords = sf::Vector2f((tu + 1) * tile_size_.x, tv * tile_size_.y);
+            quad[(rotation+2)%4].texCoords = sf::Vector2f((tu + 1) * tile_size_.x, (tv + 1) * tile_size_.y);
+            quad[(rotation+3)%4].texCoords = sf::Vector2f(tu * tile_size_.x, (tv + 1) * tile_size_.y);
+
+
+
         }
     }
 }

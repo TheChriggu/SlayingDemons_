@@ -46,7 +46,7 @@ bushGroup_layout={
     tiles = {-1,58,-1,58,-1,58},
 }
 chest_layout={
-    size = {2,1},
+    size = {1,1},
     tiles = {50},
 }
 axe_layout={
@@ -70,13 +70,13 @@ bushDoor_layout = {
 dungeon = {
     floor1 = {
         is_start = true,
-        Southern_Forest={
-            --layout = { {x = 2, y = 0}, {x=10, y= 0}, {x=10, y=6}, {x=2, y= 6}},
 
+        Southern_Forest={
+            layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
             is_start = true,
             
             northern_way = {
-                position = {x = 5,y = 0},
+                position = {x = 6,y = 0},
                 layout = door_layout,
                 is_locked = false,
                 next_room = "western_forest",
@@ -124,7 +124,7 @@ dungeon = {
         },
 
         western_forest = {
-            --layout = { {x = 2, y = 0}, {x=10, y= 0}, {x=10, y=6}, {x=2, y= 6}},
+            layout = { {2,0}, {10,0}, {10,6}, {2,6}},
 
             Way_back_down = {
                 position = {x = 5,y = 6},
@@ -181,6 +181,7 @@ dungeon = {
             eastern_way = {
                 is_locked= true,
                 position = {x = 10,y = 3},
+                rotation = 0,
                 layout = door_layout,
                 next_room = "Deep_Forest",
 
@@ -247,7 +248,7 @@ dungeon = {
         },
 
         Eastern_Forest = {
-            --layout = { {x = 0, y = 0}, {x=7, y= 0}, {x=7, y=6}, {x=0, y= 6}},
+            layout = { {0, 0}, {7, 0}, {7, 6}, {0, 6}},
 
             southern_way = {
                 position = {x = 1,y = 6},
@@ -274,7 +275,8 @@ dungeon = {
         },
 
         Deep_Forest = {
-            --layout = { {x = 0, y = 0}, {x=10, y= 0}, {x=10, y=4}, {x=0, y= 4}},
+            layout = { {0, 0}, {10, 0}, {10, 4}, {0, 4}},
+
             northern_way = {
             position = {x = 5,y = 0},
             layout = door_layout,
@@ -352,7 +354,7 @@ dungeon = {
         },
 
         Clearing = {
-            -- layout = { {x = 3, y = 0}, {x=7, y= 0}, {x=7, y=6}, {x=3, y= 6}},
+            layout = { {3, 0}, {7, 0}, {7, 6}, {3,6}},
 
             southern_way = {
                 position = {x = 5,y = 6},

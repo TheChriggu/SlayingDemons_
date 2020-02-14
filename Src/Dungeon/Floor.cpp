@@ -12,11 +12,24 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
     name_ = name;
     
     for (const auto& room : floor_data) {
-        rooms_.emplace_back(std::make_shared<Room>(room.first.as<std::string>()));
-        std::cout << "++ Room: " << room.first.as<std::string>() << std::endl;
-        
         if (room.second.is<bool>())
             continue;
+
+        std::vector<sf::Vector2i> corners;
+        for (const auto& thing : room.second.as<sol::table&>())
+        {
+            if (thing.first.as<std::string>()== "layout")
+            {
+                for (const auto& corner : thing.second.as<sol::table&>())
+                {
+                    int x = corner.second.as<sol::lua_table>()[1].get_or(0);
+                    int y = corner.second.as<sol::lua_table>()[2].get_or(0);
+                    corners.emplace_back(sf::Vector2i (corner.second.as<sol::lua_table>()[1].get_or(0),corner.second.as<sol::lua_table>()[2].get_or(0)));
+                }
+            }
+        }
+        rooms_.emplace_back(std::make_shared<Room>(room.first.as<std::string>(), corners));
+        std::cout << "++ Room: " << room.first.as<std::string>() << std::endl;
         
         for (const auto& object : room.second.as<sol::lua_table>())
         {
@@ -45,13 +58,7 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                 layout.emplace_back(object.second.as<sol::lua_table>()["layout"]["tiles"][i].get_or(-1));
             }
 
-            int rotation = 2;
-            /*std::string strg = object.first.as<std::string>();
-            int test = object.second.as<sol::lua_table>()["rotation"];
-            if(strg == "rotation")
-            {
-                rotation = object.second.as<int>();
-            }*/
+            int rotation = object.second.as<sol::lua_table>()["rotation"].get_or(0);
 
             auto function_collection = std::make_shared<FunctionCollection>(
                 object.second.as<sol::lua_table>()["on_interaction"],

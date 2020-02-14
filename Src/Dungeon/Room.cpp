@@ -7,20 +7,14 @@
 #include <utility>
 #include <Event/DoorUnlockedEventArgs.h>
 
-sd::Room::Room(std::string name)
+sd::Room::Room(std::string name, const std::vector<sf::Vector2i>& corners)
 {
     name_ = std::move(name);
     enemy_ = nullptr;
-    //tilemap = new Tilemap(11,7,position,sf::Vector2u(64,64));
-    layout_ = {
-            {0,2},{1,0},{1,0},{1,0},{1,0},{1,0,},{1,0},{1,0},{1,0},{1,0},{2,0},
-            {8,1},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{10,0},
-            {8,3},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{10,0},
-            {8,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{10,0},
-            {8,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{10,0},
-            {8,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{9,0},{10,0},
-            {16,0},{17,0},{17,0},{17,0},{17,0},{17,0},{17,0},{17,0},{17,0},{17,0},{18,0},
-    };
+    layout_ = std::vector<TileData>(77);
+    TileData no_tile = {9,0};
+    std::fill(layout_.begin(),layout_.end(), no_tile);
+    generate_wall_layout_from_corners(corners);
 }
 
 sd::Room::~Room() {
@@ -139,4 +133,112 @@ void sd::Room::handle(std::shared_ptr<EventArgs> e) {
 const std::string &sd::Room::get_name() const
 {
     return name_;
+}
+
+void sd::Room::generate_wall_layout_from_corners(const std::vector<sf::Vector2i>& corners) {
+
+    try
+    {
+        sf::Vector2i previous_corner;
+        sf::Vector2i current_corner;
+        sf::Vector2i next_corner;
+
+        for (int i=0; i < corners.size(); i++)
+        {
+            previous_corner = corners[(i-1+corners.size())%corners.size()];
+            current_corner = corners[i];
+            next_corner = corners[(i+1)%corners.size()];
+            
+            set_corner_orientation(previous_corner, current_corner, next_corner);
+            build_wall_from_current_to_next(current_corner, next_corner);
+        }
+
+
+    }
+    catch(std::exception& e)
+    {
+        //invalid corners
+    }
+}
+
+void
+sd::Room::set_corner_orientation(sf::Vector2i previous_corner, sf::Vector2i current_corner, sf::Vector2i next_corner) {
+
+    //wall comes from the left
+    if(previous_corner.x < current_corner.x && next_corner.y > current_corner.y)
+    {
+        layout_[current_corner.y*11+current_corner.x] = {0,1};
+    }
+    if(previous_corner.x < current_corner.x && next_corner.y < current_corner.y)
+    {
+        layout_[current_corner.y*11+current_corner.x] = {2,0};
+    }
+
+    //wall comes from the right
+    if(previous_corner.x > current_corner.x && next_corner.y > current_corner.y)
+    {
+        layout_[current_corner.y*11+current_corner.x] = {2,2};
+    }
+    if(previous_corner.x > current_corner.x && next_corner.y < current_corner.y)
+    {
+        layout_[current_corner.y*11+current_corner.x] = {0,3};
+    }
+
+    //wall comes from the above
+    if(previous_corner.y < current_corner.y && next_corner.x > current_corner.x)
+    {
+        layout_[current_corner.y*11+current_corner.x] = {2,1};
+    }
+    if(previous_corner.y < current_corner.y && next_corner.x < current_corner.x)
+    {
+        layout_[current_corner.y*11+current_corner.x] = {0,2};
+    }
+
+    //wall comes from the below
+    if(previous_corner.y > current_corner.y && next_corner.x > current_corner.x)
+    {
+        layout_[current_corner.y*11+current_corner.x] = {0,0};
+    }
+    if(previous_corner.y > current_corner.y && next_corner.x < current_corner.x)
+    {
+        layout_[current_corner.y*11+current_corner.x] = {2,3};
+    }
+}
+
+//draws wall between two corners. next_corner must be next corner clockwise from current corner.
+void sd::Room::build_wall_from_current_to_next(sf::Vector2i current_corner, sf::Vector2i next_corner) {
+    if(next_corner.x > current_corner.x)
+    {
+        for (int i=current_corner.x + 1; i < next_corner.x; i++)
+        {
+            TileData wall = {1,0};
+            layout_[current_corner.y*11 + i ] = wall;
+        }
+    }
+    if(next_corner.y > current_corner.y)
+    {
+        for (int i=current_corner.y + 1; i < next_corner.y; i++)
+        {
+            TileData wall = {1,1};
+            layout_[i*11 + current_corner.x] = wall;
+        }
+    }
+    if(next_corner.x < current_corner.x)
+    {
+        for (int i=current_corner.x - 1; i > next_corner.x; i--)
+        {
+            TileData wall = {1,2};
+            layout_[current_corner.y*11 + i ] = wall;
+        }
+    }
+    if(next_corner.y < current_corner.y)
+    {
+        for (int i=current_corner.y - 1; i > next_corner.y; i--)
+        {
+            TileData wall = {1,3};
+            layout_[i*11 + current_corner.x] = wall;
+        }
+    }
+
+
 }

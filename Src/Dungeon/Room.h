@@ -23,10 +23,9 @@ namespace sd {
         
         std::string name_;
 
-        //Tilemap* tilemap;
 
     public:
-        explicit Room(std::string name);
+        explicit Room(std::string name, const std::vector<sf::Vector2i>& corners);
         ~Room() override;
 
         std::string get_description();
@@ -43,6 +42,11 @@ namespace sd {
         void remove_object_with_name(const std::string& name);
 
         void handle(Sp<EventArgs> e) override;
+
+    private:
+        void generate_wall_layout_from_corners(const std::vector<sf::Vector2i>& corners);
+        void set_corner_orientation(sf::Vector2i previous_corner, sf::Vector2i current_corner, sf::Vector2i next_corner);
+        void build_wall_from_current_to_next(sf::Vector2i current_corner, sf::Vector2i next_corner);
     };
 }
 

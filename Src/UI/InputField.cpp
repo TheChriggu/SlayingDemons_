@@ -13,6 +13,13 @@ sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color c
     : DrawableObject("input-field")
     , Subscriber()
 {
+    event_handler_ = CREATE_EVENT_HANDLER(
+        if (e->type == EventArgs::Type::POSSIBLE_WORDS_CREATED) {
+            auto args = std::dynamic_pointer_cast<PossibleWordsCreatedEventArgs>(e);
+        
+            possible_words_ = Sp<PossibleWords>(args->possible_words);
+        }
+        )
 
     text_ = std::make_shared<sf::Text>();
     text_->setPosition(position + sf::Vector2f(10, 10));
@@ -137,15 +144,6 @@ sf::Vector2f sd::InputField::get_size() {
 
 sf::Vector2f sd::InputField::get_position() {
     return text_->getPosition();
-}
-
-void sd::InputField::handle(Sp<sd::EventArgs> e)
-{
-    if (e->type == EventArgs::Type::POSSIBLE_WORDS_CREATED) {
-        auto args = std::dynamic_pointer_cast<PossibleWordsCreatedEventArgs>(e);
-    
-        possible_words_ = Sp<PossibleWords>(args->possible_words);
-    }
 }
 
 

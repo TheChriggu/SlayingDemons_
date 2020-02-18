@@ -14,7 +14,20 @@
 
 sd::InputTextProcessor::InputTextProcessor() : Subscriber()
 {
-
+    event_handler_ = CREATE_EVENT_HANDLER(
+        if (e->type == EventArgs::Type::TEXT_OUTPUT_CREATED)
+        {
+            auto arg = dynamic_cast<TextOutputCreatedEventArgs *>(e.get());
+            output_ = Sp<TextOutput>(arg->output);
+        }
+    
+        if (e->type == EventArgs::Type::PLAYER_STATE_CREATED)
+        {
+            auto arg = std::dynamic_pointer_cast<PlayerStateCreatedEventArgs>(e);
+        
+            player_state_ = Sp<PlayerState>(arg->player_state);
+        }
+        )
 }
 
 void sd::InputTextProcessor::process_input(const std::string &spell)
@@ -173,7 +186,7 @@ Sp<sd::PlayerState> sd::InputTextProcessor::get_player_state()
     return player_state_;
 }
 
-void sd::InputTextProcessor::handle(std::shared_ptr<sd::EventArgs> e)
+/*void sd::InputTextProcessor::handle(std::shared_ptr<sd::EventArgs> e)
 {
     if (e->type == EventArgs::Type::TEXT_OUTPUT_CREATED)
     {
@@ -187,6 +200,6 @@ void sd::InputTextProcessor::handle(std::shared_ptr<sd::EventArgs> e)
         
         player_state_ = Sp<PlayerState>(arg->player_state);
     }
-}
+}*/
 
 

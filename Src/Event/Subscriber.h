@@ -6,8 +6,16 @@
 #define _SUBSCRIBER_H_
 
 #include <memory>
+#include <functional>
 #include "Event/EventArgs.h"
 #include "Core/GlobalDefinitions.h"
+
+#define CREATE_EVENT_HANDLER(content) \
+std::make_shared<std::function<void(Sp<EventArgs>)>>( \
+    [&](const Sp<EventArgs>& e) { \
+        content \
+    } \
+); \
 
 namespace sd {
     class Subscriber {
@@ -15,8 +23,9 @@ namespace sd {
         Subscriber();
         // declare virtual destructor to avoid potential memory leaks
         virtual ~Subscriber() = default;
-
-        virtual void handle(Sp<EventArgs> e) = 0;
+    
+        protected:
+        Sp<std::function<void(Sp<EventArgs>)>> event_handler_;
     };
 }
 

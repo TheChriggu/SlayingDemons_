@@ -35,7 +35,6 @@ namespace sd {
         void start_new_fight(const std::string& enemy_name);
 
         Sp<PlayerVocabulary> get_player_vocabulary();
-        void handle(std::shared_ptr<EventArgs> e) override;
 
         void save_current_vocab();
         void load_vocab();

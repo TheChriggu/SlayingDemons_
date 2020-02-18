@@ -7,6 +7,7 @@
 
 #include <memory>
 #include <vector>
+#include <functional>
 #include "Event/Subscriber.h"
 #include "Event/EventArgs.h"
 
@@ -22,11 +23,11 @@ namespace sd {
         EventSystem(const EventSystem&) = delete;
         void operator=(const EventSystem&) = delete;
 
-        void subscribe(const Sp<Subscriber>& new_subscriber);
+        void subscribe(Wp<std::function<void(Sp<EventArgs>)>> new_handler);
         void trigger(const Sp<EventArgs>& e) const;
 
     private:
-        std::vector<Sp<Subscriber>> subscriber_;
+        std::vector<Wp<std::function<void(Sp<EventArgs>)>>> handlers_;
     };
 }
 

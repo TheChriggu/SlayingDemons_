@@ -15,6 +15,19 @@ sd::MapWindow::MapWindow(sf::Vector2f position, sf::Vector2f size)
     , position_(position)
     , size_(size)
 {
+    
+    event_handler_ = CREATE_EVENT_HANDLER(
+        if (e->type == EventArgs::Type::PLAYER_STATE_CREATED) {
+            auto args = dynamic_cast<PlayerStateCreatedEventArgs*>(e.get());
+            player_state_ = Sp<PlayerState>(args->player_state);
+        }
+    
+        if (e->type == EventArgs::Type::FIGHT_STARTED) {
+            auto arg = dynamic_cast<FightStartedEventArgs*>(e.get());
+            monster_portrait_texture_->loadFromFile(arg->fight->get_enemy()->get_path_to_portrait());
+        }
+        )
+    
     background_texture_ = std::make_shared<sf::Texture>();
     background_sprite_ = std::make_shared<sf::Sprite>();
     current_tile_map_ = std::make_shared<Tilemap>(11, 7, position_ + sf::Vector2f(40, 44), sf::Vector2u(64, 64));
@@ -75,19 +88,6 @@ Sp<sd::Room> sd::MapWindow::get_room() {
 
 void sd::MapWindow::set_player_state(Sp<sd::PlayerState> player_state) {
     player_state_ = std::move(player_state);
-}
-
-void sd::MapWindow::handle(Sp<sd::EventArgs> e) {
-
-    if (e->type == EventArgs::Type::PLAYER_STATE_CREATED) {
-        auto args = dynamic_cast<PlayerStateCreatedEventArgs*>(e.get());
-        player_state_ = Sp<PlayerState>(args->player_state);
-    }
-
-    if (e->type == EventArgs::Type::FIGHT_STARTED) {
-        auto arg = dynamic_cast<FightStartedEventArgs*>(e.get());
-        monster_portrait_texture_->loadFromFile(arg->fight->get_enemy()->get_path_to_portrait());
-    }
 }
 
 

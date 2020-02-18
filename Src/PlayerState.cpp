@@ -14,6 +14,40 @@
 
 sd::PlayerState::PlayerState()
     : Subscriber() {
+    event_handler_ = CREATE_EVENT_HANDLER(
+        if (e->type == EventArgs::Type::WALKED_THROUGH_DOOR) {
+            auto arg = dynamic_cast<WalkedThroughDoorEventArgs*>(e.get());
+            set_current_room(current_floor_->get_room(arg->door->get_connected_room()));
+        
+            std::shared_ptr<LineToOutputEventArgs> args;
+            args = std::make_shared<LineToOutputEventArgs>(get_current_room()->get_enter_description());
+            EventSystem::get().trigger(args);
+        }
+    
+        if (e->type == EventArgs::Type::START_FIGHT_WITH_GOBLIN) {
+        
+            std::shared_ptr<LineToOutputEventArgs> args;
+            args = std::make_shared<LineToOutputEventArgs>("Starting Fight.");
+            EventSystem::get().trigger(args);
+        
+            //Monster* goblin = new Monster("../Resources/Sprites/glitchy_goblin_red.png");
+        
+            start_new_fight("Goblin");
+        }
+    
+        if (e->type == EventArgs::Type::CURRENT_ENEMY_DEFEATED) {
+            current_room_->remove_object_with_name(fight_->get_enemy()->get_name());
+            fight_.reset();
+        
+            std::shared_ptr<EventArgs> args;
+            args = std::make_shared<EventArgs>(EventArgs());
+            args->type = sd::EventArgs::Type::FIGHT_ENDED;
+            EventSystem::get().trigger(args);
+        
+            ScriptEngine::get().broadcast("fight_stopped");
+        }
+        )
+    
     fight_ = nullptr;
     player_ = std::make_shared<Fighter>();
     //current_room_ = current_floor_->get_start_room();
@@ -64,41 +98,6 @@ void sd::PlayerState::start_new_fight(const std::string& enemy_name) {
 
 Sp<sd::PlayerVocabulary> sd::PlayerState::get_player_vocabulary() {
     return player_vocabulary_;
-}
-
-void sd::PlayerState::handle(std::shared_ptr<EventArgs> e) {
-    if (e->type == EventArgs::Type::WALKED_THROUGH_DOOR) {
-        auto arg = dynamic_cast<WalkedThroughDoorEventArgs*>(e.get());
-        set_current_room(current_floor_->get_room(arg->door->get_connected_room()));
-
-        std::shared_ptr<LineToOutputEventArgs> args;
-        args = std::make_shared<LineToOutputEventArgs>(get_current_room()->get_enter_description());
-        EventSystem::get().trigger(args);
-    }
-
-    if (e->type == EventArgs::Type::START_FIGHT_WITH_GOBLIN) {
-
-        std::shared_ptr<LineToOutputEventArgs> args;
-        args = std::make_shared<LineToOutputEventArgs>("Starting Fight.");
-        EventSystem::get().trigger(args);
-        
-        //Monster* goblin = new Monster("../Resources/Sprites/glitchy_goblin_red.png");
-
-        start_new_fight("Goblin");
-    }
-
-    if (e->type == EventArgs::Type::CURRENT_ENEMY_DEFEATED) {
-        current_room_->remove_object_with_name(fight_->get_enemy()->get_name());
-        fight_.reset();
-
-        std::shared_ptr<EventArgs> args;
-        args = std::make_shared<EventArgs>(EventArgs());
-        args->type = sd::EventArgs::Type::FIGHT_ENDED;
-        EventSystem::get().trigger(args);
-    
-        ScriptEngine::get().broadcast("fight_stopped");
-    }
-
 }
 
 void sd::PlayerState::save_current_vocab() {

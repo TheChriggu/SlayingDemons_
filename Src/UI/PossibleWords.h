@@ -52,7 +52,6 @@ namespace sd {
         sf::Vector2f get_size() override;
 
         void handle(sf::Event event) override;
-        void handle(std::shared_ptr<EventArgs> e) override;
 
 
     };

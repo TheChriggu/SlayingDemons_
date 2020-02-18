@@ -40,8 +40,6 @@ namespace sd {
 
         Sp<RoomObject> get_object_with_name(const std::string& name);
         void remove_object_with_name(const std::string& name);
-
-        void handle(Sp<EventArgs> e) override;
     };
 }
 

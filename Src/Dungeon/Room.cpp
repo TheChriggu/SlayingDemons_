@@ -9,6 +9,27 @@
 
 sd::Room::Room(std::string name) : Subscriber()
 {
+    event_handler_ = CREATE_EVENT_HANDLER(
+        if (e->type == EventArgs::Type::ROOM_LAYOUT_CHANGED) {
+            for (const auto& object : room_objects_)
+            {
+                object->put_on_layout(layout_, 11, 7);
+            }
+        }
+    
+        if (e->type == EventArgs::Type::DOOR_UNLOCKED) {
+            auto arg = dynamic_cast<DoorUnlockedEventArgs*>(e.get());
+            if(arg->room_name == name_)
+            {
+                std::dynamic_pointer_cast<Door>( get_object_with_name(arg->door_name))->set_locked(false);
+            }
+        }
+    
+        if (e->type == EventArgs::Type::GOBLIN_DEFEATED) {
+            remove_object_with_name("Goblin");
+        }
+        )
+    
     name_ = std::move(name);
     enemy_ = nullptr;
     //tilemap = new Tilemap(11,7,position,sf::Vector2u(64,64));
@@ -87,27 +108,6 @@ std::string sd::Room::get_enter_description() {
 
 Sp<sd::Monster> sd::Room::get_enemy() {
     return enemy_;
-}
-
-void sd::Room::handle(std::shared_ptr<EventArgs> e) {
-    if (e->type == EventArgs::Type::ROOM_LAYOUT_CHANGED) {
-        for (const auto& object : room_objects_)
-        {
-            object->put_on_layout(layout_, 11, 7);
-        }
-    }
-
-    if (e->type == EventArgs::Type::DOOR_UNLOCKED) {
-        auto arg = dynamic_cast<DoorUnlockedEventArgs*>(e.get());
-        if(arg->room_name == name_)
-        {
-            std::dynamic_pointer_cast<Door>( get_object_with_name(arg->door_name))->set_locked(false);
-        }
-    }
-    
-    if (e->type == EventArgs::Type::GOBLIN_DEFEATED) {
-        remove_object_with_name("Goblin");
-    }
 }
 
  void sd::Room::remove_object_with_name(const std::string& name) {

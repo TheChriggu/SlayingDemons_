@@ -9,7 +9,39 @@
 #include <Event/DoorUnlockedEventArgs.h>
 
 sd::World::World() : Subscriber(){
-
+    
+    event_handler_ = CREATE_EVENT_HANDLER(
+        if (e->type == EventArgs::Type::PLAYER_DIED)
+        {
+            //reset player
+            player_state_->load_vocab();
+        
+            //reset floor
+            int i = 0;
+        
+            while(floors_[i] != player_state_->get_current_floor())
+            {
+                i++;
+            }
+        
+            //reload room with same name as current room, emplace it back in floors_
+            auto dungeon_script = ScriptEngine::get().get_script("dungeon");
+            auto dungeon_data = dungeon_script->get_table("dungeon");
+        
+            for (const auto& floor_data : dungeon_data.value()) {
+            
+                std::string name = floor_data.first.as<std::string>();
+                if(name == floors_[i]->get_name())
+                {
+                    sol::table data = floor_data.second.as<sol::table>();
+                
+                    floors_[i] = (std::make_shared<Floor>(name, data));
+                
+                    set_floor(floors_[i]->get_name());
+                }
+            }
+        }
+        )
 }
 
 bool sd::World::setup() {
@@ -47,40 +79,6 @@ bool sd::World::setup() {
 }
 
 void sd::World::shutdown() { }
-
-void sd::World::handle(Sp<sd::EventArgs> e)
-{
-    if (e->type == EventArgs::Type::PLAYER_DIED)
-    {
-        //reset player
-        player_state_->load_vocab();
-
-        //reset floor
-        int i = 0;
-
-        while(floors_[i] != player_state_->get_current_floor())
-        {
-            i++;
-        }
-
-        //reload room with same name as current room, emplace it back in floors_
-        auto dungeon_script = ScriptEngine::get().get_script("dungeon");
-        auto dungeon_data = dungeon_script->get_table("dungeon");
-
-        for (const auto& floor_data : dungeon_data.value()) {
-
-            std::string name = floor_data.first.as<std::string>();
-            if(name == floors_[i]->get_name())
-            {
-                sol::table data = floor_data.second.as<sol::table>();
-
-                floors_[i] = (std::make_shared<Floor>(name, data));
-
-                set_floor(floors_[i]->get_name());
-            }
-        }
-    }
-}
 
 void sd::World::unlock_door(std::string room_name, std::string door_name) {
     std::shared_ptr<DoorUnlockedEventArgs> args;

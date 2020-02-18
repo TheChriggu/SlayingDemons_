@@ -38,7 +38,6 @@ namespace sd {
         void move_vertical(float distance);
 
         void handle(sf::Event event) override;
-        void handle(std::shared_ptr<EventArgs> e) override;
     };
 }
 

@@ -15,12 +15,14 @@ sd::EventSystem &sd::EventSystem::get() {
     return *instance_;
 }
 
-void sd::EventSystem::subscribe(const Sp<Subscriber>& new_subscriber) {
-    subscriber_.emplace_back(new_subscriber);
+void sd::EventSystem::subscribe(Wp<std::function<void(Sp<EventArgs>)>> new_handler) {
+    handlers_.emplace_back(new_handler);
 }
 
 void sd::EventSystem::trigger(const Sp<sd::EventArgs>& e) const {
-    for (const auto& subscriber : subscriber_) {
-        subscriber->handle (e);
+    for (const auto& handler : handlers_) {
+        if(!handler.expired()) {
+            (*handler.lock())(e);
+        }
     }
 }

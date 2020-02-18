@@ -44,7 +44,10 @@ void sd::PossibleWords::draw_to(Sp<sf::RenderTarget> window) const {
 }
 
 void sd::PossibleWords::handle(sf::Event event) {
-
+    for(auto line : lines_)
+    {
+        line->handle(event);
+    }
 }
 
 void sd::PossibleWords::update(std::vector<std::string>& content) {
@@ -56,7 +59,7 @@ void sd::PossibleWords::update(std::vector<std::string>& content) {
     for(const auto& word : content)
     {
         lines_.push_back(std::make_shared<FormattedLine>(
-                word,
+                "[button=" + word + "]" + word + "[/button]",
                 sf::Vector2f(position_ + offset),
                 sf::Vector2f(1000,1000),
                         fonts_));

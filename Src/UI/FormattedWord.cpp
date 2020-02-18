@@ -19,7 +19,6 @@ sd::FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Fo
             apply_bb_to_format (code, format, fonts);
         }
 
-    on_click_text_ = format.on_click_text_;
     //set the actual word
     std::string word = std::string (text, 0, text.find_first_of ('['));
     text.erase (0, word.size ());
@@ -78,12 +77,7 @@ void sd::FormattedWord::apply_format_to_text (sd::Format format)
     text_->setCharacterSize(format.size_);
     text_->setFillColor(format.color_);
     text_->setStyle (format.style_);
-    
-    if(format.is_button_)
-        {
-            //TODO: create button
-        }
-
+    on_click_text_ = format.on_click_text_;
 }
 void sd::FormattedWord::apply_bb_to_format (std::string code, sd::Format &format, Sp<Font> fonts)
 {
@@ -158,7 +152,11 @@ void sd::FormattedWord::handle(sf::Event event) {
     {
         if (event.mouseButton.button == sf::Mouse::Left)
         {
-            //event on word clicked
+            auto mouse_pos = sd::UserInput::GetInstance ()->get_mouse_position ();
+            if(is_position_on_word (mouse_pos))
+            {
+                text_->setFillColor(sf::Color::Blue);
+            }
         }
     }
 
@@ -166,7 +164,7 @@ void sd::FormattedWord::handle(sf::Event event) {
 
 bool sd::FormattedWord::is_position_on_word(sf::Vector2f position_to_check) {
     {
-        if(on_click_text_ != "")
+        if(on_click_text_ == "")
         {
             return false;
         }

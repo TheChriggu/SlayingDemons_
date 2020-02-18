@@ -35,7 +35,7 @@ namespace sd {
 
         void move_vertical(float distance);
 
-        void handle(sf::Event event)
+        void handle(sf::Event event);
 
     };
 }

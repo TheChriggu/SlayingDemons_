@@ -10,7 +10,7 @@ sd::FormattedLine::FormattedLine(std::string string, sf::Vector2f position, sf::
     sd::Format format;
     format.style_ = sf::Text::Italic;
     format.size_ = 25;
-    format.is_button_ = false;
+    format.on_click_text_ = "";
     format.color_ = sf::Color::Red;
     format.font_ = fonts->GetFont("fantasy");
 
@@ -34,7 +34,7 @@ void sd::FormattedLine::format_line(std::string string, Sp<Font> fonts) {
     sd::Format format;
     format.style_ = sf::Text::Regular;
     format.size_ = 25;
-    format.is_button_ = false;
+    format.on_click_text_ = "";
     format.color_ = sf::Color::Black;
     format.font_ = fonts->GetCurrentFont();
     

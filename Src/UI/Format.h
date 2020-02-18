@@ -17,6 +17,7 @@ namespace sd
         sf::Color color_;
         unsigned int style_;
         bool is_button_;
+        std::string on_click_text_
     };
 }
 #endif //_FORMAT_H_

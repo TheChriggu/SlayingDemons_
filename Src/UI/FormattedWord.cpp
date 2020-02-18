@@ -3,6 +3,7 @@
 //
 
 #include "FormattedWord.h"
+#include "IO/UserInput.h"
 
 sd::FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Format& format, Sp<Font> fonts) {
     
@@ -17,7 +18,8 @@ sd::FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Fo
             text.erase (0, code.size ());
             apply_bb_to_format (code, format, fonts);
         }
-    
+
+    on_click_text_ = format.on_click_text_;
     //set the actual word
     std::string word = std::string (text, 0, text.find_first_of ('['));
     text.erase (0, word.size ());
@@ -119,5 +121,57 @@ void sd::FormattedWord::apply_bb_to_format (std::string code, sd::Format &format
         strtk::parse(code, "=,]", trash, r,g,b,a);
 
         format.color_ = sf::Color(r,g,b,a);
+    }
+    if(code.find("[button=") != std::string::npos)
+    {
+        format.on_click_text_ = code.substr(8, code.length()-9);
+    }
+    if(code.find("[/button") != std::string::npos)
+    {
+        format.on_click_text_ = "";
+    }
+}
+
+void sd::FormattedWord::handle(sf::Event event) {
+    /*if (event.type == sf::Event::MouseButtonPressed)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            auto mouse_pos = sd::UserInput::GetInstance ()->get_mouse_position ();
+
+            if(is_position_on_word (mouse_pos))
+            {
+
+            }
+        }
+    }*/
+
+    if(event.type == sf::Event::MouseMoved)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            //hover over text
+        }
+    }
+
+    if (event.type == sf::Event::MouseButtonReleased)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            //event on word clicked
+        }
+    }
+
+}
+
+bool sd::FormattedWord::is_position_on_word(sf::Vector2f position_to_check) {
+    {
+        if(on_click_text_ != "")
+        {
+            return false;
+        }
+
+        sf::Rect bounds = text_->getGlobalBounds();
+        return bounds.contains(position_to_check);
     }
 }

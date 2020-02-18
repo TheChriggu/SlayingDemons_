@@ -92,4 +92,11 @@ void sd::FormattedLine::move_vertical(float distance) {
     }
 }
 
+void sd::FormattedLine::handle(sf::Event event) {
+    for(auto word : words_)
+    {
+        word->handle(event);
+    }
+}
+
 

@@ -41,7 +41,7 @@ void sd::ShaderEngine::setup_all_shader() {
 }
 
 void sd::ShaderEngine::set_weak_glitch_on(std::string object_name) const {
-    // TODO(FK): replace with propper solution
+    // TODO(FK): replace with proper solution
 
     for (const auto& object : drawable_objects_) {
         if (object->get_name () == object_name) {
@@ -67,6 +67,10 @@ void sd::ShaderEngine::cancel_all_procedures_on(std::string object_name) {
             object->set_shader_procedure (nullptr);
         }
     }
+}
+
+void sd::ShaderEngine::add_drawable_object(Sp<sd::DrawableObject> object) {
+    drawable_objects_.emplace_back(object);
 }
 
 

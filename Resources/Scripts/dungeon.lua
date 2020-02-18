@@ -83,6 +83,7 @@ dungeon = {
 
                 on_inspection = function()
                     print_line("It's a small path leading to the north.")
+                    set_glitch_on("screen")
                 end,
 
                 on_enter = function()

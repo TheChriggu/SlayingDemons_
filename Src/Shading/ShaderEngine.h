@@ -26,6 +26,8 @@ namespace sd {
         explicit ShaderEngine(std::vector<Sp<DrawableObject>>& drawable_objects);
         virtual ~ShaderEngine() = default;
 
+        void add_drawable_object(Sp<DrawableObject> object);
+
         void setup_all_shader();
 
         void set_weak_glitch_on(std::string object_name) const;

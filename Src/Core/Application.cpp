@@ -35,6 +35,7 @@ bool sd::Application::setup()
     if (!result) return false;
     
     shader_engine_ = std::make_shared<ShaderEngine>(drawable_objects_);
+    shader_engine_->add_drawable_object(screen_);
     shader_engine_->setup_all_shader();
     
     world_ = std::make_shared<World>();
@@ -87,17 +88,18 @@ bool sd::Application::run()
     
     //Update Components
     
-    //Clear Window
-    window_->clear();
+
     
     //Draw Components
-    
+    screen_->clear();
     for (const auto &comp : drawable_objects_)
     {
-        comp->draw_to(window_);
+        comp->draw_to(screen_->get_texture());
     }
-    
-    //display
+    screen_->display();
+
+    window_->clear();
+    screen_->draw_to(window_);
     window_->display();
     
     
@@ -161,7 +163,8 @@ bool sd::Application::setup_window()
         sf::Style::Default);
     
     window_->setFramerateLimit(60);
-    
+
+    screen_ = std::make_shared<Screen>(window_->getSize());
     return true;
 }
 

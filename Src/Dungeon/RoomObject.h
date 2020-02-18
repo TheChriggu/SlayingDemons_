@@ -22,8 +22,8 @@ namespace sd {
         RoomObject(std::string name, sf::Vector2i position, std::shared_ptr<FunctionCollection> function_collection);
         virtual ~RoomObject() = default;
 
-        virtual void put_on_layout(std::vector<int>& layout, int width, int height) = 0;
-        virtual void remove_from_layout(std::vector<int>& layout, int width, int height) = 0;
+        virtual void put_on_layout(std::vector<TileData>& layout, int width, int height) = 0;
+        virtual void remove_from_layout(std::vector<TileData>& layout, int width, int height) = 0;
         virtual std::string get_name() = 0;
         
         virtual void be_interacted_with();

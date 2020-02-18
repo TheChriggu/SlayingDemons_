@@ -12,10 +12,11 @@
 #include "Door.h"
 
 sd::Door::Door(std::string name, int sprite_sheet_idx_open, int sprite_sheet_idx_locked,
-            sf::Vector2i position_on_tile_map, std::string next_room, bool is_locked, Sp<FunctionCollection> function_collection)
+            sf::Vector2i position_on_tile_map, int rotation, std::string next_room, bool is_locked, Sp<FunctionCollection> function_collection)
         : SingleTileObject(std::move(name)
                 , sprite_sheet_idx_locked
                 , position_on_tile_map
+                , rotation
                 , function_collection)
         , next_room_(std::move(next_room))
         , sprite_sheet_idx_open_(sprite_sheet_idx_open)
@@ -36,7 +37,7 @@ const std::string& sd::Door::get_connected_room() const {
     return next_room_;
 }
 
-void sd::Door::put_on_layout(std::vector<int>& layout, int width, int height) {
+void sd::Door::put_on_layout(std::vector<TileData>& layout, int width, int height) {
     //TODO: make sure position is within width & height
     SingleTileObject::put_on_layout(layout, width, height);
 }
@@ -84,7 +85,7 @@ void sd::Door::set_locked(bool lock_state) {
     EventSystem::get().trigger(args);
 }
 
-void sd::Door::remove_from_layout(std::vector<int> &layout, int width, int height) {
+void sd::Door::remove_from_layout(std::vector<TileData> &layout, int width, int height) {
     //TODO: make sure position is within width & height
     SingleTileObject::remove_from_layout(layout, width, height);
 }

@@ -221,9 +221,9 @@ dungeon = {
                     start_new_fight("Goblin")
                 end,
 
-                --on_destroy = function ()
-                    --unlock_door("western_forest", "eastern_way")
-                --end,
+                on_destroy = function ()
+                    unlock_door("western_forest", "eastern_way")
+                end,
             },
 
             outworn_path = {

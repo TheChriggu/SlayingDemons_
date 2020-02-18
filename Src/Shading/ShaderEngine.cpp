@@ -5,8 +5,8 @@
 #include <SFML/Graphics/Shader.hpp>
 #include "ShaderEngine.h"
 #include "IO/FileInput.h"
-#include "WeakGlitch.h"
-#include "Glitch.h"
+#include "NoisyLinesWeak.h"
+#include "NoisyLinesMedium.h"
 #include "ScriptEngine/ScriptEngine.h"
 
 
@@ -27,17 +27,17 @@ void sd::ShaderEngine::setup_all_shader() {
     glitch_ = new sf::Shader();
 
     /*auto shaderContent = FileInput::Load(
-            boost::filesystem::path("../Resources/Shaders/weakglitch.frag")
+            boost::filesystem::path("../Resources/Shaders/noisy_lines_weak.frag")
             );
     weakglitch->loadFromMemory(*shaderContent, sf::Shader::Type::Fragment);
 
     shaderContent = FileInput::Load(
-            boost::filesystem::path("../Resources/Shaders/glitch.vert")
+            boost::filesystem::path("../Resources/Shaders/mainVertexShader.vert")
     );
     weakglitch->loadFromMemory(*shaderContent, sf::Shader::Type::Vertex);*/
 
-    shader_procedures_.emplace_back(std::make_shared<WeakGlitch>(Sp<sf::Shader>(weakglitch_)));
-    shader_procedures_.emplace_back(std::make_shared<Glitch>(Sp<sf::Shader>(glitch_)));
+    shader_procedures_.emplace_back(std::make_shared<NoisyLinesWeak>(Sp<sf::Shader>(weakglitch_)));
+    shader_procedures_.emplace_back(std::make_shared<NoisyLinesMedium>(Sp<sf::Shader>(glitch_)));
 }
 
 void sd::ShaderEngine::set_weak_glitch_on(std::string object_name) const {
@@ -51,7 +51,7 @@ void sd::ShaderEngine::set_weak_glitch_on(std::string object_name) const {
 }
 
 void sd::ShaderEngine::set_glitch_on(std::string object_name) const {
-    // TODO(FK): replace with propper solution
+    // TODO(FK): replace with proper solution
 
     for (const auto& object : drawable_objects_) {
         if (object->get_name () == object_name) {

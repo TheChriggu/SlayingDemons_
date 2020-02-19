@@ -1,13 +1,14 @@
 Name	SpeedOff	AccuracyOff	PhysicalOff	MentalOff	FireOff	WaterOff	TreeOff	EarthOff	SpeedDef	AccuracyDef	PhysicalDef	MentalDef	FireDef	WaterDef	TreeDef	EarthDef	Path to Portrait	Modifiers	Actions	Alias	Gender	Modifier 1	Modifier 2	Modifier 3	Modifier 4	Modifier 5	Action 1	Action 2	Action 3	Action 4	Action 5
-00_Custom	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	Sprites/hedgehog.png	Water/Flirty/Pyro	Honk/Poke	Custom Player	male	Water	Flirty	Pyro			Honk	Poke			
-01_Average	0.9777777778	1	1.322222222	1.355555556	0.6888888889	0.5555555556	0.5555555556	0.6444444444	0.8555555556	1	4.888888889	4.555555556	4.466666667	2.244444444	4.466666667	3.355555556	Sprites/hedgehog.png	Minor/Stinky	Shot/Curse	most average thing ever	neutrum	Minor	Stinky				Shot	Curse			
+00_Custom	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	1	Sprites/hedgehog.png	Chaotic/Acid/Unimplemented/Useless	Honk/Poke/Attack/Kick/Slash	Custom Player	male	Chaotic	Acid	Unimplemented	Useless		Honk	Poke	Attack	Kick	Slash
+01_Average	0.98	1	1.29	1.3	0.63	0.8	0.6	0.68	0.87	1	4.5	4.2	4.12	2.12	4.12	3.12	Sprites/hedgehog.png	Minor/Stinky	Shot/Curse	most average thing ever	neutrum	Minor	Stinky				Shot	Curse			
 Cyber Fire Goblin	1	1	0.1	4	1.7	0.3	0.5	0.3	1	1	3	10	10	0.1	20	20	Sprites/glitchy_firegoblin.png	Virtual/Pyro/Fire	Kick/Slash/Smash	glitchy Firegoblin	male	Virtual	Pyro	Fire			Kick	Slash	Smash		
 Cyber Goblin	1	1	1.3	1.4	0.1	0.1	0.1	0.1	1	1	2	5	0.2	0.2	0.2	0.2	Sprites/glitchy_goblin.png	Virtual/Insulting	Curse/Attack	glitchy Goblin	male	Virtual	Insulting				Curse	Attack			
 Cyber Hedgehog	1	1	0.5	3	0.5	0.5	0.5	0.5	1	1	1	1	1	1	1	1	Sprites/glitchy_hedgehog.png	Chaotic/Unimplemented/Spikey	Poke/Curse/Hit	glitchy Hedgehog	female	Chaotic	Unimplemented	Spikey			Poke	Curse	Hit		
 Cyber Orc	1	1	2	2	0.1	0.1	0.1	0.1	0.5	1	10	20	1	1	1	1	Sprites/glitchy_orc.png	Heavy/Intimidating/Cyber	Attack/Smash/Whip	glitchy Orc	male	Heavy	Intimidating	Cyber			Attack	Smash	Whip		
 Fire Goblin	1.3	1	1.8	1.2	1.4	0.2	0.5	1	1	1	3	5	20	0	20	10	Sprites/firegoblin.png	Minor/Fire/Pyro	Bat/Attack/Slash	aggressive Firegoblin	male	Minor	Fire	Pyro			Bat	Attack	Slash		
-Goblin	1	1	2	10	10	10	10	10	10	10	50	20	50	50	50	50	Sprites/goblin.png	Minor/Thorny	Kick/Attack	Goblin	male	Minor	Thorny				Kick	Attack			
+Goblin	1	1	2	0.5	1.1	1.1	1.1	1.1	1	1	5	2	5	5	5	5	Sprites/goblin.png	Minor/Thorny	Kick/Attack	Goblin	male	Minor	Thorny				Kick	Attack			
 Hedgehog	1	1	1.3	1	0.5	0.5	0.5	0.5	1	1	1	1	1	1	1	1	Sprites/hedgehog.png	Minor/Stinky	Shot/Curse	Hedgehog	male	Minor	Stinky				Shot	Curse			
 Orc	0.5	1	2	0.5	0.5	0.5	0.5	0.5	0.2	1	20	5	10	10	10	10	Sprites/orc.png	Heavy/Intimidating	Attack/Smite	boarish Orc	male	Heavy	Intimidating				Attack	Smite			
 Mimicry	1	1	0.5	1	1	1	0.7	1	1	1	1	1	1	1	1	1	Sprites/hedgehog.png	Dancing/Flirty/Sparkling	Branch/Spell/Herb	Mimicry	neutrum	Dancing	Flirty	Sparkling			Branch	Spell	Herb		
 Cyber Mimicry	1	1	0.5	1.6	1	1	1	1	1	1	1	1	1	1	1	1	Sprites/hedgehog.png	Healing/Chaotic/Cyber	Wall/Whisper/Branch	glitchy Mimicry	neutrum	Healing	Chaotic	Cyber			Wall	Whisper	Branch		
+Goose	1	1	1	0.8	0.1	3	1	1	1	1	1	1	1	1	1	1	Sprites/hedgehog.png	Water/Animalistic/Chaotic	Honk	Goose	female	Water	Animalistic	Chaotic			Honk				

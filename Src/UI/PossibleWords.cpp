@@ -48,7 +48,7 @@ sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size, const
         }
         );
     
-    REGISTER_EVENT_HANDLER("PossibleWords");
+    REGISTER_EVENT_HANDLER();
     
     sprite_ = std::make_shared<sf::Sprite>();
     texture_ = std::make_shared<sf::Texture>();

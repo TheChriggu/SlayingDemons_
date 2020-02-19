@@ -31,7 +31,7 @@ sd::Room::Room(std::string name) : Subscriber()
         }
         );
     
-    REGISTER_EVENT_HANDLER("Room");
+    REGISTER_EVENT_HANDLER();
     
     name_ = std::move(name);
     enemy_ = nullptr;

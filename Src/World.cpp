@@ -49,7 +49,7 @@ sd::World::World() : Subscriber(){
         }
         );
     
-    REGISTER_EVENT_HANDLER("World");
+    REGISTER_EVENT_HANDLER();
 }
 
 bool sd::World::setup() {

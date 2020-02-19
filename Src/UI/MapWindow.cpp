@@ -29,7 +29,7 @@ sd::MapWindow::MapWindow(sf::Vector2f position, sf::Vector2f size)
         }
         );
     
-    REGISTER_EVENT_HANDLER("MapWindow");
+    REGISTER_EVENT_HANDLER();
     
     background_texture_ = std::make_shared<sf::Texture>();
     background_sprite_ = std::make_shared<sf::Sprite>();

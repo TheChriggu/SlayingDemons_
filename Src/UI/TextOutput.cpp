@@ -30,7 +30,7 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
         }
         );
     
-    REGISTER_EVENT_HANDLER("TextOutput");
+    REGISTER_EVENT_HANDLER();
 
     max_size_ = size;
     max_size_.y = 450; //TODO: This is not good

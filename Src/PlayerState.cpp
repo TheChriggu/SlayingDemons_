@@ -47,7 +47,7 @@ sd::PlayerState::PlayerState()
         }
         );
     
-    REGISTER_EVENT_HANDLER("PlayerState");
+    REGISTER_EVENT_HANDLER();
     
     fight_ = nullptr;
     player_ = std::make_shared<Fighter>();

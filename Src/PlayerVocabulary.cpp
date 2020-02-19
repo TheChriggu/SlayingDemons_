@@ -45,7 +45,7 @@ sd::PlayerVocabulary::PlayerVocabulary() : Subscriber() {
         }
         );
     
-    REGISTER_EVENT_HANDLER("PlayerVocabulary");
+    REGISTER_EVENT_HANDLER();
     
     actions_trie_ = std::make_shared<Trie>();
     modifiers_trie_ = std::make_shared<Trie>();

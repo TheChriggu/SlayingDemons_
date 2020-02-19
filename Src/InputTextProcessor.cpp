@@ -29,7 +29,7 @@ sd::InputTextProcessor::InputTextProcessor() : Subscriber()
         }
     );
     
-    REGISTER_EVENT_HANDLER("InputTextProcessor");
+    REGISTER_EVENT_HANDLER();
 }
 
 void sd::InputTextProcessor::process_input(const std::string &spell)

@@ -17,8 +17,8 @@ std::make_shared<std::function<void(Sp<EventArgs>)>>( \
     } \
 ); \
 
-#define REGISTER_EVENT_HANDLER(id) \
-EventSystem::get().subscribe(id, Wp<std::function<void(Sp<EventArgs>)>>(event_handler_));
+#define REGISTER_EVENT_HANDLER() \
+EventSystem::get().subscribe(Wp<std::function<void(Sp<EventArgs>)>>(event_handler_));
 
 namespace sd {
     class Subscriber {

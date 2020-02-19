@@ -14,7 +14,7 @@
 
 
 namespace sd {
-    class TextOutput: public DrawableObject, public Subscriber {
+    class TextOutput: public DrawableObject, public Subscriber, public std::enable_shared_from_this<TextOutput> {
 
         std::list<Sp<FormattedLine>> lines_;
         sf::Vector2f max_size_;
@@ -38,7 +38,6 @@ namespace sd {
         void move_vertical(float distance);
 
         void handle(sf::Event event) override;
-        void handle(std::shared_ptr<EventArgs> e) override;
     };
 }
 

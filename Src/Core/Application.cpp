@@ -10,7 +10,7 @@
 #include <map>
 #include <Combat/MonsterList.h>
 #include <memory>
-
+#include <Event/FontsCreatedEventArgs.h>
 
 bool sd::Application::setup()
 {
@@ -47,7 +47,9 @@ bool sd::Application::setup()
     
     load_vocab();
     new sd::MonsterList();
-    new sd::Font();
+    
+    fonts_ = std::make_shared<Font>();
+    EventSystem::get().trigger(std::make_shared<FontsCreatedEventArgs>(fonts_));
 
     world_->setup();
     for (const auto &object : drawable_objects_)

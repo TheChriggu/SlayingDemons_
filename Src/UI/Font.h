@@ -9,7 +9,7 @@
 #include "Core/GlobalDefinitions.h"
 
 namespace sd {
-    class Font {
+    class Font : public std::enable_shared_from_this<Font> {
     private:
         Sp<sf::Font> fantasy_font_;
         Sp<sf::Font> cyber_font_;

@@ -17,6 +17,39 @@ sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size, const
     , size_(size)
     , current_list_type_(Word::Type::COMMAND)
 {
+    event_handler_ = CREATE_EVENT_HANDLER(
+        if (e->type == sd::EventArgs::Type::FIGHT_STARTED) {
+            display_modifiers();
+            set_search_prefix("");
+        
+        }
+        if (e->type == sd::EventArgs::Type::FIGHT_ENDED) {
+            display_commands();
+            set_search_prefix("");
+        }
+    
+        if (e->type == sd::EventArgs::Type::PLAYER_STATE_CREATED) {
+            auto args = std::dynamic_pointer_cast<PlayerStateCreatedEventArgs>(e);
+    
+            player_state_ = Sp<PlayerState>(args->player_state);
+            player_vocabulary_ = player_state_->get_player_vocabulary();
+            
+        
+            std::cout << "~~Words: " << std::endl;
+            for (const auto& word : player_vocabulary_->get_modifiers())
+                std::cout << "~" << word << std::endl;
+        
+            update (player_vocabulary_->get_commands());
+        }
+    
+        if (e->type == EventArgs::Type::FONTS_CREATED) {
+            auto arg = std::dynamic_pointer_cast<FontsCreatedEventArgs>(e);
+            fonts_ = Sp<Font>(arg->fonts);
+        }
+        );
+    
+    REGISTER_EVENT_HANDLER();
+    
     sprite_ = std::make_shared<sf::Sprite>();
     texture_ = std::make_shared<sf::Texture>();
     search_prefix_ = "";
@@ -28,7 +61,8 @@ bool sd::PossibleWords::setup() {
     sprite_->setTexture(*texture_, false);
     sprite_->setPosition(position_);
     
-    auto event = std::make_shared<PossibleWordsCreatedEventArgs>(this);
+    
+    auto event = std::make_shared<PossibleWordsCreatedEventArgs>(shared_from_this());
     EventSystem::get().trigger(event);
     
     return DrawableObject::setup ();
@@ -76,46 +110,6 @@ void sd::PossibleWords::update(std::vector<std::string>& content) {
     {
 
     }*/
-}
-
-void sd::PossibleWords::handle(std::shared_ptr<EventArgs> e) {
-    /*if (e->type == sd::EventArgs::Type::PLAYER_VOCAB_CHANGED) {
-        auto args = std::dynamic_pointer_cast<PlayerVocabChangedEventArgs>(e);
-        
-        switch (args->change_type) {
-            case Word::ACTION:
-                update()
-                break;
-        }
-    }*/
-
-    if (e->type == sd::EventArgs::Type::FIGHT_STARTED) {
-        display_modifiers();
-        set_search_prefix("");
-        
-    }
-    if (e->type == sd::EventArgs::Type::FIGHT_ENDED) {
-        display_commands();
-        set_search_prefix("");
-    }
-    
-    if (e->type == sd::EventArgs::Type::PLAYER_STATE_CREATED) {
-        auto args = dynamic_cast<PlayerStateCreatedEventArgs *>(e.get());
-        
-        player_vocabulary_ = args->player_state->get_player_vocabulary();
-        player_state_ = Sp<PlayerState>(args->player_state);
-        
-        std::cout << "~~Words: " << std::endl;
-        for (const auto& word : player_vocabulary_->get_modifiers())
-            std::cout << "~" << word << std::endl;
-
-        update (player_vocabulary_->get_commands());
-    }
-
-    if (e->type == EventArgs::Type::FONTS_CREATED) {
-        auto arg = dynamic_cast<FontsCreatedEventArgs*>(e.get());
-        fonts_ = Sp<Font>(arg->fonts);
-     }
 }
 
 sf::Vector2f sd::PossibleWords::get_position() {

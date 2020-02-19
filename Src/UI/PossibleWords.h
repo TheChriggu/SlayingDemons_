@@ -12,7 +12,7 @@
 #include "PlayerState.h"
 
 namespace sd {
-    class PossibleWords: public DrawableObject, public Subscriber {
+    class PossibleWords: public DrawableObject, public Subscriber, public std::enable_shared_from_this<PossibleWords> {
     private:
         std::vector<Sp<FormattedLine>> lines_;
         Sp<PlayerVocabulary> player_vocabulary_;
@@ -52,7 +52,6 @@ namespace sd {
         sf::Vector2f get_size() override;
 
         void handle(sf::Event event) override;
-        void handle(std::shared_ptr<EventArgs> e) override;
 
 
     };

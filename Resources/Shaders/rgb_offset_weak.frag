@@ -6,11 +6,19 @@ void main()
 {
 
     float offset = 0.001f;
-    float red = texture2D(diffuseTex, gl_TexCoord[0].xy + vec2(offset,0)).r;
-    float green = texture2D(diffuseTex, gl_TexCoord[0].xy + vec2(0,offset)).g;
-    float blue = texture2D(diffuseTex, gl_TexCoord[0].xy + vec2(offset,-offset)).b;
-    float alpha = (red+green+blue)/3 + texture2D(diffuseTex, gl_TexCoord[0].xy).a;
-    alpha = clamp(alpha,0,1);
+    float alpha = 0.0f;
 
-    gl_FragColor = vec4(red, green, blue, alpha);
+    float red = texture2D(diffuseTex, gl_TexCoord[0].xy + vec2(offset,0)).r;
+    alpha += texture2D(diffuseTex, gl_TexCoord[0].xy + vec2(offset,0)).a;
+
+    float green = texture2D(diffuseTex, gl_TexCoord[0].xy + vec2(0,offset)).g;
+    alpha += texture2D(diffuseTex, gl_TexCoord[0].xy + vec2(0,offset)).a;
+
+    float blue = texture2D(diffuseTex, gl_TexCoord[0].xy + vec2(offset,-offset)).b;
+    alpha += texture2D(diffuseTex, gl_TexCoord[0].xy + vec2(offset,-offset)).a;
+
+
+    vec3 color = vec3(red,green,blue);
+
+    gl_FragColor = vec4(color, alpha);
 }

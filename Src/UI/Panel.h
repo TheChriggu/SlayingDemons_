@@ -13,6 +13,9 @@ namespace sd {
         Sp<sf::Sprite> sprite_;
         Sp<sf::Texture> texture_;
 
+        Sp<sf::RenderTexture> panel_tex_;
+        Sp<sf::Sprite> panel_sprite_;
+
     public:
         Panel(sf::Vector2f position, sf::Vector2f size, sf::Color color);
         Panel(sf::Vector2f position, sf::Vector2f size, const char* texture_path);

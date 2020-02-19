@@ -7,6 +7,7 @@
 #include <Event/FontsCreatedEventArgs.h>
 #include <Event/PossibleWordsCreatedEventArgs.h>
 #include <Event/EventSystem.h>
+#include <ScriptEngine/ScriptEngine.h>
 #include "PossibleWords.h"
 
 // TODO(FK): clean up name
@@ -20,6 +21,8 @@ sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size, const
     sprite_ = std::make_shared<sf::Sprite>();
     texture_ = std::make_shared<sf::Texture>();
     search_prefix_ = "";
+    possible_words_tex_ = std::make_shared<sf::RenderTexture>();
+    possible_words_sprite_ = std::make_shared<sf::Sprite>();
 }
 
 bool sd::PossibleWords::setup() {
@@ -30,16 +33,31 @@ bool sd::PossibleWords::setup() {
     
     auto event = std::make_shared<PossibleWordsCreatedEventArgs>(this);
     EventSystem::get().trigger(event);
-    
+
+    auto table = ScriptEngine::get().get_script("config")->get_table("window")->as<sol::table>();
+    possible_words_tex_->create(table["size"]["x"], table["size"]["y"]);
+    possible_words_sprite_->setTexture(possible_words_tex_->getTexture());
+
     return DrawableObject::setup ();
 }
 
 void sd::PossibleWords::draw_to(Sp<sf::RenderTarget> window) const {
-    window->draw(*sprite_);
+    possible_words_tex_->clear(sf::Color::Transparent);
+
+    possible_words_tex_->draw(*sprite_);
 
     for(const auto& line : lines_)
     {
-        line->draw_to (window);
+        line->draw_to (possible_words_tex_);
+    }
+    possible_words_tex_->display();
+
+    if (shader_procedure_)
+    {
+        shader_procedure_->process (window.get (), possible_words_sprite_.get ());
+    } else
+    {
+        window->draw(*possible_words_sprite_);
     }
 }
 

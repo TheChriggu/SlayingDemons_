@@ -110,4 +110,14 @@ void sd::FormattedWord::apply_bb_to_format (std::string code, sd::Format &format
     {
         format.font_ = fonts->GetFont(code.substr(6, code.length()-7));
     }
+    if(code.find("[color=") != std::string::npos)
+    {
+        std::vector<std::string> values;
+
+        std::string trash;
+        int r,g,b,a;
+        strtk::parse(code, "=,]", trash, r,g,b,a);
+
+        format.color_ = sf::Color(r,g,b,a);
+    }
 }

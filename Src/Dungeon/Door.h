@@ -16,14 +16,15 @@ namespace sd {
         int sprite_sheet_idx_open_;
         int sprite_sheet_idx_locked_;
         std::string door_id_;
+        int rotation_;
 
     public:
         Door(std::string name, int sprite_sheet_idx_open, int sprite_sheet_idx_locked,
-                sf::Vector2i position_on_tile_map, std::string next_room, bool is_locked, Sp<FunctionCollection> function_collection);
+                sf::Vector2i position_on_tile_map, int rotation, std::string next_room, bool is_locked, Sp<FunctionCollection> function_collection);
         ~Door() override = default;
 
-        void put_on_layout(std::vector<int>& layout, int width, int height) override;
-        void remove_from_layout(std::vector<int>& layout, int width, int height) override;
+        void put_on_layout(std::vector<TileData>& layout, int width, int height) override;
+        void remove_from_layout(std::vector<TileData>& layout, int width, int height) override;
         std::string get_name() override;
         void be_entered() override;
 

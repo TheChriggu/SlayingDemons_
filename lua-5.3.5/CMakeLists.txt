@@ -6,3 +6,7 @@ add_library(lua SHARED
         src/lauxlib.h  src/lcode.h     src/ldblib.c    src/ldo.h     src/lgc.c    src/llex.c    src/lmem.c      src/lobject.h  src/lparser.c   src/lstate.h   src/ltable.c   src/ltm.h      src/lua.h      src/lundump.h  src/lzio.c)
 
 target_include_directories(${PROJECT_NAME} PRIVATE src)
+
+file(GLOB_RECURSE LUA_LIB_FILES ${CMAKE_CURRENT_BINARY_DIR}/*.dll)
+
+install(FILES ${LUA_LIB_FILES} DESTINATION ${CMAKE_SOURCE_DIR}/Build/${HOST_OS}/${CMAKE_BUILD_TYPE}/SlayingDemons/bin)

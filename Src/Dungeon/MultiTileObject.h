@@ -12,15 +12,16 @@ namespace sd {
     private:
         
         sf::Vector2i size_;
-        int* layout_;
+        std::vector<int> layout_;
+        int rotation_;
 
     public:
-        MultiTileObject(std::string name, const int layout[], sf::Vector2i size, sf::Vector2i position_on_tile_map,
+        MultiTileObject(std::string name, const std::vector<int>& layout, sf::Vector2i size, int rotation, sf::Vector2i position_on_tile_map,
                 Sp<FunctionCollection> function_collection);
         ~MultiTileObject() override;
 
-        void put_on_layout(std::vector<int>& layout, int width, int height) override;
-        void remove_from_layout(std::vector<int>& layout, int width, int height) override;
+        void put_on_layout(std::vector<TileData>& layout, int width, int height) override;
+        void remove_from_layout(std::vector<TileData>& layout, int width, int height) override;
         std::string get_name() override;
         //virtual void be_interacted_with() override;
     };

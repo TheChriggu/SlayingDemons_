@@ -10,9 +10,6 @@
 
 namespace sd {
     class RGBOffsetWeak : public ShaderProcedure {
-
-        Sp<sf::Clock> clock_;
-
     public:
         explicit RGBOffsetWeak(Sp<sf::Shader> glitch_shader);
         virtual ~RGBOffsetWeak() = default;

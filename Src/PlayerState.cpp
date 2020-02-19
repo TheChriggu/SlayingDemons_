@@ -45,6 +45,15 @@ sd::PlayerState::PlayerState()
         
             ScriptEngine::get().broadcast("fight_stopped");
         }
+        
+        if (e->type == EventArgs::Type::PLAYER_DIED) {
+            
+            fight_.reset();
+            
+            auto args = std::make_shared<EventArgs>(EventArgs());
+            args->type = sd::EventArgs::Type::FIGHT_ENDED;
+            EventSystem::get().trigger(args);
+        }
         );
     
     REGISTER_EVENT_HANDLER();

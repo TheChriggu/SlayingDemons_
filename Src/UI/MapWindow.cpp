@@ -6,6 +6,7 @@
 #include <Event/FightStartedEventArgs.h>
 #include <memory>
 #include <utility>
+#include <ScriptEngine/ScriptEngine.h>
 #include "MapWindow.h"
 
 
@@ -17,7 +18,7 @@ sd::MapWindow::MapWindow(sf::Vector2f position, sf::Vector2f size)
 {
     background_texture_ = std::make_shared<sf::Texture>();
     background_sprite_ = std::make_shared<sf::Sprite>();
-    current_tile_map_ = std::make_shared<Tilemap>(11, 7, position_ + sf::Vector2f(40, 44), sf::Vector2u(64, 64));
+    current_tile_map_ = std::make_shared<Tilemap>(11, 7, position + sf::Vector2f(40, 44), sf::Vector2u(64, 64));
     monster_portrait_texture_ = std::make_shared<sf::Texture>();
     monster_portrait_sprite_ = std::make_shared<sf::Sprite>();
     //monsterPortraitSprite->setScale(0.75,0.75);
@@ -34,13 +35,11 @@ bool sd::MapWindow::setup() {
 
     monster_portrait_texture_->loadFromFile("../Resources/Sprites/goblin.png");
 
-    monster_portrait_sprite_->setTexture(*monster_portrait_texture_, true);
-    monster_portrait_sprite_->setPosition(position_);
-    //monsterPortraitSprite->setScale(0.75,0.75);
+    monster_portrait_sprite_->setTexture(*monster_portrait_texture_);
+    background_sprite_->setPosition(position_);
 
-
-    map_texture_->create(size_.x, size_.y);
-    map_sprite_->setPosition(position_);
+    auto table = ScriptEngine::get().get_script("config")->get_table("window")->as<sol::table>();
+    map_texture_->create(table["size"]["x"], table["size"]["y"]);
     map_sprite_->setTexture(map_texture_->getTexture());
 
     return DrawableObject::setup ();
@@ -48,11 +47,11 @@ bool sd::MapWindow::setup() {
 }
 
 void sd::MapWindow::draw_to(Sp<sf::RenderTarget> window) const {
-    map_texture_->clear();
+    map_texture_->clear(sf::Color::Transparent);
 
-    window->draw(*background_sprite_);
+    map_texture_->draw(*background_sprite_);
     
-    /*if(player_state_->is_fighting())
+    if(player_state_->is_fighting())
     {
         map_texture_->draw(*monster_portrait_sprite_);
     }
@@ -60,10 +59,18 @@ void sd::MapWindow::draw_to(Sp<sf::RenderTarget> window) const {
     {
         current_tile_map_->set_layout(player_state_->get_current_room()->get_layout(), 77);
         map_texture_->draw(*current_tile_map_);
-    }*/
+    }
     map_texture_->display();
-    //map_sprite_->setTexture(map_texture_->getTexture());
-   // window->draw(*map_sprite_);
+
+
+    if (shader_procedure_) {
+
+        shader_procedure_->process (window.get (), map_sprite_.get ());
+    } else {
+        window->draw(*map_sprite_);
+    }
+
+
 }
 
 sf::Vector2f sd::MapWindow::get_position() {

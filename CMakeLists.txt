@@ -20,7 +20,7 @@ file(GLOB_RECURSE EXEC_HEADERS Src/*.h)
 file(GLOB_RECURSE EXEC_SOURCES Src/*.cpp)
 
 # set executable-files (set Project-Target)
-add_executable(${PROJECT_NAME} ${EXEC_HEADERS} ${EXEC_SOURCES} Src/Shading/RGBOffsetWeak.cpp Src/Shading/RGBOffsetWeak.h)
+add_executable(${PROJECT_NAME} ${EXEC_HEADERS} ${EXEC_SOURCES} Src/Shading/RGBOffsetWeak.cpp Src/Shading/RGBOffsetWeak.h Src/Shading/RGBSplit.cpp Src/Shading/RGBSplit.h)
 
 
 target_include_directories(${PROJECT_NAME} PRIVATE Src)

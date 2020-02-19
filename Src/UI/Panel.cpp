@@ -27,7 +27,7 @@ sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, const char* texture_p
     texture_ = std::make_shared<sf::Texture>();
     texture_->loadFromFile(texture_path);
     sprite_ = std::make_shared<sf::Sprite>();
-    sprite_->setTexture(*texture_, false);
+    sprite_->setTexture(*texture_);
     sprite_->setPosition(position);
 }
 

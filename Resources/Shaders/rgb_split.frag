@@ -6,11 +6,10 @@ varying vec2 pxpos;
 
 void main()
 {
-    //curve from 0 to 1
+    //curve from 0 to 0.5
     float stage = (sin(time) / 2) + 0.5;
+    stage /= 5;
 
-    vec4 noiseCol = texture2D(noiseTex, vec2(0,gl_TexCoord[0].x))*0.1;
-    noiseCol.x=0;
     float noisestrength = max(0, 6*texture2D(noiseTex, vec2(fract(stage*1.5), 0.5)).x - 4);
 
     float red = texture2D(diffuseTex, gl_TexCoord[0].xy+ vec2(fract(stage),0)*noisestrength).r;

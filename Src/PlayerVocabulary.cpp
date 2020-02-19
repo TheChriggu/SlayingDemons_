@@ -43,11 +43,9 @@ sd::PlayerVocabulary::PlayerVocabulary() : Subscriber() {
                 EventSystem::get().trigger(event);
             }
         }
-        )
+        );
     
-    /*event_handler_ = std::make_shared<std::function<void(Sp<EventArgs>)>>(
-        
-        );*/
+    REGISTER_EVENT_HANDLER("PlayerVocabulary");
     
     actions_trie_ = std::make_shared<Trie>();
     modifiers_trie_ = std::make_shared<Trie>();

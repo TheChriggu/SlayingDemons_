@@ -14,7 +14,7 @@ sd::World::World() : Subscriber(){
         if (e->type == EventArgs::Type::PLAYER_DIED)
         {
             //reset player
-            player_state_->load_vocab();
+            //player_state_->load_vocab();
         
             //reset floor
             int i = 0;
@@ -23,6 +23,8 @@ sd::World::World() : Subscriber(){
             {
                 i++;
             }
+            
+            auto target_floor = std::find(floors_.begin(), floors_.end(), floors_[i]);
         
             //reload room with same name as current room, emplace it back in floors_
             auto dungeon_script = ScriptEngine::get().get_script("dungeon");
@@ -31,24 +33,30 @@ sd::World::World() : Subscriber(){
             for (const auto& floor_data : dungeon_data.value()) {
             
                 std::string name = floor_data.first.as<std::string>();
-                if(name == floors_[i]->get_name())
+                if(name == (*target_floor)->get_name())
                 {
                     sol::table data = floor_data.second.as<sol::table>();
+    
+                    target_floor = floors_.erase(target_floor);
+                    floors_.insert(target_floor, std::make_shared<Floor>(name, data));
+                    //floors_[i] = ();
                 
-                    floors_[i] = (std::make_shared<Floor>(name, data));
-                
-                    set_floor(floors_[i]->get_name());
+                    set_floor((*target_floor)->get_name());
+                    
+                    break;
                 }
             }
         }
-        )
+        );
+    
+    REGISTER_EVENT_HANDLER("World");
 }
 
 bool sd::World::setup() {
     player_state_ = std::make_shared<PlayerState>();
     
     EventSystem& event_system = EventSystem::get();
-    event_system.trigger(std::make_shared<PlayerStateCreatedEventArgs>(player_state_.get()));
+    event_system.trigger(std::make_shared<PlayerStateCreatedEventArgs>(player_state_));
     
     
     auto dungeon_script = ScriptEngine::get().get_script("dungeon");

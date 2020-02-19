@@ -3,8 +3,10 @@
 //
 
 #include "PossibleWordsCreatedEventArgs.h"
-sd::PossibleWordsCreatedEventArgs::PossibleWordsCreatedEventArgs(sd::PossibleWords *possible_words)
-    : possible_words(possible_words)
+#include <utility>
+
+sd::PossibleWordsCreatedEventArgs::PossibleWordsCreatedEventArgs(Sp<sd::PossibleWords> possible_words)
+    : possible_words(std::move(possible_words))
 {
     type = EventArgs::Type::POSSIBLE_WORDS_CREATED;
 }

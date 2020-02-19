@@ -9,7 +9,7 @@
 #include "Room.h"
 
 namespace sd {
-    class Door : public SingleTileObject {
+    class Door : public SingleTileObject, public std::enable_shared_from_this<Door> {
     private:
         bool is_locked_;
         std::string next_room_;

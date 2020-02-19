@@ -12,7 +12,7 @@
 #include "PlayerState.h"
 
 namespace sd {
-    class PossibleWords: public DrawableObject, public Subscriber {
+    class PossibleWords: public DrawableObject, public Subscriber, public std::enable_shared_from_this<PossibleWords> {
     private:
         std::vector<Sp<FormattedLine>> lines_;
         Sp<PlayerVocabulary> player_vocabulary_;

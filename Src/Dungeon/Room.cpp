@@ -4,6 +4,7 @@
 
 #include "Room.h"
 #include "Door.h"
+#include "Event/EventSystem.h"
 #include <utility>
 #include <Event/DoorUnlockedEventArgs.h>
 
@@ -18,7 +19,7 @@ sd::Room::Room(std::string name) : Subscriber()
         }
     
         if (e->type == EventArgs::Type::DOOR_UNLOCKED) {
-            auto arg = dynamic_cast<DoorUnlockedEventArgs*>(e.get());
+            auto arg = std::dynamic_pointer_cast<DoorUnlockedEventArgs>(e);
             if(arg->room_name == name_)
             {
                 std::dynamic_pointer_cast<Door>( get_object_with_name(arg->door_name))->set_locked(false);
@@ -28,7 +29,9 @@ sd::Room::Room(std::string name) : Subscriber()
         if (e->type == EventArgs::Type::GOBLIN_DEFEATED) {
             remove_object_with_name("Goblin");
         }
-        )
+        );
+    
+    REGISTER_EVENT_HANDLER("Room");
     
     name_ = std::move(name);
     enemy_ = nullptr;

@@ -7,5 +7,5 @@
 
 sd::Subscriber::Subscriber()
 {
-    EventSystem::get().subscribe(Wp<std::function<void(Sp<EventArgs>)>>(event_handler_));
+    //EventSystem::get().subscribe(Wp<std::function<void(Sp<EventArgs>)>>(event_handler_));
 }

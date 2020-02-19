@@ -100,6 +100,8 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
             }
         }
     }
+    
+    
 }
 
 Sp<sd::Room> sd::Floor::get_start_room() {

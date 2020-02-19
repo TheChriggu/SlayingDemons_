@@ -16,11 +16,10 @@ sd::PlayerState::PlayerState()
     : Subscriber() {
     event_handler_ = CREATE_EVENT_HANDLER(
         if (e->type == EventArgs::Type::WALKED_THROUGH_DOOR) {
-            auto arg = dynamic_cast<WalkedThroughDoorEventArgs*>(e.get());
-            set_current_room(current_floor_->get_room(arg->door->get_connected_room()));
+            auto arg = std::dynamic_pointer_cast<WalkedThroughDoorEventArgs>(e);
+            set_current_room(current_floor_->get_room(arg->door.lock()->get_connected_room()));
         
-            std::shared_ptr<LineToOutputEventArgs> args;
-            args = std::make_shared<LineToOutputEventArgs>(get_current_room()->get_enter_description());
+            auto args = std::make_shared<LineToOutputEventArgs>(get_current_room()->get_enter_description());
             EventSystem::get().trigger(args);
         }
     
@@ -46,7 +45,9 @@ sd::PlayerState::PlayerState()
         
             ScriptEngine::get().broadcast("fight_stopped");
         }
-        )
+        );
+    
+    REGISTER_EVENT_HANDLER("PlayerState");
     
     fight_ = nullptr;
     player_ = std::make_shared<Fighter>();
@@ -87,8 +88,7 @@ void sd::PlayerState::start_new_fight(const std::string& enemy_name) {
     
     fight_ = std::make_shared<Fight>(player_, goblin);
 
-    std::shared_ptr<FightStartedEventArgs> args;
-    args = std::make_shared<FightStartedEventArgs>(fight_.get());
+    auto args = std::make_shared<FightStartedEventArgs>(fight_);
     EventSystem::get().trigger(args);
     
     

@@ -3,6 +3,7 @@
 //
 
 #include "InputField.h"
+#include "Event/EventSystem.h"
 #include <iostream>
 #include <memory>
 #include <ScriptEngine/ScriptEngine.h>
@@ -17,9 +18,11 @@ sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color c
         if (e->type == EventArgs::Type::POSSIBLE_WORDS_CREATED) {
             auto args = std::dynamic_pointer_cast<PossibleWordsCreatedEventArgs>(e);
         
-            possible_words_ = Sp<PossibleWords>(args->possible_words);
+            possible_words_ = args->possible_words;
         }
-        )
+        );
+    
+    REGISTER_EVENT_HANDLER("InputField");
 
     text_ = std::make_shared<sf::Text>();
     text_->setPosition(position + sf::Vector2f(10, 10));

@@ -21,14 +21,16 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
 
     event_handler_ = CREATE_EVENT_HANDLER(
         if (e->type == EventArgs::Type::LINE_TO_OUTPUT) {
-            auto arg = dynamic_cast<LineToOutputEventArgs*>(e.get());
+            auto arg = std::dynamic_pointer_cast<LineToOutputEventArgs>(e);
             add_line (arg->line);
         }
         if (e->type == EventArgs::Type::FONTS_CREATED) {
-            auto arg = dynamic_cast<FontsCreatedEventArgs*>(e.get());
+            auto arg = std::dynamic_pointer_cast<FontsCreatedEventArgs>(e);
             fonts_ = Sp<Font>(arg->fonts);
         }
-        )
+        );
+    
+    REGISTER_EVENT_HANDLER("TextOutput");
 
     max_size_ = size;
     max_size_.y = 450; //TODO: This is not good
@@ -51,7 +53,7 @@ bool sd::TextOutput::setup() {
         max_size_, fonts_));
 
     // Trigger TextOutput Created Event
-    EventSystem::get().trigger(std::make_shared<TextOutputCreatedEventArgs>(this));
+    EventSystem::get().trigger(std::make_shared<TextOutputCreatedEventArgs>(weak_from_this()));
 
     return DrawableObject::setup ();
 }

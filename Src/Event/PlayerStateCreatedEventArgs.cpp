@@ -5,8 +5,8 @@
 #include "PlayerStateCreatedEventArgs.h"
 #include <utility>
 
-sd::PlayerStateCreatedEventArgs::PlayerStateCreatedEventArgs(sd::PlayerState* player_state)
-    : player_state(player_state)
+sd::PlayerStateCreatedEventArgs::PlayerStateCreatedEventArgs(Wp<sd::PlayerState> player_state)
+    : player_state(std::move(player_state))
 {
     type = EventArgs::Type::PLAYER_STATE_CREATED;
 }

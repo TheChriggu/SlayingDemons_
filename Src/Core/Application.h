@@ -31,6 +31,7 @@ namespace sd {
         std::vector<Sp<DrawableObject>> drawable_objects_;
         
         Sp<World> world_;
+        Sp<Font> fonts_;
         
         Sp<ShaderEngine> shader_engine_;
 

@@ -7,6 +7,7 @@
 #include <memory>
 #include <utility>
 #include "MapWindow.h"
+#include "Event/EventSystem.h"
 
 
 sd::MapWindow::MapWindow(sf::Vector2f position, sf::Vector2f size)
@@ -18,15 +19,17 @@ sd::MapWindow::MapWindow(sf::Vector2f position, sf::Vector2f size)
     
     event_handler_ = CREATE_EVENT_HANDLER(
         if (e->type == EventArgs::Type::PLAYER_STATE_CREATED) {
-            auto args = dynamic_cast<PlayerStateCreatedEventArgs*>(e.get());
+            auto args = std::dynamic_pointer_cast<PlayerStateCreatedEventArgs>(e);
             player_state_ = Sp<PlayerState>(args->player_state);
         }
     
         if (e->type == EventArgs::Type::FIGHT_STARTED) {
-            auto arg = dynamic_cast<FightStartedEventArgs*>(e.get());
-            monster_portrait_texture_->loadFromFile(arg->fight->get_enemy()->get_path_to_portrait());
+            auto arg = std::dynamic_pointer_cast<FightStartedEventArgs>(e);
+            monster_portrait_texture_->loadFromFile(arg->fight.lock()->get_enemy()->get_path_to_portrait());
         }
-        )
+        );
+    
+    REGISTER_EVENT_HANDLER("MapWindow");
     
     background_texture_ = std::make_shared<sf::Texture>();
     background_sprite_ = std::make_shared<sf::Sprite>();

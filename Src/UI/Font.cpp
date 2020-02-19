@@ -19,7 +19,7 @@ sd::Font::Font() {
     }
 
 
-    EventSystem::get().trigger(std::make_shared<FontsCreatedEventArgs>(this));
+    //EventSystem::get().trigger(std::make_shared<FontsCreatedEventArgs>(weak_from_this()));
 
 }
 

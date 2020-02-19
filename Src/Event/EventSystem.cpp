@@ -15,14 +15,18 @@ sd::EventSystem &sd::EventSystem::get() {
     return *instance_;
 }
 
-void sd::EventSystem::subscribe(Wp<std::function<void(Sp<EventArgs>)>> new_handler) {
-    handlers_.emplace_back(new_handler);
+void sd::EventSystem::subscribe(std::string id, Wp<std::function<void(Sp<EventArgs>)>> new_handler) {
+    handlers_.emplace(id, new_handler);//.emplace_back(new_handler);
 }
 
-void sd::EventSystem::trigger(const Sp<sd::EventArgs>& e) const {
-    for (const auto& handler : handlers_) {
+void sd::EventSystem::trigger(const Sp<sd::EventArgs>& e) {
+    for (const auto& pair : handlers_) {
+        auto handler = pair.second;
         if(!handler.expired()) {
-            (*handler.lock())(e);
+            auto func = *handler.lock();
+            if (!func)
+                continue;
+            func(e);
         }
     }
 }

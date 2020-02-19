@@ -54,10 +54,7 @@ void sd::Door::be_entered() {
     }
 
     else {
-        std::shared_ptr<WalkedThroughDoorEventArgs> args;
-        args = std::make_shared<WalkedThroughDoorEventArgs>(
-            this
-                );
+        auto args = std::make_shared<WalkedThroughDoorEventArgs>(weak_from_this());
         //args->type = sd::EventArgs::Type::WALKED_THROUGH_DOOR;
         EventSystem::get().trigger(args);
 

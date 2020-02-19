@@ -83,7 +83,8 @@ dungeon = {
 
                 on_inspection = function()
                     print_line("It's a small path leading to the north.")
-                    set_glitch_on("screen")
+                    --set_noisy_lines_medium_on("screen")
+                    set_rgb_offset_weak_on("map-window")
                 end,
 
                 on_enter = function()

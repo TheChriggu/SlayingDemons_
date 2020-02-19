@@ -91,6 +91,7 @@ bool sd::Application::run()
 
     
     //Draw Components
+    //window_->clear();
     screen_->clear();
     for (const auto &comp : drawable_objects_)
     {

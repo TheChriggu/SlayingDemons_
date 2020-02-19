@@ -23,6 +23,9 @@ namespace sd {
 
         Sp<Tilemap> current_tile_map_;
         Sp<PlayerState> player_state_;
+
+        Sp<sf::Sprite> map_sprite_;
+        Sp<sf::RenderTexture> map_texture_;
     public:
         MapWindow(sf::Vector2f position, sf::Vector2f size);
         ~MapWindow() override = default;

@@ -21,6 +21,9 @@ sd::MapWindow::MapWindow(sf::Vector2f position, sf::Vector2f size)
     monster_portrait_texture_ = std::make_shared<sf::Texture>();
     monster_portrait_sprite_ = std::make_shared<sf::Sprite>();
     //monsterPortraitSprite->setScale(0.75,0.75);
+
+    map_texture_ = std::make_shared<sf::RenderTexture>();
+    map_sprite_ = std::make_shared<sf::Sprite>();
 }
 
 bool sd::MapWindow::setup() {
@@ -29,30 +32,38 @@ bool sd::MapWindow::setup() {
     background_sprite_->setTexture(*background_texture_);
     background_sprite_->setPosition(position_);
 
-    
-
     monster_portrait_texture_->loadFromFile("../Resources/Sprites/goblin.png");
 
     monster_portrait_sprite_->setTexture(*monster_portrait_texture_, true);
     monster_portrait_sprite_->setPosition(position_);
     //monsterPortraitSprite->setScale(0.75,0.75);
 
+
+    map_texture_->create(size_.x, size_.y);
+    map_sprite_->setPosition(position_);
+    map_sprite_->setTexture(map_texture_->getTexture());
+
     return DrawableObject::setup ();
 
 }
 
 void sd::MapWindow::draw_to(Sp<sf::RenderTarget> window) const {
+    map_texture_->clear();
+
     window->draw(*background_sprite_);
     
-    if(player_state_->is_fighting())
+    /*if(player_state_->is_fighting())
     {
-        window->draw(*monster_portrait_sprite_);
+        map_texture_->draw(*monster_portrait_sprite_);
     }
     else
     {
         current_tile_map_->set_layout(player_state_->get_current_room()->get_layout(), 77);
-        window->draw(*current_tile_map_);
-    }
+        map_texture_->draw(*current_tile_map_);
+    }*/
+    map_texture_->display();
+    //map_sprite_->setTexture(map_texture_->getTexture());
+   // window->draw(*map_sprite_);
 }
 
 sf::Vector2f sd::MapWindow::get_position() {

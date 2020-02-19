@@ -15,7 +15,7 @@ sd::Screen::Screen(sf::Vector2u size) : DrawableObject("screen")
 
 void sd::Screen::draw_to(Sp<sf::RenderTarget> window) const {
     if (shader_procedure_) {
-        sprite_->setTexture(texture_->getTexture());
+        //sprite_->setTexture(texture_->getTexture());
         shader_procedure_->process (window.get (), sprite_.get ());
     } else {
         window->draw(*sprite_);

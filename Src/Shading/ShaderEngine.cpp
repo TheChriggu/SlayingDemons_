@@ -11,6 +11,7 @@
 #include "RGBOffsetWeak.h"
 #include "RGBSplit.h"
 #include "HorizontalZigZag.h"
+#include "GlowingPulse.h"
 
 
 sd::ShaderEngine::ShaderEngine(std::vector<Sp<DrawableObject>>& drawable_objects)
@@ -22,6 +23,7 @@ sd::ShaderEngine::ShaderEngine(std::vector<Sp<DrawableObject>>& drawable_objects
     ScriptEngine::get().register_all ("set_rgb_offset_weak_on", &ShaderEngine::set_rgb_offset_weak_on, this);
     ScriptEngine::get().register_all ("set_rgb_split_on", &ShaderEngine::set_rgb_split_on, this);
     ScriptEngine::get().register_all ("set_horizontal_zigzag_on", &ShaderEngine::set_horizontal_zigzag_on, this);
+        ScriptEngine::get().register_all ("set_glowing_pulse_on", &ShaderEngine::set_glowing_pulse_on, this);
     ScriptEngine::get().register_all ("cancel_all_procedures_on", &ShaderEngine::cancel_all_procedures_on, this);
 }
 
@@ -34,6 +36,7 @@ void sd::ShaderEngine::setup_all_shader() {
     rgb_offset_weak_ = new sf::Shader();
     rgb_split_ = new sf::Shader();
     horizontal_zigzag_ = new sf::Shader();
+    glowing_pulse_ = new sf::Shader();
 
     /*auto shaderContent = FileInput::Load(
             boost::filesystem::path("../Resources/Shaders/noisy_lines_weak.frag")
@@ -50,6 +53,7 @@ void sd::ShaderEngine::setup_all_shader() {
     shader_procedures_.emplace_back(std::make_shared<RGBOffsetWeak>(Sp<sf::Shader>(rgb_offset_weak_)));
     shader_procedures_.emplace_back(std::make_shared<RGBSplit>(Sp<sf::Shader>(rgb_split_)));
     shader_procedures_.emplace_back(std::make_shared<HorizontalZigZag>(Sp<sf::Shader>(horizontal_zigzag_)));
+    shader_procedures_.emplace_back(std::make_shared<GlowingPulse>(Sp<sf::Shader>(glowing_pulse_)));
 }
 
 void sd::ShaderEngine::add_drawable_object(Sp<sd::DrawableObject> object) {
@@ -100,6 +104,14 @@ void sd::ShaderEngine::set_horizontal_zigzag_on(std::string object_name) const {
     }
 }
 
+void sd::ShaderEngine::set_glowing_pulse_on(std::string object_name) const {
+    for (const auto& object : drawable_objects_) {
+        if (object->get_name () == object_name) {
+            object->set_shader_procedure (shader_procedures_[5]);
+        }
+    }
+}
+
 void sd::ShaderEngine::cancel_all_procedures_on(std::string object_name) {
 
     for (const auto& object : drawable_objects_) {
@@ -108,6 +120,8 @@ void sd::ShaderEngine::cancel_all_procedures_on(std::string object_name) {
         }
     }
 }
+
+
 
 
 

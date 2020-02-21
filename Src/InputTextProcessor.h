@@ -11,13 +11,11 @@
 #include "Event/Subscriber.h"
 
 namespace sd {
-
     class InputTextProcessor : public Subscriber {
     private:
-    //Fight* fight;
-    Sp<TextOutput> output_;
-    //Room* room;
-    Sp<PlayerState> player_state_;
+        
+        Sp<TextOutput> output_;
+        Sp<PlayerState> player_state_;
 
     public:
         InputTextProcessor();
@@ -30,7 +28,7 @@ namespace sd {
         std::vector<std::string> split_by_space(std::string string);
         Sp<PlayerState> get_player_state();
 
-        void handle(Sp<EventArgs> e) override;
+        //void handle(Sp<EventArgs> e) override;
     };
 }
 

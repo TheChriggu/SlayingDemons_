@@ -30,7 +30,6 @@ namespace sd {
 
         void draw_to(Sp<sf::RenderTarget> window) const override;
         void handle(sf::Event event) override;
-        void handle(Sp<EventArgs> e) override;
     };
 }
 

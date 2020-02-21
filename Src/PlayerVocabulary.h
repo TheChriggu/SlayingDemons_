@@ -39,7 +39,8 @@ namespace sd {
         Sp<std::vector<std::string>> get_modifiers_starting_with(const std::string& prefix);
         Sp<std::vector<std::string>> get_commands_starting_with(const std::string& prefix);
 
-        void handle(std::shared_ptr<EventArgs> e) override;
+        void save_to_file();
+        void load_from_file();
     };
 }
 

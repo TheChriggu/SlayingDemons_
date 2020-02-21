@@ -11,10 +11,10 @@
 namespace sd {
     class WalkedThroughDoorEventArgs: public EventArgs {
     public:
-        explicit WalkedThroughDoorEventArgs(Door* door);
+        explicit WalkedThroughDoorEventArgs(Wp<Door> door);
         ~WalkedThroughDoorEventArgs() override = default;
 
-        Door* door;
+        Wp<Door> door;
     };
 }
 

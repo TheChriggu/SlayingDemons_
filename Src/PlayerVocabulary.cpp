@@ -13,29 +13,48 @@
 #include "Word.h"
 #include "Vocabulary.h"
 
-sd::PlayerVocabulary::PlayerVocabulary() {
+sd::PlayerVocabulary::PlayerVocabulary() : Subscriber() {
+    
+    CREATE_EVENT_HANDLER(
+        if (e->type == sd::EventArgs::Type::NEW_WORD_COLLECTED)
+        {
+            auto args = std::dynamic_pointer_cast<NewWordCollectedEventArgs>(e);
+        
+            if(!has_word(args->word)) {
+                auto word = sd::Vocabulary::all_words->get(args->word);
+            
+                std::shared_ptr<PlayerVocabChangedEventArgs> event = std::make_shared<PlayerVocabChangedEventArgs>();
+            
+                switch (word->get_type()) {
+                    case (sd::Word::Type::ACTION):
+                        add_action(args->word);
+                        event->change_type = sd::Word::Type::ACTION;
+                        break;
+                    case (sd::Word::Type::MODIFIER):
+                        add_modifier(args->word);
+                        event->change_type = sd::Word::Type::MODIFIER;
+                        break;
+                    case (sd::Word::Type::COMMAND):
+                        add_command(args->word);
+                        event->change_type = sd::Word::Type::COMMAND;
+                        break;
+                }
+            
+                EventSystem::get().trigger(event);
+            }
+        }
+        );
+    
+    REGISTER_EVENT_HANDLER();
+    
     actions_trie_ = std::make_shared<Trie>();
     modifiers_trie_ = std::make_shared<Trie>();
     commands_trie_ = std::make_shared<Trie>();
-
-    /*auto table = FileInput::load_tsv("../Resources/Tables/PlayerVocab.tsv");
-    for(const auto& word : (*table)[0])
-    {
-        add_action(word);
-    }
-    for(const auto& word : (*table)[1])
-    {
-        std::cout << "NEW MODIFIER: " << word << std::endl;
-        add_modifier(word);
-    }
-    for(const auto& word : (*table)[2])
-    {
-        add_command(word);
-    }*/
+    
     add_modifier("Flirty");
     add_modifier("Chaotic");
     add_modifier("Fire");
-    add_modifier("Acid");
+    add_modifier("Useless");
     add_modifier("Unimplemented");
     //add_modifier("Pyro");
     
@@ -53,8 +72,6 @@ sd::PlayerVocabulary::PlayerVocabulary() {
     ScriptEngine::get().register_all("add_action", &PlayerVocabulary::add_action, this);
     ScriptEngine::get().register_all("add_modifier", &PlayerVocabulary::add_modifier, this);
     ScriptEngine::get().register_all("add_command", &PlayerVocabulary::add_command, this);
-    
-    
 }
 
 bool sd::PlayerVocabulary::has_word(const std::string& word) {
@@ -118,34 +135,22 @@ Sp<std::vector<std::string>> sd::PlayerVocabulary::get_commands_starting_with(co
     return commands_trie_->get_all_that_starts_with(prefix);
 }
 
-void sd::PlayerVocabulary::handle(std::shared_ptr<EventArgs> e) {
-    if (e->type == sd::EventArgs::Type::NEW_WORD_COLLECTED)
-    {
-        auto args = std::dynamic_pointer_cast<NewWordCollectedEventArgs>(e);
+void sd::PlayerVocabulary::save_to_file()
+{
+    auto vec = std::make_shared<std::vector<std::vector<std::string>>>();
+    vec->emplace_back(get_modifiers());
+    vec->emplace_back(get_actions());
+    vec->emplace_back(get_commands());
 
-        if(!has_word(args->word)) {
-            auto word = sd::Vocabulary::all_words->get(args->word);
-    
-            std::shared_ptr<PlayerVocabChangedEventArgs> event = std::make_shared<PlayerVocabChangedEventArgs>();
-            
-            switch (word->get_type()) {
-                case (sd::Word::Type::ACTION):
-                    add_action(args->word);
-                    event->change_type = sd::Word::Type::ACTION;
-                    break;
-                case (sd::Word::Type::MODIFIER):
-                    add_modifier(args->word);
-                    event->change_type = sd::Word::Type::MODIFIER;
-                    break;
-                case (sd::Word::Type::COMMAND):
-                    add_command(args->word);
-                    event->change_type = sd::Word::Type::COMMAND;
-                    break;
-            }
-            
-            EventSystem::get().trigger(event);
-        }
-    }
-    
+    FileInput::write_tsv(vec, "../Resources/Tables/PlayerVocab.tsv");
+}
+
+void sd::PlayerVocabulary::load_from_file()
+{
+    auto vec = FileInput::load_tsv("../Resources/Tables/PlayerVocab.tsv");
+
+    modifiers_ = (*vec)[0];
+    actions_ = (*vec)[1];
+    commands_ = (*vec)[2];
 }
 

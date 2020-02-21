@@ -41,7 +41,6 @@ namespace sd {
         void set_player_state(Sp<PlayerState> player_state);
 
         void handle(sf::Event event) override;
-        void handle(Sp<EventArgs> e) override;
     };
 }
 

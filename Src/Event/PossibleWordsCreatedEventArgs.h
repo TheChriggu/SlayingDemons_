@@ -11,10 +11,10 @@
 namespace sd {
     class PossibleWordsCreatedEventArgs : public EventArgs {
         public:
-        explicit PossibleWordsCreatedEventArgs(PossibleWords* possible_words);
+        explicit PossibleWordsCreatedEventArgs(Sp<PossibleWords> possible_words);
         ~PossibleWordsCreatedEventArgs() override = default;
         
-        PossibleWords* possible_words;
+        Sp<PossibleWords> possible_words;
     };
 }
 

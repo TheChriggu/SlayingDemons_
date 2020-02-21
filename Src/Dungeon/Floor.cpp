@@ -125,8 +125,6 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
         std::cout << "++ Room: " << room.first.as<std::string>() << std::endl;
 
     }
-
-
 }
 
 Sp<sd::Room> sd::Floor::get_start_room() {
@@ -141,4 +139,8 @@ Sp<sd::Room> sd::Floor::get_room(const std::string &name) const
     }
     
     return nullptr;
+}
+
+std::string sd::Floor::get_name() {
+    return name_;
 }

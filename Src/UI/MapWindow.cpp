@@ -52,7 +52,7 @@ bool sd::MapWindow::setup() {
     monster_portrait_texture_->loadFromFile("../Resources/Sprites/goblin.png");
 
     monster_portrait_sprite_->setTexture(*monster_portrait_texture_);
-    background_sprite_->setPosition(position_);
+    monster_portrait_sprite_->setPosition(position_);
 
     auto table = ScriptEngine::get().get_script("config")->get_table("window")->as<sol::table>();
     map_texture_->create(table["size"]["x"], table["size"]["y"]);

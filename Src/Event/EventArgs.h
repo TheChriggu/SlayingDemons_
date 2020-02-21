@@ -27,7 +27,8 @@ namespace sd {
             DOOR_UNLOCKED,
             CURRENT_ENEMY_DEFEATED,
             PLAYER_DIED,
-            CLICKABLE_WORD_CLICKED
+            CLICKABLE_WORD_CLICKED,
+            SET_STAGE
         };
 
         EventArgs();

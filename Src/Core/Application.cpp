@@ -176,21 +176,20 @@ bool sd::Application::setup_scene()
     std::cout << "Start initialization.\n";
     
     std::cout << "Create background panel\n";
-    auto panel = new Panel(sf::Vector2f(0.0, 0.0), sf::Vector2f(1920, 1080), "../Resources/Sprites/fantasy_background.png");
+    auto panel = new Panel(sf::Vector2f(0.0, 0.0), sf::Vector2f(1920, 1080), "../Resources/Sprites/Progressing/background_");
     panel->set_name("background_panel");
     drawable_objects_.emplace_back(Sp<Panel>(panel));
     // TODO(FK): clean up this shit
     
     std::cout << "Create text output background\n";
-    auto outputBackground = new Panel(sf::Vector2f(48.0, 41.0), sf::Vector2f(1044, 1008), "../Resources/Sprites/fantasy_textoutput.png");
+    auto outputBackground = new Panel(sf::Vector2f(48.0, 41.0), sf::Vector2f(1044, 1008), "../Resources/Sprites/Progressing/output_");
     outputBackground->set_name("output-panel");
     drawable_objects_.emplace_back(Sp<Panel>(outputBackground));
     
     std::cout << "Create words panel\n";
     drawable_objects_.emplace_back(std::make_shared<PossibleWords>(
         sf::Vector2f(39.0, 575.0),
-        sf::Vector2f(1059, 445),
-        "../Resources/Sprites/fantasy_input.png"));
+        sf::Vector2f(1059, 445)));
     
     std::cout << "emplace Inputfield\n";
     std::cout << "Create input field\n";

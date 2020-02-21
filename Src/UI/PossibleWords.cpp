@@ -11,7 +11,7 @@
 #include "PossibleWords.h"
 
 // TODO(FK): clean up name
-sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size, const std::string& path_to_background)
+sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size)
     : DrawableObject("possible-words")
     , Subscriber()
     , position_(position)
@@ -63,7 +63,7 @@ sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size, const
 
 bool sd::PossibleWords::setup() {
 
-    texture_->loadFromFile("../Resources/Sprites/fantasy_input.png");
+    texture_->loadFromFile("../Resources/Sprites/Progressing/input_0.png");
     sprite_->setTexture(*texture_, false);
     sprite_->setPosition(position_);
     

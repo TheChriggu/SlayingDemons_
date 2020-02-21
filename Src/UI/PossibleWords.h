@@ -14,7 +14,7 @@
 namespace sd {
     class PossibleWords: public DrawableObject, public Subscriber, public std::enable_shared_from_this<PossibleWords> {
         public:
-        
+
         bool second_word;
         
     private:
@@ -37,7 +37,7 @@ namespace sd {
 
 
     public:
-        PossibleWords(sf::Vector2f position, sf::Vector2f size, const std::string& path_to_background);
+        PossibleWords(sf::Vector2f position, sf::Vector2f size);
         ~PossibleWords() override = default;
 
         bool setup() override;

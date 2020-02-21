@@ -157,10 +157,9 @@ void sd::FormattedWord::handle(sf::Event event) {
             auto mouse_pos = sd::UserInput::GetInstance ()->get_mouse_position ();
             if(is_position_on_word (mouse_pos))
             {
-                int i=0;
+                int i= 0;
 
                 EventSystem::get().trigger(std::make_shared<ClickableWordClickedEventArgs>(on_click_text_));
-                //text_->setFillColor(sf::Color::Blue);
             }
         }
     }

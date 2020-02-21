@@ -9,6 +9,11 @@
 #include "TextOutput.h"
 #include "InputTextProcessor.h"
 #include "PossibleWords.h"
+#include <regex>
+
+#define UNI_ENTER 13
+#define UNI_BACKSPACE 8
+#define UNI_SPACE 32
 
 namespace sd {
     class InputField : public DrawableObject, public Subscriber {
@@ -16,6 +21,9 @@ namespace sd {
         Sp<InputTextProcessor> text_processor_;
         
         Sp<PossibleWords> possible_words_;
+        
+        const std::regex single_word_pattern_{R"([^ ]+ )"};
+        const std::regex two_words_pattern_{R"([^ ]+ [^ ]+ )"};
 
     public:
         InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color);

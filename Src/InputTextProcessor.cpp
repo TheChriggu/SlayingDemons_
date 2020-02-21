@@ -160,6 +160,7 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
         output_->add_line("nothing happens");
     }
     
+    
 }
 
 std::vector<std::string> sd::InputTextProcessor::split_by_space(std::string string)
@@ -195,21 +196,5 @@ Sp<sd::PlayerState> sd::InputTextProcessor::get_player_state()
 {
     return player_state_;
 }
-
-/*void sd::InputTextProcessor::handle(std::shared_ptr<sd::EventArgs> e)
-{
-    if (e->type == EventArgs::Type::TEXT_OUTPUT_CREATED)
-    {
-        auto arg = dynamic_cast<TextOutputCreatedEventArgs *>(e.get());
-        output_ = Sp<TextOutput>(arg->output);
-    }
-    
-    if (e->type == EventArgs::Type::PLAYER_STATE_CREATED)
-    {
-        auto arg = std::dynamic_pointer_cast<PlayerStateCreatedEventArgs>(e);
-        
-        player_state_ = Sp<PlayerState>(arg->player_state);
-    }
-}*/
 
 

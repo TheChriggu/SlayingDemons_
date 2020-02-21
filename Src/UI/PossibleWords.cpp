@@ -165,6 +165,13 @@ void sd::PossibleWords::display_commands()
     update(player_vocabulary_->get_commands());
 }
 
+void sd::PossibleWords::display_objects()
+{
+    current_list_type_ = Word::Type::OBJECT;
+    update(player_vocabulary_->get_objects());
+}
+
+
 void sd::PossibleWords::set_search_prefix(const std::string &prefix)
 {
     search_prefix_ = prefix;
@@ -178,6 +185,9 @@ void sd::PossibleWords::set_search_prefix(const std::string &prefix)
             break;
         case Word::Type::COMMAND:
             update(*(player_vocabulary_->get_commands_starting_with(prefix)));
+            break;
+        case Word::Type::OBJECT:
+            update(*(player_vocabulary_->get_objects_starting_with(prefix)));
             break;
     }
 }
@@ -204,6 +214,10 @@ const std::string &sd::PossibleWords::get_search_prefix() const
 sd::Word::Type sd::PossibleWords::get_current_list_type() const
 {
     return current_list_type_;
+}
+bool sd::PossibleWords::is_separator() const
+{
+    return false;
 }
 
 

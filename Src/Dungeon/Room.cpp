@@ -55,7 +55,7 @@ std::string sd::Room::get_description() {
 
 
     std::string ret_val = "Inside the room there is a";
-    for(const auto& object : room_objects_)
+    for(const auto& object : get_all_objects())
     {
         ret_val += " [button=" + object->get_name() + "]" + object->get_name() + ",";
     }
@@ -63,6 +63,18 @@ std::string sd::Room::get_description() {
     ret_val += ".";
 
     return ret_val;
+}
+
+std::vector<std::string> sd::Room::get_all_objects() const
+{
+    std::vector<std::string> names;
+    
+    for(const auto& object : room_objects_)
+    {
+        names.emplace_back(object->get_name());
+    }
+    
+    return names;
 }
 
 void sd::Room::add_object(const Sp<sd::RoomObject>& object) {
@@ -246,3 +258,4 @@ void sd::Room::build_wall_from_current_to_next(sf::Vector2i current_corner, sf::
 
 
 }
+

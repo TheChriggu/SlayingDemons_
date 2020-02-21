@@ -34,6 +34,9 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
 
     max_size_ = size;
     max_size_.y = 450; //TODO: This is not good
+
+    text_tex_ = std::make_shared<sf::RenderTexture>();
+    text_sprite_ = std::make_shared<sf::Sprite>();
 }
 
 bool sd::TextOutput::setup() {
@@ -55,19 +58,31 @@ bool sd::TextOutput::setup() {
     // Trigger TextOutput Created Event
     EventSystem::get().trigger(std::make_shared<TextOutputCreatedEventArgs>(weak_from_this()));
 
+    auto table = ScriptEngine::get().get_script("config")->get_table("window")->as<sol::table>();
+    text_tex_->create(table["size"]["x"], table["size"]["y"]);
+    text_sprite_->setTexture(text_tex_->getTexture());
+
     return DrawableObject::setup ();
 }
 
 void sd::TextOutput::draw_to(Sp<sf::RenderTarget> window) const {
-    // TODO(CH): There is no need to query this condition. Removed because causing Output to not be drawing anymore
-    /*if (!sf::Shader::isAvailable())
+    text_tex_->clear(sf::Color::Transparent);
+
+
+
+    for (const auto& line : lines_)
     {
-        for (const auto& line : lines) {
-            line->drawTo(window, window);
-        }
-    }*/
-    for (const auto& line : lines_) {
-        line->draw_to (window);
+        line->draw_to (text_tex_);
+    }
+    text_tex_->display();
+
+    if (shader_procedure_)
+    {
+
+        shader_procedure_->process (window.get (), text_sprite_.get ());
+    } else
+    {
+        window->draw(*text_sprite_);
     }
 }
 

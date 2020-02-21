@@ -2,6 +2,7 @@
 // Created by felix on 26.11.19.
 //
 
+#include <ScriptEngine/ScriptEngine.h>
 #include "Panel.h"
 
 // TODO(FK): clean up name
@@ -14,10 +15,19 @@ sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, sf::Color color)
 
     }
 
+    texture_->setRepeated(true);
+
     sprite_ = std::make_shared<sf::Sprite>();
     sprite_->setTexture(texture);
     sprite_->setColor(color);
     sprite_->setPosition(position);
+
+    panel_tex_ = std::make_shared<sf::RenderTexture>();
+    panel_sprite_ = std::make_shared<sf::Sprite>();
+
+    auto table = ScriptEngine::get().get_script("config")->get_table("window")->as<sol::table>();
+    panel_tex_->create(table["size"]["x"], table["size"]["y"]);
+    panel_sprite_->setTexture(panel_tex_->getTexture());
 }
 
 // TODO(FK): clean up name
@@ -26,9 +36,17 @@ sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, const char* texture_p
 {
     texture_ = std::make_shared<sf::Texture>();
     texture_->loadFromFile(texture_path);
+    texture_->setRepeated(true);
     sprite_ = std::make_shared<sf::Sprite>();
-    sprite_->setTexture(*texture_, false);
+    sprite_->setTexture(*texture_);
     sprite_->setPosition(position);
+
+    panel_tex_ = std::make_shared<sf::RenderTexture>();
+    panel_sprite_ = std::make_shared<sf::Sprite>();
+
+    auto table = ScriptEngine::get().get_script("config")->get_table("window")->as<sol::table>();
+    panel_tex_->create(table["size"]["x"], table["size"]["y"]);
+    panel_sprite_->setTexture(panel_tex_->getTexture());
 }
 
 
@@ -51,11 +69,17 @@ sf::Vector2f sd::Panel::get_size() {
 }
 
 void sd::Panel::draw_to(Sp<sf::RenderTarget> window) const{
+    panel_tex_->clear(sf::Color::Transparent);
+    panel_tex_->draw(*sprite_);
+    panel_tex_->display();
+
+
     if (shader_procedure_) {
 
-        shader_procedure_->process (window.get (), sprite_.get ());
+        shader_procedure_->process (window.get (), panel_sprite_.get ());
     } else {
-        window->draw(*sprite_);
+
+        window->draw(*panel_sprite_);
     }
 
 }

@@ -23,6 +23,9 @@ namespace sd {
         // TODO(CH): rework this Class! Position of an asset should not be determent by "old" data!
         sf::Vector2f start_position_;
 
+        Sp<sf::RenderTexture> text_tex_;
+        Sp<sf::Sprite> text_sprite_;
+
     public:
         TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color);
         ~TextOutput() override = default;

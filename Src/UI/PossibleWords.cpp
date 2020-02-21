@@ -47,6 +47,9 @@ sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size, const
             auto arg = std::dynamic_pointer_cast<FontsCreatedEventArgs>(e);
             fonts_ = Sp<Font>(arg->fonts);
         }
+        if (e->type == EventArgs::Type::CLICKABLE_WORD_CLICKED) {
+            can_handle_events = false;
+        }
         );
     
     REGISTER_EVENT_HANDLER();
@@ -98,7 +101,9 @@ void sd::PossibleWords::draw_to(Sp<sf::RenderTarget> window) const {
 void sd::PossibleWords::handle(sf::Event event) {
     for(auto line : lines_)
     {
-        line->handle(event);
+
+            line->handle(event);
+
     }
 }
 

@@ -8,6 +8,7 @@
 #include <memory>
 #include <ScriptEngine/ScriptEngine.h>
 #include <Event/PossibleWordsCreatedEventArgs.h>
+#include "Event/ClickableWordClickedEventArgs.h"
 
 // TODO(FK): clean up name
 sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color)
@@ -19,6 +20,14 @@ sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color c
             auto args = std::dynamic_pointer_cast<PossibleWordsCreatedEventArgs>(e);
         
             possible_words_ = args->possible_words;
+        }
+        if (e->type == EventArgs::Type::CLICKABLE_WORD_CLICKED) {
+            auto args = std::dynamic_pointer_cast<ClickableWordClickedEventArgs>(e);
+
+             for(auto letter : args->word)
+             {
+                 add_text(letter);
+             }
         }
         );
     

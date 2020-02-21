@@ -2,6 +2,8 @@
 // Created by christian.heusser on 07.11.2019.
 //
 
+#include <Event/EventSystem.h>
+#include <Event/ClickableWordClickedEventArgs.h>
 #include "FormattedWord.h"
 #include "IO/UserInput.h"
 
@@ -155,7 +157,10 @@ void sd::FormattedWord::handle(sf::Event event) {
             auto mouse_pos = sd::UserInput::GetInstance ()->get_mouse_position ();
             if(is_position_on_word (mouse_pos))
             {
-                text_->setFillColor(sf::Color::Blue);
+                int i=0;
+
+                EventSystem::get().trigger(std::make_shared<ClickableWordClickedEventArgs>(on_click_text_));
+                //text_->setFillColor(sf::Color::Blue);
             }
         }
     }

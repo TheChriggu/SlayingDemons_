@@ -3,8 +3,9 @@
 //
 
 #include "FontsCreatedEventArgs.h"
+#include <utility>
 
-sd::FontsCreatedEventArgs::FontsCreatedEventArgs(Font* fonts) {
+sd::FontsCreatedEventArgs::FontsCreatedEventArgs(Wp<Font> fonts) {
     this->type = EventArgs::Type::FONTS_CREATED;
-    this->fonts = fonts;
+    this->fonts = std::move(fonts);
 }

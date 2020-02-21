@@ -12,10 +12,10 @@
 namespace sd {
 class FightStartedEventArgs : public EventArgs {
 public:
-    explicit FightStartedEventArgs(Fight* fight);
+    explicit FightStartedEventArgs(Wp<Fight> fight);
     ~FightStartedEventArgs() override = default;
 
-    Fight* fight;
+    Wp<Fight> fight;
 };
 }
 

@@ -83,6 +83,14 @@ dungeon = {
 
                 on_inspection = function()
                     print_line("It's a small path leading to the north.")
+                    set_glowing_pulse_on("screen")
+                    --set_horizontal_zigzag_on("screen")
+                    set_rgb_split_on("map-window")
+                    set_rgb_offset_weak_on("possible-words")
+                    --set_rgb_split_on("text-output")
+                    set_rgb_offset_weak_on("output-panel")
+                    --set_rgb_offset_weak_on("map-window")
+
                 end,
 
                 on_enter = function()
@@ -395,6 +403,7 @@ dungeon = {
                     print_line("But...what's that? Are those holes? ")
                     print_line("Ugh, yes. I will definitely not try to sit on it!")
                     print_line("I'm not sure if it will hold with all those holes... ")
+                    set_glitch_on("background_panel")
                 end
             },
             table = {

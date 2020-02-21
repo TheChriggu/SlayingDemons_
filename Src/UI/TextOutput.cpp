@@ -19,9 +19,24 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
     , start_position_(position)
 {
 
+    event_handler_ = CREATE_EVENT_HANDLER(
+        if (e->type == EventArgs::Type::LINE_TO_OUTPUT) {
+            auto arg = std::dynamic_pointer_cast<LineToOutputEventArgs>(e);
+            add_line (arg->line);
+        }
+        if (e->type == EventArgs::Type::FONTS_CREATED) {
+            auto arg = std::dynamic_pointer_cast<FontsCreatedEventArgs>(e);
+            fonts_ = Sp<Font>(arg->fonts);
+        }
+        );
+    
+    REGISTER_EVENT_HANDLER();
 
     max_size_ = size;
     max_size_.y = 450; //TODO: This is not good
+
+    text_tex_ = std::make_shared<sf::RenderTexture>();
+    text_sprite_ = std::make_shared<sf::Sprite>();
 }
 
 bool sd::TextOutput::setup() {
@@ -41,21 +56,33 @@ bool sd::TextOutput::setup() {
         max_size_, fonts_));
 
     // Trigger TextOutput Created Event
-    EventSystem::get().trigger(std::make_shared<TextOutputCreatedEventArgs>(this));
+    EventSystem::get().trigger(std::make_shared<TextOutputCreatedEventArgs>(weak_from_this()));
+
+    auto table = ScriptEngine::get().get_script("config")->get_table("window")->as<sol::table>();
+    text_tex_->create(table["size"]["x"], table["size"]["y"]);
+    text_sprite_->setTexture(text_tex_->getTexture());
 
     return DrawableObject::setup ();
 }
 
 void sd::TextOutput::draw_to(Sp<sf::RenderTarget> window) const {
-    // TODO(CH): There is no need to query this condition. Removed because causing Output to not be drawing anymore
-    /*if (!sf::Shader::isAvailable())
+    text_tex_->clear(sf::Color::Transparent);
+
+
+
+    for (const auto& line : lines_)
     {
-        for (const auto& line : lines) {
-            line->drawTo(window, window);
-        }
-    }*/
-    for (const auto& line : lines_) {
-        line->draw_to (window);
+        line->draw_to (text_tex_);
+    }
+    text_tex_->display();
+
+    if (shader_procedure_)
+    {
+
+        shader_procedure_->process (window.get (), text_sprite_.get ());
+    } else
+    {
+        window->draw(*text_sprite_);
     }
 }
 
@@ -118,17 +145,6 @@ sf::Vector2f sd::TextOutput::get_size() {
 void sd::TextOutput::move_vertical(float distance) {
     for(const auto& line : lines_){
         line->move_vertical (distance);
-    }
-}
-
-void sd::TextOutput::handle(std::shared_ptr<EventArgs> e) {
-    if (e->type == EventArgs::Type::LINE_TO_OUTPUT) {
-        auto arg = dynamic_cast<LineToOutputEventArgs*>(e.get());
-        add_line (arg->line);
-    }
-    if (e->type == EventArgs::Type::FONTS_CREATED) {
-        auto arg = dynamic_cast<FontsCreatedEventArgs*>(e.get());
-        fonts_ = Sp<Font>(arg->fonts);
     }
 }
 

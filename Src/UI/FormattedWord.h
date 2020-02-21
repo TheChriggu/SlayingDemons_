@@ -15,6 +15,7 @@ namespace sd {
     class FormattedWord {
 
         Sp<sf::Text> text_;
+        std::string on_click_text_;
 
     public:
         FormattedWord(std::string text, sf::Vector2f position, sd::Format &format, Sp<Font> fonts);
@@ -29,12 +30,16 @@ namespace sd {
 
         void move_vertical(float distance);
 
+        void handle(sf::Event event);
+
     private:
         void apply_format_to_text(sd::Format format);
 
         void apply_bb_to_format(std::string code, sd::Format &format, Sp<Font> fonts);
 
         bool is_bb();
+
+        bool is_position_on_word(sf::Vector2f position_to_check);
     };
 }
 

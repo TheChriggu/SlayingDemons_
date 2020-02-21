@@ -57,7 +57,7 @@ std::string sd::Room::get_description() {
     std::string ret_val = "Inside the room there is a";
     for(const auto& object : get_all_objects())
     {
-        ret_val += " " + object + ",";
+        ret_val += " [button=" + object + "]" + object + ",";
     }
 
     ret_val += ".";

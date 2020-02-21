@@ -35,6 +35,7 @@ namespace sd {
         Sp<sf::RenderTexture> possible_words_tex_;
         Sp<sf::Sprite> possible_words_sprite_;
 
+
     public:
         PossibleWords(sf::Vector2f position, sf::Vector2f size, const std::string& path_to_background);
         ~PossibleWords() override = default;

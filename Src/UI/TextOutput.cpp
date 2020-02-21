@@ -112,7 +112,10 @@ void sd::TextOutput::print_line(std::string string) {
 }
 
 void sd::TextOutput::handle(sf::Event event) {
-
+    for(auto line : lines_)
+    {
+        line->handle(event);
+    }
 }
 
 sf::Vector2f sd::TextOutput::get_position() {

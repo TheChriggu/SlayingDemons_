@@ -16,10 +16,12 @@ namespace sd {
         std::vector<std::string> actions_;
         std::vector<std::string> modifiers_;
         std::vector<std::string> commands_;
+        std::vector<std::string> objects_;
         
         Sp<Trie> actions_trie_;
         Sp<Trie> modifiers_trie_;
         Sp<Trie> commands_trie_;
+        Sp<Trie> objects_trie_;
 
     public:
         PlayerVocabulary();
@@ -30,14 +32,17 @@ namespace sd {
         void add_action(const std::string& action);
         void add_modifier(const std::string& modifier);
         void add_command(const std::string& word);
+        void set_objects(std::vector<std::string> objects);
 
         std::vector<std::string>& get_actions();
         std::vector<std::string>& get_modifiers();
         std::vector<std::string>& get_commands();
+        std::vector<std::string>& get_objects();
     
         Sp<std::vector<std::string>> get_actions_starting_with(const std::string& prefix);
         Sp<std::vector<std::string>> get_modifiers_starting_with(const std::string& prefix);
         Sp<std::vector<std::string>> get_commands_starting_with(const std::string& prefix);
+        Sp<std::vector<std::string>> get_objects_starting_with(const std::string& prefix);
 
         void save_to_file();
         void load_from_file();

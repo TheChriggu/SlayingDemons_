@@ -29,6 +29,7 @@ namespace sd {
         ~Room() override;
 
         std::string get_description();
+        [[nodiscard]] std::vector<std::string> get_all_objects() const;
         std::vector<TileData>& get_layout();
 
         void add_object(const Sp<RoomObject>& object);

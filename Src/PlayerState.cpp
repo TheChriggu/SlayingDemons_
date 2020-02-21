@@ -81,6 +81,8 @@ bool sd::PlayerState::is_fighting() {
 void sd::PlayerState::set_current_room(Sp<sd::Room> room) {
     current_room_ = std::move(room);
 
+    player_vocabulary_->set_objects(current_room_->get_all_objects());
+    
     ScriptEngine::get().broadcast("room_changed", current_room_->get_name());
 }
 

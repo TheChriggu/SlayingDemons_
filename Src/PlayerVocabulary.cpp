@@ -3,6 +3,7 @@
 //
 
 #include <algorithm>
+#include <utility>
 #include <Event/NewWordCollectedEventArgs.h>
 #include <Event/TextOutputCreatedEventArgs.h>
 #include <Event/PlayerVocabChangedEventArgs.h>
@@ -108,6 +109,18 @@ void sd::PlayerVocabulary::add_command(const std::string& word) {
     commands_trie_->add_word(word);
 }
 
+void sd::PlayerVocabulary::set_objects(std::vector<std::string> objects)
+{
+    objects_ = std::move(objects);
+    
+    objects_trie_.reset();
+    objects_trie_ = std::make_shared<Trie>();
+    
+    for (const auto& object : objects_) {
+        objects_trie_->add_word(object);
+    }
+}
+
 std::vector<std::string>& sd::PlayerVocabulary::get_actions() {
     return actions_;
 }
@@ -135,6 +148,11 @@ Sp<std::vector<std::string>> sd::PlayerVocabulary::get_commands_starting_with(co
     return commands_trie_->get_all_that_starts_with(prefix);
 }
 
+Sp<std::vector<std::string>> sd::PlayerVocabulary::get_objects_starting_with(const std::string &prefix)
+{
+    return objects_trie_->get_all_that_starts_with(prefix);
+}
+
 void sd::PlayerVocabulary::save_to_file()
 {
     auto vec = std::make_shared<std::vector<std::vector<std::string>>>();
@@ -153,4 +171,11 @@ void sd::PlayerVocabulary::load_from_file()
     actions_ = (*vec)[1];
     commands_ = (*vec)[2];
 }
+
+std::vector<std::string> &sd::PlayerVocabulary::get_objects()
+{
+    return objects_;
+}
+
+
 

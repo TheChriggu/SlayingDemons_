@@ -9,9 +9,25 @@
 #include "UI/TextOutput.h"
 #include "PlayerState.h"
 #include "Event/Subscriber.h"
+#include <regex>
 
 namespace sd {
     class InputTextProcessor : public Subscriber {
+        public:
+    
+        // matches a single word, ignores all leading an trailing whitespaces
+        const static std::regex single_word_pattern;
+        // matches single word with one whitespace at the end, ignores only leading whitespaces
+        const static std::regex single_word_without_trail_pattern;
+        // matches two words separated by a whitespace, ignores all leading, trailing and redundant middle whitespaces
+        const static std::regex two_words_pattern;
+        // deletes anything except the first word, including leading and trailing whitespaces
+        const static std::regex single_word_replace_pattern;
+        // deletes anything except the second word, including leading and trailing whitespaces
+        const static std::regex two_words_replace_pattern;
+        // deletes either leading whitespaces or the first word, if there is at least one whitespace following it
+        const static std::regex autocomplete_replace_pattern;
+        
     private:
         
         Sp<TextOutput> output_;

@@ -49,12 +49,9 @@ namespace sd {
         void display_objects();
         
         void set_search_prefix(const std::string& prefix);
-        void add_to_search_prefix(const std::string& prefix);
-        void trim_last_on_search_prefix();
-        [[nodiscard]] const std::string& get_search_prefix() const;
+        void update_search_prefix(const std::string& input);
         
         [[nodiscard]] Word::Type get_current_list_type() const;
-        bool is_separator() const;
 
         void draw_to(Sp<sf::RenderTarget> window) const override;
 

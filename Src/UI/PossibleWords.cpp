@@ -8,6 +8,8 @@
 #include <Event/PossibleWordsCreatedEventArgs.h>
 #include <Event/EventSystem.h>
 #include <ScriptEngine/ScriptEngine.h>
+#include <regex>
+#include <InputTextProcessor.h>
 #include "PossibleWords.h"
 
 // TODO(FK): clean up name
@@ -176,6 +178,9 @@ void sd::PossibleWords::display_objects()
 void sd::PossibleWords::set_search_prefix(const std::string &prefix)
 {
     search_prefix_ = prefix;
+    if (prefix == "") {
+        std::cout << "TEst" << std::endl;
+    }
     
     switch (current_list_type_) {
         case Word::Type::ACTION:
@@ -193,7 +198,12 @@ void sd::PossibleWords::set_search_prefix(const std::string &prefix)
     }
 }
 
-void sd::PossibleWords::add_to_search_prefix(const std::string &prefix)
+void sd::PossibleWords::update_search_prefix(const std::string &input)
+{
+    set_search_prefix(std::regex_replace(input, InputTextProcessor::autocomplete_replace_pattern, ""));
+}
+
+/*void sd::PossibleWords::add_to_search_prefix(const std::string &prefix)
 {
     
     search_prefix_ += prefix;
@@ -206,20 +216,13 @@ void sd::PossibleWords::trim_last_on_search_prefix()
     
     search_prefix_.erase(search_prefix_.size() - 1, 1);
     set_search_prefix(search_prefix_);
-}
+}*/
 
-const std::string &sd::PossibleWords::get_search_prefix() const
-{
-    return search_prefix_;
-}
 sd::Word::Type sd::PossibleWords::get_current_list_type() const
 {
     return current_list_type_;
 }
-bool sd::PossibleWords::is_separator() const
-{
-    return false;
-}
+
 
 
 

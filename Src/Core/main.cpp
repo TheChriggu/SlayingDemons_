@@ -1,6 +1,8 @@
 #include <memory>
-#include "Application.h"
 #include <regex>
+#include <iostream>
+#include "strtk.hpp"
+#include "Application.h"
 
 int main() {
 
@@ -15,6 +17,26 @@ int main() {
     while (app->run ())
     {
     }
+    
+    std::string text{"Inspect northern_way   "};
+    
+    /*std::regex pattern_1{R"(^\s*|\s*$)"};
+    std::regex pattern_2{R"([^\s]+\s+\b)"};
+    std::regex pattern_3{R"(\b\s+[^\s]+)"};
+    
+    std::regex pattern_X{R"(^\s*|[^\s]+\s+\b|\s*$)"};*/
+    
+    /*const std::regex single_word_pattern_{R"(^[^\s]+\s+$)"};
+    const std::regex two_words_pattern_{R"(^[^\s]+\s+[^\s]+\s?$)"};
+    const std::regex single_word_replace_pattern_{R"(^\s*|\b\s+[^\s]+|\s*$)"};
+    const std::regex two_words_replace_pattern_{R"(^\s*|[^\s]+\s+\b|\s*$)"};
+    
+    //std::string result_2 = std::regex_replace(text, pattern_X, "");
+    
+    //std::cout << "#>" << result_2 << std::endl;
+    
+    std::cout << "#>" << std::regex_match(text, single_word_pattern_) << std::endl;
+    std::cout << "#>" << std::regex_match(text, two_words_pattern_) << std::endl;*/
 
     return EXIT_SUCCESS;
 }

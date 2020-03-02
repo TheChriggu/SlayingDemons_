@@ -149,8 +149,22 @@ void sd::InputField::handle(sf::Event event) {
         if (event.type == sf::Event::KeyPressed)
         {
             auto input = text_->getString();
+            auto completion = possible_words_->loop_through_possible_words();
+            
+            std::regex_replace(input, std::regex(possible_words))
+            
+            text_->setString(input);
+            //possible_words_->update_search_prefix(text_->getString().toAnsiString());
+        }
+    }
+    else if (event.key.code == sf::Keyboard::Right)
+    {
+        if (event.type == sf::Event::KeyPressed)
+        {
+            auto input = text_->getString();
             input += possible_words_->complete_first_possible_word();
             text_->setString(input);
+            possible_words_->update_search_prefix(input.toAnsiString());
         }
     }
     else if(event.type == sf::Event::TextEntered)

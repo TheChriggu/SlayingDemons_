@@ -46,6 +46,7 @@ namespace sd {
         void display_objects();
         
         void set_search_prefix(const std::string& prefix);
+        const std::string&  get_search_prefix() const;
         void update_search_prefix(const std::string& input);
         std::string complete_first_possible_word() const;
         std::string loop_through_possible_words();

@@ -221,6 +221,10 @@ std::string sd::PossibleWords::loop_through_possible_words()
     
     return ret_val;
 }
+const std::string &sd::PossibleWords::get_search_prefix() const
+{
+    return search_prefix_;
+}
 
 
 

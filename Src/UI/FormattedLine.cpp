@@ -127,4 +127,16 @@ void sd::FormattedLine::set_color(sf::Color color) {
     }
 }
 
+std::string sd::FormattedLine::get_line() {
+    std::string ret_val = "";
+    for(auto word : words_)
+    {
+        ret_val += word->get_raw();
+        ret_val += " ";
+    }
+
+    return ret_val;
+}
+
+
 

@@ -29,6 +29,7 @@ namespace sd {
         virtual ~FormattedLine() = default;
 
         void format_line(std::string string, Sp<Font> fonts, Sp<Colors> colors);
+        std::string get_line();
 
         void draw_to(const Sp<sf::RenderTarget> &window);
 

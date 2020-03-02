@@ -13,12 +13,14 @@ namespace sd {
     class Colors: public std::enable_shared_from_this<Colors>, public Subscriber {
     private:
         sf::Color current_color_;
+        sf::Color current_input_color_;
 
     public:
         Colors();
         ~Colors();
 
         sf::Color GetCurrentColor();
+        sf::Color GetCurrentInputColor();
     };
 }
 

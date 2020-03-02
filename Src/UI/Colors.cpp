@@ -16,10 +16,12 @@ sd::Colors::Colors() {
                                  {
                                      case 0:
                                          current_color_ = sf::Color::Black;
+                                         current_input_color_ = sf::Color::Black;
                                          break;
 
                                      case 1:
                                          current_color_ = sf::Color::White;
+                                         current_input_color_ = sf::Color::Green;
                                          break;
                                  }
 
@@ -37,4 +39,8 @@ sf::Color sd::Colors::GetCurrentColor() {
 
 sd::Colors::~Colors() {
 
+}
+
+sf::Color sd::Colors::GetCurrentInputColor() {
+    return current_input_color_;
 }

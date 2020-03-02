@@ -16,6 +16,7 @@ namespace sd {
     class FormattedWord {
 
         Sp<sf::Text> text_;
+        std::string raw_;
         std::string on_click_text_;
 
     public:
@@ -30,6 +31,8 @@ namespace sd {
         void set_font(Sp<sf::Font> font);
         void set_size(int size);
         void set_color(sf::Color color);
+        void format_word(sd::Format &format, Sp<Font> fonts, Sp<Colors> colors);
+        std::string get_raw();
 
         sf::FloatRect get_rect();
 

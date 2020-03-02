@@ -36,19 +36,20 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
         if(e->type == EventArgs::Type::CURRENT_FONT_CHANGED)
         {
             std::cout<<"current font changed\n";
-
-            for(auto line : lines_)
+            reformat();
+            /*for(auto line : lines_)
             {
                 line->set_font(fonts_->GetCurrentFont());
-            }
+            }*/
         }
 
         if(e->type == EventArgs::Type::CURRENT_COLOR_CHANGED)
         {
-            for(auto line : lines_)
+            reformat();
+            /*for(auto line : lines_)
             {
                 line->set_color(colors_->GetCurrentColor());
-            }
+            }*/
         }
         );
     
@@ -167,6 +168,18 @@ sf::Vector2f sd::TextOutput::get_size() {
 void sd::TextOutput::move_vertical(float distance) {
     for(const auto& line : lines_){
         line->move_vertical (distance);
+    }
+}
+
+void sd::TextOutput::reformat() {
+    int size = lines_.size();
+    for (int i=0; i < size; i++)
+    {
+        auto line = lines_.front()-> get_line();
+        float distance = lines_.front ()->get_rect ().height;
+        move_vertical (-distance);
+        lines_.pop_front();
+        add_line(line);
     }
 }
 

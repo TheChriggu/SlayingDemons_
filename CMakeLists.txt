@@ -20,7 +20,7 @@ file(GLOB_RECURSE EXEC_HEADERS Src/*.h)
 file(GLOB_RECURSE EXEC_SOURCES Src/*.cpp)
 
 # set executable-files (set Project-Target)
-add_executable(${PROJECT_NAME} ${EXEC_HEADERS} ${EXEC_SOURCES} Src/Event/ClickableWordClickedEventArgs.cpp Src/Event/ClickableWordClickedEventArgs.h)
+add_executable(${PROJECT_NAME} ${EXEC_HEADERS} ${EXEC_SOURCES} Src/Event/ClickableWordClickedEventArgs.cpp Src/Event/ClickableWordClickedEventArgs.h Src/Core/RoutineManager.cpp Src/Core/RoutineManager.h Src/Core/Routine.cpp Src/Core/Routine.h)
 
 
 target_include_directories(${PROJECT_NAME} PRIVATE Src)

@@ -2,7 +2,10 @@
 // Created by christian.heusser on 07.11.2019.
 //
 
+#include <Event/EventSystem.h>
+#include <Event/ClickableWordClickedEventArgs.h>
 #include "FormattedWord.h"
+#include "IO/UserInput.h"
 
 sd::FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Format& format, Sp<Font> fonts) {
     
@@ -17,7 +20,7 @@ sd::FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Fo
             text.erase (0, code.size ());
             apply_bb_to_format (code, format, fonts);
         }
-    
+
     //set the actual word
     std::string word = std::string (text, 0, text.find_first_of ('['));
     text.erase (0, word.size ());
@@ -76,12 +79,7 @@ void sd::FormattedWord::apply_format_to_text (sd::Format format)
     text_->setCharacterSize(format.size_);
     text_->setFillColor(format.color_);
     text_->setStyle (format.style_);
-    
-    if(format.is_button_)
-        {
-            //TODO: create button
-        }
-
+    on_click_text_ = format.on_click_text_;
 }
 void sd::FormattedWord::apply_bb_to_format (std::string code, sd::Format &format, Sp<Font> fonts)
 {
@@ -119,5 +117,63 @@ void sd::FormattedWord::apply_bb_to_format (std::string code, sd::Format &format
         strtk::parse(code, "=,]", trash, r,g,b,a);
 
         format.color_ = sf::Color(r,g,b,a);
+    }
+    if(code.find("[button=") != std::string::npos)
+    {
+        format.on_click_text_ = code.substr(8, code.length()-9);
+    }
+    if(code.find("[/button") != std::string::npos)
+    {
+        format.on_click_text_ = "";
+    }
+}
+
+void sd::FormattedWord::handle(sf::Event event) {
+    /*if (event.type == sf::Event::MouseButtonPressed)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            auto mouse_pos = sd::UserInput::GetInstance ()->get_mouse_position ();
+
+            if(is_position_on_word (mouse_pos))
+            {
+
+            }
+        }
+    }*/
+
+    if(event.type == sf::Event::MouseMoved)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            //hover over text
+        }
+    }
+
+    if (event.type == sf::Event::MouseButtonReleased)
+    {
+        if (event.mouseButton.button == sf::Mouse::Left)
+        {
+            auto mouse_pos = sd::UserInput::GetInstance ()->get_mouse_position ();
+            if(is_position_on_word (mouse_pos))
+            {
+                int i= 0;
+
+                EventSystem::get().trigger(std::make_shared<ClickableWordClickedEventArgs>(on_click_text_));
+            }
+        }
+    }
+
+}
+
+bool sd::FormattedWord::is_position_on_word(sf::Vector2f position_to_check) {
+    {
+        if(on_click_text_ == "")
+        {
+            return false;
+        }
+
+        sf::Rect bounds = text_->getGlobalBounds();
+        return bounds.contains(position_to_check);
     }
 }

@@ -12,7 +12,11 @@
 #include "PlayerState.h"
 
 namespace sd {
-    class PossibleWords: public DrawableObject, public Subscriber {
+    class PossibleWords: public DrawableObject, public Subscriber, public std::enable_shared_from_this<PossibleWords> {
+        public:
+        
+        bool second_word;
+        
     private:
         std::vector<Sp<FormattedLine>> lines_;
         Sp<PlayerVocabulary> player_vocabulary_;
@@ -28,6 +32,10 @@ namespace sd {
         
         std::string search_prefix_;
 
+        Sp<sf::RenderTexture> possible_words_tex_;
+        Sp<sf::Sprite> possible_words_sprite_;
+
+
     public:
         PossibleWords(sf::Vector2f position, sf::Vector2f size, const std::string& path_to_background);
         ~PossibleWords() override = default;
@@ -38,6 +46,7 @@ namespace sd {
         void display_modifiers();
         void display_actions();
         void display_commands();
+        void display_objects();
         
         void set_search_prefix(const std::string& prefix);
         void add_to_search_prefix(const std::string& prefix);
@@ -45,6 +54,7 @@ namespace sd {
         [[nodiscard]] const std::string& get_search_prefix() const;
         
         [[nodiscard]] Word::Type get_current_list_type() const;
+        bool is_separator() const;
 
         void draw_to(Sp<sf::RenderTarget> window) const override;
 
@@ -52,7 +62,6 @@ namespace sd {
         sf::Vector2f get_size() override;
 
         void handle(sf::Event event) override;
-        void handle(std::shared_ptr<EventArgs> e) override;
 
 
     };

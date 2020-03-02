@@ -5,7 +5,7 @@
 #include "TextGlitch.h"
 
 TextGlitch::TextGlitch() {
-    window = new sf::RenderWindow(sf::VideoMode(1920,1080), "Glitch");
+    window = new sf::RenderWindow(sf::VideoMode(1920,1080), "NoisyLinesMedium");
     window->setVisible(false);
 }
 

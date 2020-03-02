@@ -25,7 +25,9 @@ namespace sd {
             FONTS_CREATED,
             POSSIBLE_WORDS_CREATED,
             DOOR_UNLOCKED,
-            CURRENT_ENEMY_DEFEATED
+            CURRENT_ENEMY_DEFEATED,
+            PLAYER_DIED,
+            CLICKABLE_WORD_CLICKED
         };
 
         EventArgs();

@@ -34,6 +34,9 @@ namespace sd {
         sf::FloatRect get_rect();
 
         void move_vertical(float distance);
+
+        void handle(sf::Event event);
+
     };
 }
 

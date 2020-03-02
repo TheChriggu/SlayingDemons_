@@ -14,7 +14,22 @@
 
 sd::InputTextProcessor::InputTextProcessor() : Subscriber()
 {
-
+    event_handler_ = CREATE_EVENT_HANDLER(
+        if (e->type == EventArgs::Type::TEXT_OUTPUT_CREATED)
+        {
+            auto arg = std::dynamic_pointer_cast<TextOutputCreatedEventArgs>(e);
+            output_ = Sp<TextOutput>(arg->output);
+        }
+    
+        if (e->type == EventArgs::Type::PLAYER_STATE_CREATED)
+        {
+            auto arg = std::dynamic_pointer_cast<PlayerStateCreatedEventArgs>(e);
+        
+            player_state_ = Sp<PlayerState>(arg->player_state);
+        }
+    );
+    
+    REGISTER_EVENT_HANDLER();
 }
 
 void sd::InputTextProcessor::process_input(const std::string &spell)
@@ -26,6 +41,14 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
     
     std::cout << "Word 1: " << words[0] << std::endl;
     std::cout << "Word 2: " << words[1] << std::endl;
+    
+    if (words[0] == "kill" && words[1] == "player") {
+        auto defeated_args = std::make_shared<EventArgs>();
+        defeated_args->type = sd::EventArgs::Type::PLAYER_DIED;
+        EventSystem::get().trigger(defeated_args);
+    
+        return;
+    }
     
     //check if currently fighting
     if (player_state_->is_fighting())
@@ -137,6 +160,7 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
         output_->add_line("nothing happens");
     }
     
+    
 }
 
 std::vector<std::string> sd::InputTextProcessor::split_by_space(std::string string)
@@ -171,22 +195,6 @@ void sd::InputTextProcessor::set_room(Sp<sd::Room> room)
 Sp<sd::PlayerState> sd::InputTextProcessor::get_player_state()
 {
     return player_state_;
-}
-
-void sd::InputTextProcessor::handle(std::shared_ptr<sd::EventArgs> e)
-{
-    if (e->type == EventArgs::Type::TEXT_OUTPUT_CREATED)
-    {
-        auto arg = dynamic_cast<TextOutputCreatedEventArgs *>(e.get());
-        output_ = Sp<TextOutput>(arg->output);
-    }
-    
-    if (e->type == EventArgs::Type::PLAYER_STATE_CREATED)
-    {
-        auto arg = std::dynamic_pointer_cast<PlayerStateCreatedEventArgs>(e);
-        
-        player_state_ = Sp<PlayerState>(arg->player_state);
-    }
 }
 
 

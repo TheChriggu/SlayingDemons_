@@ -23,6 +23,7 @@
 #include "ScriptEngine/ScriptEngine.h"
 #include "InputTextProcessor.h"
 #include "UI/PossibleWords.h"
+#include "UI/Screen.h"
 
 namespace sd {
     class Application : public Manageable {
@@ -31,10 +32,14 @@ namespace sd {
         std::vector<Sp<DrawableObject>> drawable_objects_;
         
         Sp<World> world_;
+        Sp<Font> fonts_;
         
         Sp<ShaderEngine> shader_engine_;
 
         void load_vocab();
+
+        //Sp<sf::RenderTexture> screen_texture_;
+        Sp<Screen> screen_;
 
     public:
         Application() = default;

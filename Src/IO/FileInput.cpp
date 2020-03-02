@@ -104,11 +104,7 @@ Sp<std::vector<std::vector<std::string>>> sd::FileInput::load_tsv(const boost::f
                 std::stringstream cheat(row);
                 while (std::getline(cheat, field, '\t')) {
                     if (field.empty()) continue;
-/*                    if (field[0] == ASCII_NEWLINE) {
-                        content->emplace_back(std::vector<std::string>());
-                        continue;
-                    }
-*/
+
                     content->back().emplace_back(field);
                 }
 
@@ -123,5 +119,33 @@ Sp<std::vector<std::vector<std::string>>> sd::FileInput::load_tsv(const boost::f
     }
 
     return content;
+}
+
+void sd::FileInput::write_tsv(const Sp<std::vector<std::vector<std::string>>> content, const boost::filesystem::path &url)
+{
+    try {
+        std::ofstream file(url.string(), std::ofstream::trunc);
+
+        if (file.is_open()) {
+
+            for(auto row : *content)
+            {
+                for (auto word : row)
+                {
+                        file.write(word.c_str(), word.length());
+                        char c = '\t';
+                        file.write(&c, 1);
+                }
+                char c = '\n';
+                file.write(&c, 1);
+            }
+
+            file.close();
+        } else {
+            std::cerr << "open TSV file " << url << " failed!" << std::endl;
+        }
+    } catch (std::exception& ex) {
+        std::cerr << "Writing TSV failed due to exception: " << ex.what() << std::endl;
+    }
 }
 

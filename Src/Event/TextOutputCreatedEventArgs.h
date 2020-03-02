@@ -13,10 +13,10 @@
 namespace sd {
     class TextOutputCreatedEventArgs : public EventArgs {
     public:
-        explicit TextOutputCreatedEventArgs(TextOutput* output);
+        explicit TextOutputCreatedEventArgs(Wp<TextOutput> output);
         ~TextOutputCreatedEventArgs() override = default;
 
-        TextOutput* output;
+        Wp<TextOutput> output;
     };
 }
 

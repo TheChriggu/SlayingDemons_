@@ -29,6 +29,7 @@ namespace sd {
         ~Room() override;
 
         std::string get_description();
+        [[nodiscard]] std::vector<std::string> get_all_objects() const;
         std::vector<TileData>& get_layout();
 
         void add_object(const Sp<RoomObject>& object);
@@ -40,8 +41,6 @@ namespace sd {
 
         Sp<RoomObject> get_object_with_name(const std::string& name);
         void remove_object_with_name(const std::string& name);
-
-        void handle(Sp<EventArgs> e) override;
 
     private:
         void generate_wall_layout_from_corners(const std::vector<sf::Vector2i>& corners);

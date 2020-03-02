@@ -3,8 +3,9 @@
 //
 
 #include "FightStartedEventArgs.h"
+#include <utility>
 
-sd::FightStartedEventArgs::FightStartedEventArgs(Fight* fight) {
+sd::FightStartedEventArgs::FightStartedEventArgs(Wp<Fight> fight) {
     this->type = EventArgs::Type::FIGHT_STARTED;
-    this->fight = fight;
+    this->fight = std::move(fight);
 }

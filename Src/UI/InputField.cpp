@@ -3,16 +3,37 @@
 //
 
 #include "InputField.h"
+#include "Event/EventSystem.h"
 #include <iostream>
 #include <memory>
 #include <ScriptEngine/ScriptEngine.h>
 #include <Event/PossibleWordsCreatedEventArgs.h>
+#include "Event/ClickableWordClickedEventArgs.h"
 
 // TODO(FK): clean up name
 sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color)
     : DrawableObject("input-field")
     , Subscriber()
 {
+    event_handler_ = CREATE_EVENT_HANDLER(
+        if (e->type == EventArgs::Type::POSSIBLE_WORDS_CREATED) {
+            auto args = std::dynamic_pointer_cast<PossibleWordsCreatedEventArgs>(e);
+        
+            possible_words_ = args->possible_words;
+        }
+        if (e->type == EventArgs::Type::CLICKABLE_WORD_CLICKED) {
+            auto args = std::dynamic_pointer_cast<ClickableWordClickedEventArgs>(e);
+
+             for(auto letter : args->word)
+             {
+                 add_text(letter);
+             }
+        }
+        );
+    
+    REGISTER_EVENT_HANDLER();
+    
+    //single_word_pattern_ = std::regex()
 
     text_ = std::make_shared<sf::Text>();
     text_->setPosition(position + sf::Vector2f(10, 10));
@@ -39,10 +60,10 @@ bool sd::InputField::setup() {
 }
 
 void sd::InputField::add_text(sf::Uint32 input) {
-    std::cout << "Code: " << input << std::endl;
+    //std::cout << "Code: " << input << std::endl;
     
     sf::String result = text_->getString();
-    if(input == 8)
+    if(input == UNI_BACKSPACE)
     {
         if (result.getSize() > 0)
         {
@@ -53,14 +74,14 @@ void sd::InputField::add_text(sf::Uint32 input) {
         
         return;
     }
-    else if(input != 13)
+    else if(input != UNI_ENTER)
     {
         result += static_cast<char>(input);
     }
 
     text_->setString(result);
     
-    if (input != 32)
+    if (input != UNI_SPACE && input != UNI_ENTER)
         possible_words_->add_to_search_prefix(std::string(1, static_cast<char>(input)));
 }
 
@@ -86,7 +107,7 @@ void sd::InputField::handle(sf::Event event) {
                 case Word::Type::UNKNOWN:
                     possible_words_->display_commands();
                     break;
-                case Word::Type::COMMAND:
+                case Word::Type::OBJECT:
                     possible_words_->display_commands();
                     break;
             }
@@ -98,36 +119,52 @@ void sd::InputField::handle(sf::Event event) {
     else if (event.key.code == sf::Keyboard::Space)
     {
         if (event.type == sf::Event::KeyPressed) {
-            if(possible_words_->get_current_list_type() == Word::Type::MODIFIER) {
-                //Complete Word
-                possible_words_->set_search_prefix("");
-                possible_words_->display_actions();
-                
+            
+            switch(possible_words_->get_current_list_type()) {
+                case Word::Type::MODIFIER:
+                    possible_words_->display_actions();
+                    possible_words_->set_search_prefix("");
+                    break;
+                case Word::Type::COMMAND:
+                    possible_words_->display_objects();
+                    possible_words_->set_search_prefix("");
+                    break;
             }
-            else if(possible_words_->get_current_list_type() == Word::Type::ACTION)
-            {
-                //possible_words_->display_commands(); //placeholder to check if this line is reached
-
-                //Complete word
-                possible_words_->set_search_prefix("");
+            
+        }
+    }
+    else if (event.key.code == sf::Keyboard::BackSpace)
+    {
+        //std::cout << " - 1: " << text_->getString()[text_->getString().getSize() - 1] << std::endl;
+        //std::cout << " - 2: " << text_->getString()[text_->getString().getSize() - 2] << std::endl;
+        if (event.type == sf::Event::KeyPressed && std::regex_match(text_->getString().toAnsiString(), single_word_pattern_))
+        {
+            switch(possible_words_->get_current_list_type()) {
+                case Word::Type::ACTION:
+                    possible_words_->display_modifiers();
+                    possible_words_->set_search_prefix(text_->getString().toAnsiString());
+                    //possible_words_->trim_last_on_search_prefix();
+                    break;
+                case Word::Type::OBJECT:
+                    possible_words_->display_commands();
+                    possible_words_->set_search_prefix(text_->getString().toAnsiString());
+                    //possible_words_->trim_last_on_search_prefix();
+                    break;
             }
-            else if(possible_words_->get_current_list_type() == Word::Type::COMMAND)
-            {
-                //possible_words_->display_modifiers(); //placeholder to check if this line is reached
-
-                //Complete word
-                //switch to list of room objects
-                possible_words_->set_search_prefix("");
-            }
+        }
+    
+        if (event.type == sf::Event::KeyPressed && std::regex_match(text_->getString().toAnsiString(), two_words_pattern_))
+        {
+            
+            //possible_words_->set_search_prefix(text_->getString().toAnsiString());
         }
     }
     else if(event.type == sf::Event::TextEntered)
     {
         add_text (event.text.unicode);
-    }
-    
-    if (event.key.code == sf::Keyboard::BackSpace) {
-        possible_words_->set_search_prefix(text_->getString().toAnsiString());
+        //auto test = std::regex_match(text_->getString().toAnsiString(), single_word_pattern_);
+        std::cout << "1: " << std::regex_match(text_->getString().toAnsiString(), single_word_pattern_) << std::endl;
+        std::cout << "2: " << std::regex_match(text_->getString().toAnsiString(), two_words_pattern_) << std::endl;
     }
 }
 
@@ -137,15 +174,6 @@ sf::Vector2f sd::InputField::get_size() {
 
 sf::Vector2f sd::InputField::get_position() {
     return text_->getPosition();
-}
-
-void sd::InputField::handle(Sp<sd::EventArgs> e)
-{
-    if (e->type == EventArgs::Type::POSSIBLE_WORDS_CREATED) {
-        auto args = std::dynamic_pointer_cast<PossibleWordsCreatedEventArgs>(e);
-    
-        possible_words_ = Sp<PossibleWords>(args->possible_words);
-    }
 }
 
 

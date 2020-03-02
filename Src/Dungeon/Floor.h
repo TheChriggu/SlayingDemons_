@@ -23,6 +23,8 @@ namespace sd {
         
         Sp<Room> get_start_room();
         [[nodiscard]] Sp<Room> get_room(const std::string& name) const;
+
+        std::string get_name();
     };
 }
 

@@ -200,6 +200,7 @@ void sd::PossibleWords::set_search_prefix(const std::string &prefix)
 void sd::PossibleWords::update_search_prefix(const std::string &input)
 {
     set_search_prefix(std::regex_replace(input, InputTextProcessor::autocomplete_replace_pattern, ""));
+    std::cout << possible_words_.size() << std::endl;
 }
 
 sd::Word::Type sd::PossibleWords::get_current_list_type() const
@@ -208,7 +209,7 @@ sd::Word::Type sd::PossibleWords::get_current_list_type() const
 }
 std::string sd::PossibleWords::complete_first_possible_word() const
 {
-    return std::regex_replace(possible_words_[0], std::regex(search_prefix_), "");
+    return !possible_words_.empty() ? std::regex_replace(possible_words_[0], std::regex(search_prefix_), "") : "";
 }
 
 std::string sd::PossibleWords::loop_through_possible_words()
@@ -216,7 +217,7 @@ std::string sd::PossibleWords::loop_through_possible_words()
     if (loop_iterator_ >= possible_words_.size())
         loop_iterator_ = 0;
     
-    auto ret_val = std::regex_replace(possible_words_[loop_iterator_], std::regex(search_prefix_), "");
+    auto ret_val = !possible_words_.empty() ? std::regex_replace(possible_words_[loop_iterator_], std::regex(search_prefix_), "") : "";
     loop_iterator_++;
     
     return ret_val;

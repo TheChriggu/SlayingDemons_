@@ -32,8 +32,6 @@ sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color c
         );
     
     REGISTER_EVENT_HANDLER();
-    
-    //single_word_pattern_ = std::regex()
 
     text_ = std::make_shared<sf::Text>();
     text_->setPosition(position + sf::Vector2f(10, 10));
@@ -60,21 +58,24 @@ bool sd::InputField::setup() {
 }
 
 void sd::InputField::add_text(sf::Uint32 input) {
-    //std::cout << "Code: " << input << std::endl;
+    std::cout << "Code: " << input << std::endl;
+    
+    if (input == UNI_ENTER || input == UNI_TAB)
+        return;
     
     sf::String result = text_->getString();
+    
     if(input == UNI_BACKSPACE)
     {
         if (result.getSize() > 0)
         {
             result.erase(result.getSize() - 1, 1);
         }
-    }
-    else if(input != UNI_ENTER)
-    {
+    } else {
         result += static_cast<char>(input);
     }
-
+    
+    
     text_->setString(result);
     
     possible_words_->update_search_prefix(text_->getString().toAnsiString());
@@ -141,6 +142,15 @@ void sd::InputField::handle(sf::Event event) {
                     possible_words_->display_commands();
                     break;
             }
+        }
+    }
+    else if (event.key.code == sf::Keyboard::Tab)
+    {
+        if (event.type == sf::Event::KeyPressed)
+        {
+            auto input = text_->getString();
+            input += possible_words_->complete_first_possible_word();
+            text_->setString(input);
         }
     }
     else if(event.type == sf::Event::TextEntered)

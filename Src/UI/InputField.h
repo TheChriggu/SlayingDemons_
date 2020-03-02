@@ -14,6 +14,7 @@
 #define UNI_ENTER 13
 #define UNI_BACKSPACE 8
 #define UNI_SPACE 32
+#define UNI_TAB 9
 
 namespace sd {
     class InputField : public DrawableObject, public Subscriber {

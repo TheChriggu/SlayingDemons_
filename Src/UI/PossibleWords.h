@@ -13,10 +13,6 @@
 
 namespace sd {
     class PossibleWords: public DrawableObject, public Subscriber, public std::enable_shared_from_this<PossibleWords> {
-        public:
-        
-        bool second_word;
-        
     private:
         std::vector<Sp<FormattedLine>> lines_;
         Sp<PlayerVocabulary> player_vocabulary_;
@@ -29,12 +25,13 @@ namespace sd {
         sf::Vector2f size_;
         
         Word::Type current_list_type_;
-        
         std::string search_prefix_;
+        std::vector<std::string> possible_words_;
 
         Sp<sf::RenderTexture> possible_words_tex_;
         Sp<sf::Sprite> possible_words_sprite_;
 
+        int loop_iterator_;
 
     public:
         PossibleWords(sf::Vector2f position, sf::Vector2f size, const std::string& path_to_background);
@@ -50,6 +47,8 @@ namespace sd {
         
         void set_search_prefix(const std::string& prefix);
         void update_search_prefix(const std::string& input);
+        std::string complete_first_possible_word() const;
+        std::string loop_through_possible_words();
         
         [[nodiscard]] Word::Type get_current_list_type() const;
 

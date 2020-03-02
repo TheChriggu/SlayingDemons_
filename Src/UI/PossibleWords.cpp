@@ -9,6 +9,8 @@
 #include <Event/PossibleWordsCreatedEventArgs.h>
 #include <Event/EventSystem.h>
 #include <ScriptEngine/ScriptEngine.h>
+#include <regex>
+#include <InputTextProcessor.h>
 #include "PossibleWords.h"
 #include "Event/SetStageEventArgs.h"
 
@@ -19,6 +21,7 @@ sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size)
     , position_(position)
     , size_(size)
     , current_list_type_(Word::Type::COMMAND)
+    , loop_iterator_(0)
 {
     event_handler_ = CREATE_EVENT_HANDLER(
         if (e->type == sd::EventArgs::Type::FIGHT_STARTED) {
@@ -123,6 +126,8 @@ void sd::PossibleWords::handle(sf::Event event) {
 }
 
 void sd::PossibleWords::update(std::vector<std::string>& content) {
+    possible_words_ = content;
+    
     lines_.clear();
     //std::cout << "Size: " << search_prefix_.size() << std::endl;
     
@@ -171,7 +176,6 @@ void sd::PossibleWords::display_actions()
 {
     current_list_type_ = Word::Type::ACTION;
     update(player_vocabulary_->get_actions());
-    //std::cout << "Size after update: " << search_prefix_.size() << std::endl;
 }
 
 void sd::PossibleWords::display_commands()
@@ -207,33 +211,35 @@ void sd::PossibleWords::set_search_prefix(const std::string &prefix)
     }
 }
 
-void sd::PossibleWords::add_to_search_prefix(const std::string &prefix)
+void sd::PossibleWords::update_search_prefix(const std::string &input)
 {
-    
-    search_prefix_ += prefix;
-    set_search_prefix(search_prefix_);
+    set_search_prefix(std::regex_replace(input, InputTextProcessor::autocomplete_replace_pattern, ""));
 }
 
-void sd::PossibleWords::trim_last_on_search_prefix()
-{
-    if (search_prefix_.empty()) return;
-    
-    search_prefix_.erase(search_prefix_.size() - 1, 1);
-    set_search_prefix(search_prefix_);
-}
-
-const std::string &sd::PossibleWords::get_search_prefix() const
-{
-    return search_prefix_;
-}
 sd::Word::Type sd::PossibleWords::get_current_list_type() const
 {
     return current_list_type_;
 }
-bool sd::PossibleWords::is_separator() const
+std::string sd::PossibleWords::complete_first_possible_word() const
 {
-    return false;
+    return std::regex_replace(possible_words_[0], std::regex(search_prefix_), "");
 }
+
+std::string sd::PossibleWords::loop_through_possible_words()
+{
+    if (loop_iterator_ >= possible_words_.size())
+        loop_iterator_ = 0;
+    
+    auto ret_val = std::regex_replace(possible_words_[loop_iterator_], std::regex(search_prefix_), "");
+    loop_iterator_++;
+    
+    return ret_val;
+}
+const std::string &sd::PossibleWords::get_search_prefix() const
+{
+    return search_prefix_;
+}
+
 
 
 

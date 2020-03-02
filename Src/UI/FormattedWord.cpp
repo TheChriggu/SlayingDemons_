@@ -8,6 +8,7 @@
 #include "IO/UserInput.h"
 
 sd::FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Format& format, Sp<Font> fonts, Sp<Colors> colors) {
+    //std::cout << "incoming text for word = " << text << "\n";
     raw_ = text;
 
     text_ = std::make_shared<sf::Text> ();

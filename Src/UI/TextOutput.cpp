@@ -35,21 +35,12 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
         }
         if(e->type == EventArgs::Type::CURRENT_FONT_CHANGED)
         {
-            std::cout<<"current font changed\n";
             reformat();
-            /*for(auto line : lines_)
-            {
-                line->set_font(fonts_->GetCurrentFont());
-            }*/
         }
 
         if(e->type == EventArgs::Type::CURRENT_COLOR_CHANGED)
         {
             reformat();
-            /*for(auto line : lines_)
-            {
-                line->set_color(colors_->GetCurrentColor());
-            }*/
         }
         );
     
@@ -64,14 +55,6 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
 
 bool sd::TextOutput::setup() {
   ScriptEngine::get().register_all ("print_line", &TextOutput::print_line, this);
-
-    //font_ = std::make_shared<sf::Font>();
-
-    /*if (!font_->loadFromFile("../Resources/Fonts/comic.ttf"))
-    {
-        std::cout << "Could not load Font!\n";
-        return false;
-    }*/
 
     lines_.push_back(std::make_shared<FormattedLine>(
         "",
@@ -90,8 +73,6 @@ bool sd::TextOutput::setup() {
 
 void sd::TextOutput::draw_to(Sp<sf::RenderTarget> window) const {
     text_tex_->clear(sf::Color::Transparent);
-
-
 
     for (const auto& line : lines_)
     {
@@ -131,7 +112,7 @@ void sd::TextOutput::add_line(std::string string) {
 
 void sd::TextOutput::print_line(std::string string) {
     //sf::String temp(string);
-  add_line (string);
+    add_line (string);
 }
 
 void sd::TextOutput::handle(sf::Event event) {
@@ -142,8 +123,7 @@ void sd::TextOutput::handle(sf::Event event) {
 }
 
 sf::Vector2f sd::TextOutput::get_position() {
-    //TODO(CH): GetPosition function. Based on lines? or saved in variable?
-    return sf::Vector2f();
+    return start_position_;
 }
 
 sf::Vector2f sd::TextOutput::get_size() {
@@ -172,14 +152,25 @@ void sd::TextOutput::move_vertical(float distance) {
 }
 
 void sd::TextOutput::reformat() {
-    int size = lines_.size();
-    for (int i=0; i < size; i++)
+
+    std::vector<std::string> lines;
+
+    for (auto line : lines_)
     {
-        auto line = lines_.front()-> get_line();
-        float distance = lines_.front ()->get_rect ().height;
-        move_vertical (-distance);
-        lines_.pop_front();
+        lines.push_back(line -> get_line());
+    }
+
+    lines_.clear();
+
+    lines_.push_back(std::make_shared<FormattedLine>(
+            "",
+            sf::Vector2f(start_position_ + sf::Vector2f(20, 20)),
+            max_size_, fonts_, colors_));
+
+    for (auto line : lines)
+    {
         add_line(line);
+        std::cout << line << "\n";
     }
 }
 

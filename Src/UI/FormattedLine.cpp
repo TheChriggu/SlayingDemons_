@@ -33,11 +33,15 @@ void sd::FormattedLine::format_line(std::string string, Sp<Font> fonts, Sp<Color
     format.on_click_text_ = "";
     format.color_ = colors->GetCurrentColor();
     format.font_ = fonts->GetCurrentFont();
-    
+
+
+    //remove leading spaces
+
+
     sf::Vector2f next_position =  sf::Vector2f(get_rect ().left, get_rect ().top + get_rect ().height);
     
     std::vector<std::string> string_vector;
-    strtk::parse(string, " ", string_vector, strtk::split_options::include_all_delimiters);
+    strtk::parse(string, " ", string_vector, strtk::split_options::include_1st_delimiter);
     
     for(auto word : string_vector)
         {

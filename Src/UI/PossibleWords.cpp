@@ -9,6 +9,7 @@
 #include <Event/EventSystem.h>
 #include <ScriptEngine/ScriptEngine.h>
 #include "PossibleWords.h"
+#include "Event/SetStageEventArgs.h"
 
 // TODO(FK): clean up name
 sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size)
@@ -46,6 +47,11 @@ sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size)
         if (e->type == EventArgs::Type::FONTS_CREATED) {
             auto arg = std::dynamic_pointer_cast<FontsCreatedEventArgs>(e);
             fonts_ = Sp<Font>(arg->fonts);
+        }
+        if (e->type == EventArgs::Type::SET_STAGE) {
+            auto arg = std::dynamic_pointer_cast<SetStageEventArgs>(e);
+            auto path = "../Resources/Sprites/Progressing/input_" + std::to_string(arg->stage) + ".png";
+            texture_->loadFromFile(path);
         }
         /*if (e->type == EventArgs::Type::CLICKABLE_WORD_CLICKED) {
             can_handle_events = false;

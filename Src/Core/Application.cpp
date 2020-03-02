@@ -182,13 +182,13 @@ bool sd::Application::setup_scene()
     // TODO(FK): clean up this shit
     
     std::cout << "Create text output background\n";
-    auto outputBackground = new Panel(sf::Vector2f(48.0, 41.0), sf::Vector2f(1044, 1008), "../Resources/Sprites/Progressing/output_");
+    auto outputBackground = new Panel(sf::Vector2f(41.8, 75.8), sf::Vector2f(1044, 1008), "../Resources/Sprites/Progressing/output_");
     outputBackground->set_name("output-panel");
     drawable_objects_.emplace_back(Sp<Panel>(outputBackground));
     
     std::cout << "Create words panel\n";
     drawable_objects_.emplace_back(std::make_shared<PossibleWords>(
-        sf::Vector2f(39.0, 575.0),
+        sf::Vector2f(19.1, 597.9),
         sf::Vector2f(1059, 445)));
     
     std::cout << "emplace Inputfield\n";
@@ -202,7 +202,7 @@ bool sd::Application::setup_scene()
     drawable_objects_.emplace_back(std::make_shared<TextOutput>(sf::Vector2f(90.0, 100.0), sf::Vector2f(1044, 1008), sf::Color::Red));
     
     std::cout << "Create Map panel\n";
-    MapWindow *mapWindow = new MapWindow(sf::Vector2f(1127.0, 41.0), sf::Vector2f(761, 558));
+    MapWindow *mapWindow = new MapWindow(sf::Vector2f(1122.8, 79.9), sf::Vector2f(761, 558));
     drawable_objects_.emplace_back(Sp<MapWindow>(mapWindow));
     
     

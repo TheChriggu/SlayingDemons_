@@ -69,11 +69,8 @@ bushDoor_layout = {
 
 dungeon = {
     floor1 = {
-        is_start = false,
         Southern_Forest={
             --layout = { {x = 2, y = 0}, {x=10, y= 0}, {x=10, y=6}, {x=2, y= 6}},
-
-            is_start = true,
             
             northern_way = {
                 position = {x = 5,y = 0},
@@ -500,6 +497,7 @@ dungeon = {
     },
 
     dungeon_3 ={
+        is_start = true,
         main_room = {
             is_start = true,
             
@@ -527,9 +525,10 @@ dungeon = {
                 next_room = "secret_room",
                 is_locked = false,
 
-                on_enter = {
+                on_enter = function ()
                     set_glitch_on("output-panel")
-                }
+                end
+                
             },
         
             chest = {
@@ -564,6 +563,12 @@ dungeon = {
         },
 
         red_room = {
+            way_back = {
+                position = {x=5, y=6},
+                layout = door_layout,
+                next_room = "main_room"
+            },
+
             chest = {
                 position = {x = 5, y = 1},
                 layout= chest_layout,
@@ -584,6 +589,12 @@ dungeon = {
         },
 
         blue_room = {
+            way_back = {
+                position = {x=5, y=6},
+                layout = door_layout,
+                next_room = "main_room"
+            },
+
             chest = {
                 position = {x = 5, y = 1},
                 layout= chest_layout,
@@ -604,6 +615,12 @@ dungeon = {
         },
 
         green_room = {
+            way_back = {
+                position = {x=5, y=6},
+                layout = door_layout,
+                next_room = "main_room"
+            },
+            
             chest = {
                 position = {x = 5, y = 1},
                 layout= chest_layout,

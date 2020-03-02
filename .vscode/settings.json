@@ -1,10 +1,18 @@
 {
     "Lua.diagnostics.globals": [
-        "table_layout"
+        "table_layout",
+        "set_glitch_on",
+        "add_modifier",
+        "print_line",
+        "unlock_door",
+        "start_new_fight",
+        "add_action"
     ],
     "cmake.buildDirectory": "${workspaceRoot}/cmake-build-debug/",
     "cmake.preferredGenerators": [
         "Unix Makefiles"
+    ],
+    "Lua.diagnostics.disable": [
+        "lowercase-global"
     ]
 }
- 

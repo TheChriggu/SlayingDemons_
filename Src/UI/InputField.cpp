@@ -9,6 +9,8 @@
 #include <ScriptEngine/ScriptEngine.h>
 #include <Event/PossibleWordsCreatedEventArgs.h>
 #include "Event/ClickableWordClickedEventArgs.h"
+#include <Event/FontsCreatedEventArgs.h>
+#include <Event/ColorsCreatedEventArgs.h>
 
 // TODO(FK): clean up name
 sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color)
@@ -29,6 +31,15 @@ sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color c
                  add_text(letter);
              }
         }
+        if (e->type == EventArgs::Type::FONTS_CREATED) {
+            auto arg = std::dynamic_pointer_cast<FontsCreatedEventArgs>(e);
+            fonts_ = Sp<Font>(arg->fonts);
+        }
+        if (e->type == EventArgs::Type::COLORS_CREATED) {
+            auto arg = std::dynamic_pointer_cast<ColorsCreatedEventArgs>(e);
+            colors_ = Sp<Colors>(arg->colors);
+        }
+
         );
     
     REGISTER_EVENT_HANDLER();
@@ -42,19 +53,11 @@ sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color c
 }
 
 bool sd::InputField::setup() {
-    
 
-    auto* font = new sf::Font();
-    if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
-    {
-        std::cout << "Could not load Font!\n";
-        return false;
-    }
-
-    text_->setFont(*font);
+    text_->setFont(*(fonts_->GetCurrentFont()));
     text_->setString("");
     text_->setCharacterSize(24);
-    text_->setFillColor(sf::Color::Black);
+    text_->setFillColor(colors_->GetCurrentColor());
 
     return DrawableObject::setup ();
 }
@@ -86,6 +89,8 @@ void sd::InputField::add_text(sf::Uint32 input) {
 }
 
 void sd::InputField::draw_to(Sp<sf::RenderTarget> window) const {
+    text_->setFont(*(fonts_->GetCurrentFont()));
+    text_->setFillColor(colors_->GetCurrentColor());
     window->draw(*text_);
 }
 

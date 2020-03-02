@@ -4,6 +4,8 @@
 
 #include <iostream>
 #include "Tilemap.h"
+#include "Event/SetStageEventArgs.h"
+#include <Event/EventSystem.h>
 
 sd::Tilemap::Tilemap(unsigned int width, unsigned int height, sf::Vector2f position, sf::Vector2u tile_size)
     : width_(width)
@@ -25,6 +27,16 @@ sd::Tilemap::Tilemap(unsigned int width, unsigned int height, sf::Vector2f posit
     set_layout(default_layout, width_ * height_);
     set_all_quad_positions();
     std::cout << "End constructor Tilemap\n";
+
+    event_handler_ = CREATE_EVENT_HANDLER(
+    if (e->type == EventArgs::Type::SET_STAGE) {
+                auto arg = std::dynamic_pointer_cast<SetStageEventArgs>(e);
+                auto path = "../Resources/Sprites/Progressing/spritesheet_" + std::to_string(arg->stage) + ".png";
+                load_sprite_sheet(path);
+            }
+            );
+
+    REGISTER_EVENT_HANDLER();
 }
 
 

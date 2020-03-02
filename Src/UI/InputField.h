@@ -21,6 +21,9 @@ namespace sd {
         Sp<InputTextProcessor> text_processor_;
         
         Sp<PossibleWords> possible_words_;
+
+        Sp<Font> fonts_;
+        Sp<Colors> colors_;
         
         const std::regex single_word_pattern_{R"([^ ]+ )"};
         const std::regex two_words_pattern_{R"([^ ]+ [^ ]+ )"};

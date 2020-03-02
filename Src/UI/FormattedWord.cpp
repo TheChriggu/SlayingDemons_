@@ -7,7 +7,7 @@
 #include "FormattedWord.h"
 #include "IO/UserInput.h"
 
-sd::FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Format& format, Sp<Font> fonts) {
+sd::FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Format& format, Sp<Font> fonts, Sp<Colors> colors) {
     
     text_ = std::make_shared<sf::Text> ();
     text_->setPosition (position);
@@ -18,7 +18,7 @@ sd::FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Fo
         {
             std::string code = std::string (text, 0, text.find_first_of (']') + 1);
             text.erase (0, code.size ());
-            apply_bb_to_format (code, format, fonts);
+            apply_bb_to_format (code, format, fonts, colors);
         }
 
     //set the actual word
@@ -36,7 +36,7 @@ sd::FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Fo
         {
             std::string code = std::string (text, 0, text.find_first_of (']') + 1);
             text.erase (0, code.size ());
-            apply_bb_to_format (code, format, fonts);
+            apply_bb_to_format (code, format, fonts, colors);
         }
         
     //add trailing spaces or punctuation if not included in word
@@ -81,7 +81,7 @@ void sd::FormattedWord::apply_format_to_text (sd::Format format)
     text_->setStyle (format.style_);
     on_click_text_ = format.on_click_text_;
 }
-void sd::FormattedWord::apply_bb_to_format (std::string code, sd::Format &format, Sp<Font> fonts)
+void sd::FormattedWord::apply_bb_to_format (std::string code, sd::Format &format, Sp<Font> fonts, Sp<Colors> colors)
 {
     if(code == "[b]")
         {
@@ -108,7 +108,11 @@ void sd::FormattedWord::apply_bb_to_format (std::string code, sd::Format &format
     {
         format.font_ = fonts->GetFont(code.substr(6, code.length()-7));
     }
-    if(code.find("[color=") != std::string::npos)
+    if(code.find("[color=current") != std::string::npos)
+    {
+        format.color_ = sf::Color(colors->GetCurrentColor());
+    }
+    else if(code.find("[color=") != std::string::npos)
     {
         std::vector<std::string> values;
 
@@ -176,4 +180,22 @@ bool sd::FormattedWord::is_position_on_word(sf::Vector2f position_to_check) {
         sf::Rect bounds = text_->getGlobalBounds();
         return bounds.contains(position_to_check);
     }
+}
+
+void sd::FormattedWord::set_font_size_color(sd::Format format) {
+    text_->setFont(*(format.font_));
+    text_->setCharacterSize(format.size_);
+    text_->setFillColor(format.color_);
+}
+
+void sd::FormattedWord::set_font(Sp<sf::Font> font) {
+    text_->setFont(*font);
+}
+
+void sd::FormattedWord::set_size(int size) {
+    text_->setCharacterSize(size);
+}
+
+void sd::FormattedWord::set_color(sf::Color color) {
+    text_->setFillColor(color);
 }

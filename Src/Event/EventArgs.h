@@ -28,7 +28,10 @@ namespace sd {
             CURRENT_ENEMY_DEFEATED,
             PLAYER_DIED,
             CLICKABLE_WORD_CLICKED,
-            SET_STAGE
+            SET_STAGE,
+            COLORS_CREATED,
+            CURRENT_COLOR_CHANGED,
+            CURRENT_FONT_CHANGED
         };
 
         EventArgs();

@@ -10,6 +10,7 @@
 #include <Event/LineToOutputEventArgs.h>
 #include <ScriptEngine/ScriptEngine.h>
 #include <Event/FontsCreatedEventArgs.h>
+#include <Event/ColorsCreatedEventArgs.h>
 
 //TODO(CH): Lines have to move up, when max is reached.
 // TODO(FK): clean up name
@@ -27,6 +28,27 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
         if (e->type == EventArgs::Type::FONTS_CREATED) {
             auto arg = std::dynamic_pointer_cast<FontsCreatedEventArgs>(e);
             fonts_ = Sp<Font>(arg->fonts);
+        }
+        if (e->type == EventArgs::Type::COLORS_CREATED) {
+            auto arg = std::dynamic_pointer_cast<ColorsCreatedEventArgs>(e);
+           colors_ = Sp<Colors>(arg->colors);
+        }
+        if(e->type == EventArgs::Type::CURRENT_FONT_CHANGED)
+        {
+            std::cout<<"current font changed\n";
+
+            for(auto line : lines_)
+            {
+                line->set_font(fonts_->GetCurrentFont());
+            }
+        }
+
+        if(e->type == EventArgs::Type::CURRENT_COLOR_CHANGED)
+        {
+            for(auto line : lines_)
+            {
+                line->set_color(colors_->GetCurrentColor());
+            }
         }
         );
     
@@ -53,7 +75,7 @@ bool sd::TextOutput::setup() {
     lines_.push_back(std::make_shared<FormattedLine>(
         "",
         sf::Vector2f(start_position_ + sf::Vector2f(20, 20)),
-        max_size_, fonts_));
+        max_size_, fonts_, colors_));
 
     // Trigger TextOutput Created Event
     EventSystem::get().trigger(std::make_shared<TextOutputCreatedEventArgs>(weak_from_this()));
@@ -92,7 +114,7 @@ void sd::TextOutput::add_line(std::string string) {
         string, sf::Vector2f(
             lines_.back ()->get_rect ().left,
             lines_.back ()->get_rect ().top + lines_.back ()->get_rect ().height),
-        max_size_,fonts_
+        max_size_,fonts_, colors_
     );
 
     //format line

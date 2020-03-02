@@ -11,7 +11,7 @@
 namespace sd
 {
     class Format {
-        public:
+    public:
         Sp<sf::Font> font_;
         unsigned int size_;
         sf::Color color_;

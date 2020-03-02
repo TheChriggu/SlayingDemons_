@@ -6,10 +6,11 @@
 #define _TILEMAP_H_
 
 #include <SFML/Graphics.hpp>
+#include <Event/Subscriber.h>
 #include "../Dungeon/TileData.h"
 
 namespace sd {
-    class Tilemap : public sf::Drawable, public sf::Transformable {
+    class Tilemap : public sf::Drawable, public sf::Transformable, public Subscriber {
 
     public:
         Tilemap(unsigned int width, unsigned int height, sf::Vector2f position, sf::Vector2u tile_size);

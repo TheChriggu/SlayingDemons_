@@ -22,6 +22,7 @@ namespace sd {
         Sp<PlayerVocabulary> player_vocabulary_;
         Sp<PlayerState> player_state_;
         Sp<Font> fonts_;
+        Sp<Colors> colors_;
 
         Sp<sf::Sprite> sprite_;
         Sp<sf::Texture> texture_;

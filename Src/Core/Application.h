@@ -16,6 +16,7 @@
 #include <vector>
 #include <Shading/ShaderEngine.h>
 #include <Event/EventSystem.h>
+#include <UI/Colors.h>
 #include "Vocabulary.h"
 #include "Combat/Action.h"
 #include "Combat/Modifier.h"
@@ -33,6 +34,7 @@ namespace sd {
         
         Sp<World> world_;
         Sp<Font> fonts_;
+        Sp<Colors> colors_;
         
         Sp<ShaderEngine> shader_engine_;
 

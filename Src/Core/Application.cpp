@@ -11,6 +11,7 @@
 #include <Combat/MonsterList.h>
 #include <memory>
 #include <Event/FontsCreatedEventArgs.h>
+#include <Event/ColorsCreatedEventArgs.h>
 
 bool sd::Application::setup()
 {
@@ -51,6 +52,9 @@ bool sd::Application::setup()
     
     fonts_ = std::make_shared<Font>();
     EventSystem::get().trigger(std::make_shared<FontsCreatedEventArgs>(fonts_));
+
+    colors_ = std::make_shared<Colors>();
+    EventSystem::get().trigger(std::make_shared<ColorsCreatedEventArgs>(colors_));
 
     world_->setup();
     for (const auto &object : drawable_objects_)

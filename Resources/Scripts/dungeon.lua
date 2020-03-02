@@ -20,6 +20,10 @@ door_layout = {
     size = {2,1},
     tiles = {9, 3}
 }
+fakedoor_layout = {
+    size = {1,1},
+    tiles = {3}
+}
 book_layout = {
     tiles = {34}
 }
@@ -382,8 +386,214 @@ dungeon = {
     },
 
     dungeon_2={
-        room1 = {
+
+        Southern_Forest={
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
+
+            northern_way = {
+                position = {x = 5,y = 0},
+                layout = door_layout,
+                is_locked = false,
+                next_room = "western_forest",
+
+                on_inspection = function()
+                    print_line("It's a small path leading to the north.")
+                end,
+
+                on_enter = function()
+                    print_line("You walk to the north and enter a new room.")
+                end
+            },
+
+            tree = {
+                position={x=3,y=1},
+                layout = tree_layout,
+
+                on_inspection = function ()
+                    print_line("It's a tree.")
+                    print_line("Not astounding, considering you're in a forest right now... ")
+                end
+            },
+
+            bushes = {
+                position = {x= 7,y=1},
+                layout = bushGroup_layout,
+
+                on_inspection = function ()
+                    print_line("You can see several bushes. Some of them carry berries. ")
+                    print_line("As you take a closer look you wouldn't consider them edible. ")
+                end
+            },
+
+            axe = {
+                position = {x = 7, y = 3},
+                layout= axe_layout,
+
+                on_inspection = function ()
+                    --print_line("Through the thick moss you see something shiny. As you approach it you realize it's an axe. ")
+                    print_line("An old axe. Probably not very useful. ")
+                    print_line("The blade is broken. There is a long crack in it. ")
+                    print_line("As fast as you discover your new find, you leave it again. It's not gonna help you anyway. ")
+                end
+            },
+        },
+        western_forest = {
+            layout = { {2,0}, {10,0}, {10,6}, {2,6}},
+
+            Way_back_down = {
+                position = {x = 5,y = 6},
+                layout = door_layout,
+                next_room = "Southern_Forest",
+            },
+
+            northern_way = {
+                position = {x = 9,y = 0},
+                layout = bushDoor_layout,
+                next_room = "Eastern_Forest",
+                is_locked=true,
+
+                on_inspection = function ()
+                    print_line("You can see a path behind this bush. But you'll first have to remove it. ")
+                    print_line("You could try to use some spells on it. ")
+                end,
+
+                on_fight= function ()
+                    print_line("You use your Pyro Poke on the bush.")
+                    print_line("[b] > Pyro Poke")
+                    print_line("It burns down. The way is free now.")
+                    unlock_door("western_forest", "northern_way")
+                end,
+
+                on_enter = function()
+                    print_line("You walk to the north and enter a new room.")
+                end
+            },
+
+            southern_way = {
+                position = {x = 9,y = 6},
+                layout = bushDoor_layout,
+                next_room = "Eastern_Forest",
+                is_locked=true,
+
+                on_interaction = function ()
+                    print_line("You can see a path behind this bush. But you'll first have to remove it. ")
+                    print_line("You could try to use some spells on it. ")
+                end,
+
+                on_fight= function ()
+                    print_line("You use your Pyro Poke on the bush.")
+                    print_line("[b] > Pyro Poke")
+                    print_line("It burns down. The way is free now.")
+                    unlock_door("western_forest", "southern_way")
+                end,
+
+                on_enter = function()
+                    print_line("You walk to the south and enter a new room.")
+                end
+            },
+
+            eastern_way = {
+                position = {x = 10,y = 3},
+                rotation = 0,
+                layout = fakedoor_layout,
+
+                on_enter = function()
+                    print_line("That's not the right way.")
+                    print_line("You should take the way marked on the map.")
+                end
+            },
+
+            Goblin = {
+                position = {x = 5, y = 3},
+                layout = goblin_layout,
+                --on_interaction = function()
+                    --print_line("You walk to the Goblin, wanting to wish him a merry day.")
+                    --print_line("He does not understand your intentions. A fight ensues.")
+                    --start_new_fight("Goblin")
+                --end,
+
+                on_open = function()
+                    print_line("You try to open the Goblin. This fails, for obvious reasons.")
+                    print_line("Disturbed by your strange behaviour, the Goblin attacks you.")
+                    start_new_fight("Goblin")
+                end,
+
+                on_inspection = function()
+                    print_line("It's a small, hairy, wild, angry Goblin. Nothing too dangerous. Probably...")
+                end,
+
+                on_fight = function()
+                    print_line("You take charge and attack the Goblin.")
+                    start_new_fight("Goblin")
+                end,
+
+                on_enter = function()
+                    print_line("You try to enter the Goblin, which enrages him a lot.")
+                    print_line("He attacks you.")
+                    print_line("What the hell were you expecting to happen?")
+                    start_new_fight("Goblin")
+                end,
+
+                on_destroy = function ()
+                    unlock_door("western_forest", "eastern_way")
+                end,
+            },
+
+            outworn_path = {
+                position = {x = 8, y = 3},
+                layout= path_layout,
+                on_inspection = function ()
+                    print_line("The path looks old, like it hasn't been used in a long, long time. ")
+                    print_line("It leads to the east. You could follow the way and see where it goes. ")
+                end
+            },
+            
+            skeleton = {
+                position = {x = 6, y = 1},
+                layout= skeleton_layout,
+                on_inspection = function ()
+                    print_line("Uagh! It's a skeleton. Like... a real skeleton! ")
+                    print_line("You know the wizard said it will be dangerous and the forest is known to be deep, but that was a real living adventurer, who died. ")
+                    print_line("Why are you here? ")
+                end
+            },
+
+        },
+        Eastern_Forest = {
+            layout = { {0, 0}, {7, 0}, {7, 6}, {0, 6}},
+
+            southern_way = {
+                position = {x = 1,y = 6},
+                layout = door_layout,
+                next_room = "western_forest",
+
+                on_enter = function()
+                    print_line("You walk to the south and enter a new room.")
+                end
+            },
+
+            northern_way = {
+                position = {x = 1,y = 0},
+                layout = door_layout,
+                next_room = "western_forest",
+
+                on_enter = function()
+                    print_line("You walk to the north and enter a new room.")
+                end
+            },
+
+            way_deeper_in_the_forest = {
+                position = {x = 7,y = 4},
+                layout = door_layout,
+                next_room = "room1",
+
+                on_enter = function()
+                    print_line("You walk deeper inside the forest and enter a new room.")
+                end
+            },
+        },
+        room1 = {
+            layout = { {0, 0}, {10, 0}, {10, 6}, {0, 6}},
 
             sofa = {
                 position = { x = 1, y = 2},
@@ -416,7 +626,7 @@ dungeon = {
             }
         },
         room2 = {
-            layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
+            layout = { {0, 0}, {10, 0}, {10, 6}, {0, 6}},
 
             south_door = {
                 position = {x = 5, y = 6},
@@ -441,7 +651,7 @@ dungeon = {
             }
         },
         room3 = {
-            layout = { {0, 0}, {10, 0}, {10, 4}, {0, 4}},
+            layout = { {0, 0}, {10, 0}, {10, 6}, {0, 6}},
 
             west_door = {
                 position = {x = 0, y = 3},
@@ -481,6 +691,8 @@ dungeon = {
             }
         },
         room5 = {
+            layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
+
             north_door = {
                 position = {x = 5, y = 0},
                 layout = door_layout,
@@ -493,6 +705,8 @@ dungeon = {
             }
         },
         room6 = {
+            layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
+
             north_door = {
                 position = {x = 5, y = 0},
                 layout = door_layout,
@@ -508,9 +722,12 @@ dungeon = {
 
     dungeon_3={
         is_start = true,
+
             main_room = {
                 is_start = true,
-                
+
+                layout = { {0, 0}, {10, 0}, {10, 6}, {0, 6}},
+
                 red_door = {
                     position = {x=2, y=0},
                     layout = door_layout,
@@ -560,18 +777,20 @@ dungeon = {
                         add_action ("Light")
                         set_glitch_on("output-panel")
                     end,
+
+                    on_inspection = function ()
+                        print_line("The room is nearly empty, except four doors.")
+                        print_line("Three are on the north side. A red, green and blue one.")
+                        print_line("The fourth one is white and one the east side.")
+                        print_line("But wait! There is one more thing.")
+                        print_line("It's another old chest, which is standing right in the middle of the room.")
+        
+                    end
                 },
-    
-                on_inspection = function ()
-                    print_line("The room is nearly empty, except four doors.")
-                    print_line("Three are on the north side. A red, green and blue one.")
-                    print_line("The fourth one is white and one the east side.")
-                    print_line("But wait! There is one more thing.")
-                    print_line("It's another old chest, which is standing right in the middle of the room.")
-    
-                end
             },
             red_room = {
+                layout = { {2, 0}, {8, 0}, {8, 6}, {2, 6}},
+
                 way_back = {
                     position = {x=5, y=6},
                     layout = door_layout,
@@ -597,6 +816,8 @@ dungeon = {
                 },
             },
             blue_room = {
+                layout = { {2, 0}, {8, 0}, {8, 6}, {2, 6}},
+
                 way_back = {
                     position = {x=5, y=6},
                     layout = door_layout,
@@ -622,6 +843,8 @@ dungeon = {
                 },
             },
             green_room = {
+                layout = { {2, 0}, {8, 0}, {8, 6}, {2, 6}},
+
                 way_back = {
                     position = {x=5, y=6},
                     layout = door_layout,
@@ -673,8 +896,9 @@ dungeon = {
                     end,
                 }
             },
-
             secret_room = {
+                layout = { {0, 0}, {6, 0}, {6, 6}, {0, 6}},
+
                 way_back = {
                     position = {x=0, y=3},
                     layout = door_layout,
@@ -692,9 +916,8 @@ dungeon = {
                     end
                 },
                 writing_table = {
-                },
-    
-                table = {
+                    position = {x=1, y=4},
+                    layout = table_layout,
                 },
             },
     },

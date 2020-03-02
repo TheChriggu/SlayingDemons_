@@ -58,7 +58,7 @@ bool sd::InputField::setup() {
 }
 
 void sd::InputField::add_text(sf::Uint32 input) {
-    std::cout << "Code: " << input << std::endl;
+    //std::cout << "Code: " << input << std::endl;
     
     if (input == UNI_ENTER || input == UNI_TAB)
         return;
@@ -116,6 +116,8 @@ void sd::InputField::handle(sf::Event event) {
     {
         if (event.type == sf::Event::KeyPressed)
         {
+            possible_words_->update_search_prefix(text_->getString().toAnsiString());
+            
             auto input = text_->getString();
             input += possible_words_->complete_first_possible_word();
             text_->setString(input);
@@ -155,12 +157,20 @@ void sd::InputField::handle(sf::Event event) {
             auto input = text_->getString().toAnsiString();
             auto completion = possible_words_->loop_through_possible_words();
             auto prefix = possible_words_->get_search_prefix();
+            auto position = input.find_last_of(prefix) - (prefix.size() - 1);
+            
+            /*std::cout << "input: " << input << std::endl;
+            std::cout << "completion: " << completion << std::endl;
+            std::cout << "prefix: " << prefix.size() << std::endl;
+            std::cout << "position: " << position << std::endl;
+            std::cout << "last position: " << input.size() - 1 << std::endl;*/
             
             // deletes the prefix and anything thats behind it and then places the prefix with the rest of looped word behind it
-            input = std::regex_replace(
+            /*input = std::regex_replace(
                 input,
-                std::regex("\\b" + prefix + ".*"),
-                prefix + completion);
+                std::regex(prefix + ".*"),
+                prefix + completion);*/
+            input.replace(position, input.size(), prefix + completion);
             
             text_->setString(input);
         }
@@ -169,6 +179,8 @@ void sd::InputField::handle(sf::Event event) {
     {
         if (event.type == sf::Event::KeyPressed)
         {
+            possible_words_->update_search_prefix(text_->getString().toAnsiString());
+            
             auto input = text_->getString();
             input += possible_words_->complete_first_possible_word();
             text_->setString(input);

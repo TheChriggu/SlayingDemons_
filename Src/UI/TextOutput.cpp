@@ -12,12 +12,11 @@
 #include <Event/FontsCreatedEventArgs.h>
 #include <Event/ColorsCreatedEventArgs.h>
 
-//TODO(CH): Lines have to move up, when max is reached.
 // TODO(FK): clean up name
 sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color)
     : DrawableObject("text-output")
     , Subscriber()
-    , start_position_(position)
+    , position_(position)
 {
 
     event_handler_ = CREATE_EVENT_HANDLER(
@@ -46,11 +45,14 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
     
     REGISTER_EVENT_HANDLER();
 
-    max_size_ = size;
-    max_size_.y = 450; //TODO: This is not good
+    max_size_.x = size.x -20;
+    max_size_.y = 435;
 
     text_tex_ = std::make_shared<sf::RenderTexture>();
     text_sprite_ = std::make_shared<sf::Sprite>();
+
+    offset_ = sf::Vector2f(10, 55);
+
 }
 
 bool sd::TextOutput::setup() {
@@ -58,7 +60,7 @@ bool sd::TextOutput::setup() {
 
     lines_.push_back(std::make_shared<FormattedLine>(
         "",
-        sf::Vector2f(start_position_ + sf::Vector2f(20, 20)),
+        sf::Vector2f(position_ + offset_),
         max_size_, fonts_, colors_));
 
     // Trigger TextOutput Created Event
@@ -94,7 +96,7 @@ void sd::TextOutput::add_line(std::string string) {
 
     auto new_line = std::make_shared<FormattedLine>(
         string, sf::Vector2f(
-            lines_.back ()->get_rect ().left,
+                (position_ + offset_).x,
             lines_.back ()->get_rect ().top + lines_.back ()->get_rect ().height),
         max_size_,fonts_, colors_
     );
@@ -123,7 +125,7 @@ void sd::TextOutput::handle(sf::Event event) {
 }
 
 sf::Vector2f sd::TextOutput::get_position() {
-    return start_position_;
+    return position_;
 }
 
 sf::Vector2f sd::TextOutput::get_size() {
@@ -164,7 +166,7 @@ void sd::TextOutput::reformat() {
 
     lines_.push_back(std::make_shared<FormattedLine>(
             "",
-            sf::Vector2f(start_position_ + sf::Vector2f(20, 20)),
+            sf::Vector2f(position_ + offset_),
             max_size_, fonts_, colors_));
 
     for (auto line : lines)

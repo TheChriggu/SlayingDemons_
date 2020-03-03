@@ -22,8 +22,8 @@ namespace sd {
         Sp<Font> fonts_;
         Sp<Colors> colors_;
 
-        // TODO(CH): rework this Class! Position of an asset should not be determent by "old" data!
-        sf::Vector2f start_position_;
+        sf::Vector2f position_;
+        sf::Vector2f offset_;
 
         Sp<sf::RenderTexture> text_tex_;
         Sp<sf::Sprite> text_sprite_;

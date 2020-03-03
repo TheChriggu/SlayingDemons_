@@ -11,13 +11,17 @@ sd::Font::Font() {
     fantasy_font_ = std::make_shared<sf::Font>();
     cyber_font_ = std::make_shared<sf::Font>();
     code_font_ = std::make_shared<sf::Font>();
+    transition_font_ = std::make_shared<sf::Font>();
+    book_font = std::make_shared<sf::Font>();
+    ai_font_ = std::make_shared<sf::Font>();
 
-    fantasy_font_->loadFromFile("../Resources/Fonts/comic.ttf");
-    cyber_font_->loadFromFile("../Resources/Fonts/Alef-Regular.ttf");
-    if(!(code_font_->loadFromFile("../Resources/Fonts/trebuc.ttf")))
-    {
-        std::cout << "could not load code font.\n";
-    }
+    fantasy_font_->loadFromFile("../Resources/Fonts/Merriweather-Light.ttf");
+    transition_font_->loadFromFile("../Resources/Fonts/MerriweatherSans-Light.ttf");
+    cyber_font_->loadFromFile("../Resources/Fonts/RobotoMono-Regular.ttf");
+    code_font_->loadFromFile("../Resources/Fonts/VT323-Regular.ttf");
+    book_font->loadFromFile("../Resources/Fonts/IMFellEnglishSC-Regular.ttf");
+    ai_font_->loadFromFile("../Resources/Fonts/Quantico-Regular.ttf");
+
 
     current_font_ = fantasy_font_;
 
@@ -31,6 +35,14 @@ sd::Font::Font() {
                                          break;
 
                                      case 1:
+                                         current_font_ = transition_font_;
+                                         break;
+
+                                     case 2:
+                                         current_font_ = transition_font_;
+                                         break;
+
+                                     case 3:
                                          current_font_ = cyber_font_;
                                          break;
                                  }
@@ -42,10 +54,6 @@ sd::Font::Font() {
                      );
 
     REGISTER_EVENT_HANDLER();
-
-
-    //EventSystem::get().trigger(std::make_shared<FontsCreatedEventArgs>(weak_from_this()));
-
 }
 
 sd::Font::~Font() {
@@ -57,6 +65,10 @@ Sp<sf::Font> sd::Font::GetFont(std::string font) {
     {
         return fantasy_font_;
     }
+    if (font == "transition")
+    {
+        return transition_font_;
+    }
     if (font == "cyber")
     {
         return cyber_font_;
@@ -64,6 +76,14 @@ Sp<sf::Font> sd::Font::GetFont(std::string font) {
     if (font == "code")
     {
         return code_font_;
+    }
+    if (font == "ai")
+    {
+        return ai_font_;
+    }
+    if (font == "book")
+    {
+        return book_font;
     }
     if (font == "current")
     {

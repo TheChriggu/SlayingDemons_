@@ -15,6 +15,10 @@ namespace sd {
         Sp<sf::Font> fantasy_font_;
         Sp<sf::Font> cyber_font_;
         Sp<sf::Font> code_font_;
+        Sp<sf::Font> transition_font_;
+        Sp<sf::Font> book_font;
+        Sp<sf::Font> ai_font_;
+
         Sp<sf::Font> current_font_;
 
     public:

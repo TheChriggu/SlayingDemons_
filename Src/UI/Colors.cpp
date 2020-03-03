@@ -20,6 +20,16 @@ sd::Colors::Colors() {
                                          break;
 
                                      case 1:
+                                         current_color_ = sf::Color::Black;
+                                         current_input_color_ = sf::Color::Black;
+                                         break;
+
+                                     case 2:
+                                         current_color_ = sf::Color::White;
+                                         current_input_color_ = sf::Color::Green;
+                                         break;
+
+                                     case 3:
                                          current_color_ = sf::Color::White;
                                          current_input_color_ = sf::Color::Green;
                                          break;

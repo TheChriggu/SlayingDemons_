@@ -23,7 +23,7 @@ sd::Font::Font() {
     ai_font_->loadFromFile("../Resources/Fonts/Quantico-Regular.ttf");
 
 
-    current_font_ = fantasy_font_;
+    current_font_ = book_font;
 
     event_handler_ = CREATE_EVENT_HANDLER(
                              if (e->type == EventArgs::Type::SET_STAGE) {
@@ -35,6 +35,14 @@ sd::Font::Font() {
                                          break;
 
                                      case 1:
+                                         current_font_ = transition_font_;
+                                         break;
+
+                                     case 2:
+                                         current_font_ = transition_font_;
+                                         break;
+
+                                     case 3:
                                          current_font_ = cyber_font_;
                                          break;
                                  }
@@ -46,10 +54,6 @@ sd::Font::Font() {
                      );
 
     REGISTER_EVENT_HANDLER();
-
-
-    //EventSystem::get().trigger(std::make_shared<FontsCreatedEventArgs>(weak_from_this()));
-
 }
 
 sd::Font::~Font() {

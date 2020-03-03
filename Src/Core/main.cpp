@@ -14,6 +14,7 @@
 #endif
 
 void startup();
+void write_data(std::vector<std::string> data);
 
 int main() {
     startup();
@@ -114,9 +115,9 @@ void startup()
     SLEEP(1000);
     std::cout << "!\n";
     SLEEP(1000);
-    std::cout << ".\n";
+    std::cout << ".";
     SLEEP(1000);
-    std::cout << ".\n";
+    std::cout << ".";
     SLEEP(1000);
     std::cout << ".\n";
     SLEEP(1500);
@@ -190,6 +191,7 @@ void startup()
     std::cin >> input;
     arguments.emplace_back("Nationality: ");
     arguments.emplace_back(input);
+    write_data(arguments);
     write("Nationality saved.\n");
     write("Thank you for taking part in this survey.\n");
     write("Please remember to keep your internet connection on at all times, to facilitate a proper flow of information to our servers.\n");
@@ -235,14 +237,21 @@ void startup()
     write("loading...[52%]\n");
     SLEEP(500);
     write("Starting Game Window\n");
+}
+
+void write_data(std::vector<std::string> data)
+{
+    std::ofstream file("../Resources/InnocentFileDoNotOpen.txt", std::ofstream::trunc);
+
+    if (file.is_open()) {
 
 
-
-
-    for(auto entry : arguments)
-    {
-        std::cout << entry;
+        for (auto word : data) {
+            file.write(word.c_str(), word.length());
+            char c = '\n';
+            file.write(&c, 1);
+        }
+        file.close();
     }
-    //std::cin >> input;
 }
 

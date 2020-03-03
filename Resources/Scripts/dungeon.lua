@@ -1119,6 +1119,48 @@ dungeon = {
     },
 }
 
+tutorial ={
+    floor1 ={
+        layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
+
+
+
+        barrel = {
+            position={x=7,y=3},
+            layout = bush_layout,
+
+            on_enter = function ()
+                print_line("You can't enter a barrel. That's not how it works.")
+                print_line("Nevertheless, the old wizard said you should try fight the barrel.")
+            end,
+
+            on_fight = function ()
+                print_line("Let's see how that works.")
+            end,
+
+            on_open = function ()
+                print_line("The old wizard said you should try fight the barrel.")
+            end,
+
+            on_inspection = function ()
+                print_line("The old wizard said you should try fight the barrel.")
+            end,
+
+            on_destroy = function ()
+                print_line("'Good, Kid. That are the basics of fighting', said the old wizard.")
+                print_line("'Now that you know how to fight you can start your adventure.'")
+                print_line("The wizards point to a forest in the far.")
+                print_line("'The fire-breathing dragon waits at the ancient castle at the other side of the adventurer forest.'")
+                print_line("'Just go to the forest and you'll find your way.' In a strange way the wizard looks a bit optimistic.")
+                print_line("Wait, the adventurer forest? That's not the nicest place for a farmer boy to be. Many adventuerer has gone missing there.")
+                print_line("You wanted to start protesting, but before you could say something the wizard stamps his staff on the ground and vanishes.")
+                print_line("Apparently you have no other choice than trying to fight the fire-breathing dragon...")
+                --loads dungeon floor1
+            end
+        },
+
+        }
+    }
 
 
 

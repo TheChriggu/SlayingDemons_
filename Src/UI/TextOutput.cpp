@@ -11,6 +11,7 @@
 #include <ScriptEngine/ScriptEngine.h>
 #include <Event/FontsCreatedEventArgs.h>
 #include <Event/ColorsCreatedEventArgs.h>
+#include <Event/SetStageEventArgs.h>
 
 // TODO(FK): clean up name
 sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color)
@@ -40,6 +41,33 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
         if(e->type == EventArgs::Type::CURRENT_COLOR_CHANGED)
         {
             reformat();
+        }
+        if(e->type == EventArgs::Type::SET_STAGE)
+        {
+            auto arg = std::dynamic_pointer_cast<SetStageEventArgs>(e);
+            switch(arg->stage)
+            {
+                case 0:
+                    max_size_.x = 1024;
+                    max_size_.y = 435;
+                    offset_ = sf::Vector2f(10, 55);
+                    break;
+                case 1:
+                    max_size_.x = 1024;
+                    max_size_.y = 435;
+                    offset_ = sf::Vector2f(10, 55);
+                    break;
+                case 2:
+                    max_size_.x = 1024;
+                    max_size_.y = 500;
+                    offset_ = sf::Vector2f(0, 15);
+                    break;
+                case 3:
+                    max_size_.x = 1024;
+                    max_size_.y = 500;
+                    offset_ = sf::Vector2f(0, 15);
+                    break;
+            }
         }
         );
     

@@ -125,7 +125,9 @@ dungeon = {
                 on_inspection = function ()
                     --print_line("Through the thick moss you see something shiny. As you approach it you realize it's an axe. ")
                     print_line("An old axe. Probably not very useful. ")
+                    wait(2)
                     print_line("The blade is broken. There is a long crack in it. ")
+                    wait(4)
                     print_line("As fast as you discover your new find, you leave it again. It's not gonna help you anyway. ")
                 end
             },

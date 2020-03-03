@@ -71,6 +71,7 @@ bool sd::Application::setup()
             3,
             CREATE_ROUTINE_BODY(
                 test();
+                return Routine::end;
                 )
             )
         );

@@ -8,6 +8,7 @@
 #include <sol/function.hpp>
 #include "Tilemap.h"
 #include "ScriptEngine/FunctionCollection.h"
+#include "Core/GlobalDefinitions.h"
 
 namespace sd {
     class RoomObject {

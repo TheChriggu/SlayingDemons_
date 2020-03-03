@@ -13,8 +13,12 @@
 namespace sd {
     class Routine : public std::enable_shared_from_this<Routine> {
         public:
-        Routine(std::function<void()> body, float duration, std::function<void(Sp<Routine>)> on_finished_body);
-        virtual ~Routine() = default;
+        constexpr static bool restart = true;
+        constexpr static bool end = false;
+        
+        
+        Routine(std::function<void()> body, float duration, std::function<bool(Sp<Routine>)> on_finished_body);
+        virtual ~Routine();
         
         void start();
         bool process();
@@ -26,7 +30,7 @@ namespace sd {
         float duration_;
         
         std::function<void()> body_;
-        std::function<void(Sp<Routine>)> on_finished_body_;
+        std::function<bool(Sp<Routine>)> on_finished_body_;
     };
 }
 

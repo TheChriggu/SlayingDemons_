@@ -17,9 +17,9 @@ void sd::RoomObject::be_opened()
 {
 
 
-    if (function_collection_->be_opened_signal_.valid())
+    if (function_collection_->is_opened_valid())
     {
-        function_collection_->be_opened_signal_();
+        function_collection_->invoke_opened();
     } else {
         std::shared_ptr<LineToOutputEventArgs> args;
         args = std::make_shared<LineToOutputEventArgs>("You try to open the " + name_ + ".");
@@ -31,9 +31,9 @@ void sd::RoomObject::be_opened()
 
 void sd::RoomObject::be_inspected()
 {
-    if (function_collection_->be_inspected_signal_.valid())
+    if (function_collection_->is_inspected_valid())
     {
-        function_collection_->be_inspected_signal_();
+        function_collection_->invoke_inspected();
     } else {
         std::shared_ptr<LineToOutputEventArgs> args;
         args = std::make_shared<LineToOutputEventArgs>("You try to inspect the " + name_ + ".");
@@ -46,9 +46,9 @@ void sd::RoomObject::be_inspected()
 void sd::RoomObject::be_fought()
 {
 
-    if (function_collection_->be_fought_signal_.valid())
+    if (function_collection_->is_fought_valid())
     {
-        function_collection_->be_fought_signal_();
+        function_collection_->invoke_fought();
     } else {
         std::shared_ptr<LineToOutputEventArgs> args;
         args = std::make_shared<LineToOutputEventArgs>("You attack the " + name_ + ".");
@@ -62,9 +62,9 @@ void sd::RoomObject::be_fought()
 void sd::RoomObject::be_entered()
 {
 
-    if (function_collection_->be_entered_signal_.valid())
+    if (function_collection_->is_entered_valid())
     {
-        function_collection_->be_entered_signal_();
+        function_collection_->invoke_entered();
     } else {
         std::shared_ptr<LineToOutputEventArgs> args;
         args = std::make_shared<LineToOutputEventArgs>("You try to enter the " + name_ + ".");
@@ -76,9 +76,9 @@ void sd::RoomObject::be_entered()
 }
 
 void sd::RoomObject::be_destroyed() {
-    if (function_collection_->be_destroyed_signal_.valid())
+    if (function_collection_->is_destroyed_valid())
     {
-        function_collection_->be_destroyed_signal_();
+        function_collection_->invoke_destroyed();
     }
 }
 

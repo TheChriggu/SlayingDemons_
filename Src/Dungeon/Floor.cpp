@@ -58,12 +58,11 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                 int rotation = object.second.as<sol::lua_table>()["rotation"].get_or(0);
 
                 auto function_collection = std::make_shared<FunctionCollection>(
-                        object.second.as<sol::lua_table>()["on_interaction"],
-                        object.second.as<sol::lua_table>()["on_open"],
-                        object.second.as<sol::lua_table>()["on_inspection"],
-                        object.second.as<sol::lua_table>()["on_fight"],
-                        object.second.as<sol::lua_table>()["on_enter"],
-                        object.second.as<sol::lua_table>()["on_destroy"]
+                        object.second.as<sol::lua_table>()["on_open"].get<sol::coroutine>(),
+                        object.second.as<sol::lua_table>()["on_inspection"].get<sol::coroutine>(),
+                        object.second.as<sol::lua_table>()["on_fight"].get<sol::coroutine>(),
+                        object.second.as<sol::lua_table>()["on_enter"].get<sol::coroutine>(),
+                        object.second.as<sol::lua_table>()["on_destroy"].get<sol::coroutine>()
                 );
 
                 if (size.x == 1 && size.y == 1) {

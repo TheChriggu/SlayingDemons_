@@ -4,6 +4,7 @@
 
 #include <Core/RoutineManager.h>
 #include "FunctionCollection.h"
+#include "ScriptEngine.h"
 
 sd::FunctionCollection::FunctionCollection(sol::coroutine be_opened_signal,
                                            sol::coroutine be_inspected_signal, sol::coroutine be_fought_signal,
@@ -36,16 +37,30 @@ bool sd::FunctionCollection::is_destroyed_valid() const
     return be_destroyed_signal_.valid();
 }
 
-bool sd::FunctionCollection::invoke_opened(std::function<void()> default_reaction)
+bool sd::FunctionCollection::invoke_opened()
 {
-    
-    
-    
-    return false
+    return invoke(be_opened_signal_);
 }
-bool sd::FunctionCollection::invoke_inspected(std::function<void()> default_reaction)
+bool sd::FunctionCollection::invoke_inspected()
 {
-    sol::object result = be_inspected_signal_();
+    return invoke(be_inspected_signal_);
+}
+bool sd::FunctionCollection::invoke_fought()
+{
+    return invoke(be_fought_signal_);
+}
+bool sd::FunctionCollection::invoke_entered()
+{
+    return invoke(be_entered_signal_);
+}
+bool sd::FunctionCollection::invoke_destroyed()
+{
+    return invoke(be_destroyed_signal_);
+}
+
+bool sd::FunctionCollection::invoke(sol::coroutine& coroutine)
+{
+    sol::object result = coroutine();
     
     if (result.is<sol::lua_nil_t>())
         return true;
@@ -55,40 +70,7 @@ bool sd::FunctionCollection::invoke_inspected(std::function<void()> default_reac
     
     if (result.is<float>())
     {
-        RoutineManager::get().start_routine(
-            std::make_shared<Routine>(
-                nullptr,
-                time,
-                std::function<void(Sp<Routine>)>(
-                    [this, default_reaction](Sp<Routine> this_routine) {
-                        sol::object result = be_inspected_signal_();
-                        
-                        if (result.is<float>())
-                        {
-                            this_routine->set_duration(result.as<float>());
-                            this_routine->start();
-                        }
-                        if (result.is<bool>())
-                        {
-                            if (result.as<bool>())
-                                default_reaction();
-                        }
-                    }
-                )
-            )
-        );
+        ScriptEngine::get().start_lua_callback_routine(coroutine, result.as<float>());
     }
-    return false;
-}
-bool sd::FunctionCollection::invoke_fought(std::function<void()> default_reaction)
-{
-    return false;
-}
-bool sd::FunctionCollection::invoke_entered(std::function<void()> default_reaction)
-{
-    return false;
-}
-bool sd::FunctionCollection::invoke_destroyed(std::function<void()> default_reaction)
-{
     return false;
 }

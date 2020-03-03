@@ -71,17 +71,25 @@ void sd::ScriptEngine::set_broadcast_locked(bool locked)
 {
     broadcast_locked_ = locked;
 }
-void sd::ScriptEngine::start_lua_callback_routine(sol::coroutine function, float time) const
+
+void sd::ScriptEngine::start_lua_callback_routine(sol::coroutine& function, float time) const
 {
     RoutineManager::get().start_routine(
         std::make_shared<Routine>(
             nullptr,
             time,
-            CREATE_ROUTINE_BODY(
-                sol::object result = function();
-    
-                if ()
+            std::function<bool(Sp<Routine>)>(
+                [&](Sp<Routine> this_routine) {
+                    sol::object result = function();
+                    
+                    if (result.is<float>())
+                    {
+                        this_routine->set_duration(result.as<float>());
+                        return Routine::restart;
+                    }
+                    return Routine::end;
+                }
             )
-            )
-        );
+        )
+    );
 }

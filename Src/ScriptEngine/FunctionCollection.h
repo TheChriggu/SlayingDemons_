@@ -16,6 +16,8 @@ namespace sd {
         sol::coroutine be_entered_signal_;
         sol::coroutine be_destroyed_signal_;
         
+        bool invoke(sol::coroutine& coroutine);
+        
     public:
         FunctionCollection(sol::coroutine be_opened_signal
                 , sol::coroutine be_inspected_signal, sol::coroutine be_fought_signal
@@ -30,11 +32,11 @@ namespace sd {
         [[nodiscard]] bool is_entered_valid() const;
         [[nodiscard]] bool is_destroyed_valid() const;
         
-        bool invoke_opened(std::function<void()> default_reaction);
-        bool invoke_inspected(std::function<void()> default_reaction);
-        bool invoke_fought(std::function<void()> default_reaction);
-        bool invoke_entered(std::function<void()> default_reaction);
-        bool invoke_destroyed(std::function<void()> default_reaction);
+        bool invoke_opened();
+        bool invoke_inspected();
+        bool invoke_fought();
+        bool invoke_entered();
+        bool invoke_destroyed();
 
     };
 }

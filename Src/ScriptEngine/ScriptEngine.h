@@ -52,7 +52,7 @@ namespace sd {
             }
         }
         
-        void start_lua_callback_routine(sol::coroutine function, float time) const;
+        void start_lua_callback_routine(sol::coroutine& function, float time) const;
     };
 }
 

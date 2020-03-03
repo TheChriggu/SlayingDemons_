@@ -27,6 +27,7 @@ bool sd::Application::run_splash_screens() {
     screen_->clear();
     if(!splash_screens_->DrawTo(screen_->get_texture()))
     {
+        audio_player_ = std::make_shared<AudioPlayer>();
         return false;
     }
     screen_->display();
@@ -89,7 +90,8 @@ bool sd::Application::setup()
     }
 
     ScriptEngine::get().set_broadcast_locked(false);
-    
+
+
     std::cout << "End initialization\n";
     
     return true;

@@ -8,15 +8,33 @@ int main() {
 
     auto app = std::make_shared<sd::Application>();
     auto result = app->setup ();
-
     if (!result) {
-      std::cerr << "Error while setting up Application!" << std::endl;
+        std::cerr << "Error while setting up Application!" << std::endl;
+        return EXIT_FAILURE;
+    }
+    result = app->setup_splash_screens ();
+    if (!result) {
+        std::cerr << "Error while setting up splash screens!" << std::endl;
+        return EXIT_FAILURE;
+    }
+    result = app->setup_main_menu ();
+    if (!result) {
+        std::cerr << "Error while setting up main menu!" << std::endl;
         return EXIT_FAILURE;
     }
 
+
+    while (app->run_splash_screens ())
+    {}
+
+
+    while (app->run_main_menu ())
+    {}
+
+
+
     while (app->run ())
-    {
-    }
+    {}
     
     std::string text{"Inspect northern_way   "};
     
@@ -40,3 +58,4 @@ int main() {
 
     return EXIT_SUCCESS;
 }
+

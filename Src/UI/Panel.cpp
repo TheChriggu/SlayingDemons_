@@ -4,6 +4,8 @@
 
 #include <ScriptEngine/ScriptEngine.h>
 #include "Panel.h"
+#include "Event/SetStageEventArgs.h"
+#include "Event/EventSystem.h"
 
 // TODO(FK): clean up name
 sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, sf::Color color)
@@ -35,8 +37,33 @@ sd::Panel::Panel(sf::Vector2f position, sf::Vector2f size, const char* texture_p
     : DrawableObject("Panel")
 {
     texture_ = std::make_shared<sf::Texture>();
-    texture_->loadFromFile(texture_path);
-    texture_->setRepeated(true);
+
+
+    std::string path(texture_path);
+    if(path.find("Progressing") != std::string::npos)
+    {
+        path_ = path;
+        event_handler_ = CREATE_EVENT_HANDLER(
+         if (e->type == EventArgs::Type::SET_STAGE)
+         {
+             if (e->type == EventArgs::Type::SET_STAGE) {
+                 auto arg = std::dynamic_pointer_cast<SetStageEventArgs>(e);
+
+                 texture_->loadFromFile(path_ + std::to_string(arg->stage) + ".png");
+             }
+         }
+         );
+
+        REGISTER_EVENT_HANDLER();
+
+        path += "0.png";
+        texture_->loadFromFile(path);
+    }
+    else{
+        texture_->loadFromFile(texture_path);
+    }
+
+    //texture_->setRepeated(true);
     sprite_ = std::make_shared<sf::Sprite>();
     sprite_->setTexture(*texture_);
     sprite_->setPosition(position);

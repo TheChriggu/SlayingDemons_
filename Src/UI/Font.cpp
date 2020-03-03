@@ -5,6 +5,7 @@
 #include "Font.h"
 #include <Event/EventSystem.h>
 #include <Event/FontsCreatedEventArgs.h>
+#include "../Event/SetStageEventArgs.h"
 
 sd::Font::Font() {
     fantasy_font_ = std::make_shared<sf::Font>();
@@ -17,6 +18,30 @@ sd::Font::Font() {
     {
         std::cout << "could not load code font.\n";
     }
+
+    current_font_ = fantasy_font_;
+
+    event_handler_ = CREATE_EVENT_HANDLER(
+                             if (e->type == EventArgs::Type::SET_STAGE) {
+                                 auto arg = std::dynamic_pointer_cast<SetStageEventArgs>(e);
+                                 switch(arg->stage)
+                                 {
+                                     case 0:
+                                         current_font_ = fantasy_font_;
+                                         break;
+
+                                     case 1:
+                                         current_font_ = cyber_font_;
+                                         break;
+                                 }
+
+                                 auto args = std::make_shared<EventArgs>();
+                                 args->type = sd::EventArgs::Type::CURRENT_FONT_CHANGED;
+                                 EventSystem::get().trigger(args);
+                             }
+                     );
+
+    REGISTER_EVENT_HANDLER();
 
 
     //EventSystem::get().trigger(std::make_shared<FontsCreatedEventArgs>(weak_from_this()));
@@ -48,5 +73,5 @@ Sp<sf::Font> sd::Font::GetFont(std::string font) {
 }
 
 Sp<sf::Font> sd::Font::GetCurrentFont() {
-    return fantasy_font_;
+    return current_font_;
 }

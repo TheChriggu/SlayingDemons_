@@ -10,6 +10,7 @@
 #include <Event/LineToOutputEventArgs.h>
 #include <ScriptEngine/ScriptEngine.h>
 #include <Event/FontsCreatedEventArgs.h>
+#include <Event/ColorsCreatedEventArgs.h>
 
 //TODO(CH): Lines have to move up, when max is reached.
 // TODO(FK): clean up name
@@ -28,6 +29,19 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
             auto arg = std::dynamic_pointer_cast<FontsCreatedEventArgs>(e);
             fonts_ = Sp<Font>(arg->fonts);
         }
+        if (e->type == EventArgs::Type::COLORS_CREATED) {
+            auto arg = std::dynamic_pointer_cast<ColorsCreatedEventArgs>(e);
+           colors_ = Sp<Colors>(arg->colors);
+        }
+        if(e->type == EventArgs::Type::CURRENT_FONT_CHANGED)
+        {
+            reformat();
+        }
+
+        if(e->type == EventArgs::Type::CURRENT_COLOR_CHANGED)
+        {
+            reformat();
+        }
         );
     
     REGISTER_EVENT_HANDLER();
@@ -42,18 +56,10 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
 bool sd::TextOutput::setup() {
   ScriptEngine::get().register_all ("print_line", &TextOutput::print_line, this);
 
-    //font_ = std::make_shared<sf::Font>();
-
-    /*if (!font_->loadFromFile("../Resources/Fonts/comic.ttf"))
-    {
-        std::cout << "Could not load Font!\n";
-        return false;
-    }*/
-
     lines_.push_back(std::make_shared<FormattedLine>(
         "",
         sf::Vector2f(start_position_ + sf::Vector2f(20, 20)),
-        max_size_, fonts_));
+        max_size_, fonts_, colors_));
 
     // Trigger TextOutput Created Event
     EventSystem::get().trigger(std::make_shared<TextOutputCreatedEventArgs>(weak_from_this()));
@@ -67,8 +73,6 @@ bool sd::TextOutput::setup() {
 
 void sd::TextOutput::draw_to(Sp<sf::RenderTarget> window) const {
     text_tex_->clear(sf::Color::Transparent);
-
-
 
     for (const auto& line : lines_)
     {
@@ -92,7 +96,7 @@ void sd::TextOutput::add_line(std::string string) {
         string, sf::Vector2f(
             lines_.back ()->get_rect ().left,
             lines_.back ()->get_rect ().top + lines_.back ()->get_rect ().height),
-        max_size_,fonts_
+        max_size_,fonts_, colors_
     );
 
     //format line
@@ -108,7 +112,7 @@ void sd::TextOutput::add_line(std::string string) {
 
 void sd::TextOutput::print_line(std::string string) {
     //sf::String temp(string);
-  add_line (string);
+    add_line (string);
 }
 
 void sd::TextOutput::handle(sf::Event event) {
@@ -119,8 +123,7 @@ void sd::TextOutput::handle(sf::Event event) {
 }
 
 sf::Vector2f sd::TextOutput::get_position() {
-    //TODO(CH): GetPosition function. Based on lines? or saved in variable?
-    return sf::Vector2f();
+    return start_position_;
 }
 
 sf::Vector2f sd::TextOutput::get_size() {
@@ -145,6 +148,29 @@ sf::Vector2f sd::TextOutput::get_size() {
 void sd::TextOutput::move_vertical(float distance) {
     for(const auto& line : lines_){
         line->move_vertical (distance);
+    }
+}
+
+void sd::TextOutput::reformat() {
+
+    std::vector<std::string> lines;
+
+    for (auto line : lines_)
+    {
+        lines.push_back(line -> get_line());
+    }
+
+    lines_.clear();
+
+    lines_.push_back(std::make_shared<FormattedLine>(
+            "",
+            sf::Vector2f(start_position_ + sf::Vector2f(20, 20)),
+            max_size_, fonts_, colors_));
+
+    for (auto line : lines)
+    {
+        add_line(line);
+        std::cout << line << "\n";
     }
 }
 

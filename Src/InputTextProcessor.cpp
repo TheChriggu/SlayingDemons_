@@ -43,7 +43,7 @@ sd::InputTextProcessor::InputTextProcessor() : Subscriber()
 void sd::InputTextProcessor::process_input(const std::string &spell)
 {
     
-    output_->add_line("[b]> " + spell + "[/b]");
+    output_->add_line("[input]> " + spell);
     //split spell
     std::vector<std::string> words = split_by_space(spell);
     

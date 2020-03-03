@@ -25,6 +25,8 @@ namespace sd {
         void unlock_door(std::string room_name, std::string door_name);
 
         void set_floor(std::string floor_name);
+
+        void set_stage(int stage);
     };
 }
 

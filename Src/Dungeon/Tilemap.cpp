@@ -4,13 +4,15 @@
 
 #include <iostream>
 #include "Tilemap.h"
+#include "Event/SetStageEventArgs.h"
+#include <Event/EventSystem.h>
 
 sd::Tilemap::Tilemap(unsigned int width, unsigned int height, sf::Vector2f position, sf::Vector2u tile_size)
     : width_(width)
     , height_(height)
     , tile_size_(tile_size)
 {
-    std::cout << "Start contructor Tilemap\n";
+    std::cout << "Start constructor Tilemap\n";
     //layout_ = new int[width_ * height_];
     layout_ = std::vector<TileData>(width_ * height_);
     position_ = position;
@@ -21,10 +23,20 @@ sd::Tilemap::Tilemap(unsigned int width, unsigned int height, sf::Vector2f posit
     
     
     std::vector<TileData> default_layout = {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
-    load_sprite_sheet("../Resources/Sprites/fantasy_tilemap.png");
+    load_sprite_sheet("../Resources/Sprites/Progressing/spritesheet_0.png");
     set_layout(default_layout, width_ * height_);
     set_all_quad_positions();
-    std::cout << "End contructor Tilemap\n";
+    std::cout << "End constructor Tilemap\n";
+
+    event_handler_ = CREATE_EVENT_HANDLER(
+    if (e->type == EventArgs::Type::SET_STAGE) {
+                auto arg = std::dynamic_pointer_cast<SetStageEventArgs>(e);
+                auto path = "../Resources/Sprites/Progressing/spritesheet_" + std::to_string(arg->stage) + ".png";
+                load_sprite_sheet(path);
+            }
+            );
+
+    REGISTER_EVENT_HANDLER();
 }
 
 

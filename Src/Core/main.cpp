@@ -18,8 +18,7 @@ void write_data(std::vector<std::string> data);
 
 int main() {
     startup();
-
-
+    
     auto app = std::make_shared<sd::Application>();
     auto result = app->setup ();
     if (!result) {
@@ -31,22 +30,9 @@ int main() {
         std::cerr << "Error while setting up splash screens!" << std::endl;
         return EXIT_FAILURE;
     }
-    result = app->setup_main_menu ();
-    if (!result) {
-        std::cerr << "Error while setting up main menu!" << std::endl;
-        return EXIT_FAILURE;
-    }
-
 
     while (app->run_splash_screens ())
     {}
-
-
-    while (app->run_main_menu ())
-    {}
-
-
-
     while (app->run ())
     {}
     

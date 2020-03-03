@@ -10,11 +10,12 @@
 
 class SplashScreens {
 private:
-    sf::Clock* clock;
-    sf::Texture team_texture;
-    sf::Texture school_texture;
-    sf::Sprite school_logo;
-    sf::Sprite team_logo;
+    sf::Clock* clock_;
+    sf::Texture team_texture_;
+    sf::Texture school_texture_;
+    sf::Sprite school_logo_;
+    sf::Sprite team_logo_;
+    sf::Shader shader_;
 
 public:
     SplashScreens();

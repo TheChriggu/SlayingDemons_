@@ -2,34 +2,42 @@
 // Created by christian.heusser on 03.03.2020.
 //
 
+#include <iostream>
 #include "SplashScreens.h"
 
 SplashScreens::SplashScreens() {
     //sf::Texture team_texture;
-    team_texture.loadFromFile("../Resources/Sprites/StartUp/team_logo.png");
+    team_texture_.loadFromFile("../Resources/Sprites/StartUp/team_logo.png");
 
     //sf::Texture school_texture;
-    school_texture.loadFromFile("../Resources/Sprites/StartUp/school_logo.png");
+    school_texture_.loadFromFile("../Resources/Sprites/StartUp/school_logo.png");
 
-    team_logo.setTexture(team_texture);
-    school_logo.setTexture(school_texture);
+    team_logo_.setTexture(team_texture_);
+    school_logo_.setTexture(school_texture_);
 
-    clock = new sf::Clock();
+    clock_ = new sf::Clock();
+
+    if(!shader_.loadFromFile("../Resources/Shaders/mainVertexShader.vert", "../Resources/Shaders/fade_in_and_out.frag"))
+    {
+        std::cout << "!!!!could not load fade_in_and_out_shader shader\n";
+    }
 }
 
 SplashScreens::~SplashScreens() {
-    delete(clock);
+    delete(clock_);
 }
 
 bool SplashScreens::DrawTo(Sp<sf::RenderTarget> window) {
-    if(clock->getElapsedTime().asSeconds () < 5)
+    shader_.setUniform("time", clock_->getElapsedTime().asSeconds());
+
+    if(clock_->getElapsedTime().asSeconds () < 5)
     {
-        window->draw(team_logo);
+        window->draw(team_logo_, &shader_);
         return true;
     }
-    else if(clock->getElapsedTime().asSeconds () < 10)
+    else if(clock_->getElapsedTime().asSeconds () < 10)
     {
-        window->draw(school_logo);
+        window->draw(school_logo_, &shader_);
         return true;
     }
 

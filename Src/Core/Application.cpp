@@ -38,13 +38,6 @@ bool sd::Application::run_splash_screens() {
     //end
     return true;
 }
-bool sd::Application::setup_main_menu() {
-    return true;
-}
-
-bool sd::Application::run_main_menu() {
-    return false;
-}
 
 bool sd::Application::setup()
 {

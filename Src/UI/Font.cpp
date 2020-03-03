@@ -23,7 +23,7 @@ sd::Font::Font() {
     ai_font_->loadFromFile("../Resources/Fonts/Quantico-Regular.ttf");
 
 
-    current_font_ = book_font;
+    current_font_ = fantasy_font_;
 
     event_handler_ = CREATE_EVENT_HANDLER(
                              if (e->type == EventArgs::Type::SET_STAGE) {

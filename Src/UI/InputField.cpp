@@ -180,21 +180,21 @@ void sd::InputField::handle(sf::Event event) {
             text_->setString(input);
         }
     }
+    else if(event.type == sf::Event::TextEntered)
+    {
+        add_text (event.text.unicode);
+    }
     else if (event.key.code == sf::Keyboard::Right)
     {
         if (event.type == sf::Event::KeyPressed)
         {
             possible_words_->update_search_prefix(text_->getString().toAnsiString());
-            
+
             auto input = text_->getString();
             input += possible_words_->complete_first_possible_word();
             text_->setString(input);
             possible_words_->update_search_prefix(input.toAnsiString());
         }
-    }
-    else if(event.type == sf::Event::TextEntered)
-    {
-        add_text (event.text.unicode);
     }
 }
 

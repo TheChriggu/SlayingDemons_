@@ -29,7 +29,7 @@ void sd::FormattedLine::draw_to(const Sp<sf::RenderTarget>& window) {
 void sd::FormattedLine::format_line(std::string string, Sp<Font> fonts, Sp<Colors> colors) {
     sd::Format format;
     format.style_ = sf::Text::Regular;
-    format.size_ = 25;
+    format.size_ = 18;
     format.on_click_text_ = "";
     format.color_ = colors->GetCurrentColor();
     format.font_ = fonts->GetCurrentFont();
@@ -101,7 +101,7 @@ void sd::FormattedLine::handle(sf::Event event) {
 
 void sd::FormattedLine::set_font_size_color(Sp<Font> fonts, int size, Sp<Colors> colors) {
     sd::Format format;
-    format.size_ = 25;
+    format.size_ = 18;
     format.color_ = colors->GetCurrentColor();
     format.font_ = fonts->GetCurrentFont();
     for(const auto& word : words_)

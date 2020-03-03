@@ -13,6 +13,32 @@
 #include <Event/FontsCreatedEventArgs.h>
 #include <Event/ColorsCreatedEventArgs.h>
 
+bool sd::Application::setup_splash_screens() {
+    splash_screens_ = std::make_shared<SplashScreens>();
+    return true;
+}
+bool sd::Application::run_splash_screens() {
+    if (!window_->isOpen())
+    {
+        return false;
+    }
+
+    //Draw Components
+    screen_->clear();
+    if(!splash_screens_->DrawTo(screen_->get_texture()))
+    {
+        return false;
+    }
+    screen_->display();
+
+    window_->clear();
+    screen_->draw_to(window_);
+    window_->display();
+
+    //end
+    return true;
+}
+
 bool sd::Application::setup()
 {
     bool result = false;
@@ -68,6 +94,8 @@ bool sd::Application::setup()
     
     return true;
 }
+
+
 
 bool sd::Application::run()
 {
@@ -218,5 +246,11 @@ bool sd::Application::setup_scene()
     //possibleWords->Update();
     return true;
 }
+
+
+
+
+
+
 
 

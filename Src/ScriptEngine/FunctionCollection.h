@@ -9,19 +9,32 @@
 
 namespace sd {
     class FunctionCollection {
+    
+        sol::coroutine be_opened_signal_;
+        sol::coroutine be_inspected_signal_;
+        sol::coroutine be_fought_signal_;
+        sol::coroutine be_entered_signal_;
+        sol::coroutine be_destroyed_signal_;
+        
     public:
-        sol::function be_interacted_with_signal_;
-        sol::function be_opened_signal_;
-        sol::function be_inspected_signal_;
-        sol::function be_fought_signal_;
-        sol::function be_entered_signal_;
-        sol::function be_destroyed_signal_;
-
-        FunctionCollection(sol::function be_interacted_with_signal, sol::function be_opened_signal
-                , sol::function be_inspected_signal, sol::function be_fought_signal
-                , sol::function be_entered_signal, sol::function be_destroyed_signal);
+        FunctionCollection(sol::coroutine be_opened_signal
+                , sol::coroutine be_inspected_signal, sol::coroutine be_fought_signal
+                , sol::coroutine be_entered_signal, sol::coroutine be_destroyed_signal);
 
         virtual ~FunctionCollection() = default;
+        
+        
+        [[nodiscard]] bool is_opened_valid() const;
+        [[nodiscard]] bool is_inspected_valid() const;
+        [[nodiscard]] bool is_fought_valid() const;
+        [[nodiscard]] bool is_entered_valid() const;
+        [[nodiscard]] bool is_destroyed_valid() const;
+        
+        bool invoke_opened(std::function<void()> default_reaction);
+        bool invoke_inspected(std::function<void()> default_reaction);
+        bool invoke_fought(std::function<void()> default_reaction);
+        bool invoke_entered(std::function<void()> default_reaction);
+        bool invoke_destroyed(std::function<void()> default_reaction);
 
     };
 }

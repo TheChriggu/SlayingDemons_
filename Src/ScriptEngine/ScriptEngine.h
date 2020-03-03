@@ -51,6 +51,8 @@ namespace sd {
                 script->register_function (std::forward<Key> (key), std::forward<Args> (args)...);
             }
         }
+        
+        void start_lua_callback_routine(sol::coroutine function, float time) const;
     };
 }
 

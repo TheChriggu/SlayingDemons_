@@ -5,6 +5,7 @@
 #include "ScriptEngine.h"
 #include "IO/FileInput.h"
 #include <memory>
+#include <Core/RoutineManager.h>
 
 sd::ScriptEngine::ScriptEngine() {
     if (!instance_)
@@ -69,4 +70,18 @@ Up<sd::ScriptEngine> sd::ScriptEngine::instance_ = nullptr;
 void sd::ScriptEngine::set_broadcast_locked(bool locked)
 {
     broadcast_locked_ = locked;
+}
+void sd::ScriptEngine::start_lua_callback_routine(sol::coroutine function, float time) const
+{
+    RoutineManager::get().start_routine(
+        std::make_shared<Routine>(
+            nullptr,
+            time,
+            CREATE_ROUTINE_BODY(
+                sol::object result = function();
+    
+                if ()
+            )
+            )
+        );
 }

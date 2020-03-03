@@ -10,8 +10,8 @@
 #include "Routine.h"
 
 #define CREATE_ROUTINE_BODY(content) \
-std::function<void()>( \
-    [&]() { \
+std::function<void(Sp<Routine>)>( \
+    [&](Sp<Routine> this_routine) { \
         content \
         } \
     ) \

@@ -10,24 +10,8 @@
 sd::RoomObject::RoomObject(std::string name, sf::Vector2i position, Sp<FunctionCollection> function_collection)
     : name_(std::move(name))
     , position_on_tile_map_(position)
-    , function_collection_(function_collection)
+    , function_collection_(std::move(function_collection))
 { }
-
-void sd::RoomObject::be_interacted_with()
-{
-
-    
-    if (function_collection_->be_interacted_with_signal_.valid())
-    {
-        function_collection_->be_interacted_with_signal_();
-    } else {
-        std::shared_ptr<LineToOutputEventArgs> args;
-        args = std::make_shared<LineToOutputEventArgs>("You try to interact with the " + name_ + ".");
-        EventSystem::get().trigger(args);
-        args = std::make_shared<LineToOutputEventArgs>("No reaction.");
-        EventSystem::get().trigger(args);
-    }
-}
 
 void sd::RoomObject::be_opened()
 {

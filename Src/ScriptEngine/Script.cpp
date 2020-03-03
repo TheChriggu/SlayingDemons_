@@ -7,16 +7,20 @@
 
 Script::Script(const std::string& name) {
     state_ = std::make_unique<sol::state>();
-    state_->open_libraries(sol::lib::base);
+    state_->open_libraries(sol::lib::base, sol::lib::coroutine);
 
     name_ = name;
+    // insert helper functions
+    state_->script(R"(function wait(seconds) coroutine.yield(seconds) end)");
 }
 
 Script::Script(const std::string& name, const std::string& content) {
     state_ = std::make_unique<sol::state>();
-    state_->open_libraries(sol::lib::base);
+    state_->open_libraries(sol::lib::base, sol::lib::coroutine);
 
     name_ = name;
+    // insert helper functions
+    state_->script(R"(function wait(seconds) coroutine.yield(seconds) end)");
     state_->script(content);
 }
 

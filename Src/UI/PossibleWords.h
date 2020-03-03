@@ -18,6 +18,7 @@ namespace sd {
         Sp<PlayerVocabulary> player_vocabulary_;
         Sp<PlayerState> player_state_;
         Sp<Font> fonts_;
+        Sp<Colors> colors_;
 
         Sp<sf::Sprite> sprite_;
         Sp<sf::Texture> texture_;
@@ -34,7 +35,7 @@ namespace sd {
         int loop_iterator_;
 
     public:
-        PossibleWords(sf::Vector2f position, sf::Vector2f size, const std::string& path_to_background);
+        PossibleWords(sf::Vector2f position, sf::Vector2f size);
         ~PossibleWords() override = default;
 
         bool setup() override;

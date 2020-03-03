@@ -7,6 +7,7 @@
 #include <Event/PlayerStateCreatedEventArgs.h>
 #include "World.h"
 #include <Event/DoorUnlockedEventArgs.h>
+#include <Event/SetStageEventArgs.h>
 
 sd::World::World() : Subscriber(){
     
@@ -82,6 +83,7 @@ bool sd::World::setup() {
 
     ScriptEngine::get().register_all("unlock_door", &World::unlock_door, this);
     ScriptEngine::get().register_all("set_floor", &World::set_floor, this);
+    ScriptEngine::get().register_all("set_stage", &World::set_stage, this);
 
     return true;
 }
@@ -104,4 +106,10 @@ void sd::World::set_floor(std::string floor_name) {
             player_state_->save_current_vocab();
         }
     }
+}
+
+void sd::World::set_stage(int stage) {
+    std::shared_ptr<SetStageEventArgs> args;
+    args = std::make_shared<SetStageEventArgs>(stage);
+    EventSystem::get().trigger(args);
 }

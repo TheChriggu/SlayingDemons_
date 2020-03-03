@@ -5,15 +5,17 @@
 #include <Event/PlayerVocabChangedEventArgs.h>
 #include <Event/PlayerStateCreatedEventArgs.h>
 #include <Event/FontsCreatedEventArgs.h>
+#include <Event/ColorsCreatedEventArgs.h>
 #include <Event/PossibleWordsCreatedEventArgs.h>
 #include <Event/EventSystem.h>
 #include <ScriptEngine/ScriptEngine.h>
 #include <regex>
 #include <InputTextProcessor.h>
 #include "PossibleWords.h"
+#include "Event/SetStageEventArgs.h"
 
 // TODO(FK): clean up name
-sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size, const std::string& path_to_background)
+sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size)
     : DrawableObject("possible-words")
     , Subscriber()
     , position_(position)
@@ -50,9 +52,21 @@ sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size, const
             auto arg = std::dynamic_pointer_cast<FontsCreatedEventArgs>(e);
             fonts_ = Sp<Font>(arg->fonts);
         }
-        /*if (e->type == EventArgs::Type::CLICKABLE_WORD_CLICKED) {
-            can_handle_events = false;
-        }*/
+        if (e->type == EventArgs::Type::COLORS_CREATED) {
+            auto arg = std::dynamic_pointer_cast<ColorsCreatedEventArgs>(e);
+            colors_ = Sp<Colors>(arg->colors);
+        }
+        if (e->type == EventArgs::Type::SET_STAGE) {
+            auto arg = std::dynamic_pointer_cast<SetStageEventArgs>(e);
+            auto path = "../Resources/Sprites/Progressing/input_" + std::to_string(arg->stage) + ".png";
+            texture_->loadFromFile(path);
+        }
+         if(e->type == EventArgs::Type::SET_STAGE) {
+             for(auto line : lines_)
+             {
+                 line->set_font_size_color(fonts_, 24, colors_);
+             }
+         }
         );
     
     REGISTER_EVENT_HANDLER();
@@ -66,7 +80,7 @@ sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size, const
 
 bool sd::PossibleWords::setup() {
 
-    texture_->loadFromFile("../Resources/Sprites/fantasy_input.png");
+    texture_->loadFromFile("../Resources/Sprites/Progressing/input_0.png");
     sprite_->setTexture(*texture_, false);
     sprite_->setPosition(position_);
     
@@ -125,7 +139,7 @@ void sd::PossibleWords::update(std::vector<std::string>& content) {
                 "[button=" + word + "]" + word + "[/button]",
                 sf::Vector2f(position_ + offset),
                 sf::Vector2f(1000,1000),
-                        fonts_));
+                        fonts_, colors_));
         offset.y += 30;
     }
 

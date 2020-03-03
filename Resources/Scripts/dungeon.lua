@@ -78,6 +78,9 @@ dungeon = {
         Southern_Forest={
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
 
+            --Spieler betritt Wald und fragt sich warum er hier ist
+            --Spiel zählt Items und Spells auf mit dem der Wizard ein los geschickt hat
+
             northern_way = {
                 position = {x = 5,y = 0},
                 layout = door_layout,
@@ -118,7 +121,7 @@ dungeon = {
                 layout= axe_layout,
 
                 on_inspection = function ()
-                    --print_line("Through the thick moss you see something shiny. As you approach it you realize it's an axe. ")
+                    print_line("Through the thick moss you see something shiny. As you approach it you realize it's an axe. ")
                     print_line("An old axe. Probably not very useful. ")
                     print_line("The blade is broken. There is a long crack in it. ")
                     print_line("As fast as you discover your new find, you leave it again. It's not gonna help you anyway. ")
@@ -196,11 +199,11 @@ dungeon = {
             Goblin = {
                 position = {x = 5, y = 3},
                 layout = enemy_layout,
-                --on_interaction = function()
-                    --print_line("You walk to the Goblin, wanting to wish him a merry day.")
-                    --print_line("He does not understand your intentions. A fight ensues.")
-                    --start_new_fight("Goblin")
-                --end,
+                on_interaction = function()
+                    print_line("You walk to the Goblin, wanting to wish him a merry day.")
+                    print_line("He does not understand your intentions. A fight ensues.")
+                    start_new_fight("Goblin")
+                end,
 
                 on_open = function()
                     print_line("You try to open the Goblin. This fails, for obvious reasons.")
@@ -253,6 +256,9 @@ dungeon = {
         Eastern_Forest = {
             layout = { {0, 0}, {7, 0}, {7, 6}, {0, 6}},
 
+            -- Spieler betritt den Raum
+            -- Spieler sieht dabei einen blockierten Weg
+
             southern_way = {
                 position = {x = 1,y = 6},
                 layout = door_layout,
@@ -272,9 +278,6 @@ dungeon = {
                     print_line("You walk to the north and enter a new room.")
                 end
             },
-
-            -- Angucken des Raums allgemein
-            -- Spieler sieht dabei einen blockierten Weg
         },
 
         deep_forest = {
@@ -381,7 +384,10 @@ dungeon = {
                     print_line("But it's in walking distance. You could reach it in maybe 30 minutes.")
                     set_glitch_on("output-panel")
 
-                    -- AI schaltet sich dazu
+                    --AI schaltet sich dazu
+                    --AI erklärt dem Spieler er ist nicht dazu befugt diese Map zu finden
+                    --Setzt ihn zum Anfang des Levels zurück
+                    --Glitch
                     --set_floor("dungeon_2")
                 end
             },
@@ -392,6 +398,9 @@ dungeon = {
 
         Southern_Forest={
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
+
+            --Spiel startet am Anfang vom Wald
+            --Spiel zählt Items und Spells auf mit dem der Wizard ein los geschickt hat
 
             northern_way = {
                 position = {x = 5,y = 0},
@@ -433,7 +442,7 @@ dungeon = {
                 layout= axe_layout,
 
                 on_inspection = function ()
-                    --print_line("Through the thick moss you see something shiny. As you approach it you realize it's an axe. ")
+                    print_line("Through the thick moss you see something shiny. As you approach it you realize it's an axe. ")
                     print_line("An old axe. Probably not very useful. ")
                     print_line("The blade is broken. There is a long crack in it. ")
                     print_line("As fast as you discover your new find, you leave it again. It's not gonna help you anyway. ")
@@ -456,7 +465,7 @@ dungeon = {
                 is_locked=true,
 
                 on_inspection = function ()
-                    print_line("You can see a path behind this bush. But you'll first have to remove it. ")
+                    print_line("You can see a path behind this bush. But you'll first have to remove it.")
                     print_line("You could try to use some spells on it. ")
                 end,
 
@@ -506,14 +515,14 @@ dungeon = {
                 end
             },
 
-            Goblin = {
+            goblin = {
                 position = {x = 5, y = 3},
                 layout = enemy_layout,
-                --on_interaction = function()
-                    --print_line("You walk to the Goblin, wanting to wish him a merry day.")
-                    --print_line("He does not understand your intentions. A fight ensues.")
-                    --start_new_fight("Goblin")
-                --end,
+                on_interaction = function()
+                    print_line("You walk to the Goblin, wanting to wish him a merry day.")
+                    print_line("He does not understand your intentions. A fight ensues.")
+                    start_new_fight("Goblin")
+                end,
 
                 on_open = function()
                     print_line("You try to open the Goblin. This fails, for obvious reasons.")
@@ -649,7 +658,12 @@ dungeon = {
                 position = {x = 9, y = 3 },
                 layout = enemy_layout,
                 on_interaction = function()
-                    start_new_fight("Goblin")
+                    start_new_fight("Cyber Goblin")
+                end,
+
+                on_inspection = function ()
+                    print_line("To you the goblin looks strange.")
+                    print_line("It flickers and is more transparent, than the ones you have seen before.")
                 end
             }
         },
@@ -708,6 +722,8 @@ dungeon = {
             }
 
             --AI meckert
+            --Game restarts
+            --Game loads personal_id.txt
             --set_floor("dungeon_3")
         },
     },
@@ -912,7 +928,12 @@ dungeon = {
                     layout = table_layout,
                 },
 
-                -- AI erzeugt Glitches, lädt Level neu
+                --Fight erzeugt Glitch
+                --Pfad zur personal id txt file wird angezeigt
+                --Spieler minimiert das Spiele
+                --Spieler löscht Ordner
+                --Spieler öffnet Spiel wieder
+                --AI erzeugt Glitches, meckert, lädt Level neu
                 --set_floor("dungeon_4")
             },
     },
@@ -920,6 +941,9 @@ dungeon = {
     dungeon_4={
         first_room = {
             layout = { {0, 0}, {10, 0}, {10, 6}, {0, 6}},
+            
+            --AI registriert löschen des Ordners
+            --AI ist sich sicher dass der Spieler ihn nicht aufhalten kann
 
             chest ={
                 position = {x = 2, y = 1},
@@ -935,6 +959,8 @@ dungeon = {
         second_room = {
             layout = { {0, 0}, {5, 0}, {5, 6}, {0, 6}},
             
+            --AI beginnt das Senden der Dateien zum Hauptserver
+
             --selfdestruct.txt
             selfdestruct = {
                 position = {x=4, y=1},
@@ -945,7 +971,13 @@ dungeon = {
                 end
             },
 
-            chest = {
+            --Nach Mimis bekämpft
+            --RGB Glitches
+            --AI ist sich trotzdem sigessicher
+            --Spieler bekommt Nachricht dass die Firewall der AI deaktiviert wurde
+
+            --mimicry_chest.png
+            mimicry_chest = {
                 position = {x=2, y=4},
                 layout = enemy_layout,
 
@@ -955,7 +987,8 @@ dungeon = {
                 end,
             },
 
-            plant = {
+            --mimicry_plant.png
+            mimicry_plant = {
                 position = {x=2, y=2},
                 layout = enemy_layout,
 
@@ -968,14 +1001,22 @@ dungeon = {
         third_room = {
             layout = { {0, 1}, {8, 1}, {8, 5}, {0, 5}},
 
+            --Spieler betritt Raum
+            --Sieht einen komplett verglitchten Goblin
+            --AI begrüßt Spieler
+
             goblin = {
                 position = {x=3, y=3},
                 layout = enemy_layout,
 
                 on_fight = function()
                     print_line("As you approach the plant it starts baring it's teeth.")
-                    --AI Fight
                     start_new_fight("Cyber Goblin")
+                    --AI Fight
+                    --nach 3 Attacken glitcht die Battleview, Pfad zum spell.txt wird angezeigt
+                    --Player adds selfdestruct zur txt
+                    --benutzt selfdestruct im Kampf
+                    --Spiel zerstört sich selbst
                 end,
             }
         },

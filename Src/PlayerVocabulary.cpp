@@ -95,17 +95,18 @@ bool sd::PlayerVocabulary::has_word(const std::string& word) {
     return false;
 }
 
-void sd::PlayerVocabulary::add_action(const std::string& action) {
+void sd::PlayerVocabulary::add_action(std::string action) {
+
     actions_.emplace_back(action);
     actions_trie_->add_word(action);
 }
 
-void sd::PlayerVocabulary::add_modifier(const std::string& modifier) {
+void sd::PlayerVocabulary::add_modifier(std::string modifier) {
     modifiers_.emplace_back(modifier);
     modifiers_trie_->add_word(modifier);
 }
 
-void sd::PlayerVocabulary::add_command(const std::string& word) {
+void sd::PlayerVocabulary::add_command(std::string word) {
     commands_.emplace_back(word);
     commands_trie_->add_word(word);
 }
@@ -169,21 +170,29 @@ void sd::PlayerVocabulary::load_from_file()
     auto vec = FileInput::load_tsv("../Resources/Tables/PlayerVocab.tsv");
 
     actions_trie_.reset();
+    actions_trie_ = std::make_shared<Trie>();
     modifiers_trie_.reset();
+    modifiers_trie_ = std::make_shared<Trie>();
     commands_trie_.reset();
+    commands_trie_ = std::make_shared<Trie>();
+
 
     for(auto modifier :  (*vec)[0])
     {
-        add_modifier(modifier);
+        std::string copy = modifier;
+        add_modifier(copy);
     }
     for(auto action :  (*vec)[1])
     {
-        add_modifier(action);
+        std::string copy = action;
+        add_action(copy);
     }
     for(auto command :  (*vec)[2])
     {
-        add_modifier(command);
+        std::string copy = command;
+        add_command(copy);
     }
+    std::cout << "words added\n";
 }
 
 std::vector<std::string> &sd::PlayerVocabulary::get_objects()

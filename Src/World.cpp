@@ -15,7 +15,7 @@ sd::World::World() : Subscriber(){
         if (e->type == EventArgs::Type::PLAYER_DIED)
         {
             //reset player
-            //player_state_->load_vocab();
+            player_state_->load_vocab();
         
             //reset floor
             int i = 0;

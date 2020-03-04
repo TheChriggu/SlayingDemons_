@@ -11,6 +11,7 @@ sd::Monster::Monster(std::string path_to_portrait, std::string alias, std::strin
     alias_ = alias;
     gender_ = gender;
     name_ = name;
+    room_object_to_remove_on_defeat_ = "";
 }
 
 std::string sd::Monster::get_action() {
@@ -48,4 +49,12 @@ std::string sd::Monster::get_gender() {
 
 std::string sd::Monster::get_name() {
     return name_;
+}
+
+std::string sd::Monster::get_room_object_to_remove_on_defeat() {
+    return room_object_to_remove_on_defeat_;
+}
+
+void sd::Monster::set_room_object_to_remove_on_defeat(std::string room_object_to_remove_on_defeat) {
+    room_object_to_remove_on_defeat_ = room_object_to_remove_on_defeat;
 }

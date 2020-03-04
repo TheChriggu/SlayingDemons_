@@ -73,7 +73,7 @@ bushDoor_layout = {
 
 dungeon = {
     floor1 = {
-        --is_start = true,
+        is_start = true,
 
         Southern_Forest={
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
@@ -95,6 +95,7 @@ dungeon = {
 
                 on_inspection = function()
                     print_line("It's a small path leading to the north.")
+                    add_action("Branch")
                 end
             },
 
@@ -136,6 +137,7 @@ dungeon = {
         },
 
         western_forest = {
+            is_start = true,
             layout = { {2,0}, {10,0}, {10,6}, {2,6}},
 
             Way_back_down = {
@@ -234,6 +236,7 @@ dungeon = {
                 end,
 
                 on_destroy = function ()
+                    print_line("You defeat the Goblin")
                     unlock_door("western_forest", "eastern_way")
                 end,
             },
@@ -735,7 +738,7 @@ dungeon = {
     },
 
     dungeon_3={
-        is_start = true,
+        --is_start = true,
 
             main_room = {
                 is_start = true,
@@ -798,7 +801,7 @@ dungeon = {
                         print_line("The fourth one is white and one the east side.")
                         print_line("But wait! There is one more thing.")
                         print_line("It's another old chest, which is standing right in the middle of the room.")
-        
+                        set_floor("floor1")
                     end
                 },
             },

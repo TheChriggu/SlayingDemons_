@@ -26,6 +26,7 @@
 #include "UI/PossibleWords.h"
 #include "UI/Screen.h"
 #include "StartUp/SplashScreens.h"
+#include "../Audio/AudioPlayer.h"
 
 namespace sd {
     class Application : public Manageable {
@@ -41,6 +42,8 @@ namespace sd {
         Sp<Colors> colors_;
         
         Sp<ShaderEngine> shader_engine_;
+
+        Sp<AudioPlayer> audio_player_;
 
         void load_vocab();
 

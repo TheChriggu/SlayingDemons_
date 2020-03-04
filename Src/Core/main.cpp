@@ -18,7 +18,7 @@ void write_data(std::vector<std::string> data);
 
 int main() {
     //startup();
-    
+
     auto app = std::make_shared<sd::Application>();
     auto result = app->setup ();
     if (!result) {

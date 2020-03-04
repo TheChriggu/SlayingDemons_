@@ -12,6 +12,14 @@
 #include <Event/LineToOutputEventArgs.h>
 #include <Event/PlayerStateCreatedEventArgs.h>
 
+
+const std::regex sd::InputTextProcessor::single_word_pattern{R"(^\s*[^\s]+\s*$)"};
+const std::regex sd::InputTextProcessor::single_word_without_trail_pattern{R"(^\s*[^\s]+\s$)"};
+const std::regex sd::InputTextProcessor::two_words_pattern{R"(^\s*[^\s]+\s+[^\s]+\s*$)"};
+const std::regex sd::InputTextProcessor::single_word_replace_pattern{R"(^\s*|\b\s+[^\s]+|\s*$)"};
+const std::regex sd::InputTextProcessor::two_words_replace_pattern{R"(^\s*|[^\s]+\s+\b|\s*$)"};
+const std::regex sd::InputTextProcessor::autocomplete_replace_pattern{R"(^\s*[^\s]+\s+\b|^\s*[^\s]+\s+$|^\s*)"};
+
 sd::InputTextProcessor::InputTextProcessor() : Subscriber()
 {
     event_handler_ = CREATE_EVENT_HANDLER(
@@ -35,7 +43,7 @@ sd::InputTextProcessor::InputTextProcessor() : Subscriber()
 void sd::InputTextProcessor::process_input(const std::string &spell)
 {
     
-    output_->add_line("[b]> " + spell + "[/b]");
+    output_->add_line("[input]> " + spell);
     //split spell
     std::vector<std::string> words = split_by_space(spell);
     

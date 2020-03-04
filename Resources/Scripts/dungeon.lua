@@ -89,6 +89,7 @@ dungeon = {
 
                 on_inspection = function()
                     print_line("It's a small path leading to the north.")
+
                 end,
 
                 on_enter = function()

@@ -9,6 +9,7 @@
 #include <ScriptEngine/ScriptEngine.h>
 #include "MapWindow.h"
 #include "Event/EventSystem.h"
+#include "Event/SetStageEventArgs.h"
 
 
 sd::MapWindow::MapWindow(sf::Vector2f position, sf::Vector2f size)
@@ -28,6 +29,11 @@ sd::MapWindow::MapWindow(sf::Vector2f position, sf::Vector2f size)
             auto arg = std::dynamic_pointer_cast<FightStartedEventArgs>(e);
             monster_portrait_texture_->loadFromFile(arg->fight.lock()->get_enemy()->get_path_to_portrait());
         }
+        if (e->type == EventArgs::Type::SET_STAGE) {
+            auto arg = std::dynamic_pointer_cast<SetStageEventArgs>(e);
+            auto path = "../Resources/Sprites/Progressing/map_" + std::to_string(arg->stage) + ".png";
+            background_texture_->loadFromFile(path);
+        }
         );
     
     REGISTER_EVENT_HANDLER();
@@ -41,18 +47,20 @@ sd::MapWindow::MapWindow(sf::Vector2f position, sf::Vector2f size)
 
     map_texture_ = std::make_shared<sf::RenderTexture>();
     map_sprite_ = std::make_shared<sf::Sprite>();
+
+    monster_position_ = sf::Vector2f(1387.7, 168);
 }
 
 bool sd::MapWindow::setup() {
-    background_texture_->loadFromFile("../Resources/Sprites/fantasy_map.png");
+    background_texture_->loadFromFile("../Resources/Sprites/Progressing/map_0.png");
 
     background_sprite_->setTexture(*background_texture_);
     background_sprite_->setPosition(position_);
 
-    monster_portrait_texture_->loadFromFile("../Resources/Sprites/goblin.png");
+    monster_portrait_texture_->loadFromFile("../Resources/Sprites/fantasy_goblin.png");
 
     monster_portrait_sprite_->setTexture(*monster_portrait_texture_);
-    monster_portrait_sprite_->setPosition(position_);
+    monster_portrait_sprite_->setPosition(monster_position_);
 
     auto table = ScriptEngine::get().get_script("config")->get_table("window")->as<sol::table>();
     map_texture_->create(table["size"]["x"], table["size"]["y"]);

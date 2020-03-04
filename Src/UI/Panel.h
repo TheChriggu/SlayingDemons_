@@ -6,15 +6,18 @@
 #define _PANEL_H_
 
 #include "Core/DrawableObject.h"
+#include "../Event/Subscriber.h"
 
 namespace sd {
-    class Panel : public DrawableObject {
+    class Panel : public DrawableObject, public Subscriber {
     private:
         Sp<sf::Sprite> sprite_;
         Sp<sf::Texture> texture_;
 
         Sp<sf::RenderTexture> panel_tex_;
         Sp<sf::Sprite> panel_sprite_;
+
+        std::string path_;
 
     public:
         Panel(sf::Vector2f position, sf::Vector2f size, sf::Color color);

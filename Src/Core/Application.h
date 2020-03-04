@@ -16,6 +16,7 @@
 #include <vector>
 #include <Shading/ShaderEngine.h>
 #include <Event/EventSystem.h>
+#include <UI/Colors.h>
 #include "Vocabulary.h"
 #include "Combat/Action.h"
 #include "Combat/Modifier.h"
@@ -24,15 +25,20 @@
 #include "InputTextProcessor.h"
 #include "UI/PossibleWords.h"
 #include "UI/Screen.h"
+#include "StartUp/SplashScreens.h"
 
 namespace sd {
     class Application : public Manageable {
+
+        Sp<SplashScreens> splash_screens_;
+
 
         Sp<sf::RenderWindow> window_;
         std::vector<Sp<DrawableObject>> drawable_objects_;
         
         Sp<World> world_;
         Sp<Font> fonts_;
+        Sp<Colors> colors_;
         
         Sp<ShaderEngine> shader_engine_;
 
@@ -45,7 +51,11 @@ namespace sd {
         Application() = default;
         ~Application() override = default;
 
+        bool setup_splash_screens();
+        bool setup_main_menu();
         bool setup() override;
+        bool run_splash_screens();
+        bool run_main_menu();
         bool run();
         void shutdown() override;
         

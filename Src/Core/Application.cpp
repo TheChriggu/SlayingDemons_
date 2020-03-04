@@ -129,6 +129,13 @@ bool sd::Application::run()
         {
             window_->close();
         }
+
+        if(evt.type == sf::Event::GainedFocus)
+        {
+            auto args = std::make_shared<EventArgs>(EventArgs());
+            args->type = sd::EventArgs::Type::GAINED_FOCUS;
+            EventSystem::get().trigger(args);
+        }
         
         for (const auto &object : drawable_objects_)
         {
@@ -267,6 +274,5 @@ void sd::Application::test()
     auto event = std::make_shared<LineToOutputEventArgs>("test");
     EventSystem::get().trigger(event);
 }
-
 
 

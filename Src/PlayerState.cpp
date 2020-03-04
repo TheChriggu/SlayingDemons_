@@ -54,6 +54,15 @@ sd::PlayerState::PlayerState()
             args->type = sd::EventArgs::Type::FIGHT_ENDED;
             EventSystem::get().trigger(args);
         }
+        if (e->type == EventArgs::Type::GAINED_FOCUS)
+        {
+            load_vocab();
+
+            if(!FileInput::is_existing("../Resources/InnocentFileDoNotOpen.txt"))
+            {
+                ScriptEngine::get().broadcast("player_profile_deleted");
+            }
+        }
         );
     
     REGISTER_EVENT_HANDLER();

@@ -14,3 +14,11 @@ function room_changed(name)
         is_in_green_room = false
     end
 end
+
+function player_profile_deleted()
+    --print_line("player_profile_deleted")
+end
+
+function self_destruct_added()
+    print_line("self_destruct_added")
+end

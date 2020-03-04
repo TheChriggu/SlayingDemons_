@@ -30,7 +30,8 @@ namespace sd {
             
             if (func.valid())
             {
-                sol::object result = func(std::forward<Args>(args)...);
+                coroutine_cache.emplace_back(func);
+                sol::object result = coroutine_cache.back()(std::forward<Args>(args)...);
     
                 if (result.is<sol::lua_nil_t>())
                 {
@@ -44,7 +45,6 @@ namespace sd {
                 if (result.is<float>())
                 {
                     std::cout << "#~# start coroutine" << std::endl;
-                    coroutine_cache.emplace_back(func);
                     start_lua_callback_routine(coroutine_cache.back(), result.as<float>());
                 }
                 return false;

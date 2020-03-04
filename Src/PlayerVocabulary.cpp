@@ -20,7 +20,8 @@ sd::PlayerVocabulary::PlayerVocabulary() : Subscriber() {
         if (e->type == sd::EventArgs::Type::NEW_WORD_COLLECTED)
         {
             auto args = std::dynamic_pointer_cast<NewWordCollectedEventArgs>(e);
-        
+            std::cout << "-- added new word: " << args->word << std::endl;
+            
             if(!has_word(args->word)) {
                 auto word = sd::Vocabulary::all_words->get(args->word);
             
@@ -96,17 +97,19 @@ bool sd::PlayerVocabulary::has_word(const std::string& word) {
 }
 
 void sd::PlayerVocabulary::add_action(std::string action) {
-
+    strtk::convert_to_lowercase(action);
     actions_.emplace_back(action);
     actions_trie_->add_word(action);
 }
 
 void sd::PlayerVocabulary::add_modifier(std::string modifier) {
+    strtk::convert_to_lowercase(modifier);
     modifiers_.emplace_back(modifier);
     modifiers_trie_->add_word(modifier);
 }
 
 void sd::PlayerVocabulary::add_command(std::string word) {
+    strtk::convert_to_lowercase(word);
     commands_.emplace_back(word);
     commands_trie_->add_word(word);
 }
@@ -185,13 +188,14 @@ void sd::PlayerVocabulary::load_from_file()
                 commands_trie_.reset();
                 commands_trie_ = std::make_shared<Trie>();
 
-                add_modifier("Self");
-                add_action("Destruct");;
-                add_command("Self_Destruct");
+                add_modifier("self");
+                add_action("destruct");;
+                add_command("self_destruct");
                 start_self_destruct = true;
             }
         }
     }
+    std::cout << "-- number commands: " << commands_.size() << std::endl;
     if(!start_self_destruct)
     {
         actions_trie_.reset();
@@ -221,10 +225,11 @@ void sd::PlayerVocabulary::load_from_file()
             std::string lcase;
             strtk::parse(command, "", strtk::as_lcase(lcase).ref());
             std::string copy = lcase;
+            std::cout << "-- new commands: " << copy << std::endl;
             add_command(copy);
         }
     }
-
+    std::cout << "-- number commands: " << commands_.size() << std::endl;
 }
 
 std::vector<std::string> &sd::PlayerVocabulary::get_objects()

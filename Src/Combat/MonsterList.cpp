@@ -2,6 +2,7 @@
 // Created by christian.heusser on 15.01.2020.
 //
 
+#include <strtk.hpp>
 #include "MonsterList.h"
 
 Sp<sd::MonsterList> sd::MonsterList::instance_ = nullptr;
@@ -16,6 +17,11 @@ sd::MonsterList::MonsterList() {
         {
             if(line[0] != "Name")
             {
+                for (auto& data : line) {
+                    strtk::convert_to_lowercase(data);
+                }
+                
+                
                 auto monster = std::make_shared<Monster>("../Resources/" + line[17], line[20], line[21], line[0]);
                 //action->SetName(line[0]);
                 monster->set_base_stats({stof(line[1]), stof(line[2]), stof(line[3]), stof(line[4]), stof(line[5]),

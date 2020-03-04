@@ -169,8 +169,10 @@ void sd::Application::load_vocab()
         if (line[0] != "Name")
         {
             auto action = std::make_shared<Action>(line);
+            std::string name{line[0]};
+            strtk::convert_to_lowercase(name);
 
-            vocab->add(line[0], action);
+            vocab->add(name, action);
         }
     }
     
@@ -180,7 +182,10 @@ void sd::Application::load_vocab()
         if (line[0] != "Name")
         {
             auto modifier = std::make_shared<Modifier>(line);
-            vocab->add(line[0], modifier);
+            std::string name{line[0]};
+            strtk::convert_to_lowercase(name);
+            
+            vocab->add(name, modifier);
         }
     }
     

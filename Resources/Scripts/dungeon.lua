@@ -42,6 +42,10 @@ blocked_window_layout = {
     size = {5, 4},
     tiles = {-1, -1, -1, -1, 11, 10, -1, -1, -1, -1, -1, -1, -1, -1, 11, 9, -1, 9, -1, -1},
 }
+server_layout = {
+    size = {2, 2},
+    tiles = {48, 56}
+}
 
 
 -- Forest Layouts
@@ -750,8 +754,6 @@ dungeon = {
         },
         room4 = {
             layout = { {0, 2}, {4, 2}, {4, 0}, {6, 0}, {6, 4}, {0, 4}},
-            
-            is_start = true,
 
             west_door = {
                 position = {x = 0, y = 3},
@@ -761,34 +763,76 @@ dungeon = {
             north_door = {
                 position = {x = 5, y = 0},
                 layout = door_layout,
-                next_room = "room2"
+                next_room = "room5"
             },
 
             windows = {
                 position = {x = 2, y = 1},
                 layout = blocked_window_layout,
 
-
+                on_inspection = function ()
+                    print_line("The walls are covered with windows. All boarded-up, some better than others. The size of the windows varey. Through some windows you could take a peak, because the boards are some centimeters away from each other.")
+                    print_line("Why are all those windows boarded-up?")
+                    print_line("It doesn't make sense. These windows should be here. From the outside the house looked way more tinier.")
+                    print_line("Here should be room for the windows or this floor in general!")
+                    print_line("What is behind this windows? ")
+                    print_line("You take a peak through the boards and it looks like there is a picture of a garden behind it, but it is far away from you. Not right in front of you, like you would have imagined. So you can see the hole image.")
+                    print_line("There is a stone path in the middle, which leads to a tiny pond. On the sides are beautiful flowers in different colors. Some flowers you recognize from your garden at home, but the most is unkown to you. On the far left is a tree with a big crown, which hangs over the flowers and path. ")
+                    print_line("As you keep looking araound you recognize that in front of the tree stamp are some kind of yellow folders with names under it, 'Family', 'Music', 'E-Mails' and 'Reports'.")
+                    print_line("That's weird. What is this? Is this behind every window?")
+                    print_line("You head to another window on the other wall and behind the boards it is the same. It has another picture and the folders have different names, but in general it is the same.")
+                    print_line("You don't understand this house...")
+                    print_line("The sooner you found what's marked on the map, the sooner you can leave this strange place.")
+                end
             }
         },
         room5 = {
-            layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
+            layout = { {0, 0}, {9, 0}, {9, 6}, {0, 6}},
 
-            north_door = {
-                position = {x = 5, y = 0},
-                layout = door_layout,
-                next_room = "room2"
-            },
+            is_start = true,
+
             south_door = {
                 position = {x = 5, y = 6},
                 layout = door_layout,
                 next_room = "room2"
-            }
+            },
 
+            bookshelves = {
+                position = {x=1, y=1},
+                layout=big_bookshelf_layout,
+
+                on_inspection = function ()
+                    print_line("You recognize the bookshelves.")
+                    print_line("They are the same weird ones from the room at the beginning.")
+                end
+            },
+
+            machine = {
+                position = {x=2 ,y= 2},
+                layout = server_layout,
+
+                on_inspection = function ()
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    --set_floor("dungeon_3")
+                end
+            }
+                
             --AI meckert
             --Game restarts
             --Game loads personal_id.txt
-            --set_floor("dungeon_3")
         },
     },
 

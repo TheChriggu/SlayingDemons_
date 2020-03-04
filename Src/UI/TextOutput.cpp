@@ -84,7 +84,7 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
 }
 
 bool sd::TextOutput::setup() {
-  ScriptEngine::get().register_all ("print_line", &TextOutput::print_line, this);
+    ScriptEngine::get().register_all_timeable(1, 0.25, "print_line", &TextOutput::print_line, this);
 
     lines_.push_back(std::make_shared<FormattedLine>(
         "",

@@ -8,12 +8,13 @@
 #include <sol/function.hpp>
 #include "Tilemap.h"
 #include "ScriptEngine/FunctionCollection.h"
+#include "Core/GlobalDefinitions.h"
 
 namespace sd {
     class RoomObject {
         protected:
 
-        std::shared_ptr<FunctionCollection> function_collection_;
+        Sp<FunctionCollection> function_collection_;
     
         std::string name_;
         sf::Vector2i position_on_tile_map_;
@@ -26,15 +27,10 @@ namespace sd {
         virtual void remove_from_layout(std::vector<TileData>& layout, int width, int height) = 0;
         virtual std::string get_name() = 0;
         
-        virtual void be_interacted_with();
         virtual void be_destroyed();
-
         virtual void be_opened();
-
         virtual void be_inspected();
-
         virtual void be_fought();
-    
         virtual void be_entered();
     };
 }

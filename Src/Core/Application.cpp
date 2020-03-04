@@ -6,11 +6,13 @@
 #include "UI/Panel.h"
 #include "IO/UserInput.h"
 #include "Event/EventSystem.h"
+#include "RoutineManager.h"
 #include <iostream>
 #include <map>
 #include <Combat/MonsterList.h>
 #include <memory>
 #include <Event/FontsCreatedEventArgs.h>
+#include <Event/LineToOutputEventArgs.h>
 #include <Event/ColorsCreatedEventArgs.h>
 
 bool sd::Application::setup_splash_screens() {
@@ -46,6 +48,7 @@ bool sd::Application::setup()
     
     new EventSystem();
     new ScriptEngine();
+    new RoutineManager();
     
     std::cout << "Initialize Script Engine" << std::endl;
     
@@ -94,6 +97,17 @@ bool sd::Application::setup()
 
     std::cout << "End initialization\n";
     
+    RoutineManager::get().start_routine(
+        std::make_shared<Routine>(
+            nullptr,
+            3,
+            CREATE_ROUTINE_BODY(
+                test();
+                return Routine::end;
+                )
+            )
+        );
+    
     return true;
 }
 
@@ -122,9 +136,9 @@ bool sd::Application::run()
         }
     }
     
-    //Update Components
+    //Update Routines
+    RoutineManager::get().process();
     
-
     
     //Draw Components
     //window_->clear();
@@ -249,10 +263,11 @@ bool sd::Application::setup_scene()
     return true;
 }
 
-
-
-
-
+void sd::Application::test()
+{
+    auto event = std::make_shared<LineToOutputEventArgs>("test");
+    EventSystem::get().trigger(event);
+}
 
 
 

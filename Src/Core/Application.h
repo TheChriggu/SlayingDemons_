@@ -49,6 +49,8 @@ namespace sd {
 
         //Sp<sf::RenderTexture> screen_texture_;
         Sp<Screen> screen_;
+        
+        void test();
 
     public:
         Application() = default;

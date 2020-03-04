@@ -52,12 +52,11 @@ sd::PlayerVocabulary::PlayerVocabulary() : Subscriber() {
     modifiers_trie_ = std::make_shared<Trie>();
     commands_trie_ = std::make_shared<Trie>();
     
-    add_modifier("Flirty");
+    /*add_modifier("Flirty");
     add_modifier("Chaotic");
     add_modifier("Fire");
     add_modifier("Useless");
     add_modifier("Unimplemented");
-    //add_modifier("Pyro");
     
     add_action("Honk");
     add_action("Poke");
@@ -68,7 +67,9 @@ sd::PlayerVocabulary::PlayerVocabulary() : Subscriber() {
     add_command("Inspect");
     add_command("Open");
     add_command("Fight");
-    add_command("Enter");
+    add_command("Enter");*/
+
+    load_from_file();
     
     ScriptEngine::get().register_all("add_action", &PlayerVocabulary::add_action, this);
     ScriptEngine::get().register_all("add_modifier", &PlayerVocabulary::add_modifier, this);
@@ -167,9 +168,22 @@ void sd::PlayerVocabulary::load_from_file()
 {
     auto vec = FileInput::load_tsv("../Resources/Tables/PlayerVocab.tsv");
 
-    modifiers_ = (*vec)[0];
-    actions_ = (*vec)[1];
-    commands_ = (*vec)[2];
+    actions_trie_.reset();
+    modifiers_trie_.reset();
+    commands_trie_.reset();
+
+    for(auto modifier :  (*vec)[0])
+    {
+        add_modifier(modifier);
+    }
+    for(auto action :  (*vec)[1])
+    {
+        add_modifier(action);
+    }
+    for(auto command :  (*vec)[2])
+    {
+        add_modifier(command);
+    }
 }
 
 std::vector<std::string> &sd::PlayerVocabulary::get_objects()

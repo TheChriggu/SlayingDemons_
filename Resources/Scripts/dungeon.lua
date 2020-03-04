@@ -77,6 +77,7 @@ dungeon = {
 
         Southern_Forest={
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
+            is_start = true,
 
             --Spieler betritt Wald und fragt sich warum er hier ist
             --Spiel zählt Items und Spells auf mit dem der Wizard ein los geschickt hat
@@ -95,6 +96,7 @@ dungeon = {
 
                 on_inspection = function()
                     print_line("It's a small path leading to the north.")
+                    add_action("Branch")
                 end
             },
 
@@ -798,7 +800,7 @@ dungeon = {
                         print_line("The fourth one is white and one the east side.")
                         print_line("But wait! There is one more thing.")
                         print_line("It's another old chest, which is standing right in the middle of the room.")
-        
+                        set_floor("floor1")
                     end
                 },
             },

@@ -12,6 +12,10 @@
 #include "Core/RoutineManager.h"
 
 namespace sd {
+    struct LuaRoutineContainer {
+        sol::coroutine func;
+    };
+    
     class Script {
         public:
         explicit Script(const std::string& name);
@@ -22,16 +26,21 @@ namespace sd {
         
         [[nodiscard]] const std::string& get_name() const;
         [[nodiscard]] sol::optional<sol::table> get_table(const std::string& name) const;
+    
+        //sol::coroutine func;
         
         
         template <typename... Args>
         bool call(const std::string& function, Args&&... args) {
-            sol::coroutine func = (*state_)[function];
+            coroutine_cache.emplace_back(std::make_shared<sd::LuaRoutineContainer>());
             
-            if (func.valid())
+            coroutine_cache.back()->func = (*state_)[function].get<sol::coroutine>();
+            
+            if (coroutine_cache.back()->func.valid())
             {
-                coroutine_cache.emplace_back(func);
-                sol::object result = coroutine_cache.back()(std::forward<Args>(args)...);
+                //auto test = func;
+                //coroutine_cache.emplace_back(test);
+                sol::object result = coroutine_cache.back()->func(std::forward<Args>(args)...);
     
                 if (result.is<sol::lua_nil_t>())
                 {
@@ -49,6 +58,7 @@ namespace sd {
                 }
                 return false;
             }
+            return false;
         }
         
         template <typename T>
@@ -79,15 +89,15 @@ namespace sd {
         }
     
         template <typename... Args>
-        void start_lua_callback_routine(sol::coroutine& function, float time, Args&&... args) const
+        void start_lua_callback_routine(Sp<sd::LuaRoutineContainer> function, float time, Args&&... args) const
         {
             RoutineManager::get().start_routine(
                 std::make_shared<Routine>(
                     nullptr,
                     time,
                     std::function<bool(Sp<Routine>)>(
-                        [&](Sp<Routine> this_routine) {
-                            sol::object result = function(std::forward<Args>(args)...);
+                        [function, args...](Sp<Routine> this_routine) {
+                            sol::object result = function->func(std::forward<Args>(args)...);
     
                             if (result.is<float>())
                             {
@@ -107,7 +117,7 @@ namespace sd {
         std::unique_ptr<sol::state> state_;
         std::string name_;
         
-        std::vector<sol::coroutine> coroutine_cache;
+        std::vector<Sp<sd::LuaRoutineContainer>> coroutine_cache;
     };
 }
 

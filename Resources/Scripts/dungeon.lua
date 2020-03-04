@@ -866,12 +866,18 @@ dungeon = {
                     position = {x=10, y=3},
                     layout = door_layout,
                     next_room = "secret_room",
-                    is_locked = false,
+                    is_locked = true,
     
                     on_enter = function ()
                         set_glitch_on("output-panel")
-                    end
+                    end,
                     
+                    on_inspection = function ()
+                        print_line("You walk towards the white door and try to open it. It's locked.")
+                        print_line("But as you take a closer look at the door you see a writting on it:")
+                        print_line("'I'm the last one to open, but first I have to shine the brightest.'")
+                        print_line("What does that mean? Does it have to do with light?")
+                    end
                 },
             
                 chest = {
@@ -892,15 +898,6 @@ dungeon = {
                         print_line("Congratulation! You've collected the word \"Light\".")
                         add_action ("Light")
                         set_glitch_on("output-panel")
-                    end,
-
-                    on_inspection = function ()
-                        print_line("The room is nearly empty, except four doors.")
-                        print_line("Three are on the north side. A red, green and blue one.")
-                        print_line("The fourth one is white and one the east side.")
-                        print_line("But wait! There is one more thing.")
-                        print_line("It's another old chest, which is standing right in the middle of the room.")
-        
                     end
                 },
             },

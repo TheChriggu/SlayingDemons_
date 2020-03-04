@@ -7,7 +7,7 @@
 
 Script::Script(const std::string& name) {
     state_ = std::make_unique<sol::state>();
-    state_->open_libraries(sol::lib::base, sol::lib::coroutine);
+    state_->open_libraries(sol::lib::base, sol::lib::coroutine, sol::lib::table);
 
     name_ = name;
     // insert helper functions
@@ -16,7 +16,7 @@ Script::Script(const std::string& name) {
 
 Script::Script(const std::string& name, const std::string& content) {
     state_ = std::make_unique<sol::state>();
-    state_->open_libraries(sol::lib::base, sol::lib::coroutine);
+    state_->open_libraries(sol::lib::base, sol::lib::coroutine, sol::lib::table);
 
     name_ = name;
     // insert helper functions

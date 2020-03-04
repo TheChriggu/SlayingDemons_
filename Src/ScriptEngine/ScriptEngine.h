@@ -51,6 +51,13 @@ namespace sd {
                 script->register_function (std::forward<Key> (key), std::forward<Args> (args)...);
             }
         }
+    
+        template <typename... Args>
+        void register_all_timeable(int argument_count, float default_wait_time, const char* key, Args&&... args) {
+            for (const auto& script : scripts_) {
+                script->register_timeable_function(argument_count, default_wait_time, key, std::forward<Args>(args)...);
+            }
+        }
         
         void start_lua_callback_routine(sol::coroutine& function, float time) const;
     };

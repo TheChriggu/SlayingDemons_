@@ -43,6 +43,7 @@ bool sd::FunctionCollection::invoke_opened()
 }
 bool sd::FunctionCollection::invoke_inspected()
 {
+    std::cout << "#~# inspected invoked" << std::endl;
     return invoke(be_inspected_signal_);
 }
 bool sd::FunctionCollection::invoke_fought()
@@ -63,13 +64,17 @@ bool sd::FunctionCollection::invoke(sol::coroutine& coroutine)
     sol::object result = coroutine();
     
     if (result.is<sol::lua_nil_t>())
+    {
+        std::cout << "#~# no return" << std::endl;
         return true;
+    }
     if (result.is<bool>())
         return result.as<bool>();
     
     
     if (result.is<float>())
     {
+        std::cout << "#~# start coroutine" << std::endl;
         ScriptEngine::get().start_lua_callback_routine(coroutine, result.as<float>());
     }
     return false;

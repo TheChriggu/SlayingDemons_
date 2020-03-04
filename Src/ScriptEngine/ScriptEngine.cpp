@@ -7,6 +7,8 @@
 #include <memory>
 #include <Core/RoutineManager.h>
 
+Up<sd::ScriptEngine> sd::ScriptEngine::instance_ = nullptr;
+
 sd::ScriptEngine::ScriptEngine() {
     if (!instance_)
         instance_ = Up<ScriptEngine>(this);
@@ -38,35 +40,6 @@ std::shared_ptr<Script> sd::ScriptEngine::get_script(const std::string& name) co
     return nullptr;
 }
 
-
-
-/*bool sd::ScriptEngine::Setup() {
-    //sol::state _state;
-    engine_ = new sol::state;
-
-    engine_->open_libraries(sol::lib::base);
-
-    engine_->script_file("../Resources/Scripts/test.lua");
-
-    //sol::function func = (*engine_)["do_smth"];
-    //func();
-    (*engine_)["do_smth"]();
-    //std::function<int()> better_func = func;
-    //int var = better_func();
-
-    sol::optional<bool> config = (*engine_)["config"]["fullscreen"];
-    //config = (*engine_)["config"]["blub"];
-
-    if(config) {
-        std::cout << "script: " << typeof(true) << std::endl;
-    }
-
-
-    return true;
-}*/
-
-Up<sd::ScriptEngine> sd::ScriptEngine::instance_ = nullptr;
-
 void sd::ScriptEngine::set_broadcast_locked(bool locked)
 {
     broadcast_locked_ = locked;
@@ -78,17 +51,15 @@ void sd::ScriptEngine::start_lua_callback_routine(sol::coroutine& function, floa
         std::make_shared<Routine>(
             nullptr,
             time,
-            std::function<bool(Sp<Routine>)>(
-                [&](Sp<Routine> this_routine) {
-                    sol::object result = function();
-                    
-                    if (result.is<float>())
-                    {
-                        this_routine->set_duration(result.as<float>());
-                        return Routine::restart;
-                    }
-                    return Routine::end;
+            CREATE_ROUTINE_BODY(
+                sol::object result = function();
+    
+                if (result.is<float>())
+                {
+                    this_routine->set_duration(result.as<float>());
+                    return Routine::restart;
                 }
+                return Routine::end;
             )
         )
     );

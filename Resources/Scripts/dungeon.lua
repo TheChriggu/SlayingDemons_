@@ -859,8 +859,8 @@ dungeon = {
                     layout = door_layout,
                     next_room = "blue_room"
                 },
-                -- Door opens after red light, green light and blue light were used on the door
-                -- Writing after Light has been collected:
+                -- Door opens after red light, green light and blue light were used on the white door
+                -- Writing after Light has been collected appears on white door:
                 -- I'm the last one to open, but first I have to shine the brightest.
                 white_door = {
                     position = {x=10, y=3},

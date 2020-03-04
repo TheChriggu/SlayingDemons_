@@ -103,9 +103,14 @@ void sd::PlayerState::set_current_floor(Sp<sd::Floor> floor)
 
 
 void sd::PlayerState::start_new_fight_room_object(const std::string& enemy_name, const std::string& room_object_to_remove_on_defeat) {
+    std::string enemy_name_lower = enemy_name;
+    std::string room_object_to_remove_on_defeat_lower = room_object_to_remove_on_defeat;
+    strtk::convert_to_lowercase(enemy_name_lower);
+    strtk::convert_to_lowercase(room_object_to_remove_on_defeat_lower);
+    
     auto list = MonsterList::get();
-    auto goblin = list->get_monster(enemy_name);
-    goblin->set_room_object_to_remove_on_defeat(room_object_to_remove_on_defeat);
+    auto goblin = list->get_monster(enemy_name_lower);
+    goblin->set_room_object_to_remove_on_defeat(room_object_to_remove_on_defeat_lower);
     //start_new_fight(Sp<Monster>(goblin));
     
     fight_ = std::make_shared<Fight>(player_, goblin);
@@ -115,11 +120,14 @@ void sd::PlayerState::start_new_fight_room_object(const std::string& enemy_name,
     
     
 
-    ScriptEngine::get().broadcast("fight_started_with", enemy_name);
+    ScriptEngine::get().broadcast("fight_started_with", enemy_name_lower);
 }
 
 void sd::PlayerState::start_new_fight(const std::string &enemy_name) {
-    start_new_fight_room_object(enemy_name,enemy_name);
+    std::string enemy_name_lower = enemy_name;
+    strtk::convert_to_lowercase(enemy_name_lower);
+    
+    start_new_fight_room_object(enemy_name_lower, enemy_name_lower);
 }
 
 Sp<sd::PlayerVocabulary> sd::PlayerState::get_player_vocabulary() {

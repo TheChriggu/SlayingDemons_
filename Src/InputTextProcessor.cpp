@@ -83,7 +83,7 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
     
     else if (words[0] == "inspect")
     {
-        if (words[1] == "Room")
+        if (words[1] == "room")
         {
             output_->add_line(player_state_->get_current_room()->get_description());
         }
@@ -120,7 +120,7 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
             EventSystem::get().trigger(args);
         }
     }
-    else if (words[0] == "Fight")
+    else if (words[0] == "fight")
     {
         auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
         

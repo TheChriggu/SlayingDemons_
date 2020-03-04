@@ -67,7 +67,7 @@ void sd::FormattedWord::set_position(sf::Vector2f position) {
 
 sf::FloatRect sd::FormattedWord::get_rect() {
     auto ret_val = text_->getGlobalBounds();
-    ret_val.height += 5;
+    ret_val.height += 2;
     return ret_val;
 }
 

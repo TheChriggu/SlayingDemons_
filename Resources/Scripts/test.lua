@@ -18,14 +18,3 @@ config = {
     derp = 5,
     pos = { x = 1.1, z = 2.2}
 }]]
-
-
-function print_line(arg0, wait_time)
-    print("this is called from TEST")
-    if #arg0 > 1 then
-        print("other")
-    else
-        print_line()
-    end
-
-end

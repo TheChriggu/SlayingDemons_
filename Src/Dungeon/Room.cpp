@@ -37,7 +37,7 @@ sd::Room::Room(std::string name, const std::vector<sf::Vector2i>& corners)
     name_ = std::move(name);
     enemy_ = nullptr;
     layout_ = std::vector<TileData>(77);
-    TileData no_tile = {9,0};
+    TileData no_tile = {8,0};
     std::fill(layout_.begin(),layout_.end(), no_tile);
     generate_wall_layout_from_corners(corners);
 }

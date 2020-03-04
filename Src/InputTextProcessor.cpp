@@ -101,22 +101,6 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
         
     }
     
-    else if (words[0] == "Interact")
-    {
-        auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
-        
-        if (object)
-        {
-            object->be_interacted_with();
-        }
-        else
-        {
-            std::shared_ptr<LineToOutputEventArgs> args;
-            args = std::make_shared<LineToOutputEventArgs>("Could not find object in room.");
-            EventSystem::get().trigger(args);
-        }
-    }
-    
     else if (words[0] == "Open")
     {
         auto object = player_state_->get_current_room()->get_object_with_name(words[1]);

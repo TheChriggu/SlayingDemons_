@@ -169,30 +169,56 @@ void sd::PlayerVocabulary::load_from_file()
 {
     auto vec = FileInput::load_tsv("../Resources/Tables/PlayerVocab.tsv");
 
-    actions_trie_.reset();
-    actions_trie_ = std::make_shared<Trie>();
-    modifiers_trie_.reset();
-    modifiers_trie_ = std::make_shared<Trie>();
-    commands_trie_.reset();
-    commands_trie_ = std::make_shared<Trie>();
+    bool start_self_destruct = false;
+    for(auto row : *vec)
+    {
+        for (auto word : row)
+        {
+            std::string lcase;
+            strtk::parse(word, "", lcase);
+            if(lcase.find("self") != std::string::npos || lcase.find("destruct") != std::string::npos)
+            {
+                actions_trie_.reset();
+                actions_trie_ = std::make_shared<Trie>();
+                modifiers_trie_.reset();
+                modifiers_trie_ = std::make_shared<Trie>();
+                commands_trie_.reset();
+                commands_trie_ = std::make_shared<Trie>();
+
+                add_modifier("Self");
+                add_action("Destruct");;
+                add_command("Self_Destruct");
+                start_self_destruct = true;
+            }
+        }
+    }
+    if(!start_self_destruct)
+    {
+        actions_trie_.reset();
+        actions_trie_ = std::make_shared<Trie>();
+        modifiers_trie_.reset();
+        modifiers_trie_ = std::make_shared<Trie>();
+        commands_trie_.reset();
+        commands_trie_ = std::make_shared<Trie>();
 
 
-    for(auto modifier :  (*vec)[0])
-    {
-        std::string copy = modifier;
-        add_modifier(copy);
+        for(auto modifier :  (*vec)[0])
+        {
+            std::string copy = modifier;
+            add_modifier(copy);
+        }
+        for(auto action :  (*vec)[1])
+        {
+            std::string copy = action;
+            add_action(copy);
+        }
+        for(auto command :  (*vec)[2])
+        {
+            std::string copy = command;
+            add_command(copy);
+        }
     }
-    for(auto action :  (*vec)[1])
-    {
-        std::string copy = action;
-        add_action(copy);
-    }
-    for(auto command :  (*vec)[2])
-    {
-        std::string copy = command;
-        add_command(copy);
-    }
-    std::cout << "words added\n";
+
 }
 
 std::vector<std::string> &sd::PlayerVocabulary::get_objects()

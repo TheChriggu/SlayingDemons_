@@ -71,6 +71,7 @@ bool sd::World::setup() {
     for (const auto& floor_data : dungeon_data.value()) {
         
         std::string name = floor_data.first.as<std::string>();
+        strtk::convert_to_lowercase(name);
         sol::table data = floor_data.second.as<sol::table>();
         
         floors_.emplace_back(std::make_shared<Floor>(name, data));
@@ -91,12 +92,17 @@ bool sd::World::setup() {
 void sd::World::shutdown() { }
 
 void sd::World::unlock_door(std::string room_name, std::string door_name) {
+    strtk::convert_to_lowercase(room_name);
+    strtk::convert_to_lowercase(door_name);
+    
     std::shared_ptr<DoorUnlockedEventArgs> args;
     args = std::make_shared<DoorUnlockedEventArgs>(room_name, door_name);
     EventSystem::get().trigger(args);
 }
 
 void sd::World::set_floor(std::string floor_name) {
+    strtk::convert_to_lowercase(floor_name);
+    
     for (auto floor : floors_)
     {
         if(floor->get_name() == floor_name)

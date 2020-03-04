@@ -7,8 +7,6 @@
 #include "Goblin.h"
 
 sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(nullptr) {
-    //int counter = 0;
-    
     name_ = name;
     
     for (const auto& room : floor_data) {

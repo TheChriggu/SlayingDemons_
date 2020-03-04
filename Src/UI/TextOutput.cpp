@@ -125,7 +125,7 @@ void sd::TextOutput::add_line(std::string string) {
     auto new_line = std::make_shared<FormattedLine>(
         string, sf::Vector2f(
                 (position_ + offset_).x,
-            lines_.back ()->get_rect ().top + lines_.back ()->get_rect ().height),
+                lines_.back ()->get_rect ().top + lines_.back ()->get_rect ().height),
         max_size_,fonts_, colors_
     );
 

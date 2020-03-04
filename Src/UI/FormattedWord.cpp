@@ -66,7 +66,9 @@ void sd::FormattedWord::set_position(sf::Vector2f position) {
 }
 
 sf::FloatRect sd::FormattedWord::get_rect() {
-    return text_->getGlobalBounds();
+    auto ret_val = text_->getGlobalBounds();
+    ret_val.height += 5;
+    return ret_val;
 }
 
 void sd::FormattedWord::move_vertical(float distance) {

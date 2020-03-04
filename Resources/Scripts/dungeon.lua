@@ -73,11 +73,10 @@ bushDoor_layout = {
 
 dungeon = {
     floor1 = {
-        --is_start = true,
+        is_start = true,
 
         Southern_Forest={
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
-            is_start = true,
 
             --Spieler betritt Wald und fragt sich warum er hier ist
             --Spiel zählt Items und Spells auf mit dem der Wizard ein los geschickt hat
@@ -138,6 +137,7 @@ dungeon = {
         },
 
         western_forest = {
+            is_start = true,
             layout = { {2,0}, {10,0}, {10,6}, {2,6}},
 
             Way_back_down = {
@@ -236,6 +236,7 @@ dungeon = {
                 end,
 
                 on_destroy = function ()
+                    print_line("You defeat the Goblin")
                     unlock_door("western_forest", "eastern_way")
                 end,
             },
@@ -737,7 +738,7 @@ dungeon = {
     },
 
     dungeon_3={
-        is_start = true,
+        --is_start = true,
 
             main_room = {
                 is_start = true,

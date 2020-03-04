@@ -32,6 +32,7 @@ namespace sd {
 
         void set_current_room(Sp<Room> room);
         void set_current_floor(Sp<Floor> floor);
+        void start_new_fight_room_object(const std::string& enemy_name, const std::string& room_object_to_remove_on_defeat);
         void start_new_fight(const std::string& enemy_name);
 
         Sp<PlayerVocabulary> get_player_vocabulary();

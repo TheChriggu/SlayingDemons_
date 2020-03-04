@@ -175,7 +175,7 @@ void sd::PlayerVocabulary::load_from_file()
         for (auto word : row)
         {
             std::string lcase;
-            strtk::parse(word, "", lcase);
+            strtk::parse(word, "", strtk::as_lcase(lcase).ref());
             if(lcase.find("self") != std::string::npos || lcase.find("destruct") != std::string::npos)
             {
                 actions_trie_.reset();

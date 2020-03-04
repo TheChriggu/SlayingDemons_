@@ -35,7 +35,7 @@ sd::PlayerState::PlayerState()
         }
     
         if (e->type == EventArgs::Type::CURRENT_ENEMY_DEFEATED) {
-            current_room_->remove_object_with_name(fight_->get_enemy()->get_name());
+            current_room_->remove_object_with_name(fight_->get_enemy()->get_room_object_to_remove_on_defeat());
             fight_.reset();
         
             std::shared_ptr<EventArgs> args;
@@ -64,6 +64,7 @@ sd::PlayerState::PlayerState()
     player_vocabulary_ = std::make_shared<PlayerVocabulary>();
     
     ScriptEngine::get().register_all("start_new_fight", &PlayerState::start_new_fight, this);
+    ScriptEngine::get().register_all("start_new_fight_with_differently_named_enemy", &PlayerState::start_new_fight_room_object, this);
 }
 
 Sp<sd::Room> sd::PlayerState::get_current_room() {
@@ -92,9 +93,10 @@ void sd::PlayerState::set_current_floor(Sp<sd::Floor> floor)
 }
 
 
-void sd::PlayerState::start_new_fight(const std::string& enemy_name) {
+void sd::PlayerState::start_new_fight_room_object(const std::string& enemy_name, const std::string& room_object_to_remove_on_defeat) {
     auto list = MonsterList::get();
     auto goblin = list->get_monster(enemy_name);
+    goblin->set_room_object_to_remove_on_defeat(room_object_to_remove_on_defeat);
     //start_new_fight(Sp<Monster>(goblin));
     
     fight_ = std::make_shared<Fight>(player_, goblin);
@@ -105,6 +107,10 @@ void sd::PlayerState::start_new_fight(const std::string& enemy_name) {
     
 
     ScriptEngine::get().broadcast("fight_started_with", enemy_name);
+}
+
+void sd::PlayerState::start_new_fight(const std::string &enemy_name) {
+    start_new_fight_room_object(enemy_name,enemy_name);
 }
 
 Sp<sd::PlayerVocabulary> sd::PlayerState::get_player_vocabulary() {
@@ -124,4 +130,6 @@ void sd::PlayerState::load_vocab()
 Sp<sd::Floor> sd::PlayerState::get_current_floor() {
     return current_floor_;
 }
+
+
 

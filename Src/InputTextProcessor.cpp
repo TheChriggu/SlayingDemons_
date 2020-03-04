@@ -81,7 +81,7 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
         }
     }
     
-    else if (words[0] == "Inspect")
+    else if (words[0] == "inspect")
     {
         if (words[1] == "Room")
         {
@@ -105,7 +105,7 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
         
     }
     
-    else if (words[0] == "Open")
+    else if (words[0] == "open")
     {
         auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
         
@@ -135,7 +135,7 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
             EventSystem::get().trigger(args);
         }
     }
-    else if (words[0] == "Enter")
+    else if (words[0] == "enter")
     {
         auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
         

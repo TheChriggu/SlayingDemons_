@@ -161,7 +161,6 @@ bool sd::Application::run()
 
 void sd::Application::load_vocab()
 {
-    
     auto vocab = std::make_shared<Vocabulary>();
     
     auto table = FileInput::load_tsv("../Resources/Tables/Actions.tsv");
@@ -185,10 +184,10 @@ void sd::Application::load_vocab()
         }
     }
     
-    auto walk_to = std::make_shared<Word>();
+    /*auto walk_to = std::make_shared<Word>();
     auto jump_over = std::make_shared<Word>();
     vocab->add("walk to", walk_to);
-    vocab->add("jump over", jump_over);
+    vocab->add("jump over", jump_over);*/
     
     Vocabulary::all_words = vocab;
 }

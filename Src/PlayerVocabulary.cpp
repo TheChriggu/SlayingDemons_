@@ -204,17 +204,23 @@ void sd::PlayerVocabulary::load_from_file()
 
         for(auto modifier :  (*vec)[0])
         {
-            std::string copy = modifier;
+            std::string lcase;
+            strtk::parse(modifier, "", strtk::as_lcase(lcase).ref());
+            std::string copy = lcase;
             add_modifier(copy);
         }
         for(auto action :  (*vec)[1])
         {
-            std::string copy = action;
+            std::string lcase;
+            strtk::parse(action, "", strtk::as_lcase(lcase).ref());
+            std::string copy = lcase;
             add_action(copy);
         }
         for(auto command :  (*vec)[2])
         {
-            std::string copy = command;
+            std::string lcase;
+            strtk::parse(command, "", strtk::as_lcase(lcase).ref());
+            std::string copy = lcase;
             add_command(copy);
         }
     }

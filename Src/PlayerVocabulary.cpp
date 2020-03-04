@@ -52,12 +52,11 @@ sd::PlayerVocabulary::PlayerVocabulary() : Subscriber() {
     modifiers_trie_ = std::make_shared<Trie>();
     commands_trie_ = std::make_shared<Trie>();
     
-    add_modifier("Flirty");
+    /*add_modifier("Flirty");
     add_modifier("Chaotic");
     add_modifier("Fire");
     add_modifier("Useless");
     add_modifier("Unimplemented");
-    //add_modifier("Pyro");
     
     add_action("Honk");
     add_action("Poke");
@@ -68,7 +67,9 @@ sd::PlayerVocabulary::PlayerVocabulary() : Subscriber() {
     add_command("Inspect");
     add_command("Open");
     add_command("Fight");
-    add_command("Enter");
+    add_command("Enter");*/
+
+    load_from_file();
     
     ScriptEngine::get().register_all("add_action", &PlayerVocabulary::add_action, this);
     ScriptEngine::get().register_all("add_modifier", &PlayerVocabulary::add_modifier, this);
@@ -94,17 +95,18 @@ bool sd::PlayerVocabulary::has_word(const std::string& word) {
     return false;
 }
 
-void sd::PlayerVocabulary::add_action(const std::string& action) {
+void sd::PlayerVocabulary::add_action(std::string action) {
+
     actions_.emplace_back(action);
     actions_trie_->add_word(action);
 }
 
-void sd::PlayerVocabulary::add_modifier(const std::string& modifier) {
+void sd::PlayerVocabulary::add_modifier(std::string modifier) {
     modifiers_.emplace_back(modifier);
     modifiers_trie_->add_word(modifier);
 }
 
-void sd::PlayerVocabulary::add_command(const std::string& word) {
+void sd::PlayerVocabulary::add_command(std::string word) {
     commands_.emplace_back(word);
     commands_trie_->add_word(word);
 }
@@ -167,9 +169,56 @@ void sd::PlayerVocabulary::load_from_file()
 {
     auto vec = FileInput::load_tsv("../Resources/Tables/PlayerVocab.tsv");
 
-    modifiers_ = (*vec)[0];
-    actions_ = (*vec)[1];
-    commands_ = (*vec)[2];
+    bool start_self_destruct = false;
+    for(auto row : *vec)
+    {
+        for (auto word : row)
+        {
+            std::string lcase;
+            strtk::parse(word, "", strtk::as_lcase(lcase).ref());
+            if(lcase.find("self") != std::string::npos || lcase.find("destruct") != std::string::npos)
+            {
+                actions_trie_.reset();
+                actions_trie_ = std::make_shared<Trie>();
+                modifiers_trie_.reset();
+                modifiers_trie_ = std::make_shared<Trie>();
+                commands_trie_.reset();
+                commands_trie_ = std::make_shared<Trie>();
+
+                add_modifier("Self");
+                add_action("Destruct");;
+                add_command("Self_Destruct");
+                start_self_destruct = true;
+            }
+        }
+    }
+    if(!start_self_destruct)
+    {
+        actions_trie_.reset();
+        actions_trie_ = std::make_shared<Trie>();
+        modifiers_trie_.reset();
+        modifiers_trie_ = std::make_shared<Trie>();
+        commands_trie_.reset();
+        commands_trie_ = std::make_shared<Trie>();
+
+
+        for(auto modifier :  (*vec)[0])
+        {
+            std::string copy = modifier;
+            add_modifier(copy);
+        }
+        for(auto action :  (*vec)[1])
+        {
+            std::string copy = action;
+            add_action(copy);
+        }
+        for(auto command :  (*vec)[2])
+        {
+            std::string copy = command;
+            add_command(copy);
+        }
+    }
+
 }
 
 std::vector<std::string> &sd::PlayerVocabulary::get_objects()

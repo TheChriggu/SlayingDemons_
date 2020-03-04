@@ -66,7 +66,9 @@ void sd::FormattedWord::set_position(sf::Vector2f position) {
 }
 
 sf::FloatRect sd::FormattedWord::get_rect() {
-    return text_->getGlobalBounds();
+    auto ret_val = text_->getGlobalBounds();
+    ret_val.height += 2;
+    return ret_val;
 }
 
 void sd::FormattedWord::move_vertical(float distance) {
@@ -85,6 +87,7 @@ void sd::FormattedWord::apply_format_to_text (sd::Format format)
     text_->setFont(*(format.font_));
     text_->setCharacterSize(format.size_);
     text_->setFillColor(format.color_);
+    text_->setOutlineColor(format.color_);
     text_->setStyle (format.style_);
     on_click_text_ = format.on_click_text_;
 }
@@ -198,6 +201,7 @@ void sd::FormattedWord::set_font_size_color(sd::Format format) {
     text_->setFont(*(format.font_));
     text_->setCharacterSize(format.size_);
     text_->setFillColor(format.color_);
+    text_->setOutlineColor(format.color_);
 }
 
 void sd::FormattedWord::set_font(Sp<sf::Font> font) {

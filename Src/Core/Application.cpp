@@ -29,6 +29,7 @@ bool sd::Application::run_splash_screens() {
     screen_->clear();
     if(!splash_screens_->DrawTo(screen_->get_texture()))
     {
+        audio_player_ = std::make_shared<AudioPlayer>();
         return false;
     }
     screen_->display();
@@ -92,7 +93,8 @@ bool sd::Application::setup()
     }
 
     ScriptEngine::get().set_broadcast_locked(false);
-    
+
+
     std::cout << "End initialization\n";
     
     RoutineManager::get().start_routine(
@@ -159,7 +161,6 @@ bool sd::Application::run()
 
 void sd::Application::load_vocab()
 {
-    
     auto vocab = std::make_shared<Vocabulary>();
     
     auto table = FileInput::load_tsv("../Resources/Tables/Actions.tsv");
@@ -168,8 +169,10 @@ void sd::Application::load_vocab()
         if (line[0] != "Name")
         {
             auto action = std::make_shared<Action>(line);
+            std::string name{line[0]};
+            strtk::convert_to_lowercase(name);
 
-            vocab->add(line[0], action);
+            vocab->add(name, action);
         }
     }
     
@@ -179,14 +182,17 @@ void sd::Application::load_vocab()
         if (line[0] != "Name")
         {
             auto modifier = std::make_shared<Modifier>(line);
-            vocab->add(line[0], modifier);
+            std::string name{line[0]};
+            strtk::convert_to_lowercase(name);
+            
+            vocab->add(name, modifier);
         }
     }
     
-    auto walk_to = std::make_shared<Word>();
+    /*auto walk_to = std::make_shared<Word>();
     auto jump_over = std::make_shared<Word>();
     vocab->add("walk to", walk_to);
-    vocab->add("jump over", jump_over);
+    vocab->add("jump over", jump_over);*/
     
     Vocabulary::all_words = vocab;
 }

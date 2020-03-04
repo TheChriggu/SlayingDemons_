@@ -42,8 +42,12 @@ sd::InputTextProcessor::InputTextProcessor() : Subscriber()
 
 void sd::InputTextProcessor::process_input(const std::string &spell)
 {
-    
     output_->add_line("[input]> " + spell);
+    
+    if (!std::regex_match(spell, two_words_pattern)) {
+        output_->add_line("this is wrong");
+        return;
+    }
     //split spell
     std::vector<std::string> words = split_by_space(spell);
     
@@ -77,9 +81,9 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
         }
     }
     
-    else if (words[0] == "Inspect")
+    else if (words[0] == "inspect")
     {
-        if (words[1] == "Room")
+        if (words[1] == "room")
         {
             output_->add_line(player_state_->get_current_room()->get_description());
         }
@@ -101,7 +105,7 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
         
     }
     
-    else if (words[0] == "Open")
+    else if (words[0] == "open")
     {
         auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
         
@@ -116,7 +120,7 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
             EventSystem::get().trigger(args);
         }
     }
-    else if (words[0] == "Fight")
+    else if (words[0] == "fight")
     {
         auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
         
@@ -131,7 +135,7 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
             EventSystem::get().trigger(args);
         }
     }
-    else if (words[0] == "Enter")
+    else if (words[0] == "enter")
     {
         auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
         

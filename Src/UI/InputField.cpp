@@ -75,7 +75,7 @@ void sd::InputField::add_text(sf::Uint32 input) {
             result.erase(result.getSize() - 1, 1);
         }
     } else {
-        result += static_cast<char>(input);
+        result += static_cast<char>(std::tolower(input));
     }
     
     

@@ -121,16 +121,20 @@ Sp<sd::Monster> sd::Room::get_enemy() {
 }
 
  void sd::Room::remove_object_with_name(const std::string& name) {
+    std::cout << "searching for: " << name << "\n";
     auto it = room_objects_.begin();
     bool it_lock = false;
     for(const auto& object : room_objects_)
     {
+        std::cout << "comparing to: " << std::string(object->get_name())  << "\n";
         if (std::string(object->get_name()) == name)
         {
+            std::cout << "is valid \n";
             it_lock = true;
         }
         if(!it_lock)
         {
+            std::cout << "is not valid \n";
             it.operator++();
         }
     }
@@ -140,7 +144,8 @@ Sp<sd::Monster> sd::Room::get_enemy() {
         (*it)->be_destroyed();
         (*it)->remove_from_layout(layout_, 11, 7);
         room_objects_.erase(it);
-    } else
+    }
+    else
         {
         std::cout << "object not found\n";
     }

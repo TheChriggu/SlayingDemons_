@@ -22,11 +22,14 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
         {
             std::cout << "++ object: " << object.first.as<std::string>() << std::endl;
             
+            std::string object_name{object.first.as<std::string>()};
+            strtk::convert_to_lowercase(object_name);
+            
             if (object.second.is<bool>()) {
                 is_start = object.second.as<bool>();
             }
 
-            else if (object.first.as<std::string>()== "layout")
+            else if (object_name == "layout")
             {
                 for (const auto& corner : object.second.as<sol::table&>())
                 {
@@ -66,7 +69,7 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                 if (size.x == 1 && size.y == 1) {
                     room_objects.emplace_back(
                             std::make_shared<SingleTileObject>(
-                                    object.first.as<std::string>(),
+                                object_name,
                                     layout[0],
                                     position,
                                     rotation,
@@ -79,7 +82,7 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                         std::cout << "++ door"  << std::endl;
                         room_objects.emplace_back(
                                 std::make_shared<Door>(
-                                        object.first.as<std::string>(),
+                                    object_name,
                                         layout[0],
                                         layout[1],
                                         position,
@@ -94,7 +97,7 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                         std::cout << "++ Multi tile" << std::endl;
                         room_objects.emplace_back(
                                 std::make_shared<MultiTileObject>(
-                                        object.first.as<std::string>(),
+                                    object_name,
                                         layout,
                                         size,
                                         rotation,

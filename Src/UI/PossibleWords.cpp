@@ -131,7 +131,7 @@ void sd::PossibleWords::update(std::vector<std::string>& content) {
     lines_.clear();
     //std::cout << "Size: " << search_prefix_.size() << std::endl;
     
-    sf::Vector2f offset = sf::Vector2f(50, 90);
+    sf::Vector2f offset = sf::Vector2f(80, 90);
         
     for(const auto& word : content)
     {

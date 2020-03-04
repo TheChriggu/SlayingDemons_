@@ -23,7 +23,7 @@ sd::ShaderEngine::ShaderEngine(std::vector<Sp<DrawableObject>>& drawable_objects
     ScriptEngine::get().register_all ("set_rgb_offset_weak_on", &ShaderEngine::set_rgb_offset_weak_on, this);
     ScriptEngine::get().register_all ("set_rgb_split_on", &ShaderEngine::set_rgb_split_on, this);
     ScriptEngine::get().register_all ("set_horizontal_zigzag_on", &ShaderEngine::set_horizontal_zigzag_on, this);
-        ScriptEngine::get().register_all ("set_glowing_pulse_on", &ShaderEngine::set_glowing_pulse_on, this);
+    ScriptEngine::get().register_all ("set_glowing_pulse_on", &ShaderEngine::set_glowing_pulse_on, this);
     ScriptEngine::get().register_all ("cancel_all_procedures_on", &ShaderEngine::cancel_all_procedures_on, this);
 }
 

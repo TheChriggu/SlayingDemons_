@@ -20,7 +20,8 @@ sd::PlayerVocabulary::PlayerVocabulary() : Subscriber() {
         if (e->type == sd::EventArgs::Type::NEW_WORD_COLLECTED)
         {
             auto args = std::dynamic_pointer_cast<NewWordCollectedEventArgs>(e);
-        
+            std::cout << "-- added new word: " << args->word << std::endl;
+            
             if(!has_word(args->word)) {
                 auto word = sd::Vocabulary::all_words->get(args->word);
             
@@ -52,12 +53,11 @@ sd::PlayerVocabulary::PlayerVocabulary() : Subscriber() {
     modifiers_trie_ = std::make_shared<Trie>();
     commands_trie_ = std::make_shared<Trie>();
     
-    add_modifier("Flirty");
+    /*add_modifier("Flirty");
     add_modifier("Chaotic");
     add_modifier("Fire");
     add_modifier("Useless");
     add_modifier("Unimplemented");
-    //add_modifier("Pyro");
     
     add_action("Honk");
     add_action("Poke");
@@ -68,7 +68,9 @@ sd::PlayerVocabulary::PlayerVocabulary() : Subscriber() {
     add_command("Inspect");
     add_command("Open");
     add_command("Fight");
-    add_command("Enter");
+    add_command("Enter");*/
+
+    load_from_file();
     
     ScriptEngine::get().register_all("add_action", &PlayerVocabulary::add_action, this);
     ScriptEngine::get().register_all("add_modifier", &PlayerVocabulary::add_modifier, this);
@@ -94,17 +96,20 @@ bool sd::PlayerVocabulary::has_word(const std::string& word) {
     return false;
 }
 
-void sd::PlayerVocabulary::add_action(const std::string& action) {
+void sd::PlayerVocabulary::add_action(std::string action) {
+    strtk::convert_to_lowercase(action);
     actions_.emplace_back(action);
     actions_trie_->add_word(action);
 }
 
-void sd::PlayerVocabulary::add_modifier(const std::string& modifier) {
+void sd::PlayerVocabulary::add_modifier(std::string modifier) {
+    strtk::convert_to_lowercase(modifier);
     modifiers_.emplace_back(modifier);
     modifiers_trie_->add_word(modifier);
 }
 
-void sd::PlayerVocabulary::add_command(const std::string& word) {
+void sd::PlayerVocabulary::add_command(std::string word) {
+    strtk::convert_to_lowercase(word);
     commands_.emplace_back(word);
     commands_trie_->add_word(word);
 }
@@ -167,9 +172,64 @@ void sd::PlayerVocabulary::load_from_file()
 {
     auto vec = FileInput::load_tsv("../Resources/Tables/PlayerVocab.tsv");
 
-    modifiers_ = (*vec)[0];
-    actions_ = (*vec)[1];
-    commands_ = (*vec)[2];
+    bool start_self_destruct = false;
+    for(auto row : *vec)
+    {
+        for (auto word : row)
+        {
+            std::string lcase;
+            strtk::parse(word, "", strtk::as_lcase(lcase).ref());
+            if(lcase.find("self") != std::string::npos || lcase.find("destruct") != std::string::npos)
+            {
+                actions_trie_.reset();
+                actions_trie_ = std::make_shared<Trie>();
+                modifiers_trie_.reset();
+                modifiers_trie_ = std::make_shared<Trie>();
+                commands_trie_.reset();
+                commands_trie_ = std::make_shared<Trie>();
+
+                add_modifier("self");
+                add_action("destruct");;
+                add_command("self_destruct");
+                start_self_destruct = true;
+            }
+        }
+    }
+    std::cout << "-- number commands: " << commands_.size() << std::endl;
+    if(!start_self_destruct)
+    {
+        actions_trie_.reset();
+        actions_trie_ = std::make_shared<Trie>();
+        modifiers_trie_.reset();
+        modifiers_trie_ = std::make_shared<Trie>();
+        commands_trie_.reset();
+        commands_trie_ = std::make_shared<Trie>();
+
+
+        for(auto modifier :  (*vec)[0])
+        {
+            std::string lcase;
+            strtk::parse(modifier, "", strtk::as_lcase(lcase).ref());
+            std::string copy = lcase;
+            add_modifier(copy);
+        }
+        for(auto action :  (*vec)[1])
+        {
+            std::string lcase;
+            strtk::parse(action, "", strtk::as_lcase(lcase).ref());
+            std::string copy = lcase;
+            add_action(copy);
+        }
+        for(auto command :  (*vec)[2])
+        {
+            std::string lcase;
+            strtk::parse(command, "", strtk::as_lcase(lcase).ref());
+            std::string copy = lcase;
+            std::cout << "-- new commands: " << copy << std::endl;
+            add_command(copy);
+        }
+    }
+    std::cout << "-- number commands: " << commands_.size() << std::endl;
 }
 
 std::vector<std::string> &sd::PlayerVocabulary::get_objects()

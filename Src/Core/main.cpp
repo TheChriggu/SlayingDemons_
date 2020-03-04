@@ -18,27 +18,28 @@ void write_data(std::vector<std::string> data);
 
 int main() {
     //startup();
-    
+
     auto app = std::make_shared<sd::Application>();
     auto result = app->setup ();
     if (!result) {
         std::cerr << "Error while setting up Application!" << std::endl;
         return EXIT_FAILURE;
     }
-    result = app->setup_splash_screens ();
+    /*result = app->setup_splash_screens ();
     if (!result) {
         std::cerr << "Error while setting up splash screens!" << std::endl;
         return EXIT_FAILURE;
     }
 
     while (app->run_splash_screens ())
-    {}
+    {}*/
     while (app->run ())
     {}
     
-    std::string text{"Inspect northern_way   "};
+    
+    /*std::string text{"Inspect northern_way   "};
 
-    /*std::regex pattern_1{R"(^\s*|\s*$)"};
+    std::regex pattern_1{R"(^\s*|\s*$)"};
     std::regex pattern_2{R"([^\s]+\s+\b)"};
     std::regex pattern_3{R"(\b\s+[^\s]+)"};
     

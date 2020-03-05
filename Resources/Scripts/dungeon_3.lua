@@ -8,6 +8,8 @@ function input_received (input)
 end
 
 function room_changed(name)
+    print("ROOM changed")
+    print_line("[color=255,0,144,255]Room changed!")
     if name=="green_room" then
         is_in_green_room = true
     else

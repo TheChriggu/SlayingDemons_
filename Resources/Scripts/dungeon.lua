@@ -109,6 +109,7 @@ dungeon = {
 
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
 
+            
             wizard ={
                 position={x=7,y=3},
                 layout = wizard_layout,
@@ -413,7 +414,6 @@ dungeon = {
                 end
 
             },
-
         },
         eastern_forest = {
             layout = { {0, 0}, {7, 0}, {7, 6}, {0, 6}},
@@ -629,6 +629,7 @@ dungeon = {
                     print_line("[font=ai].", 1)
                     print_line("[font=ai].", 1)
                     print_line("[font=ai]Resetting now.", 1)
+                    cancel_all_procedures_on("background_panel")
                     set_floor("dungeon_2")
                     set_stage(1)
                 end,
@@ -1420,6 +1421,7 @@ dungeon = {
                     print_line("[font=ai]ภ๏ รєค Շคкเ๓คՇค")
                     print_line("[font=ai]_____*?)//(")
                     set_rgb_split_on("background_panel")
+                    wait(1)
                     set_horizontal_zigzag_on("text-output")
                     print_line("[font=code][size=27]Error 7: fatal error")
                     print_line("[font=code][size=27].")

@@ -14,7 +14,7 @@ function room_changed(name)
         print_line_instant("But as far you can tell nothing dangerous is around.")
         print_line_instant("The old wizard taught you some more spells before he left.")
         print_line_instant("You start your journey with:")
-        print_line_instant("Spells, an old map with a marked location.")
+        print_line_instant("Flirty, Chaotic, Fire, Useless, unimplemented, Honk, Poke, Attack, Kick, Slash and an old map with a marked location.")
     else
         is_in_Southern_Forest_2 = false
     end
@@ -71,9 +71,9 @@ function room_changed(name)
         print_line_instant("There a signs and numbers on it...or more like on the book spines then on the shelves itself. The numbers are running down from the top of the shelves to the buttom. ")
         print_line_instant("But in your opinion they don't make any sense. Sometimes the numbers change to letters and you can read some words.")
         print_line_instant("You ask yourself what you're supposed to do here? But maybe you will get some information in here.")
-        set_rgb_split_on("map-window")
+        --[[set_rgb_split_on("map-window")
         wait(1)
-        cancel_all_procedures_on("map-window")
+        cancel_all_procedures_on("map-window")]]
     else
         is_in_room3 = false
     end
@@ -94,24 +94,13 @@ end
 function room_changed(name)
     if name=="room5" then
         is_in_room5 = true
-        print_line_instant("")
-        print_line_instant("")
+        print_line_instant("You enter the room with the marked location.")
+        print_line_instant("It's similar cold to the other room before. As you keep looking around you notice the same glowing bookshelves.")
+        print_line_instant("Since you collected the word 'Cyber' you think a lot in this house looks like 'cyber'. But you're actually not quite sure what that really means.")
+        print_line_instant("In the middle of the room stands a big machine like building. With a window on one side. ")
+        print_line_instant("As you take a closer look at the machine you see some more machine parts, like gears and cables inside of it. The frame around the window is glowing in the same light blue like the bookshelves.")
+        print_line_instant("The room is nearly silent except from a quiet buzzing from the machine.")
     else
         is_in_room5= false
     end
 end
-
-
---[[
-function room_changed(name)
-    if name=="mainroom" then
-        is_in_mainroom = true
-        print_line("The room is nearly empty, except four doors.")
-        print_line("Three are on the north side. A red, green and blue one.")
-        print_line("The fourth one is white and one the east side.")
-        print_line("But wait! There is one more thing.")
-        print_line("It's another old chest, which is standing right in the middle of the room.")
-    else
-        is_in_mainroom= false
-    end
-end]]

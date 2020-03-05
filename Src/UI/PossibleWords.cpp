@@ -67,6 +67,22 @@ sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size)
                  line->set_font_size_color(fonts_, 24, colors_);
              }
          }
+
+         if(e->type == EventArgs::Type::PLAYER_VOCAB_CHANGED)
+         {
+             if(current_list_type_ == Word::Type::ACTION)
+             {
+                 update(player_vocabulary_->get_actions());
+             }
+             if(current_list_type_ == Word::Type::MODIFIER)
+             {
+                 update(player_vocabulary_->get_modifiers());
+             }
+             if(current_list_type_ == Word::Type::COMMAND)
+             {
+                 update(player_vocabulary_->get_commands());
+             }
+         }
         );
     
     REGISTER_EVENT_HANDLER();

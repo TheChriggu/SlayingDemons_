@@ -31,7 +31,8 @@ namespace sd {
             SET_STAGE,
             COLORS_CREATED,
             CURRENT_COLOR_CHANGED,
-            CURRENT_FONT_CHANGED
+            CURRENT_FONT_CHANGED,
+            GAINED_FOCUS
         };
 
         EventArgs();

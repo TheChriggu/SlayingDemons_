@@ -62,6 +62,9 @@ bool sd::Application::setup()
         ScriptEngine::get().add_script(file);
     }
     
+    ScriptEngine::get().register_all("get_current_directory", &FileInput::get_current_directory);
+    ScriptEngine::get().register_all("is_file_existing", &FileInput::is_file_existing);
+    
     result = setup_window();
     if (!result) return false;
     
@@ -128,6 +131,13 @@ bool sd::Application::run()
         if (evt.type == sf::Event::Closed)
         {
             window_->close();
+        }
+
+        if(evt.type == sf::Event::GainedFocus)
+        {
+            auto args = std::make_shared<EventArgs>(EventArgs());
+            args->type = sd::EventArgs::Type::GAINED_FOCUS;
+            EventSystem::get().trigger(args);
         }
         
         for (const auto &object : drawable_objects_)
@@ -272,6 +282,5 @@ void sd::Application::test()
     auto event = std::make_shared<LineToOutputEventArgs>("test");
     EventSystem::get().trigger(event);
 }
-
 
 

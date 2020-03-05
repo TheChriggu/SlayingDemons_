@@ -28,7 +28,7 @@ void sd::ScriptEngine::add_script(const boost::filesystem::path& url) {
 }
 
 
-std::shared_ptr<Script> sd::ScriptEngine::get_script(const std::string& name) const {
+std::shared_ptr<sd::Script> sd::ScriptEngine::get_script(const std::string& name) const {
 
     for (const auto& script : scripts_) {
         std::string strg = script->get_name ();

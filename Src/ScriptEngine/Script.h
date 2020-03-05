@@ -9,59 +9,117 @@
 #include <memory>
 #include <regex>
 #include "UI/TextOutput.h"
+#include "Core/RoutineManager.h"
 
-
-class Script {
-public:
-    explicit Script(const std::string& name);
-    Script(const std::string& name, const std::string& content);
-    virtual ~Script() = default;
+namespace sd {
+    struct LuaRoutineContainer {
+        sol::coroutine func;
+    };
     
-    void add_content(const std::string& content);
-    
-    [[nodiscard]] const std::string& get_name() const;
-    [[nodiscard]] sol::optional<sol::table> get_table(const std::string& name) const;
-    
-    
-    template <typename... Args>
-    void call(const std::string& function, Args&&... args) const {
-        sol::function func = (*state_)[function];
+    class Script {
+        public:
+        explicit Script(const std::string& name);
+        Script(const std::string& name, const std::string& content);
+        virtual ~Script() = default;
         
-        if (func.valid())
-            func(std::forward<Args>(args)...);
-    }
-
-    template <typename T>
-    T get_var(const std::string& name) const {
-        return (*state_)[name];
-    }
-
-    template <typename... Args, typename Key>
-    void register_function(Key&& key, Args&&... args) {
-        state_->set_function(std::forward<Key>(key), std::forward<Args>(args)...);
-    }
+        void add_content(const std::string& content);
+        
+        [[nodiscard]] const std::string& get_name() const;
+        [[nodiscard]] sol::optional<sol::table> get_table(const std::string& name) const;
     
-    template <typename... Args>
-    void register_timeable_function(int argument_count, float default_wait_time, const char* key, Args&&... args) {
-        // create inter-function that yields and simulates a overloaded function
-        std::string test = "function " + std::string(key) + "(...) " +
-                           "local args = table.pack(...) " +
-                           "local wait_time = 0 " +
-                           std::string(key) + "_instant(args[1]) " +
-                             "if #args > " + std::to_string(argument_count) + " then wait_time = args[2] " +
-                             "else wait_time = " + std::to_string(default_wait_time) + " end " +
-                           "coroutine.yield(wait_time) "
-                           "end";
+        //sol::coroutine func;
         
-        state_->script(test);
         
-        state_->set_function(std::string(key) + "_instant", std::forward<Args>(args)...);
-    }
-
-private:
-    std::unique_ptr<sol::state> state_;
-    std::string name_;
-};
+        template <typename... Args>
+        bool call(const std::string& function, Args&&... args) {
+            coroutine_cache.emplace_back(std::make_shared<sd::LuaRoutineContainer>());
+            
+            coroutine_cache.back()->func = (*state_)[function].get<sol::coroutine>();
+            
+            if (coroutine_cache.back()->func.valid())
+            {
+                //auto test = func;
+                //coroutine_cache.emplace_back(test);
+                sol::object result = coroutine_cache.back()->func(std::forward<Args>(args)...);
+    
+                if (result.is<sol::lua_nil_t>())
+                {
+                    std::cout << "#~# no return" << std::endl;
+                    return true;
+                }
+                if (result.is<bool>())
+                    return result.as<bool>();
+    
+    
+                if (result.is<float>())
+                {
+                    std::cout << "#~# start coroutine" << std::endl;
+                    start_lua_callback_routine(coroutine_cache.back(), result.as<float>());
+                }
+                return false;
+            }
+            return false;
+        }
+        
+        template <typename T>
+        T get_var(const std::string& name) const {
+            return (*state_)[name];
+        }
+        
+        template <typename... Args, typename Key>
+        void register_function(Key&& key, Args&&... args) {
+            state_->set_function(std::forward<Key>(key), std::forward<Args>(args)...);
+        }
+        
+        template <typename... Args>
+        void register_timeable_function(int argument_count, float default_wait_time, const char* key, Args&&... args) {
+            // create inter-function that yields and simulates a overloaded function
+            std::string test = "function " + std::string(key) + "(...) " +
+                               "local args = table.pack(...) " +
+                               "local wait_time = 0 " +
+                               std::string(key) + "_instant(args[1]) " +
+                               "if #args > " + std::to_string(argument_count) + " then wait_time = args[2] " +
+                               "else wait_time = " + std::to_string(default_wait_time) + " end " +
+                               "coroutine.yield(wait_time) "
+                               "end";
+            
+            state_->script(test);
+            
+            state_->set_function(std::string(key) + "_instant", std::forward<Args>(args)...);
+        }
+    
+        template <typename... Args>
+        void start_lua_callback_routine(Sp<sd::LuaRoutineContainer> function, float time, Args&&... args) const
+        {
+            RoutineManager::get().start_routine(
+                std::make_shared<Routine>(
+                    nullptr,
+                    time,
+                    std::function<bool(Sp<Routine>)>(
+                        [function, args...](Sp<Routine> this_routine) {
+                            sol::object result = function->func(std::forward<Args>(args)...);
+    
+                            if (result.is<float>())
+                            {
+                                this_routine->set_duration(result.as<float>());
+                                return Routine::restart;
+                            }
+                            return Routine::end;
+                        }
+                    )
+                )
+            );
+        }
+    
+        
+        
+        private:
+        std::unique_ptr<sol::state> state_;
+        std::string name_;
+        
+        std::vector<Sp<sd::LuaRoutineContainer>> coroutine_cache;
+    };
+}
 
 
 #endif //_SCRIPT_H_

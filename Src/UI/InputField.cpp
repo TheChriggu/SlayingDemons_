@@ -196,6 +196,7 @@ void sd::InputField::handle(sf::Event event) {
             possible_words_->update_search_prefix(input.toAnsiString());
         }
     }
+
 }
 
 sf::Vector2f sd::InputField::get_size() {

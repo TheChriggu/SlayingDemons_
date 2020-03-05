@@ -149,3 +149,13 @@ void sd::FileInput::write_tsv(const Sp<std::vector<std::vector<std::string>>> co
     }
 }
 
+std::string sd::FileInput::get_current_directory()
+{
+    return boost::filesystem::current_path().string();
+}
+
+bool sd::FileInput::is_file_existing(std::string url)
+{
+    return is_existing(boost::filesystem::path(url));
+}
+

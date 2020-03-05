@@ -40,7 +40,12 @@ big_bookshelf_layout = {
     tiles = {16, 17, 17, 17, 17, 17, 17, 18, 24, -1, -1, -1, -1, -1, -1, 24, 32, -1, -1, -1, -1, -1, -1, 32}
 }
 enemy_layout = {
-    tiles = {61}
+    size = {1,1},
+    tiles = {61},
+}
+wizard_layout = {
+    size = {1,1},
+    tiles = {62},
 }
 blocked_window_layout = {
     size = {5, 4},
@@ -88,8 +93,85 @@ bushDoor_layout = {
 
 
 dungeon = {
-    floor1 = {
+    tutorial_floor ={
         is_start = true,
+
+        tutorial_room={
+            is_start = true,
+
+            layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
+
+        --print_line("As you lay peacefully on your front porch, soaking up the last warm sun rays of late summer, you hear one of goats on the range land. Everything seems so peaceful nothing bad could ever happen."),
+        --print_line("'Hey Kid! Wake up.' A rough voice wakes you up."),
+        --print_line("You are getting rudely awake as the end of a large wooden staff hits your stomach. Stachled by the unfriendly behavior of your guest you jump up, willed to aks him what his problem is. But than you realized it's the old wizard of the village standing in front of you. "),
+        --print_line("'I need you to do me a favor, kid.' he countinues."),
+        --print_line("The wizard need you to do him a favor? That's highly unlikely. Why should he need you? You're just an oridnary farmer boy, living outside the village with no special talent. "),
+        --print_line("Obviously you don't trust the old wizard, but luckly you can take a closer look at things."),
+        --print_line("[i]Try typing: Inspect Wizard[/i]"),
+
+            wizard ={
+                position={x=7,y=3},
+                layout = wizard_layout,
+
+                on_inspection = function ()
+                    print_line("[i]It's the old wizard. He lives down the street in the village. You barely saw him before, but today he seems to be a bit more nervous.[/i]")
+                    print_line("[i]In his right hand he holds a large wooden staff. It's probably the staff he poked you with.[/i]")
+                    print_line("Congratulations!")
+                    print_line("You have inspected the wizard. You can do this with every listed object in the room.")
+                    print_line("You look at the wizard sceptically.")
+                    print_line("The old wizard returns the look. 'What? I bet it's not the first time someone asked you for a favor.'")
+                    print_line("[font=book]'Anyway, I need you to fight the fire-breathing drago, the ancient enemy of this kingdom.'")
+                    print_line("[font=book]'You know, the dragonn who destroys the fields and homes of the village residents.'")
+                    print_line("The wizard lowers his sight. 'Soon we won't have any food left...'")
+                    print_line("'Don't look like that!'")
+                    print_line("[font=book]'Let's be honest. Apparently you have the most common sense from everyone in the village and a radius of several miles around it'")
+                    print_line("[font=book]'So I decided you would be the best option to fight this dragon. We have no other choice.' [font=current] He looks at you, eyes full of confidence.")
+                    print_line("Oh, what a great decision. You don't even know how to fight.")
+                    print_line("[font=book]'But do not worry. I will show you how to fight.'")
+                    print_line("Great...")
+                    print_line("[font=book]'First you need to learn some spells', [font=current]he explains.")
+                    print_line("You learnt starter spells.")
+                    print_line("The old wizard points to a barrel. [font=book]'Now, you see the barrel over there? Attack it by typing [font=current]'fight barrel'.")
+                end
+        },
+            barrel = {
+                position={x=5,y=3},
+                layout = bush_layout,
+
+                on_enter = function ()
+                    print_line("You can't enter a barrel. That's not how it works.")
+                    print_line("Nevertheless, the old wizard said you should try fight the barrel.")
+                end,
+
+                on_fight = function ()
+                    print_line("Let's see how that works.")
+                end,
+
+                on_open = function ()
+                    print_line("The old wizard said you should try fight the barrel.")
+                end,
+
+                on_inspection = function ()
+                    print_line("The old wizard said you should try fight the barrel.")
+                end,
+
+                on_destroy = function ()
+                    print_line("'Good, Kid. That are the basics of fighting', said the old wizard.")
+                    print_line("'Now that you know how to fight you can start your adventure.'")
+                    print_line("The wizards point to a forest in the far.")
+                    print_line("'The fire-breathing dragon waits at the ancient castle at the other side of the adventurer forest.'")
+                    print_line("'Just go to the forest and you'll find your way.' In a strange way the wizard looks a bit optimistic.")
+                    print_line("But be cautious! Many brave people tried your quest before but never returned!")
+                    print_line("Wait, the adventurer forest? That's not the nicest place for a farmer boy to be. Many adventuerer has gone missing there.")
+                    print_line("You wanted to start protesting, but before you could say something the wizard stamps his staff on the ground and vanishes.")
+                    print_line("Apparently you have no other choice than trying to fight the fire-breathing dragon...")
+                    --loads dungeon floor1
+                end
+            },
+        },
+    },
+
+    floor1 = {
         Southern_Forest={
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
 
@@ -1163,80 +1245,6 @@ dungeon = {
     },
 }
 
-tutorial ={
-    floor1 ={
-        layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
-
-        --print_line("As you lay peacefully on your front porch, soaking up the last warm sun rays of late summer, you hear one of goats on the range land. Everything seems so peaceful nothing bad could ever happen."),
-        --print_line("'Hey Kid! Wake up.' A rough voice wakes you up."),
-        --print_line("You are getting rudely awake as the end of a large wooden staff hits your stomach. Stachled by the unfriendly behavior of your guest you jump up, willed to aks him what his problem is. But than you realized it's the old wizard of the village standing in front of you. "),
-        --print_line("'I need you to do me a favor, kid.' he countinues."),
-        --print_line("The wizard need you to do him a favor? That's highly unlikely. Why should he need you? You're just an oridnary farmer boy, living outside the village with no special talent. "),
-        --print_line("Obviously you don't trust the old wizard, but luckly you can take a closer look at things."),
-        --print_line("[i]Try typing: Inspect Wizard[/i]"),
-
-        wizard ={
-            position={x=7,y=3},
-            layout = enemy_layout,
-
-            on_inspection = function ()
-                print_line("[i]It's the old wizard. He lives down the street in the village. You barely saw him before, but today he seems to be a bit more nervous.[/i]")
-                print_line("[i]In his right hand he holds a large wooden staff. It's probably the staff he poked you with.[/i]")
-                print_line("Great!")
-                print_line("You have inspected the wizard. You can do this with every listed object in the room and even better, you can inspect the room itself!")
-                print_line("You look sceptical at the wizard.")
-                print_line("The old wizard returns the look. 'What? I bet it's not the first time someone asked you for a favor.'")
-                print_line("'Anyways, I need you to fight the fire-breathing drago, the year long enemy of this kingdom.'")
-                print_line("'You know, the dragon, which destroys the fields and homes of the village residents.'")
-                print_line("His look gets darker. 'Soon we won't have anymore food...'")
-                print_line("'Don't do that look!'")
-                print_line("'Let's be honest. You know, apparently you has the most common sense from everyone in the village and a radius of several miles around it'")
-                print_line("'So, I decided you would be the best option to fight this dragon. You have no choice.' He looks pretty convinced about his decision.")
-                print_line("Oh, what a great decision. You don't even know how to fight.")
-                print_line("'But don't worry. I will show you how to fight.'")
-                print_line("Great...")
-                print_line("'First you need to learn some spells', he explained.")
-                print_line("You learnt starter spells.")
-                print_line("The old wizard points to a barrel. 'Now, you see the barrel over there? Attack it by typing Fight barrel.'")
-            end
-        },
-        barrel = {
-            position={x=5,y=3},
-            layout = bush_layout,
-
-            on_enter = function ()
-                print_line("You can't enter a barrel. That's not how it works.")
-                print_line("Nevertheless, the old wizard said you should try fight the barrel.")
-            end,
-
-            on_fight = function ()
-                print_line("Let's see how that works.")
-            end,
-
-            on_open = function ()
-                print_line("The old wizard said you should try fight the barrel.")
-            end,
-
-            on_inspection = function ()
-                print_line("The old wizard said you should try fight the barrel.")
-            end,
-
-            on_destroy = function ()
-                print_line("'Good, Kid. That are the basics of fighting', said the old wizard.")
-                print_line("'Now that you know how to fight you can start your adventure.'")
-                print_line("The wizards point to a forest in the far.")
-                print_line("'The fire-breathing dragon waits at the ancient castle at the other side of the adventurer forest.'")
-                print_line("'Just go to the forest and you'll find your way.' In a strange way the wizard looks a bit optimistic.")
-                print_line("But be cautious! Many brave people tried your quest before but never returned!")
-                print_line("Wait, the adventurer forest? That's not the nicest place for a farmer boy to be. Many adventuerer has gone missing there.")
-                print_line("You wanted to start protesting, but before you could say something the wizard stamps his staff on the ground and vanishes.")
-                print_line("Apparently you have no other choice than trying to fight the fire-breathing dragon...")
-                --loads dungeon floor1
-            end
-        },
-
-        }
-}
 
 
 

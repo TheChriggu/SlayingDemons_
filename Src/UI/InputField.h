@@ -26,6 +26,11 @@ namespace sd {
         Sp<Font> fonts_;
         Sp<Colors> colors_;
         
+        //important for autocompletion Tab loop
+        std::string former_completion_;
+        
+        void complete_first();
+        
     public:
         InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color);
         ~InputField() override = default;

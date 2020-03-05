@@ -78,8 +78,8 @@ skeleton_layout={
     tiles = {25},
 }
 path_layout={
-    size = {1, 2},
-    tiles = {55, 63}
+    size = {2,1},
+    tiles = {7,7}
 }
 bushDoor_layout = {
     size = {2,1},
@@ -171,6 +171,7 @@ dungeon = {
                 is_locked=true,
 
                 on_inspection = function ()
+                    set_stage(2)
                     print_line("You can see a path behind this bush. But you'll first have to remove it. ")
                     print_line("You could try to use some spells on it. ")
                 end,
@@ -257,7 +258,6 @@ dungeon = {
 
             outworn_path = {
                 position = {x = 8, y = 3},
-                rotation = 1,
                 layout= path_layout,
                 on_inspection = function ()
                     print_line("The path looks old, like it hasn't been used in a long, long time. ")

@@ -19,7 +19,7 @@ function room_changed(name)
 end
 
 function player_profile_deleted()
-    --print_line("player_profile_deleted")
+    print_line("player_profile_deleted")
 end
 
 function self_destruct_added()

@@ -10,6 +10,7 @@ end
 function room_changed(name)
     if name=="intro" then
         is_in_intro = true
+        
     else
         is_in_intro = false
     end

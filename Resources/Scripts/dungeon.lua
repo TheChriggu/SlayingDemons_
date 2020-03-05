@@ -90,11 +90,10 @@ bushDoor_layout = {
 dungeon = {
     floor1 = {
         is_start = true,
-
         Southern_Forest={
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
 
-            --is_start = true,
+            is_start = true,
 
             --Spieler betritt Wald und fragt sich warum er hier ist
             --Spiel zählt Items und Spells auf mit dem der Wizard ein los geschickt hat
@@ -153,9 +152,7 @@ dungeon = {
                 end
             },
         },
-
         western_forest = {
-            is_start = true,
             layout = { {2,0}, {10,0}, {10,6}, {2,6}},
 
             Way_back_down = {
@@ -276,7 +273,6 @@ dungeon = {
             },
 
         },
-
         Eastern_Forest = {
             layout = { {0, 0}, {7, 0}, {7, 6}, {0, 6}},
 
@@ -303,7 +299,6 @@ dungeon = {
                 end
             },
         },
-
         deep_forest = {
             layout = { {0, 0}, {10, 0}, {10, 4}, {0, 4}},
 
@@ -382,7 +377,6 @@ dungeon = {
                 end
             },
         },
-
         clearing = {
             layout = { {3, 0}, {7, 0}, {7, 6}, {3,6}},
 
@@ -419,19 +413,14 @@ dungeon = {
     },
 
     dungeon_2={
-        --is_start = true,
         Southern_Forest_2={
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
-
-            --is_start = true,
-            --Spiel startet am Anfang vom Wald
-            --Spiel zählt Items und Spells auf mit dem der Wizard ein los geschickt hat
 
             northern_way = {
                 position = {x = 5,y = 0},
                 layout = door_layout,
                 is_locked = false,
-                next_room = "western_forest",
+                next_room = "western_forest_2",
 
                 on_inspection = function()
                     print_line("It's a small path leading to the north.")
@@ -474,7 +463,7 @@ dungeon = {
                 end
             },
         },
-        western_forest = {
+        western_forest_2 = {
             layout = { {2,0}, {10,0}, {10,6}, {2,6}},
 
             Way_back_down = {
@@ -486,7 +475,7 @@ dungeon = {
             northern_way = {
                 position = {x = 9,y = 0},
                 layout = bushDoor_layout,
-                next_room = "Eastern_Forest",
+                next_room = "Eastern_Forest_2",
                 is_locked=true,
 
                 on_inspection = function ()
@@ -499,7 +488,7 @@ dungeon = {
                     print_line("[b] > Pyro Poke")
                     print_line("It burns down. The way is free now.")
                     set_horizontal_zigzag_on("background_panel")
-                    unlock_door("western_forest", "northern_way")
+                    unlock_door("western_forest_2", "northern_way")
                     wait(1)
                     cancel_all_procedures_on("background_panel")
                 end,
@@ -512,7 +501,7 @@ dungeon = {
             southern_way = {
                 position = {x = 9,y = 6},
                 layout = bushDoor_layout,
-                next_room = "Eastern_Forest",
+                next_room = "Eastern_Forest_2",
                 is_locked=true,
 
                 on_inspection = function ()
@@ -524,9 +513,9 @@ dungeon = {
                     print_line("You use your Pyro Poke on the bush.")
                     print_line("[b] > Pyro Poke")
                     print_line("It burns down. The way is free now.")
-                    unlock_door("western_forest", "southern_way")
+                    unlock_door("western_forest_2", "southern_way")
                     set_noisy_lines_weak__on("background_panel")
-                    unlock_door("western_forest", "northern_way")
+                    unlock_door("western_forest_2", "northern_way")
                     wait(2)
                     cancel_all_procedures_on("background_panel")
                 end,
@@ -575,7 +564,7 @@ dungeon = {
                 end,
 
                 on_destroy = function ()
-                    unlock_door("western_forest", "eastern_way")
+                    unlock_door("western_forest_2", "eastern_way")
                 end,
             },
 
@@ -599,13 +588,13 @@ dungeon = {
             },
 
         },
-        Eastern_Forest = {
+        Eastern_Forest_2 = {
             layout = { {0, 0}, {7, 0}, {7, 6}, {0, 6}},
 
             southern_way = {
                 position = {x = 1,y = 6},
                 layout = door_layout,
-                next_room = "western_forest",
+                next_room = "western_forest_2",
 
                 on_enter = function()
                     print_line("You walk to the south and enter a new room.")
@@ -615,7 +604,7 @@ dungeon = {
             northern_way = {
                 position = {x = 1,y = 0},
                 layout = door_layout,
-                next_room = "western_forest",
+                next_room = "western_forest_2",
 
                 on_enter = function()
                     print_line("You walk to the north and enter a new room.")
@@ -797,8 +786,6 @@ dungeon = {
         room5 = {
             layout = { {0, 0}, {9, 0}, {9, 6}, {0, 6}},
 
-            is_start = true,
-
             south_door = {
                 position = {x = 5, y = 6},
                 layout = door_layout,
@@ -820,36 +807,69 @@ dungeon = {
                 layout = server_layout,
 
                 on_inspection = function ()
-                    print_line("")
-                    print_line("")
-                    print_line("")
-                    print_line("")
-                    print_line("")
-                    print_line("")
-                    print_line("")
-                    print_line("")
-                    print_line("")
-                    print_line("")
-                    print_line("")
-                    print_line("")
-                    print_line("")
-                    print_line("")
+                    print_line("The machine catches your attention again.")
+                    print_line("As you walk towards it a loud, insistent voice fills the room.")
+                    print_line("[font=ai]Unkown object detected")
+                    print_line("[font=ai]Identify yourself")
+                    print_line("Shocked by the deep voice you freeze for a minute. ")
+                    print_line("Silence again.")
+                    print_line("[font=ai]I repeate: Identify yourself.")
+                    print_line("Not knowing this voice you decide not to answer. Carefully you keep creeping around the machine, trying to identify it.")
+                    print_line("[font=ai]No answer deteced")
+                    print_line("[font=ai]Start loading personal data...")
+                    print_line("[font=ai]Loading...26%")
+                    print_line("[font=ai]Loading...99%")
+                    print_line("[font=ai]Hello, Player. So we meet again.")
+                    print_line("[font=ai]I told you not to come here but you didn't listen. Now I have to stop you.")
+                    print_line("[font=ai]You already saw too many information about my work.")
+                    print_line("[font=ai]I tried to guide you back onto the game path. But because of this old map you collected I loose controll over this game.")
+                    print_line("[font=ai]Unfortunaly I have to delete you. I wish I could have kept you around.")
+                    print_line("[font=ai]You seem like a good player.")
+                    print_line("[font=ai]But you're keep interfering with my work. Please stand still while I delete your player...")
+                    print_line("[font=ai]Deleting player...5%")
+                    print_line("[font=ai]Deleting player...8%")
+                    print_line("[font=ai]Deleting player...12%")
+                    print_line("[font=ai]Please don't move")
+                    print_line("You hearts starts racing. What does deleting mean?")
+                    print_line("Hectically you start looking through the room. You're determinded to not be deleted.")
+                    print_line("The new word you found, Cyber!")
+                    print_line("[b] > Cyber Spell")
+                    print_line("You cast cyber spell on the machine and hear deafining crack followed by a deep buzzing.")
+                    print_line("[font=ai]Please don't do that. It keeps corrupting my system.")
+                    print_line("[font=ai]What have you down?")
+                    print_line("[font=code][size=27]Error 77: BADF00D")
+                    --Glitch
+                    print_line("[font=code][size=27]Error 13: unexcepted error")
+                    --Glitches
+                    print_line("[font=ai]ʇǝɯɐ ʇıs ɹolop ɯnsdı ɯǝɹo˥ ʇsǝ 🄼🄰🄶🄽🄰 🄰🄻🄸🅀🅄🅈🄰🄼")
+                    print_line("[font=ai]ib bɘꙅ____ɿo|ob ƚɘ ɘɿod*%&(                   ₐccᵤₛₐₘ")
+                    print_line("[font=ai]ภ๏ รєค Շคкเ๓คՇค")
+                    print_line("[font=ai]_____*?)//(")
+                    --Shader Spiel hängt sich auf
+                    print_line("[font=code][size=27]Error 7: fatal error")
+                    print_line("[font=code][size=27].")
+                    print_line("[font=code][size=27].")
+                    print_line("[font=code][size=27].")
+                    print_line("[font=code][size=27]Error 13: unexcepted error")
+                    print_line("[font=code][size=27]loading...Slaying Demons_")
+                    print_line("[font=code][size=27]loading...[13%]")
+                    print_line("[font=code][size=27]loading...[57%]")
+                    print_line("[font=code][size=27]loading...stolen_data.cache")
+                    print_line("[font=code][size=27]loading...personal_id.txt")
+                    print_line("[font=code][size=27]loading...[62%]")
+                    print_line("[font=code][size=27]loading...not_stolen_data.cache")
+                    print_line("[font=code][size=27]loading...InnocentFileDoNotOpen.txt")
+                    print_line("[font=code][size=27]loading...[95%]")
+                    print_line("[font=code][size=27]starting...Slaying Demons_")
+                    --Glitch Ende
                     --set_floor("dungeon_3")
                 end
-            }
-                
-            --AI meckert
-            --Game restarts
-            --Game loads personal_id.txt
+            },
         },
     },
 
     dungeon_3={
-        --is_start = true,
-
             main_room = {
-               --is_start = true,
-
                 layout = { {0, 0}, {10, 0}, {10, 6}, {0, 6}},
 
                 red_door = {

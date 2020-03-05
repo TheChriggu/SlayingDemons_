@@ -5,7 +5,7 @@ is_in_main_room = false
 
 
 function player_profile_deleted()
-    --print_line("player_profile_deleted")
+    print_line("player_profile_deleted")
 end
 
 function self_destruct_added()

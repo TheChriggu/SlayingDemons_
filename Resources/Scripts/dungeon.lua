@@ -10,7 +10,7 @@
 -- Old House Layouts
 sofa_layout = {
     size = {1, 2},
-    tiles = {32, 40}
+    tiles = {51, 59}
 }
 table_layout = {
     size = {1, 2},
@@ -19,6 +19,10 @@ table_layout = {
 door_layout = {
     size = {2,1},
     tiles = {8, 3}
+}
+horizontal_door_layout = {
+    size = {2,1},
+    tiles = {8, 4}
 }
 fakedoor_layout = {
     size = {1,1},
@@ -36,7 +40,7 @@ big_bookshelf_layout = {
     tiles = {16, 17, 17, 17, 17, 17, 17, 18, 24, -1, -1, -1, -1, -1, -1, 24, 32, -1, -1, -1, -1, -1, -1, 32}
 }
 enemy_layout = {
-    tiles = {25}
+    tiles = {61}
 }
 blocked_window_layout = {
     size = {5, 4},
@@ -44,7 +48,7 @@ blocked_window_layout = {
 }
 server_layout = {
     size = {2, 2},
-    tiles = {48, 56}
+    tiles = {38, 39, 46, 47}
 }
 
 
@@ -63,7 +67,7 @@ bushGroup_layout={
 }
 chest_layout={
     size = {1,1},
-    tiles = {50},
+    tiles = {40},
 }
 axe_layout={
     size = {1,1},
@@ -71,15 +75,15 @@ axe_layout={
 }
 skeleton_layout={
     size = {1,1},
-    tiles = {43},
+    tiles = {25},
 }
 path_layout={
-    size = {2,1},
-    tiles = {51,51},
+    size = {1, 2},
+    tiles = {55, 63}
 }
 bushDoor_layout = {
     size = {2,1},
-    tiles = {9, 58}
+    tiles = {8, 58}
 }
 
 
@@ -253,6 +257,7 @@ dungeon = {
 
             outworn_path = {
                 position = {x = 8, y = 3},
+                rotation = 1,
                 layout= path_layout,
                 on_inspection = function ()
                     print_line("The path looks old, like it hasn't been used in a long, long time. ")

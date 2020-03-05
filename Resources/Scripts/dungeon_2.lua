@@ -104,18 +104,3 @@ function room_changed(name)
         is_in_room5= false
     end
 end
-
-
---[[
-function room_changed(name)
-    if name=="mainroom" then
-        is_in_mainroom = true
-        print_line("The room is nearly empty, except four doors.")
-        print_line("Three are on the north side. A red, green and blue one.")
-        print_line("The fourth one is white and one the east side.")
-        print_line("But wait! There is one more thing.")
-        print_line("It's another old chest, which is standing right in the middle of the room.")
-    else
-        is_in_mainroom= false
-    end
-end]]

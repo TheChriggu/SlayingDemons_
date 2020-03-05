@@ -6,10 +6,12 @@
 #define SLAYINGDEMONS_SELFDESTRUCT_H
 
 
-class SelfDestruct {
-public:
-    void self_destruct();
-};
+namespace sd {
+    class SelfDestruct {
+        public:
+        void self_destruct();
+    };
+}
 
 
 #endif //SLAYINGDEMONS_SELFDESTRUCT_H

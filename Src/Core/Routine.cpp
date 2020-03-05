@@ -13,11 +13,13 @@ sd::Routine::Routine(std::function<void()> body, float duration, std::function<b
 
 bool sd::Routine::process()
 {
+
     if (body_)
         body_();
     
     if (timer_.getElapsedTime().asSeconds() >= duration_) {
         if (on_finished_body_)
+
             if (on_finished_body_(shared_from_this())) {
                 start();
                 return true;

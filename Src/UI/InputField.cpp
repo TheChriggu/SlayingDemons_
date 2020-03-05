@@ -121,12 +121,7 @@ void sd::InputField::handle(sf::Event event) {
     {
         if (event.type == sf::Event::KeyPressed)
         {
-            possible_words_->update_search_prefix(text_->getString().toAnsiString());
-            
-            auto input = text_->getString();
-            input += possible_words_->complete_first_possible_word();
-            text_->setString(input);
-            possible_words_->update_search_prefix(input.toAnsiString());
+            complete_first();
             
             if (std::regex_match(text_->getString().toAnsiString(), InputTextProcessor::single_word_pattern)) {
                 switch(possible_words_->get_current_list_type()) {
@@ -138,6 +133,8 @@ void sd::InputField::handle(sf::Event event) {
                         break;
                 }
             }
+    
+            former_completion_ = "";
         }
     }
     else if (event.key.code == sf::Keyboard::BackSpace)
@@ -162,21 +159,42 @@ void sd::InputField::handle(sf::Event event) {
             auto input = text_->getString().toAnsiString();
             auto completion = possible_words_->loop_through_possible_words();
             auto prefix = possible_words_->get_search_prefix();
-            auto position = input.find_last_of(prefix) - (prefix.size() - 1);
-            
-            /*std::cout << "input: " << input << std::endl;
+            auto prefix_size = prefix.size();
+            auto find_result = static_cast<long>(input.rfind(prefix));
+            long position = find_result;
+    
+            std::cout << "---------------------" << std::endl;
+            std::cout << "input: " << input << std::endl;
             std::cout << "completion: " << completion << std::endl;
-            std::cout << "prefix: " << prefix.size() << std::endl;
+            std::cout << "prefix: " << prefix << std::endl;
+            std::cout << "prefix_size: " << prefix_size << std::endl;
+            std::cout << "find result: " << (long)input.find_last_of(prefix) << std::endl;
             std::cout << "position: " << position << std::endl;
-            std::cout << "last position: " << input.size() - 1 << std::endl;*/
+            //std::cout << "last position: " << input.size() - 1 << std::endl;
             
             // deletes the prefix and anything thats behind it and then places the prefix with the rest of looped word behind it
             /*input = std::regex_replace(
                 input,
                 std::regex(prefix + ".*"),
                 prefix + completion);*/
-            input.replace(position, input.size(), prefix + completion);
-            
+            if (!prefix.empty())
+            {
+                input.replace(position, input.size(), prefix + completion);
+                
+            }
+            else
+            {
+                std::cout << "++++++++++++++++++++++" << std::endl;
+                std::cout << "input size: " << input.size() << std::endl;
+                std::cout << "former_completion_ size: " << former_completion_.size() << std::endl;
+                input.replace(input.size() - former_completion_.size(), input.size(), prefix + completion);
+                std::cout << "++++++++++++++++++++++" << std::endl;
+            }
+            /*if ((long)input.find_last_of(prefix) > 0)
+                input.replace(position, input.size(), prefix + completion);
+            else
+                input.append(completion);*/
+            former_completion_ = completion;
             text_->setString(input);
         }
     }
@@ -188,12 +206,7 @@ void sd::InputField::handle(sf::Event event) {
     {
         if (event.type == sf::Event::KeyPressed)
         {
-            possible_words_->update_search_prefix(text_->getString().toAnsiString());
-
-            auto input = text_->getString();
-            input += possible_words_->complete_first_possible_word();
-            text_->setString(input);
-            possible_words_->update_search_prefix(input.toAnsiString());
+            complete_first();
         }
     }
 
@@ -205,6 +218,17 @@ sf::Vector2f sd::InputField::get_size() {
 
 sf::Vector2f sd::InputField::get_position() {
     return text_->getPosition();
+}
+
+void sd::InputField::complete_first()
+{
+    possible_words_->update_search_prefix(text_->getString().toAnsiString());
+    
+    auto input = text_->getString();
+    input += possible_words_->complete_first_possible_word();
+    text_->setString(input);
+    
+    possible_words_->update_search_prefix(input.toAnsiString());
 }
 
 

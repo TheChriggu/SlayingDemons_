@@ -21,6 +21,15 @@ void write_data(std::vector<std::string> data);
 int main() {
     //startup();
     
+    /*std::string prefix{"bushe"};
+    std::string input1{"t bus"};
+    std::string input2{"t bushes"};
+    
+    std::cout << static_cast<long>(input1.rfind(prefix)) << std::endl;
+    std::cout << static_cast<long>(input2.rfind(prefix)) << std::endl;*/
+    
+    
+    
     auto app = std::make_shared<sd::Application>();
     auto result = app->setup ();
     if (!result) {

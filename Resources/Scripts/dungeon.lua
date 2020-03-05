@@ -55,6 +55,10 @@ server_layout = {
     size = {2, 2},
     tiles = {38, 39, 46, 47}
 }
+paintings_layout = {
+    size = {1, 2},
+    tiles = {12, 12}
+}
 
 
 -- Forest Layouts
@@ -98,20 +102,12 @@ bushDoor_layout = {
 
 dungeon = {
     tutorial_floor ={
-        is_start = true,
+        
 
         tutorial_room={
-            is_start = true,
+            --is_start = true,
 
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
-
-        --print_line("As you lay peacefully on your front porch, soaking up the last warm sun rays of late summer, you hear one of goats on the range land. Everything seems so peaceful nothing bad could ever happen."),
-        --print_line("'Hey Kid! Wake up.' A rough voice wakes you up."),
-        --print_line("You are getting rudely awake as the end of a large wooden staff hits your stomach. Stachled by the unfriendly behavior of your guest you jump up, willed to aks him what his problem is. But than you realized it's the old wizard of the village standing in front of you. "),
-        --print_line("'I need you to do me a favor, kid.' he countinues."),
-        --print_line("The wizard need you to do him a favor? That's highly unlikely. Why should he need you? You're just an oridnary farmer boy, living outside the village with no special talent. "),
-        --print_line("Obviously you don't trust the old wizard, but luckly you can take a closer look at things."),
-        --print_line("[i]Try typing: Inspect Wizard[/i]"),
 
             wizard ={
                 position={x=7,y=3},
@@ -139,22 +135,10 @@ dungeon = {
                     --wait(1)
                     print_line("[font=book]'First you need to learn some spells', [font=current]he explains.")
                     print_line("You learnt starter spells.")
-                    print_line("The old wizard points to a barrel. [font=book]'Now, you see the barrel over there? Attack it by typing [b]'fight barrel'.")
+                    print_line("The old wizard points to a barrel. [font=book]'Now, you see the barrel over there?")
+                    print_line("Attack it by typing [b]'fight barrel'.")
                     add_command("fight")
                 end,
-
-                on_enter = function()
-                    set_stage(1)
-                end,
-
-                on_fight = function()
-                    set_stage(2)
-                end,
-
-                on_open = function()
-                    set_stage(3)
-                end
-
         },
             barrel = {
                 position={x=5,y=3},
@@ -191,17 +175,17 @@ dungeon = {
                     print_line("You want to start protesting, but before you can say anything the wizard stamps his staff on the ground and vanishes.")
                     print_line("Apparently you have no other choice but attempting to fight the fire-breathing dragon...")
                     set_floor("floor1")
-                    --loads dungeon floor1
                 end
             },
         },
     },
 
     floor1 = {
+        is_start = true,
         southern_forest={
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
 
-            is_start = true,
+            --is_start = true,
 
             northern_way = {
                 position = {x = 5,y = 0},
@@ -278,7 +262,7 @@ dungeon = {
             northern_way = {
                 position = {x = 9,y = 0},
                 layout = bushDoor_layout,
-                next_room = "Eastern_Forest",
+                next_room = "eastern_forest",
                 is_locked=true,
 
                 on_inspection = function ()
@@ -290,7 +274,7 @@ dungeon = {
                 on_fight= function ()
                     print_line("You use your Pyro Poke on the bush.")
                     wait(2)
-                    print_line("[input] > pyro poke")
+                    print_line("[input] > Pyro Poke")
                     print_line("It burns down. The way is free now.")
                     unlock_door("western_forest", "northern_way")
                     unlock_door("eastern_forest", "southern_way")
@@ -308,7 +292,7 @@ dungeon = {
             southern_way = {
                 position = {x = 9,y = 6},
                 layout = bushDoor_layout,
-                next_room = "Eastern_Forest",
+                next_room = "eastern_forest",
                 is_locked=true,
 
                 on_inspection = function ()
@@ -318,7 +302,7 @@ dungeon = {
 
                 on_fight= function ()
                     print_line("You use your pyro poke on the bush.")
-                    print_line("[input] > pyro poke")
+                    print_line("[input] > Pyro Poke")
                     print_line("It burns down. The way is free now.")
                     unlock_door("western_forest", "southern_way")
                     unlock_door("eastern_forest", "northern_way")
@@ -430,13 +414,9 @@ dungeon = {
                 end
 
             },
-
         },
         eastern_forest = {
             layout = { {0, 0}, {7, 0}, {7, 6}, {0, 6}},
-
-            -- Spieler betritt den Raum
-            -- Spieler sieht dabei einen blockierten Weg
 
             southern_way = {
                 position = {x = 1,y = 6},
@@ -456,7 +436,7 @@ dungeon = {
 
                 on_fight= function ()
                     print_line("You use your pyro poke on the bush.")
-                    print_line("[input] > pyro poke")
+                    print_line("[input] > Pyro Poke")
                     print_line("It burns down. The way is free now.")
                     unlock_door("western_forest", "northern_way")
                     unlock_door("eastern_forest", "southern_way")
@@ -485,7 +465,7 @@ dungeon = {
 
                 on_fight= function ()
                     print_line("You use your pyro poke on the bush.")
-                    print_line("[input] > pyro poke")
+                    print_line("[input] > Pyro Poke")
                     print_line("It burns down. The way is free now.")
                     unlock_door("western_forest", "southern_way")
                     unlock_door("eastern_forest", "northern_way")
@@ -618,7 +598,7 @@ dungeon = {
         },
         clearing = {
             layout = { {3, 0}, {7, 0}, {7, 6}, {3,6}},
-
+            is_start = true,
             southern_way = {
                 position = {x = 5,y = 6},
                 layout = door_layout,
@@ -635,6 +615,7 @@ dungeon = {
                 on_open = function ()
                     print_line("It's an old chest. Again. You are kind of anxious about what's going to happen this time when you open it. ")
                     print_line("Slowly you approach it and open it.")
+                    set_background_music("fantasy_glitched_loop")
                     print_line("[i]*Screeeech*", 1)
                     print_line("[i]*boof*", 1)
                     print_line("At the bottom of the chest is a piece of paper. It looks like a map.")
@@ -649,6 +630,7 @@ dungeon = {
                     print_line("[font=ai].", 1)
                     print_line("[font=ai].", 1)
                     print_line("[font=ai]Resetting now.", 1)
+                    cancel_all_procedures_on("background_panel")
                     set_floor("dungeon_2")
                     set_stage(1)
                 end,
@@ -915,6 +897,7 @@ dungeon = {
                 on_enter = function()
                     print_line("As you walk that way, you realize: you're back in the room with the goblin.")
                     print_line("You're lucky you didn't get any more lost than that.")
+                    set_background_music("fantasy_glitched_loop")
                 end,
 
                 on_inspection = function ()
@@ -924,7 +907,7 @@ dungeon = {
 
                 on_fight= function ()
                     print_line("You use your pyro poke on the bush.")
-                    print_line("[input] > pyro poke")
+                    print_line("[input] > Pyro Poke")
                     print_line("It burns down. The way is free now.")
                     unlock_door("western_forest_2", "northern_way")
                     unlock_door("eastern_forest_2", "southern_way")
@@ -953,7 +936,7 @@ dungeon = {
 
                 on_fight= function ()
                     print_line("You use your pyro poke on the bush.")
-                    print_line("[input] > pyro poke")
+                    print_line("[input] > Pyro Poke")
                     print_line("It burns down. The way is free now.")
                     unlock_door("western_forest_2", "southern_way")
                     unlock_door("eastern_forest_2", "northern_way")
@@ -1440,6 +1423,7 @@ dungeon = {
                     print_line("[font=ai]ภ๏ รєค Շคкเ๓คՇค")
                     print_line("[font=ai]_____*?)//(")
                     set_rgb_split_on("background_panel")
+                    wait(1)
                     set_horizontal_zigzag_on("text-output")
                     print_line("[font=code][size=27]Error 7: fatal error")
                     print_line("[font=code][size=27].")
@@ -1461,6 +1445,7 @@ dungeon = {
                     cancel_all_procedures_on("background_panel")
                     cancel_all_procedures_on("text-output")
                     set_floor("dungeon_3")
+                    set_stage(1)
                 end
             },
         },
@@ -1525,7 +1510,7 @@ dungeon = {
                     print_line("As you slowly open the lid a beam of light escapes through the crack.")
                     print_line("It hits the door to the east.")
                     print_line("Your gaze follows the beam and you see writing appearing, where the light hit the door.")
-                    print_line("With a loud crack the lid swings open and floods the room with bright white light")
+                    print_line("With a loud crack the lid swings open and floods the room with bright white light.")
                     print_line("For a few seconds you see nothing but white, but than the light is gone and you see the room again.")
                     print_line("Congratulation! You've collected the word \"Light\".")
                     add_action ("Light")
@@ -1538,7 +1523,6 @@ dungeon = {
                     print_line("The fourth one is white and one the east side.")
                     print_line("But wait! There is one more thing.")
                     print_line("It's another old chest, which is standing right in the middle of the room.")
-                    set_floor("floor1")
                 end
             },
         },
@@ -1583,14 +1567,27 @@ dungeon = {
                     print_line("Another old chest.")
                     print_line("But at this time you are getting kind of used to it, what happens when you open one of this old chests.")
                     print_line("Slowly you approach the chest and open it.")
-                    -- crackling noises and squeaking
                     print_line("The whole inside is blue. ")
                     print_line("You take a closer look at it and as soon as you opened the chest completely a blinding blue light fills the room.")
                     print_line("For a few seconds you can't see anything, but than the light is gone and you see the room again.")
-                    -- rgb glitch
+                    set_rgb_split_on("screen")
                     print_line("Congratulation! You've collected the word \"Blue\".")
                     add_modifier ("Blue")
                     set_glitch_on("output-panel")
+                end,
+            },
+            paintings = {
+                position = {x = 2, y = 2},
+                layout= paintings_layout,
+                on_inspection = function ()
+                    print_line("On the left the wall are three paintings. All of them are showing the sea. ")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("Congratulation! You've collected the word \"water\".")
+                    add_modifier ("water")
                 end,
             },
         },
@@ -1602,7 +1599,7 @@ dungeon = {
                 layout = door_layout,
                 next_room = "main_room"
             },
-            
+
             chest = {
                 position = {x = 5, y = 1},
                 layout= chest_layout,
@@ -1610,11 +1607,10 @@ dungeon = {
                     print_line("You know what it is. An old chest.")
                     print_line("What a surprise.")
                     print_line("Slowly you approach the chest and open it.")
-                    -- crackling noises and squeaking
                     print_line("The whole inside is green. ")
                     print_line("You take a closer look at it and as soon as you opened the chest completely a blinding green light fills the room.")
                     print_line("For a few seconds you can't see anything, but than the light is gone and you see the room again.")
-                    -- rgb glitch
+                    set_horizontal_zigzag_on("possible-words")
                     print_line("Congratulation! You've collected the word \"Green\".")
                     add_modifier ("Green")
                     set_glitch_on("output-panel")
@@ -1628,7 +1624,7 @@ dungeon = {
                 on_open = function()
                     print_line("You try to open the Mimicry. This fails, for obvious reasons.")
                     print_line("Disturbed by your strange behaviour, the Mimicry attacks you.")
-                    start_new_fight("Goblin")
+                    start_new_fight("mimiplant")
                 end,
 
                 on_inspection = function()
@@ -1637,14 +1633,14 @@ dungeon = {
 
                 on_fight = function()
                     print_line("You take charge and attack the Mimicry.")
-                    start_new_fight("Goblin")
+                    start_new_fight("mimiplant")
                 end,
 
                 on_enter = function()
                     print_line("You try to enter the Mimicry, which enrages him a lot.")
                     print_line("He attacks you.")
                     print_line("What the hell were you expecting to happen?")
-                    start_new_fight("Goblin")
+                    start_new_fight("mimiplant")
                 end,
             }
         },
@@ -1663,105 +1659,173 @@ dungeon = {
 
                 on_inspection =  function ()
                     print_line("You take a closer look at the bookshelves and see that there a many, many papers and folders with lots of names.")
-                    set_glitch_on("output-panel")
-                    print_line("")
+                    print_line("They look the same to the papers on the table. But the shelves are messy.")
+                    print_line("You're afraid if you pull out a folder the hole shelf is going to collapse. So you decide to take a closer look at the table. ")
                 end
             },
             writing_table = {
                 position = {x=1, y=4},
                 layout = table_layout,
-            },
 
-            --Fight erzeugt Glitch
-            --Pfad zur personal id txt file wird angezeigt
-            --Spieler minimiert das Spiele
-            --Spieler löscht Ordner
-            --Spieler öffnet Spiel wieder
-            --AI erzeugt Glitches, meckert, lädt Level neu
-            --set_floor("dungeon_4")
+                on_inspection = function ()
+                    print_line("You walk to the table.png. The desk is overcrowded with more papers.")
+                    print_line("As you dig through the pilles of paper you notice many of them aren't writen with normal ink but with a blue glowing ink.")
+                    print_line("You read the papers.")
+                    print_line("'stolen player data: ")
+                    print_line("Amelia McFleed")
+                    print_line("26 years")
+                    print_line("female")
+                    print_line("English")
+                    print_line("High Street 127, Canterburry")
+                    print_line("data accepted, transfer completed")
+                    print_line("Note: data used to create fake credit card and hack into bank system'")
+                    print_line("There are many more of this papers with lot of different names and informations of this persons.")
+                    print_line("Is this program stealing identities to reuse them?")
+                end
+            },
+            plant = {
+                position = {x=5, y=4},
+                layout = enemy_layout,
+
+                on_destroy = function ()
+                    set_noisy_lines_medium_on("screen")
+                    print_line("You wasn't supposed to see that.")
+                    print_line("Apparently my syyystee*E///*ms are corrputed.")
+                    cancel_all_procedures_on("screen")
+                end,
+
+                on_fight = function()
+                    print_line("As you approach the chest it starts baring it's teeth.")
+                    start_new_fight("mimiplant")
+                end,
+
+                on_open = function()
+                    print_line("You try to open the Mimicry. This fails, for obvious reasons.")
+                    print_line("Disturbed by your strange behaviour, the Mimicry attacks you.")
+                    start_new_fight("mimiplant")
+                end,
+
+                on_inspection = function()
+                    print_line("It's a small branch of a tree...with feets...and pointy fangs peaking out of its mouth. Shouldn't too dangerous. Probably...")
+                end,
+
+                on_enter = function()
+                    print_line("You try to enter the Mimicry, which enrages him a lot.")
+                    print_line("He attacks you.")
+                    print_line("What the hell were you expecting to happen?")
+                    start_new_fight("mimiplant")
+                end,
+            }
         },
     },
 
     dungeon_4={
         first_room = {
             layout = { {0, 0}, {10, 0}, {10, 6}, {0, 6}},
-            
-            --AI registriert löschen des Ordners
-            --AI ist sich sicher dass der Spieler ihn nicht aufhalten kann
+
+            door_image = {
+                position = {x = 10,y = 3},
+                layout = door_layout,
+                is_locked = false,
+                next_room = "second_room",
+            },
 
             chest ={
                 position = {x = 2, y = 1},
                 layout= chest_layout,
 
                 on_inspection = function ()
-                    print_line("")
-                    print_line("")
-                    add_modifier ("Water")
+                    print_line("C:\\chest.png is glowing and flickering.")
+                    print_line("As you try to walk around it you can see through it.")
+                end,
+                
+                on_open = function ()
+                    print_line("You're not sure how you actually should open the chest as it hasn't a physical appereance anymore.")
+                    print_line("Confident to try it nevertheless you reach for the chest.")
+                    print_line("As soon as your hand touches the image the lid vanishes.")
+                    print_line("From the ground of the chest rises a word. Right above the chest it stops.")
+                    print_line("Slowly the light radiated by the word pulsates.")
+                    print_line("You lift your hand and touch the word. At the same moment you touched it it desappeares.")
+                    print_line("Congratulation! You've collected the word [b]\"Virtual\".")
+                    add_modifier("virtual")
                 end
             }
         },
         second_room = {
             layout = { {0, 0}, {5, 0}, {5, 6}, {0, 6}},
-            
-            --AI beginnt das Senden der Dateien zum Hauptserver
 
-            --selfdestruct.txt
-            selfdestruct = {
+            door_image = {
+                position = {x = 5,y = 3},
+                layout = door_layout,
+                is_locked = true,
+                next_room = "third_room",
+            },
+
+            back_door_image = {
+                position = {x = 0,y = 3},
+                layout = door_layout,
+                is_locked = false,
+                next_room = "first_room",
+            },
+
+            file = {
                 position = {x=4, y=1},
                 layout = chest_layout,
 
                 on_inspection = function ()
-                    print_line("")
+                    print_line("You open the C:\\actions_modifier.txt")
+                    print_line("Location: .../Slaying Demons_/Resources/Tables/PlayerVocab.tsv")
+                    print_line("'Changelog:")
+                    print_line("- added modifier: flirty, unimplemented, dancing ")
+                    print_line("- removed: self_destruction")
+                    print_line("due too many game chrashes and automatic deleting of files'")
                 end
             },
 
-            --Nach Mimis bekämpft
-            --RGB Glitches
-            --AI ist sich trotzdem sigessicher
-            --Spieler bekommt Nachricht dass die Firewall der AI deaktiviert wurde
-
-            --mimicry_chest.png
-            mimicry_chest = {
-                position = {x=2, y=4},
-                layout = enemy_layout,
-
-                on_fight = function()
-                    print_line("As you approach the chest it starts baring it's teeth.")
-                    start_new_fight("Cyber Mimichest")
-                end,
-            },
-
-            --mimicry_plant.png
-            mimicry_plant = {
+            flickering_plant = {
                 position = {x=2, y=2},
                 layout = enemy_layout,
 
-                on_fight = function()
-                    print_line("As you approach the plant it starts baring it's teeth.")
-                    start_new_fight("Cyber Mimiplant")
+                on_destroy = function ()
+                    unlock_door("door_image")
                 end,
-            }
+
+                on_fight = function()
+                    print_line("As you approach the chest it starts baring it's teeth.")
+                    start_new_fight("mimiplant")
+                end,
+
+                on_open = function()
+                    print_line("You try to open the Mimicry. This fails, for obvious reasons.")
+                    print_line("Disturbed by your strange behaviour, the Mimicry attacks you.")
+                    start_new_fight("mimiplant")
+                end,
+
+                on_inspection = function()
+                    print_line("It's a small branch of a tree...with feets...and pointy fangs peaking out of its mouth. Shouldn't too dangerous. Probably...")
+                end,
+
+                on_enter = function()
+                    print_line("You try to enter the Mimicry, which enrages him a lot.")
+                    print_line("He attacks you.")
+                    print_line("What the hell were you expecting to happen?")
+                    start_new_fight("mimiplant")
+                end,
         },
+    },
         third_room = {
             layout = { {0, 1}, {8, 1}, {8, 5}, {0, 5}},
 
-            --Spieler betritt Raum
-            --Sieht einen komplett verglitchten Goblin
-            --AI begrüßt Spieler
+            back_door_image = {
+                position = {x = 0,y = 3},
+                layout = door_layout,
+                is_locked = false,
+                next_room = "second_room",
+            },
 
-            goblin = {
+            AI = {
                 position = {x=3, y=3},
                 layout = enemy_layout,
-
-                on_fight = function()
-                    print_line("As you approach the plant it starts baring it's teeth.")
-                    start_new_fight("Cyber Goblin")
-                    --AI Fight
-                    --nach 3 Attacken glitcht die Battleview, Pfad zum spell.txt wird angezeigt
-                    --Player adds selfdestruct zur txt
-                    --benutzt selfdestruct im Kampf
-                    --Spiel zerstört sich selbst
-                end,
             }
         },
     },

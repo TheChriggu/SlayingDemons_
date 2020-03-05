@@ -5,24 +5,44 @@ is_in_main_room = false
 
 
 function player_profile_deleted()
-    print_line("player_profile_deleted")
+    print_line("You keep looking through the papers and folders as         _____*?)//(")
+    print_line("Deleted file detected.")
+    print_line("Try restoring deleted file...")
+    print_line(".")
+    print_line(".")
+    print_line(".")
+    print_line("Restoring failed.")
+    print_line("Searching for backup file...")
+    print_line(".")
+    print_line(".")
+    print_line(".")
+    print_line("Backup file found.")
+    print_line("Searching for reason...")
+    print_line(".")
+    print_line(".")
+    print_line(".")
+    print_line("Reason found.")
+    print_line("Reason: Player.")
+    print_line("I thought I deleted you. The process was meant to minimize your potential to corrupt the system.")
+    print_line("I won't do the same mistake again. ")
+    print_line("Start sending stolen data to main server...")
+    print_line(".")
+    print_line(".")
+    print_line(".")
+    print_line("Sending...8%")
+    print_line("Sending...11%")
+    print_line("You thought this file was the only file with your data? Your're wrong.")
+    print_line("To minimize your potential risk I start sending your data to main server.")
+    print_line("You neither can stop me nor this process.")
+    --wait(4)
+    set_floor("dungeon_4")
+    set_stage(1)
 end
-
-function self_destruct_added()
-    print_line("self_destruct_added")
-end
-
-function input_received (input) 
-    if input=="Inspect Room" and is_in_green_room then
-
-    end
-end
-
-
 
 function room_changed(name)
     if name=="main_room" then
         is_in_main_room = true
+        set_background_music("cyber_glitched_loop")
         set_noisy_lines_medium_on("text-output")
         print_line_instant("You      ɯǝɹo˥ ʇsǝ 🄼🄰🄶🄽🄰 ")
         set_rgb_offset_weak_on("possible-words")

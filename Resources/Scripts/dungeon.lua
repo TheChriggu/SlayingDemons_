@@ -10,7 +10,7 @@
 -- Old House Layouts
 sofa_layout = {
     size = {1, 2},
-    tiles = {32, 40}
+    tiles = {51, 59}
 }
 table_layout = {
     size = {1, 2},
@@ -18,7 +18,11 @@ table_layout = {
 }
 door_layout = {
     size = {2,1},
-    tiles = {9, 3}
+    tiles = {8, 3}
+}
+horizontal_door_layout = {
+    size = {2,1},
+    tiles = {8, 4}
 }
 fakedoor_layout = {
     size = {1,1},
@@ -31,8 +35,20 @@ bookshelf_layout = {
     size = {1, 2},
     tiles = {48, 56}
 }
+big_bookshelf_layout = {
+    size = {8, 3},
+    tiles = {16, 17, 17, 17, 17, 17, 17, 18, 24, -1, -1, -1, -1, -1, -1, 24, 32, -1, -1, -1, -1, -1, -1, 32}
+}
 enemy_layout = {
-    tiles = {25}
+    tiles = {61}
+}
+blocked_window_layout = {
+    size = {5, 4},
+    tiles = {-1, -1, -1, -1, 11, 10, -1, -1, -1, -1, -1, -1, -1, -1, 11, 9, -1, 9, -1, -1},
+}
+server_layout = {
+    size = {2, 2},
+    tiles = {38, 39, 46, 47}
 }
 
 
@@ -51,7 +67,7 @@ bushGroup_layout={
 }
 chest_layout={
     size = {1,1},
-    tiles = {50},
+    tiles = {40},
 }
 axe_layout={
     size = {1,1},
@@ -59,15 +75,15 @@ axe_layout={
 }
 skeleton_layout={
     size = {1,1},
-    tiles = {43},
+    tiles = {25},
 }
 path_layout={
     size = {2,1},
-    tiles = {51,51},
+    tiles = {7,7}
 }
 bushDoor_layout = {
     size = {2,1},
-    tiles = {9, 58}
+    tiles = {8, 58}
 }
 
 
@@ -77,7 +93,9 @@ dungeon = {
 
         Southern_Forest={
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
-            is_start = true,
+
+            --is_start = true,
+
             --Spieler betritt Wald und fragt sich warum er hier ist
             --Spiel zählt Items und Spells auf mit dem der Wizard ein los geschickt hat
 
@@ -124,10 +142,6 @@ dungeon = {
                 layout= axe_layout,
 
                 on_inspection = function ()
-                    --print_line(get_current_directory())
-                    --[[if is_file_existing("../Resources/config.lua") then
-                        print_line("\"../Resources/config.lua\" is existing!")
-                    end]]
                     --wait(1)
                     --print_line("Through the thick moss you see something shiny. As you approach it you realize it's an axe. ")
                     print_line("Through the thick moss you see something shiny. As you approach it you realize it's an axe. ")
@@ -141,7 +155,7 @@ dungeon = {
         },
 
         western_forest = {
-
+            is_start = true,
             layout = { {2,0}, {10,0}, {10,6}, {2,6}},
 
             Way_back_down = {
@@ -157,6 +171,7 @@ dungeon = {
                 is_locked=true,
 
                 on_inspection = function ()
+                    set_stage(2)
                     print_line("You can see a path behind this bush. But you'll first have to remove it. ")
                     print_line("You could try to use some spells on it. ")
                 end,
@@ -179,7 +194,7 @@ dungeon = {
                 next_room = "Eastern_Forest",
                 is_locked=true,
 
-                on_interaction = function ()
+                on_inspection = function ()
                     print_line("You can see a path behind this bush. But you'll first have to remove it. ")
                     print_line("You could try to use some spells on it. ")
                 end,
@@ -211,7 +226,7 @@ dungeon = {
             Goblin = {
                 position = {x = 5, y = 3},
                 layout = enemy_layout,
-                on_interaction = function()
+                on_inspection = function()
                     print_line("You walk to the Goblin, wanting to wish him a merry day.")
                     print_line("He does not understand your intentions. A fight ensues.")
                     start_new_fight("Goblin")
@@ -221,10 +236,6 @@ dungeon = {
                     print_line("You try to open the Goblin. This fails, for obvious reasons.")
                     print_line("Disturbed by your strange behaviour, the Goblin attacks you.")
                     start_new_fight("Goblin")
-                end,
-
-                on_inspection = function()
-                    print_line("It's a small, hairy, wild, angry Goblin. Nothing too dangerous. Probably...")
                 end,
 
                 on_fight = function()
@@ -408,10 +419,11 @@ dungeon = {
     },
 
     dungeon_2={
-
-        Southern_Forest={
+        --is_start = true,
+        Southern_Forest_2={
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
 
+            --is_start = true,
             --Spiel startet am Anfang vom Wald
             --Spiel zählt Items und Spells auf mit dem der Wizard ein los geschickt hat
 
@@ -468,7 +480,7 @@ dungeon = {
             Way_back_down = {
                 position = {x = 5,y = 6},
                 layout = door_layout,
-                next_room = "Southern_Forest",
+                next_room = "Southern_Forest_2",
             },
 
             northern_way = {
@@ -486,7 +498,10 @@ dungeon = {
                     print_line("You use your Pyro Poke on the bush.")
                     print_line("[b] > Pyro Poke")
                     print_line("It burns down. The way is free now.")
+                    set_horizontal_zigzag_on("background_panel")
                     unlock_door("western_forest", "northern_way")
+                    wait(1)
+                    cancel_all_procedures_on("background_panel")
                 end,
 
                 on_enter = function()
@@ -500,7 +515,7 @@ dungeon = {
                 next_room = "Eastern_Forest",
                 is_locked=true,
 
-                on_interaction = function ()
+                on_inspection = function ()
                     print_line("You can see a path behind this bush. But you'll first have to remove it. ")
                     print_line("You could try to use some spells on it. ")
                 end,
@@ -510,6 +525,10 @@ dungeon = {
                     print_line("[b] > Pyro Poke")
                     print_line("It burns down. The way is free now.")
                     unlock_door("western_forest", "southern_way")
+                    set_noisy_lines_weak__on("background_panel")
+                    unlock_door("western_forest", "northern_way")
+                    wait(2)
+                    cancel_all_procedures_on("background_panel")
                 end,
 
                 on_enter = function()
@@ -531,7 +550,7 @@ dungeon = {
             goblin = {
                 position = {x = 5, y = 3},
                 layout = enemy_layout,
-                on_interaction = function()
+                on_inspection = function()
                     print_line("You walk to the Goblin, wanting to wish him a merry day.")
                     print_line("He does not understand your intentions. A fight ensues.")
                     start_new_fight("Goblin")
@@ -541,10 +560,6 @@ dungeon = {
                     print_line("You try to open the Goblin. This fails, for obvious reasons.")
                     print_line("Disturbed by your strange behaviour, the Goblin attacks you.")
                     start_new_fight("Goblin")
-                end,
-
-                on_inspection = function()
-                    print_line("It's a small, hairy, wild, angry Goblin. Nothing too dangerous. Probably...")
                 end,
 
                 on_fight = function()
@@ -614,6 +629,9 @@ dungeon = {
 
                 on_enter = function()
                     print_line("You walk deeper inside the forest and enter a new room.")
+                    set_noisy_lines_weak__on("possible-words")
+                    wait(3)
+                    cancel_all_procedures_on("possible-words")
                 end
             },
         },
@@ -623,20 +641,20 @@ dungeon = {
             sofa = {
                 position = { x = 1, y = 2},
                 layout = sofa_layout,
-                on_interaction = function()
+                on_inspection = function()
                     print_line("That's just an old sofa. It looks like it hasn't been used in a very long time. ")
                     print_line("But...what's that? Are those holes? ")
-                    print_line("Ugh, yes. I will definitely not try to sit on it!")
-                    print_line("I'm not sure if it will hold with all those holes... ")
+                    print_line("Ugh, yes. You will definitely not try to sit on it!")
+                    print_line("You're not sure if it will hold with all those holes... ")
                 end
             },
             table = {
                 position = {x = 9, y = 4},
                 layout = table_layout,
-                on_interaction = function()
+                on_inspection = function()
                     print_line("...*cough*...That was a bad idea.")
-                    print_line("Note to myself: Don't pull dusty sheets of dusty funiture in dusty, old houses.")
-                    print_line("It's a table with a drawer under the table top...but the drawer is empty. ")
+                    print_line("Note to yourself: Don't pull dusty sheets of dusty funiture in dusty, old houses.")
+                    print_line("It's a table with a drawer under the table top..but the drawer is empty. ")
                 end
             },
             east_door = {
@@ -661,7 +679,8 @@ dungeon = {
             east_door = {
                 position = {x = 10, y = 3},
                 layout = door_layout,
-                next_room = "room4"
+                next_room = "room4",
+                is_locked = true
             },
             bookshelf  = {
                 position = {x = 6, y = 4},
@@ -670,13 +689,19 @@ dungeon = {
             goblin = {
                 position = {x = 9, y = 3 },
                 layout = enemy_layout,
-                on_interaction = function()
+                on_fight = function()
                     start_new_fight("Cyber Goblin")
                 end,
 
                 on_inspection = function ()
                     print_line("To you the goblin looks strange.")
                     print_line("It flickers and is more transparent, than the ones you have seen before.")
+                end,
+
+                on_destroy = function ()
+                    print_line("Well...that was interesting.")
+                    print_line("Somehow you get the feeling you shouldn't be here...The door is not blocked anymore and look!")
+                    unlock_door("east_door")
                 end
             }
         },
@@ -688,10 +713,39 @@ dungeon = {
                 layout = door_layout,
                 next_room = "room1"
             },
+
+            bookshelves = {
+                position={x=1, y=1},
+                layout=big_bookshelf_layout,
+
+                on_inspection = function ()
+                    print_line("The light of the numbers and signs is slowly pulsating as they run down the bookshelves.")
+                    print_line("You take a closer look at the few words, which are appearing from time to time. But as soon as pay attention to it they change back to numbers.")
+                    print_line("You're kind of scared by these bookshelves.")
+                end
+            },
+
+            table = {
+                position={x=1, y=4},
+                layout=table_layout,
+
+                on_inspection = function ()
+                    print_line("You approach the table and as soon as you stand right in front of it you see that it is covered in papers.")
+                    print_line("On the papers are more numbers, but those are not blue or even glowing. Just plain black ink on ivory paper.")
+                end
+            },
+
             book = {
-                position = {x = 7, y = 3},
+                position = {x = 7, y = 5},
                 layout = book_layout,
-                on_interaction = function()
+                on_inspection = function()
+                    print_line("Next to one bookshelf is standing a small chest.")
+                    print_line("It doesn't have a lock or appears to be locked in general. It's to heavy to lift it up or move it around. On top of the chest is a big layer of dust.")
+                end,
+
+                on_open = function()
+                    print_line("The lid is just as heavy as the rest of the chest and opens only with difficulty. As finaly the lid swings open you can see a big acient book inside.")
+                    print_line("You didn't thought it would be possible but the book is even dustier than anything else in this house.")
                     print_line("The book is much lighter than you first thought.")
                     print_line("The paper nearly crumbles between you fingers as you try to open it.")
                     print_line("The book is pretty fragile. I should be really careful with-...")
@@ -707,8 +761,8 @@ dungeon = {
             }
         },
         room4 = {
-            layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
-            
+            layout = { {0, 2}, {4, 2}, {4, 0}, {6, 0}, {6, 4}, {0, 4}},
+
             west_door = {
                 position = {x = 0, y = 3},
                 layout = door_layout,
@@ -717,27 +771,76 @@ dungeon = {
             north_door = {
                 position = {x = 5, y = 0},
                 layout = door_layout,
-                next_room = "room2"
+                next_room = "room5"
+            },
+
+            windows = {
+                position = {x = 2, y = 1},
+                layout = blocked_window_layout,
+
+                on_inspection = function ()
+                    print_line("The walls are covered with windows. All boarded-up, some better than others. The size of the windows varey. Through some windows you could take a peak, because the boards are some centimeters away from each other.")
+                    print_line("Why are all those windows boarded-up?")
+                    print_line("It doesn't make sense. These windows should be here. From the outside the house looked way more tinier.")
+                    print_line("Here should be room for the windows or this floor in general!")
+                    print_line("What is behind this windows? ")
+                    print_line("You take a peak through the boards and it looks like there is a picture of a garden behind it, but it is far away from you. Not right in front of you, like you would have imagined. So you can see the hole image.")
+                    print_line("There is a stone path in the middle, which leads to a tiny pond. On the sides are beautiful flowers in different colors. Some flowers you recognize from your garden at home, but the most is unkown to you. On the far left is a tree with a big crown, which hangs over the flowers and path. ")
+                    print_line("As you keep looking araound you recognize that in front of the tree stamp are some kind of yellow folders with names under it, 'Family', 'Music', 'E-Mails' and 'Reports'.")
+                    print_line("That's weird. What is this? Is this behind every window?")
+                    print_line("You head to another window on the other wall and behind the boards it is the same. It has another picture and the folders have different names, but in general it is the same.")
+                    print_line("You don't understand this house...")
+                    print_line("The sooner you found what's marked on the map, the sooner you can leave this strange place.")
+                end
             }
         },
         room5 = {
-            layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
+            layout = { {0, 0}, {9, 0}, {9, 6}, {0, 6}},
 
-            north_door = {
-                position = {x = 5, y = 0},
-                layout = door_layout,
-                next_room = "room2"
-            },
+            is_start = true,
+
             south_door = {
                 position = {x = 5, y = 6},
                 layout = door_layout,
                 next_room = "room2"
-            }
+            },
 
+            bookshelves = {
+                position = {x=1, y=1},
+                layout=big_bookshelf_layout,
+
+                on_inspection = function ()
+                    print_line("You recognize the bookshelves.")
+                    print_line("They are the same weird ones from the room at the beginning.")
+                end
+            },
+
+            machine = {
+                position = {x=2 ,y= 2},
+                layout = server_layout,
+
+                on_inspection = function ()
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    print_line("")
+                    --set_floor("dungeon_3")
+                end
+            }
+                
             --AI meckert
             --Game restarts
             --Game loads personal_id.txt
-            --set_floor("dungeon_3")
         },
     },
 
@@ -745,7 +848,7 @@ dungeon = {
         --is_start = true,
 
             main_room = {
-                is_start = true,
+               --is_start = true,
 
                 layout = { {0, 0}, {10, 0}, {10, 6}, {0, 6}},
 
@@ -764,19 +867,25 @@ dungeon = {
                     layout = door_layout,
                     next_room = "blue_room"
                 },
-                -- Door opens after red light, green light and blue light were used on the door
-                -- Writing after Light has been collected:
+                -- Door opens after red light, green light and blue light were used on the white door
+                -- Writing after Light has been collected appears on white door:
                 -- I'm the last one to open, but first I have to shine the brightest.
                 white_door = {
                     position = {x=10, y=3},
                     layout = door_layout,
                     next_room = "secret_room",
-                    is_locked = false,
+                    is_locked = true,
     
                     on_enter = function ()
                         set_glitch_on("output-panel")
-                    end
+                    end,
                     
+                    on_inspection = function ()
+                        print_line("You walk towards the white door and try to open it. It's locked.")
+                        print_line("But as you take a closer look at the door you see a writting on it:")
+                        print_line("'I'm the last one to open, but first I have to shine the brightest.'")
+                        print_line("What does that mean? Does it have to do with light?")
+                    end
                 },
             
                 chest = {

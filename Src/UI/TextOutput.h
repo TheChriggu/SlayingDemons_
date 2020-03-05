@@ -12,6 +12,8 @@
 #include "FormattedLine.h"
 #include "Font.h"
 #include "Colors.h"
+#include "Core/RoutineManager.h"
+#include "Core/Routine.h"
 
 
 namespace sd {
@@ -28,6 +30,8 @@ namespace sd {
         Sp<sf::RenderTexture> text_tex_;
         Sp<sf::Sprite> text_sprite_;
 
+        Sp<std::vector<std::string>> line_queue_;
+
     public:
         TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color);
         ~TextOutput() override = default;
@@ -35,6 +39,7 @@ namespace sd {
         bool setup() override;
 
         void add_line(std::string string);
+        void enqueue_line(std::string string);
         void print_line(std::string string);
 
         void draw_to(Sp<sf::RenderTarget> window) const override;
@@ -45,6 +50,8 @@ namespace sd {
         void handle(sf::Event event) override;
 
         void reformat();
+
+        void print_first_in_queue();
     };
 }
 

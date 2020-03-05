@@ -42,10 +42,10 @@ sd::InputTextProcessor::InputTextProcessor() : Subscriber()
 
 void sd::InputTextProcessor::process_input(const std::string &spell)
 {
-    output_->add_line("[input]> " + spell);
+    output_->enqueue_line("[input]> " + spell);
     
     if (!std::regex_match(spell, two_words_pattern)) {
-        output_->add_line("this is wrong");
+        output_->enqueue_line("this is wrong");
         return;
     }
     //split spell
@@ -77,7 +77,7 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
         
         else
         {
-            output_->add_line("You are currently in combat, you should probably use some combat spells you know of.");
+            output_->enqueue_line("You are currently in combat, you should probably use some combat spells you know of.");
         }
     }
     
@@ -85,7 +85,7 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
     {
         if (words[1] == "room")
         {
-            output_->add_line(player_state_->get_current_room()->get_description());
+            output_->enqueue_line(player_state_->get_current_room()->get_description());
         }
         else
         {
@@ -153,7 +153,7 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
     
     else
     {
-        output_->add_line("nothing happens");
+        output_->enqueue_line("nothing happens");
     }
     
     

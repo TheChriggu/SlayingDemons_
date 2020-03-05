@@ -165,3 +165,14 @@ void sd::FileInput::write_file(const boost::filesystem::path &url, const std::st
     test << content;
 }
 
+std::string sd::FileInput::get_path_to_player_vocab() {
+
+    auto relative = boost::filesystem::path("../Resources/Tables/PlayerVocab.tsv");
+    return boost::filesystem::canonical(relative).string();
+}
+
+std::string sd::FileInput::get_path_to_player_profile() {
+    auto relative = boost::filesystem::path("../Resources/InnocentFileDoNotOpen.txt");
+    return boost::filesystem::canonical(relative).string();
+}
+

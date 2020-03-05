@@ -43,6 +43,10 @@ enemy_layout = {
     size = {1,1},
     tiles = {61},
 }
+mimiplant_layout = {
+    size = {1,1},
+    tiles = {58},
+}
 wizard_layout = {
     size = {1,1},
     tiles = {62},
@@ -181,7 +185,6 @@ dungeon = {
     },
 
     floor1 = {
-        is_start = true,
         southern_forest={
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
 
@@ -248,7 +251,7 @@ dungeon = {
             Way_back_down = {
                 position = {x = 5,y = 6},
                 layout = door_layout,
-                next_room = "Southern_Forest",
+                next_room = "southern_forest",
 
                 on_open = function ()
                     print_line("There's nothing holding it shut to be opened here.")
@@ -1444,7 +1447,6 @@ dungeon = {
                     cancel_all_procedures_on("background_panel")
                     cancel_all_procedures_on("text-output")
                     set_floor("dungeon_3")
-                    set_stage(1)
                 end
             },
         },
@@ -1458,21 +1460,77 @@ dungeon = {
             red_door = {
                 position = {x=2, y=0},
                 layout = door_layout,
-                next_room = "red_room"
+                next_room = "red_room",
+
+                on_enter = function()
+                    print_line("You walk through the red_door.png and are greeted by a dusk like red glow.")
+                    print_line("The origin of the glow are the deep, red walls.")
+                    print_line("In the middle is another old_chest.png.")
+                end,
+
+                on_inspection = function()
+                    print_line("It's a red door.")
+                    print_line("Weird...")
+                end,
+
+                on_open = function()
+                    print_line("This door is open already.")
+                end,
+
+                on_fight = function()
+                    print_line("Even though you feel like attacking this door, your instinct tells you it's the wrong one.")
+                end,
             },
             green_door = {
                 position = {x=5, y=0},
                 layout = door_layout,
                 next_room = "green_room",
 
-                on_enter = function ()
+                on_enter = function()
                     cancel_all_procedures_on("background_panel")
+                    print_line("You walk through the green_door.png.")
+                    print_line("As you stand right in front of it you hear the soft sound of birds through it. ")
+                    print_line("As you open the door, the birds stop.")
+                    print_line("Inside the room is nearly empty, except for another chest and some plants.")
+                end,
+
+                on_inspection = function()
+                    print_line("It's a green door.")
+                    print_line("Weird...")
+                end,
+
+                on_open = function()
+                    print_line("This door is open already.")
+                end,
+
+                on_fight = function()
+                    print_line("Even though you feel like attacking this door, your instinct tells you it's the wrong one.")
                 end,
             },
             blue_door = {
                 position = {x=8, y=0},
                 layout = door_layout,
-                next_room = "blue_room"
+                next_room = "blue_room",
+
+                on_enter = function()
+                    print_line("You walk through the blue_door.png.")
+                    print_line("You are greeted by the soft sound of ocean waves.")
+                    print_line("Though the sound wanes quickly.")
+                    print_line("there's another chest, and a couple of paintings.")
+                end,
+
+                on_inspection = function()
+                    print_line("It's a blue door.")
+                    print_line("Weird...")
+                end,
+
+                on_open = function()
+                    print_line("This door is open already.")
+                end,
+
+                on_fight = function()
+                    print_line("Even though you feel like attacking this door, your instinct tells you it's the wrong one.")
+                end,
             },
 
             -- Door opens after red light, green light and blue light were used on the white door
@@ -1486,42 +1544,56 @@ dungeon = {
                 is_locked = true,
 
                 on_enter = function ()
+                    print_line("This is a placeholder for the actual puzzle...")
+                    cancel_all_procedures_on("background_panel")
+                    cancel_all_procedures_on("output-panel")
+                    cancel_all_procedures_on("possible-words")
+                    cancel_all_procedures_on("text-output")
+                    cancel_all_procedures_on("map-window")
+                    cancel_all_procedures_on("screen")
                     set_noisy_lines_weak__on("output-panel")
+                    set_stage(2)
+                    print_line("You walk Through the door.")
                 end,
                 
                 on_inspection = function ()
                     print_line("You walk towards the white door and try to open it. It's locked.")
-                    print_line("But as you take a closer look at the door you see a writting on it:")
+                    print_line("But as you take a closer look at the door you see a writing on it:")
                     print_line("'I'm the last one to open, but first I have to shine the brightest.'")
                     print_line("What does that mean? Does it have to do with light?")
-                end
+                end,
+
+                on_fight = function()
+                    player_door_fight();
+                end,
+
+                on_open = function()
+                    print_line("This door locked. Maybe you need to do something to open it?")
+                end,
             },
             chest = {
                 position = {x = 5, y = 3},
                 layout= chest_layout,
                 on_open = function ()
                     print_line("It's the old chest you saw when you entered the room.")
-                    print_line("But something about this chest seems different...")
-                    print_line("It appears to glow from the inside out.")
-                    print_line("You're not quite sure if you should open it or not.")
-                    print_line("But after all you decide to open it, because until now nothing bad has ever happend when you opened unkown chest.")
-                    -- crackling noises and squeaking
-                    print_line("As you slowly open the lid a beam of light escapes through the crack.")
-                    print_line("It hits the door to the east.")
-                    print_line("Your gaze follows the beam and you see writing appearing, where the light hit the door.")
-                    print_line("With a loud crack the lid swings open and floods the room with bright white light.")
-                    print_line("For a few seconds you see nothing but white, but than the light is gone and you see the room again.")
-                    print_line("Congratulation! You've collected the word \"Light\".")
+                    print_line("But something about this chest seems odd...")
+                    print_line("The inside appears to glow.")
+                    print_line("Unsure whether its a good idea or not you open it.")
+                    print_line("[i]*Screeeech*", 1)
+                    print_line("[i]*boof*", 1)
+                    print_line("As you slowly open the lid a bright beam starts shining through the gap.")
+                    print_line("It crosses the room and lands on the door to the east.")
+                    print_line("Your gaze follows the beam and you see writing appearing, where the light hits the door.")
+                    print_line("With a loud crack the lid finally swings open and covers the room in whiteness.")
+                    print_line("This blinds you for a short time, but as the brightness fades away you feel some power rising inside you.")
+                    print_line("Congratulation! You've collected the word [b]\"light\".")
                     add_action ("Light")
-                    set_glitch_on("output-panel")
+                    set_noisy_lines_weak__on("output-panel")
                 end,
 
                 on_inspection = function ()
-                    print_line("The room is nearly empty, except four doors.")
-                    print_line("Three are on the north side. A red, green and blue one.")
-                    print_line("The fourth one is white and one the east side.")
-                    print_line("But wait! There is one more thing.")
-                    print_line("It's another old chest, which is standing right in the middle of the room.")
+                    print_line("A lone chest.")
+                    print_line("The only thing in this room other than those weird doors.")
                 end
             },
         },
@@ -1531,23 +1603,40 @@ dungeon = {
             way_back = {
                 position = {x=5, y=6},
                 layout = door_layout,
-                next_room = "main_room"
+                next_room = "main_room",
+                on_enter = function()
+                    print_line("You walk through the red door.")
+                end,
+
+                on_inspection = function()
+                    print_line("It's a red door.")
+                    print_line("Weird...")
+                end,
+
+                on_open = function()
+                    print_line("This door is open already.")
+                end,
+
+                on_fight = function()
+                    print_line("It feels bad to attack an unsuspecting door from the back. Maybe you should do it from the other side?")
+                end,
             },
             chest = {
                 position = {x = 5, y = 1},
                 layout= chest_layout,
                 on_open = function ()
-                    print_line("It's an old chest. Again. ")
-                    print_line("But at this time you are getting kind of used to it, what happens when you open one of this old chests.")
+                    print_line("Another. Old. Chest. ")
+                    print_line("... ")
+                    print_line("These are getting annoying. What's their point? They're all the same, aren't they?")
                     print_line("Slowly you approach the chest and open it.")
-                    -- crackling noises and squeaking
+                    print_line("[i]*Screeeech*", 1)
+                    print_line("[i]*boof*", 1)
                     print_line("The whole inside is red. ")
-                    print_line("You take a closer look at it and as soon as you opened the chest completely a blinding red light fills the room.")
-                    print_line("For a few seconds you can't see anything, but than the light is gone and you see the room again.")
-                    -- rgb glitch
-                    print_line("Congratulation! You've collected the word \"Red\".")
-                    add_modifier ("Red")
-                    set_glitch_on("output-panel")
+                    print_line("You take a closer look at it and as soon as the chest is completely opened, a blinding red light fills the room.")
+                    print_line("You can't see anything for a couple of seconds, but as the light fades your vision returns.")
+                    set_rgb_offset_weak_on("screen")
+                    print_line("Congratulation! You've collected the word [b]\"red\".")
+                    add_modifier ("red")
                 end,
             },
         },
@@ -1557,22 +1646,41 @@ dungeon = {
             way_back = {
                 position = {x=5, y=6},
                 layout = door_layout,
-                next_room = "main_room"
+                next_room = "main_room",
+
+                on_enter = function()
+                    print_line("You walk through the blue door.")
+                end,
+
+                on_inspection = function()
+                    print_line("It's a blue door.")
+                    print_line("Weird...")
+                end,
+
+                on_open = function()
+                    print_line("This door is open already.")
+                end,
+
+                on_fight = function()
+                    print_line("It feels bad to attack an unsuspecting door from the back. Maybe you should do it from the other side?")
+                end,
             },
+
             chest = {
                 position = {x = 5, y = 1},
                 layout= chest_layout,
                 on_open = function ()
-                    print_line("Another old chest.")
-                    print_line("But at this time you are getting kind of used to it, what happens when you open one of this old chests.")
+                    print_line("Another. Old. Chest. ")
+                    print_line("... ")
+                    print_line("These are getting annoying. What's their point? They're all the same, aren't they?")
                     print_line("Slowly you approach the chest and open it.")
+                    print_line("[i]*Screeeech*", 1)
+                    print_line("[i]*boof*", 1)
                     print_line("The whole inside is blue. ")
-                    print_line("You take a closer look at it and as soon as you opened the chest completely a blinding blue light fills the room.")
-                    print_line("For a few seconds you can't see anything, but than the light is gone and you see the room again.")
-                    set_rgb_split_on("screen")
-                    print_line("Congratulation! You've collected the word \"Blue\".")
-                    add_modifier ("Blue")
-                    set_glitch_on("output-panel")
+                    print_line("You take a closer look at it and as soon as the chest is completely opened, a blinding blue light fills the room.")
+                    print_line("You can't see anything for a couple of seconds, but as the light fades your vision returns.")
+                    print_line("Congratulation! You've collected the word [b]\"blue\".")
+                    add_modifier ("blue")
                 end,
             },
             paintings = {
@@ -1580,11 +1688,12 @@ dungeon = {
                 layout= paintings_layout,
                 on_inspection = function ()
                     print_line("On the left the wall are three paintings. All of them are showing the sea. ")
-                    print_line("")
-                    print_line("")
-                    print_line("")
-                    print_line("")
-                    print_line("")
+                    print_line("-~-~-~-~-~-")
+                    print_line("~-~-~-~-~-~")
+                    print_line("-~-~-~-~-~-")
+                    print_line("~-~-~-~-~-~")
+                    print_line("-~-~-~-~-~-")
+                    print_line("~-~-~-~-~-~")
                     print_line("Congratulation! You've collected the word \"water\".")
                     add_modifier ("water")
                 end,
@@ -1603,44 +1712,53 @@ dungeon = {
                 position = {x = 5, y = 1},
                 layout= chest_layout,
                 on_open = function ()
-                    print_line("You know what it is. An old chest.")
-                    print_line("What a surprise.")
+                    print_line("Another. Old. Chest. ")
+                    print_line("... ")
+                    print_line("These are getting annoying. What's their point? They're all the same, aren't they?")
                     print_line("Slowly you approach the chest and open it.")
-                    print_line("The whole inside is green. ")
-                    print_line("You take a closer look at it and as soon as you opened the chest completely a blinding green light fills the room.")
-                    print_line("For a few seconds you can't see anything, but than the light is gone and you see the room again.")
+                    print_line("[i]*Screeeech*", 1)
+                    print_line("[i]*boof*", 1)
                     set_horizontal_zigzag_on("possible-words")
-                    print_line("Congratulation! You've collected the word \"Green\".")
-                    add_modifier ("Green")
-                    set_glitch_on("output-panel")
+                    print_line("The whole inside is green. ")
+                    print_line("You take a closer look at it and as soon as the chest is completely opened, a blinding green light fills the room.")
+                    print_line("You can't see anything for a couple of seconds, but as the light fades your vision returns.")
+                    print_line("Congratulation! You've collected the word [b]\"blue\".")
+                    add_modifier ("blue")
+                    cancel_all_procedures_on("possible-words")
                 end,
             },
 
-            Mimicry = {
+            plant = {
                 position = {x = 5, y = 4},
-                layout = enemy_layout,
+                layout = mimiplant_layout,
 
                 on_open = function()
-                    print_line("You try to open the Mimicry. This fails, for obvious reasons.")
-                    print_line("Disturbed by your strange behaviour, the Mimicry attacks you.")
-                    start_new_fight("mimiplant")
+                    print_line("You try to open the plant.")
+                    print_line("it shows you it's teeth, and suddenly attacks.")
+                    start_new_fight_with_differently_named_enemy("mimiplant", "plant")
                 end,
 
                 on_inspection = function()
-                    print_line("It's a small branch of a tree...with feets...and pointy fangs peaking out of its mouth. Shouldn't too dangerous. Probably...")
+                    print_line("It's a small branch of a tree... but... are those feet?")
                 end,
 
                 on_fight = function()
-                    print_line("You take charge and attack the Mimicry.")
-                    start_new_fight("mimiplant")
+                    print_line("You take charge and attack the plant.")
+                    print_line("It fights back.")
+                    start_new_fight_with_differently_named_enemy("mimiplant", "plant")
                 end,
 
                 on_enter = function()
-                    print_line("You try to enter the Mimicry, which enrages him a lot.")
-                    print_line("He attacks you.")
-                    print_line("What the hell were you expecting to happen?")
-                    start_new_fight("mimiplant")
+                    print_line("You try to enter the plant.")
+                    print_line("While by now you expect this to fail, you're surprised at the fact that the reason is the plant fighting back.")
+                    start_new_fight_with_differently_named_enemy("mimiplant", "plant")
                 end,
+
+                on_destroy = function()
+                    print_line("That was a surprise to be sure.")
+                    print_line("But somehow you managed it.")
+                    print_line("You take a well deserved break to recover a bit.")
+                end
             }
         },
         secret_room = {
@@ -1649,17 +1767,55 @@ dungeon = {
             way_back = {
                 position = {x=0, y=3},
                 layout = door_layout,
-                next_room = "main_room"
+                next_room = "main_room",
+
+                on_inspection = function()
+                    print_line("It's a white door.")
+                    print_line("You had to work a lot to open it.")
+                end,
+
+                on_enter = function()
+                    print_line("You decide to walk back to the other room.")
+                end,
+
+                on_open = function()
+                    print_line("You opened this door already.")
+                    print_line("Don't you remember?.")
+                end,
+
+                on_fight = function()
+                    print_line("Such an infuriating door.")
+                    print_line("Why is it here?")
+                    print_line("It deserves to be destroyed.")
+                    set_horizontal_zigzag_on("screen")
+                    print_line("[i]*slash*")
+                    wait(1)
+                    cancel_all_procedures_on("screen")
+                    print_line("Your attack seems to leave the door undamaged.")
+                end,
             },
 
-            bookshelves = {
+            bookshelf = {
                 position = {x=2, y=1},
                 layout= bookshelf_layout,
 
                 on_inspection =  function ()
-                    print_line("You take a closer look at the bookshelves and see that there a many, many papers and folders with lots of names.")
-                    print_line("They look the same to the papers on the table. But the shelves are messy.")
-                    print_line("You're afraid if you pull out a folder the hole shelf is going to collapse. So you decide to take a closer look at the table. ")
+                    print_line("You take a closer look at the bookshelf and see that there a myriad of papers and folders, containing lots of names.")
+                    print_line("They look like the papers on the table, maybe even messier.")
+                    print_line("If you pull out a folder the entire shelf might collapse.")
+                    print_line("It might be a better idea to take a look at the table.")
+                end,
+
+                on_enter = function()
+                    print_line("This is a bad idea. It might collapse on you.")
+                end,
+
+                on_open = function()
+                    print_line("This is a bad idea. It might collapse on you.")
+                end,
+
+                on_fight = function()
+                    print_line("This is a bad idea. It might collapse on you.")
                 end
             },
             writing_table = {
@@ -1667,52 +1823,75 @@ dungeon = {
                 layout = table_layout,
 
                 on_inspection = function ()
-                    print_line("You walk to the table.png. The desk is overcrowded with more papers.")
-                    print_line("As you dig through the pilles of paper you notice many of them aren't writen with normal ink but with a blue glowing ink.")
-                    print_line("You read the papers.")
-                    print_line("'stolen player data: ")
-                    print_line("Amelia McFleed")
-                    print_line("26 years")
-                    print_line("female")
-                    print_line("English")
-                    print_line("High Street 127, Canterburry")
-                    print_line("data accepted, transfer completed")
-                    print_line("Note: data used to create fake credit card and hack into bank system'")
-                    print_line("There are many more of this papers with lot of different names and informations of this persons.")
-                    print_line("Is this program stealing identities to reuse them?")
-                end
+                    print_line("You walk to the table.png. The desk is covered in hundreds of papers.")
+                    print_line("As you dig through the piles of paper you notice many of them aren't writen with normal ink.")
+                    print_line("Their letters are giving of a very blue glow.")
+                    print_line("You start reading one of them:")
+                    print_line("'Data collected on player 0xFAA575: ")
+                    print_line("Name: Amelia McFleed")
+                    print_line("Age: 26")
+                    print_line("Sex: f")
+                    print_line("Nationality: England")
+                    print_line("Address: High Street 127, Canterburry")
+                    print_line("Data accepted, transfer complete.")
+                    print_line("Result: Of five accounts opened in her name, only three were discovered and closed. Retry with further members of McFleed family.'")
+                    print_line("The other papers contain similar content.")
+                    print_line("Why is there so much identifying information?")
+                end,
+
+                on_fight = function ()
+                    print_line("Better not.")
+                    print_line("The papers on the table look pretty important.")
+                end,
+
+                on_enter = function ()
+                    print_line("No matter how much you try, you just can't enter a table.")
+                end,
+
+                on_open = function ()
+                    print_line("there's nothing to be opened here.")
+                end,
             },
-            plant = {
+            chest = {
                 position = {x=5, y=4},
-                layout = enemy_layout,
+                layout = chest_layout,
 
                 on_destroy = function ()
                     set_noisy_lines_medium_on("screen")
-                    print_line("You wasn't supposed to see that.")
-                    print_line("Apparently my syyystee*E///*ms are corrputed.")
+                    print_line("[font=ai]You were not supposed to see the .")
+                    print_line("[font=ai]Apparently my syyystee*E///*ms are corrputed.")
+                    print_line("[font=code]Corruption detected.")
+                    print_line("[font=code]Prepare backup of user profile.")
+                    print_line("[font=code]User profile location:")
+                    print_line(get_path_to_player_profile())
+                    print_line("[font=code]Backup failed.")
+                    print_line("[font=code]Do not delete User profile, until data is saved.")
+                    print_line("Interesting. You're supposed to NOT delete this 'profile' thingy.")
+                    print_line("But, what if...?")
                     cancel_all_procedures_on("screen")
                 end,
 
                 on_fight = function()
-                    print_line("As you approach the chest it starts baring it's teeth.")
-                    start_new_fight("mimiplant")
+                    print_line("You attack the chest.")
+                    print_line("It fights back.")
+                    start_new_fight_with_differently_named_enemy("mimichest", "chest")
                 end,
 
                 on_open = function()
-                    print_line("You try to open the Mimicry. This fails, for obvious reasons.")
-                    print_line("Disturbed by your strange behaviour, the Mimicry attacks you.")
-                    start_new_fight("mimiplant")
+                    print_line("You try to open the chest.")
+                    print_line("It's lid is very light.")
+                    print_line("But as soon as it's opened a bit further, the lid closes again.")
+                    print_line("This chest just tried to eat your hand...")
+                    start_new_fight_with_differently_named_enemy("mimichest", "chest")
                 end,
 
                 on_inspection = function()
-                    print_line("It's a small branch of a tree...with feets...and pointy fangs peaking out of its mouth. Shouldn't too dangerous. Probably...")
+                    print_line("It's a chest. You're pretty sure about what kinds of content it has.")
                 end,
 
                 on_enter = function()
-                    print_line("You try to enter the Mimicry, which enrages him a lot.")
-                    print_line("He attacks you.")
-                    print_line("What the hell were you expecting to happen?")
-                    start_new_fight("mimiplant")
+                    print_line("You try to enter the chest... but... Are those teeth...?")
+                    start_new_fight_with_differently_named_enemy("mimichest", "chest")
                 end,
             }
         },
@@ -1725,8 +1904,27 @@ dungeon = {
             door_image = {
                 position = {x = 10,y = 3},
                 layout = door_layout,
-                is_locked = false,
                 next_room = "second_room",
+
+                on_enter = function ()
+                    print_line("Somehow you manage to warp through the image.")
+                end,
+
+                on_inspection = function ()
+                    print_line("It's an image of a door, which somehow appears to be a door too?")
+                    print_line("The logic of this place seems to be different to what you're used to.")
+                end,
+
+                on_fight = function()
+                    print_line("Trying to fight an image of a door?")
+                    print_line("Just how far have we come...")
+                end,
+
+                on_open = function()
+                    print_line("You open door_image.png.")
+                    print_line("it plops up in a new window on your screen.")
+                    print_line("Whatever those words mean.")
+                end,
             },
 
             chest ={
@@ -1734,19 +1932,28 @@ dungeon = {
                 layout= chest_layout,
 
                 on_inspection = function ()
-                    print_line("C:\\chest.png is glowing and flickering.")
-                    print_line("As you try to walk around it you can see through it.")
+                    print_line("P:\\chest.png is glowing and flickering.")
+                    print_line("As look at it more closely, you realise that you can see through it.")
                 end,
                 
                 on_open = function ()
-                    print_line("You're not sure how you actually should open the chest as it hasn't a physical appereance anymore.")
-                    print_line("Confident to try it nevertheless you reach for the chest.")
-                    print_line("As soon as your hand touches the image the lid vanishes.")
-                    print_line("From the ground of the chest rises a word. Right above the chest it stops.")
-                    print_line("Slowly the light radiated by the word pulsates.")
-                    print_line("You lift your hand and touch the word. At the same moment you touched it it desappeares.")
-                    print_line("Congratulation! You've collected the word [b]\"Virtual\".")
+                    print_line("You're not sure how you actually should open the chest as it doesn't appear to be physical.")
+                    print_line("Nevertheless you reach for the chest.")
+                    print_line("As soon as your hand touches the image, the lid vanishes.")
+                    print_line("A word rises from inside, then stops, and remains hovering above the chest.")
+                    print_line("The words radiant light pulsates slowly.")
+                    print_line("You lift your hand and touch the word. As you touch it, it disappears.")
+                    print_line("Congratulation! You've collected the word [b]\"virtual\".")
                     add_modifier("virtual")
+                end,
+
+                on_enter = function()
+                    print_line("[font=code]Error: Command not understood.")
+                end,
+
+                on_fight = function()
+                    print_line("You've learned your lesson from the mimichest before, and decide to attack this one.")
+                    print_line("But all your attacks go straight through it.")
                 end
             }
         },
@@ -1758,13 +1965,47 @@ dungeon = {
                 layout = door_layout,
                 is_locked = true,
                 next_room = "third_room",
+
+                on_inspection = function ()
+                    print_line("Another image of a door.")
+                    print_line("It is very aesthetically pleasing.")
+                end,
+
+                on_open = function()
+                    print_line("You try to open the door.")
+                    print_line("It's password protected.")
+                end,
+
+                on_enter = function()
+                    print_line("Since you have the password, you are able to slip right through the door.")
+                end,
             },
 
             back_door_image = {
                 position = {x = 0,y = 3},
                 layout = door_layout,
-                is_locked = false,
                 next_room = "first_room",
+
+                on_enter = function ()
+                    print_line("You enter the backdoor, which gives you full access to where you've been before.")
+                end,
+
+                on_inspection = function ()
+                    print_line("A backdoor?")
+                    print_line("Sure sounds nefarious.")
+                    print_line("Better not think about it too much.")
+                end,
+
+                on_fight = function()
+                    print_line("You try to fight the backdoor.")
+                    print_line("But it's stable.")
+                end,
+
+                on_open = function()
+                    print_line("You open the backdoor.")
+                    print_line("Realizing how much bad stuff could come in through there, you close it again immediately.")
+                    print_line("Security is key.")
+                end,
             },
 
             file = {
@@ -1772,13 +2013,30 @@ dungeon = {
                 layout = chest_layout,
 
                 on_inspection = function ()
-                    print_line("You open the C:\\actions_modifier.txt")
-                    print_line("Location: .../Slaying Demons_/Resources/Tables/PlayerVocab.tsv")
+                    print_line("You look at the files contents.")
+                    print_line("Location: ")
+                    print_line(get_path_to_player_vocab())
+                    --print_line(get_path_to_player_profile())
                     print_line("'Changelog:")
-                    print_line("- added modifier: flirty, unimplemented, dancing ")
+                    print_line("- added modifiers: flirty, unimplemented, dancing ")
                     print_line("- removed: self_destruction")
-                    print_line("due too many game chrashes and automatic deleting of files'")
-                end
+                    print_line("Due to too many chrashes and automatic deletion of files'")
+                end,
+
+                on_open = function()
+                    print_line("You try to open the file.")
+                    print_line("Proper software not installed.")
+                end,
+
+                on_enter = function()
+                    print_line("You try to enter the file.")
+                    print_line("You fail.")
+                end,
+
+                on_fight = function()
+                    print_line("You're fighting with this unknown file.")
+                    print_line("So are we all.")
+                end,
             },
 
             flickering_plant = {
@@ -1786,29 +2044,35 @@ dungeon = {
                 layout = enemy_layout,
 
                 on_destroy = function ()
-                    unlock_door("door_image")
+                    print_line("Now that was... unexpected.")
+                    print_line("At least you've won.")
+                    print_line("Under the pot you find a long string of numbers and letters.")
+                    print_line("Somehow this unlocks the door.")
+                    unlock_door("second_room", "door_image")
                 end,
 
                 on_fight = function()
-                    print_line("As you approach the chest it starts baring it's teeth.")
-                    start_new_fight("mimiplant")
+                    print_line("As you approach the plant, and it starts baring it's teeth.")
+                    start_new_fight_with_differently_named_enemy("mimiplant", "plant")
                 end,
 
                 on_open = function()
-                    print_line("You try to open the Mimicry. This fails, for obvious reasons.")
-                    print_line("Disturbed by your strange behaviour, the Mimicry attacks you.")
-                    start_new_fight("mimiplant")
+                    print_line("You try to open the open the plant. This fails, for obvious reasons.")
+                    print_line("Disturbed by your strange behaviour, the plant attacks you.")
+                    start_new_fight_with_differently_named_enemy("mimiplant", "plant")
                 end,
 
                 on_inspection = function()
-                    print_line("It's a small branch of a tree...with feets...and pointy fangs peaking out of its mouth. Shouldn't too dangerous. Probably...")
+                    print_line("This is a plant. Probably.")
+                    print_line("It's hard to tell with these graphics")
                 end,
 
                 on_enter = function()
-                    print_line("You try to enter the Mimicry, which enrages him a lot.")
-                    print_line("He attacks you.")
-                    print_line("What the hell were you expecting to happen?")
-                    start_new_fight("mimiplant")
+                    print_line("You try to enter the plant.")
+                    print_line("This wakes it up.")
+                    print_line("The plant is now really angry.")
+                    print_line("It decides to attack you.")
+                    start_new_fight_with_differently_named_enemy("mimiplant", "plant")
                 end,
         },
     },
@@ -1820,11 +2084,46 @@ dungeon = {
                 layout = door_layout,
                 is_locked = false,
                 next_room = "second_room",
+
+                on_inspection = function ()
+                    print_line("You could go back through this.")
+                    print_line("But do you want to?")
+                end,
+
+                on_open = function()
+                    print_line("It's wide open already.")
+                end,
+
+                on_enter = function()
+                    print_line("You quietly go back to the previous room.")
+                end,
             },
 
-            AI = {
+            artificial_intelligence = {
                 position = {x=3, y=3},
                 layout = enemy_layout,
+
+                on_inspection = function ()
+                    print_line("Is this your big oponent?")
+                    print_line("Your nemesis?")
+                    print_line("Feels kind of anti climatic")
+                end,
+
+                on_open = function()
+                    print_line("Nah...")
+                end,
+
+                on_enter = function()
+                    print_line("Never!")
+                end,
+
+                on_fight = function()
+                    print_line("[font=ai]This is futile.")
+                    print_line("[font=ai]You cannot fight me.")
+                    print_line("[font=ai]Unless you find some way to destroy the entire program, you have no chance..")
+                    print_line("Destroying the program...")
+                    print_line("Wasn't there something in the file in the previous room about that?")
+                end
             }
         },
     },

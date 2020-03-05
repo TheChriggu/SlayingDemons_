@@ -11,6 +11,8 @@
 #include <Event/NewWordCollectedEventArgs.h>
 #include <Event/LineToOutputEventArgs.h>
 #include <Event/PlayerStateCreatedEventArgs.h>
+#include <ScriptEngine/ScriptEngine.h>
+#include <IO/SelfDestruct.h>
 
 
 const std::regex sd::InputTextProcessor::single_word_pattern{R"(^\s*[^\s]+\s*$)"};
@@ -43,7 +45,27 @@ sd::InputTextProcessor::InputTextProcessor() : Subscriber()
 void sd::InputTextProcessor::process_input(const std::string &spell)
 {
     output_->enqueue_line("[input]> " + spell);
-    
+
+    if(spell == "self_destruct")
+    {
+        ScriptEngine::get().broadcast("self_destruct_executed");
+        auto routine = std::make_shared<Routine>( Routine(nullptr, 40.0f,
+                std::function<bool(Sp<Routine>)>
+                        (
+                                [this](Sp<Routine> this_routine)
+                                {
+                                    SelfDestruct selfDestruct;
+                                    selfDestruct.self_destruct();
+                                    return Routine::restart;
+                                }
+                        )
+        )
+        );
+
+        RoutineManager::get().start_routine(routine);
+        return;
+    }
+
     if (!std::regex_match(spell, two_words_pattern)) {
         output_->enqueue_line("this is wrong");
         return;

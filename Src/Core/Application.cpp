@@ -63,6 +63,8 @@ bool sd::Application::setup()
     }
     
     ScriptEngine::get().register_all("get_current_directory", &FileInput::get_current_directory);
+    ScriptEngine::get().register_all("get_path_to_player_vocab", &FileInput::get_path_to_player_vocab);
+    ScriptEngine::get().register_all("get_path_to_player_profile", &FileInput::get_path_to_player_profile);
     ScriptEngine::get().register_all("is_file_existing", &FileInput::is_file_existing);
     
     result = setup_window();
@@ -273,9 +275,7 @@ bool sd::Application::setup_scene()
     std::cout << "Create Map panel\n";
     MapWindow *mapWindow = new MapWindow(sf::Vector2f(1112, 53), sf::Vector2f(761, 558));
     drawable_objects_.emplace_back(Sp<MapWindow>(mapWindow));
-    
-    
-    
+
     //std::cout << "Create button\n";
     //drawable_objects_.emplace_back(new Button(sf::Vector2f(1200.0f,500.0f), sf::Vector2f(1.0f,1.0f), [&]{clear();}));
     

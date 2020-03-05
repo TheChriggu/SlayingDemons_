@@ -66,6 +66,10 @@ bush_layout={
     size = {1,1},
     tiles = {58},
 }
+barrel_layout={
+    size = {1,1},
+    tiles = {50},
+}
 bushGroup_layout={
     size = {3,2},
     tiles = {-1,58,-1,58,-1,58},
@@ -118,20 +122,25 @@ dungeon = {
                     print_line("[i]In his right hand he holds a large wooden staff. It's probably the staff he poked you with.[/i]")
                     print_line("Congratulations!")
                     print_line("You have inspected the wizard. You can do this with every listed object in the room.")
+                    --wait(4)
                     print_line("You look at the wizard sceptically.")
+                    --wait(1)
                     print_line("The old wizard returns the look. 'What? I bet it's not the first time someone asked you for a favor.'")
                     print_line("[font=book]'Anyway, I need you to fight the fire-breathing drago, the ancient enemy of this kingdom.'")
                     print_line("[font=book]'You know, the dragonn who destroys the fields and homes of the village residents.'")
                     print_line("The wizard lowers his sight. 'Soon we won't have any food left...'")
-                    print_line("'Don't look like that!'")
+                    print_line("'Don't look like that!', you say.")
+                    --wait(4)
                     print_line("[font=book]'Let's be honest. Apparently you have the most common sense from everyone in the village and a radius of several miles around it'")
                     print_line("[font=book]'So I decided you would be the best option to fight this dragon. We have no other choice.' [font=current] He looks at you, eyes full of confidence.")
                     print_line("Oh, what a great decision. You don't even know how to fight.")
                     print_line("[font=book]'But do not worry. I will show you how to fight.'")
                     print_line("Great...")
+                    --wait(1)
                     print_line("[font=book]'First you need to learn some spells', [font=current]he explains.")
                     print_line("You learnt starter spells.")
                     print_line("The old wizard points to a barrel. [font=book]'Now, you see the barrel over there? Attack it by typing [font=current]'fight barrel'.")
+                    add_command("fight")
                 end
         },
             barrel = {
@@ -145,26 +154,30 @@ dungeon = {
 
                 on_fight = function ()
                     print_line("Let's see how that works.")
+                    start_new_fight_with_differently_named_enemy("goblin", "barrel")
                 end,
 
                 on_open = function ()
-                    print_line("The old wizard said you should try fight the barrel.")
+                    print_line("This appears to belong to the old man. And that guy's looking at you quite funny.")
                 end,
 
                 on_inspection = function ()
-                    print_line("The old wizard said you should try fight the barrel.")
+                    print_line("This appears to belong to the old man. And that guy's looking at you quite funny.")
                 end,
 
                 on_destroy = function ()
-                    print_line("'Good, Kid. That are the basics of fighting', said the old wizard.")
-                    print_line("'Now that you know how to fight you can start your adventure.'")
-                    print_line("The wizards point to a forest in the far.")
-                    print_line("'The fire-breathing dragon waits at the ancient castle at the other side of the adventurer forest.'")
-                    print_line("'Just go to the forest and you'll find your way.' In a strange way the wizard looks a bit optimistic.")
-                    print_line("But be cautious! Many brave people tried your quest before but never returned!")
-                    print_line("Wait, the adventurer forest? That's not the nicest place for a farmer boy to be. Many adventuerer has gone missing there.")
-                    print_line("You wanted to start protesting, but before you could say something the wizard stamps his staff on the ground and vanishes.")
-                    print_line("Apparently you have no other choice than trying to fight the fire-breathing dragon...")
+                    print_line("[font=book]'Good, Kid. That are the basics of fighting', [font=current]said the old wizard.")
+                    print_line("[font=book]'Now that you know how to fight you can start your adventure.'")
+                    print_line("The wizard points to a forest near the horizon.")
+                    wait(2)
+                    print_line("[font=book]'The fire-breathing dragon waits at the ancient castle at the other side of the adventurer forest.'")
+                    print_line("[font=book]'Just go there and you'll find your way.' [font=current]The wizard looks strangely optimistic.")
+                    print_line("[font=book]But be cautious! Many brave people tried your quest before but never returned!")
+                    wait(1)
+                    print_line("Wait, the adventurer forest? That's not the nicest place for a farmer boy to be. Many adventuerers have gone missing there.")
+                    print_line("You want to start protesting, but before you can say anything the wizard stamps his staff on the ground and vanishes.")
+                    print_line("Apparently you have no other choice but attempting to fight the fire-breathing dragon...", 4)
+                    set_floor("floor1")
                     --loads dungeon floor1
                 end
             },

@@ -87,7 +87,7 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
 
 bool sd::TextOutput::setup() {
 
-    ScriptEngine::get().register_all_timeable(1, 1, "print_line", &TextOutput::enqueue_line, this);
+    ScriptEngine::get().register_all_timeable(1, 0.25, "print_line", &TextOutput::enqueue_line, this);
 
     lines_.push_back(std::make_shared<FormattedLine>(
         "",
@@ -102,7 +102,7 @@ bool sd::TextOutput::setup() {
     text_sprite_->setTexture(text_tex_->getTexture());
 
     //one second interval between printing enqueued lines
-    auto routine = std::make_shared<Routine>( Routine(nullptr, 1.0f,
+    auto routine = std::make_shared<Routine>( Routine(nullptr, 0.25f,
                     std::function<bool(Sp<Routine>)>
                             (
                                 [this](Sp<Routine> this_routine)

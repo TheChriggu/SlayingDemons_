@@ -29,9 +29,9 @@ namespace sd {
 
         bool has_word(const std::string& word);
 
-        void add_action(const std::string& action);
-        void add_modifier(const std::string& modifier);
-        void add_command(const std::string& word);
+        void add_action(std::string action);
+        void add_modifier(std::string modifier);
+        void add_command(std::string word);
         void set_objects(std::vector<std::string> objects);
 
         std::vector<std::string>& get_actions();
@@ -46,6 +46,7 @@ namespace sd {
 
         void save_to_file();
         void load_from_file();
+        void load();
     };
 }
 

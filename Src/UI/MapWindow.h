@@ -17,6 +17,7 @@ namespace sd {
         Sp<sf::Texture> background_texture_;
         Sp<sf::Sprite> background_sprite_;
         sf::Vector2f position_;
+        sf::Vector2f monster_position_;
         sf::Vector2f size_;
         Sp<sf::Texture> monster_portrait_texture_;
         Sp<sf::Sprite> monster_portrait_sprite_;

@@ -7,6 +7,7 @@
 #include <Event/PlayerStateCreatedEventArgs.h>
 #include "World.h"
 #include <Event/DoorUnlockedEventArgs.h>
+#include <Event/SetStageEventArgs.h>
 
 sd::World::World() : Subscriber(){
     
@@ -14,7 +15,7 @@ sd::World::World() : Subscriber(){
         if (e->type == EventArgs::Type::PLAYER_DIED)
         {
             //reset player
-            //player_state_->load_vocab();
+            player_state_->load_vocab();
         
             //reset floor
             int i = 0;
@@ -70,6 +71,7 @@ bool sd::World::setup() {
     for (const auto& floor_data : dungeon_data.value()) {
         
         std::string name = floor_data.first.as<std::string>();
+        strtk::convert_to_lowercase(name);
         sol::table data = floor_data.second.as<sol::table>();
         
         floors_.emplace_back(std::make_shared<Floor>(name, data));
@@ -82,6 +84,7 @@ bool sd::World::setup() {
 
     ScriptEngine::get().register_all("unlock_door", &World::unlock_door, this);
     ScriptEngine::get().register_all("set_floor", &World::set_floor, this);
+    ScriptEngine::get().register_all("set_stage", &World::set_stage, this);
 
     return true;
 }
@@ -89,12 +92,17 @@ bool sd::World::setup() {
 void sd::World::shutdown() { }
 
 void sd::World::unlock_door(std::string room_name, std::string door_name) {
+    strtk::convert_to_lowercase(room_name);
+    strtk::convert_to_lowercase(door_name);
+    
     std::shared_ptr<DoorUnlockedEventArgs> args;
     args = std::make_shared<DoorUnlockedEventArgs>(room_name, door_name);
     EventSystem::get().trigger(args);
 }
 
 void sd::World::set_floor(std::string floor_name) {
+    strtk::convert_to_lowercase(floor_name);
+    
     for (auto floor : floors_)
     {
         if(floor->get_name() == floor_name)
@@ -104,4 +112,10 @@ void sd::World::set_floor(std::string floor_name) {
             player_state_->save_current_vocab();
         }
     }
+}
+
+void sd::World::set_stage(int stage) {
+    std::shared_ptr<SetStageEventArgs> args;
+    args = std::make_shared<SetStageEventArgs>(stage);
+    EventSystem::get().trigger(args);
 }

@@ -2,11 +2,11 @@
 // Created by christian.heusser on 28.11.2019.
 //
 
+#include <strtk.hpp>
 #include "Modifier.h"
 
 sd::Modifier::Modifier(std::vector<std::string> line)
-    :name_(line[0])
-    ,adjective_(line[17])
+    :adjective_(line[17])
     ,adverbial_(line[18])
     ,material_(line[19])
 {
@@ -34,6 +34,10 @@ sd::Modifier::Modifier(std::vector<std::string> line)
     stat_ops.earth = stat_ops.from_string(line[15]);
 
     set_stats(stats, stat_ops);
+
+    std::string lcase;
+    strtk::parse(line[0], "", strtk::as_lcase(lcase).ref());
+    name_ = lcase;
 }
 
 void sd::Modifier::set_stats(sd::Stats stats, sd::StatwiseOperation statwise_operation) {

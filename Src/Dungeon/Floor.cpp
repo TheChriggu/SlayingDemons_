@@ -7,8 +7,6 @@
 #include "Goblin.h"
 
 sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(nullptr) {
-    //int counter = 0;
-    
     name_ = name;
     
     for (const auto& room : floor_data) {
@@ -24,11 +22,14 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
         {
             std::cout << "++ object: " << object.first.as<std::string>() << std::endl;
             
+            std::string object_name{object.first.as<std::string>()};
+            strtk::convert_to_lowercase(object_name);
+            
             if (object.second.is<bool>()) {
                 is_start = object.second.as<bool>();
             }
 
-            else if (object.first.as<std::string>()== "layout")
+            else if (object_name == "layout")
             {
                 for (const auto& corner : object.second.as<sol::table&>())
                 {
@@ -58,18 +59,17 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                 int rotation = object.second.as<sol::lua_table>()["rotation"].get_or(0);
 
                 auto function_collection = std::make_shared<FunctionCollection>(
-                        object.second.as<sol::lua_table>()["on_interaction"],
-                        object.second.as<sol::lua_table>()["on_open"],
-                        object.second.as<sol::lua_table>()["on_inspection"],
-                        object.second.as<sol::lua_table>()["on_fight"],
-                        object.second.as<sol::lua_table>()["on_enter"],
-                        object.second.as<sol::lua_table>()["on_destroy"]
+                        object.second.as<sol::lua_table>()["on_open"].get<sol::coroutine>(),
+                        object.second.as<sol::lua_table>()["on_inspection"].get<sol::coroutine>(),
+                        object.second.as<sol::lua_table>()["on_fight"].get<sol::coroutine>(),
+                        object.second.as<sol::lua_table>()["on_enter"].get<sol::coroutine>(),
+                        object.second.as<sol::lua_table>()["on_destroy"].get<sol::coroutine>()
                 );
 
                 if (size.x == 1 && size.y == 1) {
                     room_objects.emplace_back(
                             std::make_shared<SingleTileObject>(
-                                    object.first.as<std::string>(),
+                                object_name,
                                     layout[0],
                                     position,
                                     rotation,
@@ -82,7 +82,7 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                         std::cout << "++ door"  << std::endl;
                         room_objects.emplace_back(
                                 std::make_shared<Door>(
-                                        object.first.as<std::string>(),
+                                    object_name,
                                         layout[0],
                                         layout[1],
                                         position,
@@ -97,7 +97,7 @@ sd::Floor::Floor(const std::string& name, sol::table& floor_data) : start_room_(
                         std::cout << "++ Multi tile" << std::endl;
                         room_objects.emplace_back(
                                 std::make_shared<MultiTileObject>(
-                                        object.first.as<std::string>(),
+                                    object_name,
                                         layout,
                                         size,
                                         rotation,

@@ -19,8 +19,11 @@ namespace sd
         std::string alias_;
         std::string gender_;
         std::string name_;
+        std::string room_object_to_remove_on_defeat_;
 
     public:
+
+
         explicit Monster(std::string path_to_portrait, std::string alias, std::string gender, std::string name);
         ~Monster() override = default;
 
@@ -34,6 +37,8 @@ namespace sd
         std::string get_alias();
         std::string get_gender();
         std::string get_name();
+        std::string get_room_object_to_remove_on_defeat();
+        void set_room_object_to_remove_on_defeat(std::string room_object_to_remove_on_defeat);
     };
 }
 

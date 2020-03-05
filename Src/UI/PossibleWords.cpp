@@ -5,18 +5,23 @@
 #include <Event/PlayerVocabChangedEventArgs.h>
 #include <Event/PlayerStateCreatedEventArgs.h>
 #include <Event/FontsCreatedEventArgs.h>
+#include <Event/ColorsCreatedEventArgs.h>
 #include <Event/PossibleWordsCreatedEventArgs.h>
 #include <Event/EventSystem.h>
 #include <ScriptEngine/ScriptEngine.h>
+#include <regex>
+#include <InputTextProcessor.h>
 #include "PossibleWords.h"
+#include "Event/SetStageEventArgs.h"
 
 // TODO(FK): clean up name
-sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size, const std::string& path_to_background)
+sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size)
     : DrawableObject("possible-words")
     , Subscriber()
     , position_(position)
     , size_(size)
     , current_list_type_(Word::Type::COMMAND)
+    , loop_iterator_(0)
 {
     event_handler_ = CREATE_EVENT_HANDLER(
         if (e->type == sd::EventArgs::Type::FIGHT_STARTED) {
@@ -47,9 +52,37 @@ sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size, const
             auto arg = std::dynamic_pointer_cast<FontsCreatedEventArgs>(e);
             fonts_ = Sp<Font>(arg->fonts);
         }
-        /*if (e->type == EventArgs::Type::CLICKABLE_WORD_CLICKED) {
-            can_handle_events = false;
-        }*/
+        if (e->type == EventArgs::Type::COLORS_CREATED) {
+            auto arg = std::dynamic_pointer_cast<ColorsCreatedEventArgs>(e);
+            colors_ = Sp<Colors>(arg->colors);
+        }
+        if (e->type == EventArgs::Type::SET_STAGE) {
+            auto arg = std::dynamic_pointer_cast<SetStageEventArgs>(e);
+            auto path = "../Resources/Sprites/Progressing/input_" + std::to_string(arg->stage) + ".png";
+            texture_->loadFromFile(path);
+        }
+         if(e->type == EventArgs::Type::SET_STAGE) {
+             for(auto line : lines_)
+             {
+                 line->set_font_size_color(fonts_, 24, colors_);
+             }
+         }
+
+         if(e->type == EventArgs::Type::PLAYER_VOCAB_CHANGED)
+         {
+             if(current_list_type_ == Word::Type::ACTION)
+             {
+                 update(player_vocabulary_->get_actions());
+             }
+             if(current_list_type_ == Word::Type::MODIFIER)
+             {
+                 update(player_vocabulary_->get_modifiers());
+             }
+             if(current_list_type_ == Word::Type::COMMAND)
+             {
+                 update(player_vocabulary_->get_commands());
+             }
+         }
         );
     
     REGISTER_EVENT_HANDLER();
@@ -63,7 +96,7 @@ sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size, const
 
 bool sd::PossibleWords::setup() {
 
-    texture_->loadFromFile("../Resources/Sprites/fantasy_input.png");
+    texture_->loadFromFile("../Resources/Sprites/Progressing/input_0.png");
     sprite_->setTexture(*texture_, false);
     sprite_->setPosition(position_);
     
@@ -109,10 +142,12 @@ void sd::PossibleWords::handle(sf::Event event) {
 }
 
 void sd::PossibleWords::update(std::vector<std::string>& content) {
+    possible_words_ = content;
+    
     lines_.clear();
     //std::cout << "Size: " << search_prefix_.size() << std::endl;
     
-    sf::Vector2f offset = sf::Vector2f(50, 90);
+    sf::Vector2f offset = sf::Vector2f(80, 90);
         
     for(const auto& word : content)
     {
@@ -120,7 +155,7 @@ void sd::PossibleWords::update(std::vector<std::string>& content) {
                 "[button=" + word + "]" + word + "[/button]",
                 sf::Vector2f(position_ + offset),
                 sf::Vector2f(1000,1000),
-                        fonts_));
+                        fonts_, colors_));
         offset.y += 30;
     }
 
@@ -157,7 +192,6 @@ void sd::PossibleWords::display_actions()
 {
     current_list_type_ = Word::Type::ACTION;
     update(player_vocabulary_->get_actions());
-    //std::cout << "Size after update: " << search_prefix_.size() << std::endl;
 }
 
 void sd::PossibleWords::display_commands()
@@ -193,33 +227,36 @@ void sd::PossibleWords::set_search_prefix(const std::string &prefix)
     }
 }
 
-void sd::PossibleWords::add_to_search_prefix(const std::string &prefix)
+void sd::PossibleWords::update_search_prefix(const std::string &input)
 {
-    
-    search_prefix_ += prefix;
-    set_search_prefix(search_prefix_);
+    set_search_prefix(std::regex_replace(input, InputTextProcessor::autocomplete_replace_pattern, ""));
+    std::cout << possible_words_.size() << std::endl;
 }
 
-void sd::PossibleWords::trim_last_on_search_prefix()
-{
-    if (search_prefix_.empty()) return;
-    
-    search_prefix_.erase(search_prefix_.size() - 1, 1);
-    set_search_prefix(search_prefix_);
-}
-
-const std::string &sd::PossibleWords::get_search_prefix() const
-{
-    return search_prefix_;
-}
 sd::Word::Type sd::PossibleWords::get_current_list_type() const
 {
     return current_list_type_;
 }
-bool sd::PossibleWords::is_separator() const
+std::string sd::PossibleWords::complete_first_possible_word() const
 {
-    return false;
+    return !possible_words_.empty() ? std::regex_replace(possible_words_[0], std::regex(search_prefix_), "") : "";
 }
+
+std::string sd::PossibleWords::loop_through_possible_words()
+{
+    if (loop_iterator_ >= possible_words_.size())
+        loop_iterator_ = 0;
+    
+    auto ret_val = !possible_words_.empty() ? std::regex_replace(possible_words_[loop_iterator_], std::regex(search_prefix_), "") : "";
+    loop_iterator_++;
+    
+    return ret_val;
+}
+const std::string &sd::PossibleWords::get_search_prefix() const
+{
+    return search_prefix_;
+}
+
 
 
 

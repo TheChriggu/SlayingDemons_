@@ -5,10 +5,10 @@
 #include "Action.h"
 #include <iostream>
 #include <utility>
+#include <strtk.hpp>
 
 sd::Action::Action(std::vector<std::string> line)
-    :name_(line[0])
-    ,description_2nd_person(line[9])
+    :description_2nd_person(line[9])
     ,description_3rd_person(line[10])
     {
     stats_ = std::make_shared<Stats>();
@@ -16,6 +16,9 @@ sd::Action::Action(std::vector<std::string> line)
     set_stats({stof(line[1]), stof(line[2]), stof(line[3]), stof(line[4]), stof(line[5]),
                        stof(line[6]), stof(line[7]), stof(line[8])});
 
+        std::string lcase;
+        strtk::parse(line[0], "", strtk::as_lcase(lcase).ref());
+        name_ = lcase;
 }
 
 void sd::Action::set_stats(const sd::Stats& stats) {

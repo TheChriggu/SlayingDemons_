@@ -11,6 +11,7 @@
 #include "SFML/Graphics.hpp"
 #include <strtk.hpp>
 #include "Font.h"
+#include "Colors.h"
 //#include "boost/algorithm/string.hpp"
 
 namespace sd {
@@ -23,11 +24,12 @@ namespace sd {
         sf::Vector2f max_size_;
 
     public:
-        FormattedLine(std::string string, sf::Vector2f position, sf::Vector2f max_size, Sp<Font> fonts);
+        FormattedLine(std::string string, sf::Vector2f position, sf::Vector2f max_size, Sp<Font> fonts, Sp<Colors> colors);
 
         virtual ~FormattedLine() = default;
 
-        void format_line(std::string string, Sp<Font> fonts);
+        void format_line(std::string string, Sp<Font> fonts, Sp<Colors> colors);
+        std::string get_line();
 
         void draw_to(const Sp<sf::RenderTarget> &window);
 
@@ -36,6 +38,11 @@ namespace sd {
         void move_vertical(float distance);
 
         void handle(sf::Event event);
+
+        void set_font_size_color(Sp<Font> fonts, int size, Sp<Colors> colors);
+        void set_font(Sp<sf::Font> font);
+        void set_size(int size);
+        void set_color(sf::Color color);
 
     };
 }

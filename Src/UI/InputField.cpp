@@ -9,6 +9,8 @@
 #include <ScriptEngine/ScriptEngine.h>
 #include <Event/PossibleWordsCreatedEventArgs.h>
 #include "Event/ClickableWordClickedEventArgs.h"
+#include <Event/FontsCreatedEventArgs.h>
+#include <Event/ColorsCreatedEventArgs.h>
 
 // TODO(FK): clean up name
 sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color color)
@@ -29,11 +31,18 @@ sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color c
                  add_text(letter);
              }
         }
+        if (e->type == EventArgs::Type::FONTS_CREATED) {
+            auto arg = std::dynamic_pointer_cast<FontsCreatedEventArgs>(e);
+            fonts_ = Sp<Font>(arg->fonts);
+        }
+        if (e->type == EventArgs::Type::COLORS_CREATED) {
+            auto arg = std::dynamic_pointer_cast<ColorsCreatedEventArgs>(e);
+            colors_ = Sp<Colors>(arg->colors);
+        }
+
         );
     
     REGISTER_EVENT_HANDLER();
-    
-    //single_word_pattern_ = std::regex()
 
     text_ = std::make_shared<sf::Text>();
     text_->setPosition(position + sf::Vector2f(10, 10));
@@ -42,19 +51,11 @@ sd::InputField::InputField(sf::Vector2f position, sf::Vector2f size, sf::Color c
 }
 
 bool sd::InputField::setup() {
-    
 
-    auto* font = new sf::Font();
-    if (!font->loadFromFile("../Resources/Fonts/comic.ttf"))
-    {
-        std::cout << "Could not load Font!\n";
-        return false;
-    }
-
-    text_->setFont(*font);
+    text_->setFont(*(fonts_->GetCurrentFont()));
     text_->setString("");
     text_->setCharacterSize(24);
-    text_->setFillColor(sf::Color::Black);
+    text_->setFillColor(colors_->GetCurrentColor());
 
     return DrawableObject::setup ();
 }
@@ -62,30 +63,30 @@ bool sd::InputField::setup() {
 void sd::InputField::add_text(sf::Uint32 input) {
     //std::cout << "Code: " << input << std::endl;
     
+    if (input == UNI_ENTER || input == UNI_TAB)
+        return;
+    
     sf::String result = text_->getString();
+    
     if(input == UNI_BACKSPACE)
     {
         if (result.getSize() > 0)
         {
             result.erase(result.getSize() - 1, 1);
-            text_->setString(result);
-            possible_words_->trim_last_on_search_prefix();
         }
-        
-        return;
+    } else {
+        result += static_cast<char>(std::tolower(input));
     }
-    else if(input != UNI_ENTER)
-    {
-        result += static_cast<char>(input);
-    }
-
+    
+    
     text_->setString(result);
     
-    if (input != UNI_SPACE && input != UNI_ENTER)
-        possible_words_->add_to_search_prefix(std::string(1, static_cast<char>(input)));
+    possible_words_->update_search_prefix(text_->getString().toAnsiString());
 }
 
 void sd::InputField::draw_to(Sp<sf::RenderTarget> window) const {
+    text_->setFont(*(fonts_->GetCurrentFont()));
+    text_->setFillColor(colors_->GetCurrentColor());
     window->draw(*text_);
 }
 
@@ -118,54 +119,84 @@ void sd::InputField::handle(sf::Event event) {
     }
     else if (event.key.code == sf::Keyboard::Space)
     {
-        if (event.type == sf::Event::KeyPressed) {
+        if (event.type == sf::Event::KeyPressed)
+        {
+            possible_words_->update_search_prefix(text_->getString().toAnsiString());
             
-            switch(possible_words_->get_current_list_type()) {
-                case Word::Type::MODIFIER:
-                    possible_words_->display_actions();
-                    possible_words_->set_search_prefix("");
-                    break;
-                case Word::Type::COMMAND:
-                    possible_words_->display_objects();
-                    possible_words_->set_search_prefix("");
-                    break;
+            auto input = text_->getString();
+            input += possible_words_->complete_first_possible_word();
+            text_->setString(input);
+            possible_words_->update_search_prefix(input.toAnsiString());
+            
+            if (std::regex_match(text_->getString().toAnsiString(), InputTextProcessor::single_word_pattern)) {
+                switch(possible_words_->get_current_list_type()) {
+                    case Word::Type::MODIFIER:
+                        possible_words_->display_actions();
+                        break;
+                    case Word::Type::COMMAND:
+                        possible_words_->display_objects();
+                        break;
+                }
             }
-            
         }
     }
     else if (event.key.code == sf::Keyboard::BackSpace)
     {
-        //std::cout << " - 1: " << text_->getString()[text_->getString().getSize() - 1] << std::endl;
-        //std::cout << " - 2: " << text_->getString()[text_->getString().getSize() - 2] << std::endl;
-        if (event.type == sf::Event::KeyPressed && std::regex_match(text_->getString().toAnsiString(), single_word_pattern_))
+        if (event.type == sf::Event::KeyPressed &&
+            std::regex_match(text_->getString().toAnsiString(), InputTextProcessor::single_word_without_trail_pattern))
         {
             switch(possible_words_->get_current_list_type()) {
                 case Word::Type::ACTION:
                     possible_words_->display_modifiers();
-                    possible_words_->set_search_prefix(text_->getString().toAnsiString());
-                    //possible_words_->trim_last_on_search_prefix();
                     break;
                 case Word::Type::OBJECT:
                     possible_words_->display_commands();
-                    possible_words_->set_search_prefix(text_->getString().toAnsiString());
-                    //possible_words_->trim_last_on_search_prefix();
                     break;
             }
         }
-    
-        if (event.type == sf::Event::KeyPressed && std::regex_match(text_->getString().toAnsiString(), two_words_pattern_))
+    }
+    else if (event.key.code == sf::Keyboard::Tab)
+    {
+        if (event.type == sf::Event::KeyPressed)
         {
+            auto input = text_->getString().toAnsiString();
+            auto completion = possible_words_->loop_through_possible_words();
+            auto prefix = possible_words_->get_search_prefix();
+            auto position = input.find_last_of(prefix) - (prefix.size() - 1);
             
-            //possible_words_->set_search_prefix(text_->getString().toAnsiString());
+            /*std::cout << "input: " << input << std::endl;
+            std::cout << "completion: " << completion << std::endl;
+            std::cout << "prefix: " << prefix.size() << std::endl;
+            std::cout << "position: " << position << std::endl;
+            std::cout << "last position: " << input.size() - 1 << std::endl;*/
+            
+            // deletes the prefix and anything thats behind it and then places the prefix with the rest of looped word behind it
+            /*input = std::regex_replace(
+                input,
+                std::regex(prefix + ".*"),
+                prefix + completion);*/
+            input.replace(position, input.size(), prefix + completion);
+            
+            text_->setString(input);
         }
     }
     else if(event.type == sf::Event::TextEntered)
     {
         add_text (event.text.unicode);
-        //auto test = std::regex_match(text_->getString().toAnsiString(), single_word_pattern_);
-        std::cout << "1: " << std::regex_match(text_->getString().toAnsiString(), single_word_pattern_) << std::endl;
-        std::cout << "2: " << std::regex_match(text_->getString().toAnsiString(), two_words_pattern_) << std::endl;
     }
+    else if (event.key.code == sf::Keyboard::Right)
+    {
+        if (event.type == sf::Event::KeyPressed)
+        {
+            possible_words_->update_search_prefix(text_->getString().toAnsiString());
+
+            auto input = text_->getString();
+            input += possible_words_->complete_first_possible_word();
+            text_->setString(input);
+            possible_words_->update_search_prefix(input.toAnsiString());
+        }
+    }
+
 }
 
 sf::Vector2f sd::InputField::get_size() {

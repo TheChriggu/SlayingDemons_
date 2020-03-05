@@ -7,43 +7,50 @@
 #include "FormattedWord.h"
 #include "IO/UserInput.h"
 
-sd::FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Format& format, Sp<Font> fonts) {
-    
+sd::FormattedWord::FormattedWord(std::string text, sf::Vector2f position, sd::Format& format, Sp<Font> fonts, Sp<Colors> colors) {
+    //std::cout << "incoming text for word = " << text << "\n";
+    raw_ = text;
+
     text_ = std::make_shared<sf::Text> ();
     text_->setPosition (position);
-    
 
-    //apply prerunning bb-codes
+    format_word(format, fonts, colors);
+}
+
+void sd::FormattedWord::format_word(sd::Format &format, Sp<Font> fonts, Sp<Colors> colors) {
+    auto text = raw_;
+
+//apply prerunning bb-codes
     while (text.size() > 0 && text.at (0) == '[')
-        {
-            std::string code = std::string (text, 0, text.find_first_of (']') + 1);
-            text.erase (0, code.size ());
-            apply_bb_to_format (code, format, fonts);
-        }
+    {
+        std::string code = std::string (text, 0, text.find_first_of (']') + 1);
+        text.erase (0, code.size ());
+        apply_bb_to_format (code, format, fonts, colors);
+    }
 
     //set the actual word
     std::string word = std::string (text, 0, text.find_first_of ('['));
     text.erase (0, word.size ());
-    
+
     if(word != " ")
-        {
-            text_->setString (sf::String(word));
-            apply_format_to_text (format);
-        }
-        
+    {
+        text_->setString (sf::String(word));
+        apply_format_to_text (format);
+    }
+
     //apply trailing bb-codes
     while (text.size () > 0 && text.at (0) == '[')
-        {
-            std::string code = std::string (text, 0, text.find_first_of (']') + 1);
-            text.erase (0, code.size ());
-            apply_bb_to_format (code, format, fonts);
-        }
-        
+    {
+        std::string code = std::string (text, 0, text.find_first_of (']') + 1);
+        text.erase (0, code.size ());
+        apply_bb_to_format (code, format, fonts, colors);
+    }
+
     //add trailing spaces or punctuation if not included in word
     if(text.size() > 0 && word.size() > 0)
-        {
-            text_->setString (text_->getString() + sf::String(text));
-        }
+    {
+        text_->setString (text_->getString() + sf::String(text));
+    }
 }
 
 void sd::FormattedWord::draw_to(const Sp<sf::RenderTarget>& window) {
@@ -59,7 +66,9 @@ void sd::FormattedWord::set_position(sf::Vector2f position) {
 }
 
 sf::FloatRect sd::FormattedWord::get_rect() {
-    return text_->getGlobalBounds();
+    auto ret_val = text_->getGlobalBounds();
+    ret_val.height += 2;
+    return ret_val;
 }
 
 void sd::FormattedWord::move_vertical(float distance) {
@@ -78,10 +87,11 @@ void sd::FormattedWord::apply_format_to_text (sd::Format format)
     text_->setFont(*(format.font_));
     text_->setCharacterSize(format.size_);
     text_->setFillColor(format.color_);
+    text_->setOutlineColor(format.color_);
     text_->setStyle (format.style_);
     on_click_text_ = format.on_click_text_;
 }
-void sd::FormattedWord::apply_bb_to_format (std::string code, sd::Format &format, Sp<Font> fonts)
+void sd::FormattedWord::apply_bb_to_format (std::string code, sd::Format &format, Sp<Font> fonts, Sp<Colors> colors)
 {
     if(code == "[b]")
         {
@@ -108,7 +118,11 @@ void sd::FormattedWord::apply_bb_to_format (std::string code, sd::Format &format
     {
         format.font_ = fonts->GetFont(code.substr(6, code.length()-7));
     }
-    if(code.find("[color=") != std::string::npos)
+    if(code.find("[color=current") != std::string::npos)
+    {
+        format.color_ = sf::Color(colors->GetCurrentColor());
+    }
+    else if(code.find("[color=") != std::string::npos)
     {
         std::vector<std::string> values;
 
@@ -125,6 +139,11 @@ void sd::FormattedWord::apply_bb_to_format (std::string code, sd::Format &format
     if(code.find("[/button") != std::string::npos)
     {
         format.on_click_text_ = "";
+    }
+    if(code == "[input]")
+    {
+        format.style_ = format.style_ | sf::Text::Style::Bold;
+        format.color_ = sf::Color(colors->GetCurrentInputColor());
     }
 }
 
@@ -177,3 +196,28 @@ bool sd::FormattedWord::is_position_on_word(sf::Vector2f position_to_check) {
         return bounds.contains(position_to_check);
     }
 }
+
+void sd::FormattedWord::set_font_size_color(sd::Format format) {
+    text_->setFont(*(format.font_));
+    text_->setCharacterSize(format.size_);
+    text_->setFillColor(format.color_);
+    text_->setOutlineColor(format.color_);
+}
+
+void sd::FormattedWord::set_font(Sp<sf::Font> font) {
+    text_->setFont(*font);
+}
+
+void sd::FormattedWord::set_size(int size) {
+    text_->setCharacterSize(size);
+}
+
+void sd::FormattedWord::set_color(sf::Color color) {
+    text_->setFillColor(color);
+}
+
+std::string sd::FormattedWord::get_raw() {
+    return raw_;
+}
+
+

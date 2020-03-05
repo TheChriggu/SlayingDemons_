@@ -12,6 +12,14 @@
 #include <Event/LineToOutputEventArgs.h>
 #include <Event/PlayerStateCreatedEventArgs.h>
 
+
+const std::regex sd::InputTextProcessor::single_word_pattern{R"(^\s*[^\s]+\s*$)"};
+const std::regex sd::InputTextProcessor::single_word_without_trail_pattern{R"(^\s*[^\s]+\s$)"};
+const std::regex sd::InputTextProcessor::two_words_pattern{R"(^\s*[^\s]+\s+[^\s]+\s*$)"};
+const std::regex sd::InputTextProcessor::single_word_replace_pattern{R"(^\s*|\b\s+[^\s]+|\s*$)"};
+const std::regex sd::InputTextProcessor::two_words_replace_pattern{R"(^\s*|[^\s]+\s+\b|\s*$)"};
+const std::regex sd::InputTextProcessor::autocomplete_replace_pattern{R"(^\s*[^\s]+\s+\b|^\s*[^\s]+\s+$|^\s*)"};
+
 sd::InputTextProcessor::InputTextProcessor() : Subscriber()
 {
     event_handler_ = CREATE_EVENT_HANDLER(
@@ -34,8 +42,12 @@ sd::InputTextProcessor::InputTextProcessor() : Subscriber()
 
 void sd::InputTextProcessor::process_input(const std::string &spell)
 {
+    output_->add_line("[input]> " + spell);
     
-    output_->add_line("[b]> " + spell + "[/b]");
+    if (!std::regex_match(spell, two_words_pattern)) {
+        output_->add_line("this is wrong");
+        return;
+    }
     //split spell
     std::vector<std::string> words = split_by_space(spell);
     
@@ -69,9 +81,9 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
         }
     }
     
-    else if (words[0] == "Inspect")
+    else if (words[0] == "inspect")
     {
-        if (words[1] == "Room")
+        if (words[1] == "room")
         {
             output_->add_line(player_state_->get_current_room()->get_description());
         }
@@ -93,23 +105,7 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
         
     }
     
-    else if (words[0] == "Interact")
-    {
-        auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
-        
-        if (object)
-        {
-            object->be_interacted_with();
-        }
-        else
-        {
-            std::shared_ptr<LineToOutputEventArgs> args;
-            args = std::make_shared<LineToOutputEventArgs>("Could not find object in room.");
-            EventSystem::get().trigger(args);
-        }
-    }
-    
-    else if (words[0] == "Open")
+    else if (words[0] == "open")
     {
         auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
         
@@ -124,7 +120,7 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
             EventSystem::get().trigger(args);
         }
     }
-    else if (words[0] == "Fight")
+    else if (words[0] == "fight")
     {
         auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
         
@@ -139,7 +135,7 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
             EventSystem::get().trigger(args);
         }
     }
-    else if (words[0] == "Enter")
+    else if (words[0] == "enter")
     {
         auto object = player_state_->get_current_room()->get_object_with_name(words[1]);
         

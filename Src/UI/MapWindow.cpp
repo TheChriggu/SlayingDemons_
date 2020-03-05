@@ -40,7 +40,7 @@ sd::MapWindow::MapWindow(sf::Vector2f position, sf::Vector2f size)
     
     background_texture_ = std::make_shared<sf::Texture>();
     background_sprite_ = std::make_shared<sf::Sprite>();
-    current_tile_map_ = std::make_shared<Tilemap>(11, 7, position + sf::Vector2f(40, 44), sf::Vector2u(64, 64));
+    current_tile_map_ = std::make_shared<Tilemap>(11, 7, position + sf::Vector2f(20, 65), sf::Vector2u(64, 64));
     monster_portrait_texture_ = std::make_shared<sf::Texture>();
     monster_portrait_sprite_ = std::make_shared<sf::Sprite>();
     //monsterPortraitSprite->setScale(0.75,0.75);
@@ -48,7 +48,7 @@ sd::MapWindow::MapWindow(sf::Vector2f position, sf::Vector2f size)
     map_texture_ = std::make_shared<sf::RenderTexture>();
     map_sprite_ = std::make_shared<sf::Sprite>();
 
-    monster_position_ = sf::Vector2f(1387.7, 168);
+    monster_position_ = sf::Vector2f(1357, 115);
 }
 
 bool sd::MapWindow::setup() {
@@ -67,7 +67,6 @@ bool sd::MapWindow::setup() {
     map_sprite_->setTexture(map_texture_->getTexture());
 
     return DrawableObject::setup ();
-
 }
 
 void sd::MapWindow::draw_to(Sp<sf::RenderTarget> window) const {
@@ -93,8 +92,6 @@ void sd::MapWindow::draw_to(Sp<sf::RenderTarget> window) const {
     } else {
         window->draw(*map_sprite_);
     }
-
-
 }
 
 sf::Vector2f sd::MapWindow::get_position() {

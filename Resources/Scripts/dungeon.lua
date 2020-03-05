@@ -141,7 +141,20 @@ dungeon = {
                     print_line("You learnt starter spells.")
                     print_line("The old wizard points to a barrel. [font=book]'Now, you see the barrel over there? Attack it by typing [b]'fight barrel'.")
                     add_command("fight")
+                end,
+
+                on_enter = function()
+                    set_stage(1)
+                end,
+
+                on_fight = function()
+                    set_stage(2)
+                end,
+
+                on_open = function()
+                    set_stage(3)
                 end
+
         },
             barrel = {
                 position={x=5,y=3},

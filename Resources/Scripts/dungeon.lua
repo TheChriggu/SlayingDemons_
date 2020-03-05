@@ -77,7 +77,7 @@ dungeon = {
 
         Southern_Forest={
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
-
+            is_start = true,
             --Spieler betritt Wald und fragt sich warum er hier ist
             --Spiel zählt Items und Spells auf mit dem der Wizard ein los geschickt hat
 
@@ -124,6 +124,10 @@ dungeon = {
                 layout= axe_layout,
 
                 on_inspection = function ()
+                    --print_line(get_current_directory())
+                    --[[if is_file_existing("../Resources/config.lua") then
+                        print_line("\"../Resources/config.lua\" is existing!")
+                    end]]
                     --wait(1)
                     --print_line("Through the thick moss you see something shiny. As you approach it you realize it's an axe. ")
                     print_line("Through the thick moss you see something shiny. As you approach it you realize it's an axe. ")
@@ -137,7 +141,7 @@ dungeon = {
         },
 
         western_forest = {
-            is_start = true,
+
             layout = { {2,0}, {10,0}, {10,6}, {2,6}},
 
             Way_back_down = {

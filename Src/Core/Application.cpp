@@ -62,6 +62,9 @@ bool sd::Application::setup()
         ScriptEngine::get().add_script(file);
     }
     
+    ScriptEngine::get().register_all("get_current_directory", &FileInput::get_current_directory);
+    ScriptEngine::get().register_all("is_file_existing", &FileInput::is_file_existing);
+    
     result = setup_window();
     if (!result) return false;
     

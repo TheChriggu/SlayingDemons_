@@ -9,6 +9,7 @@ is_in_room5 = false
 function room_changed(name)
     if name=="Southern_Forest_2" then
         is_in_Southern_Forest_2 = true
+        set_background_music("fantasy_loop")
         print_line_instant("You enter the forest.")
         print_line_instant("As far as you can tell everything seems peaceful. The old wizard warned you it could get dangerous.")
         print_line_instant("But as far you can tell nothing dangerous is around.")

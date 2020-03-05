@@ -5,6 +5,7 @@ is_in_third_room = false
 function room_changed(name)
     if name=="first_room" then
         is_in_first_room = true
+        set_background_music("cyber_loop")
         print_line_instant("To minimize further unexpected but pointless interuptions by you I deleted the game interface.")
         print_line_instant("You can't play the game anymore or interfer with my work.")
         print_line_instant("So, please stop playing now.")

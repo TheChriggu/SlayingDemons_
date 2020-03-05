@@ -39,17 +39,10 @@ function player_profile_deleted()
     set_stage(1)
 end
 
-function input_received (input) 
-    if input=="Inspect Room" and is_in_green_room then
-
-    end
-end
-
-
-
 function room_changed(name)
     if name=="main_room" then
         is_in_main_room = true
+        set_background_music("cyber_glitched_loop")
         set_noisy_lines_medium_on("text-output")
         print_line_instant("You      ɯǝɹo˥ ʇsǝ 🄼🄰🄶🄽🄰 ")
         set_rgb_offset_weak_on("possible-words")

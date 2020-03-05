@@ -102,14 +102,13 @@ bushDoor_layout = {
 
 dungeon = {
     tutorial_floor ={
-        is_start = true,
+        
 
         tutorial_room={
-            is_start = true,
+            --is_start = true,
 
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
 
-            
             wizard ={
                 position={x=7,y=3},
                 layout = wizard_layout,
@@ -139,7 +138,7 @@ dungeon = {
                     print_line("The old wizard points to a barrel. [font=book]'Now, you see the barrel over there?")
                     print_line("Attack it by typing [b]'fight barrel'.")
                     add_command("fight")
-                end
+                end,
         },
             barrel = {
                 position={x=5,y=3},
@@ -182,10 +181,11 @@ dungeon = {
     },
 
     floor1 = {
+        is_start = true,
         southern_forest={
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
 
-            is_start = true,
+            --is_start = true,
 
             northern_way = {
                 position = {x = 5,y = 0},
@@ -598,7 +598,7 @@ dungeon = {
         },
         clearing = {
             layout = { {3, 0}, {7, 0}, {7, 6}, {3,6}},
-
+            is_start = true,
             southern_way = {
                 position = {x = 5,y = 6},
                 layout = door_layout,
@@ -615,6 +615,7 @@ dungeon = {
                 on_open = function ()
                     print_line("It's an old chest. Again. You are kind of anxious about what's going to happen this time when you open it. ")
                     print_line("Slowly you approach it and open it.")
+                    set_background_music("fantasy_glitched_loop")
                     print_line("[i]*Screeeech*", 1)
                     print_line("[i]*boof*", 1)
                     print_line("At the bottom of the chest is a piece of paper. It looks like a map.")
@@ -896,6 +897,7 @@ dungeon = {
                 on_enter = function()
                     print_line("As you walk that way, you realize: you're back in the room with the goblin.")
                     print_line("You're lucky you didn't get any more lost than that.")
+                    set_background_music("fantasy_glitched_loop")
                 end,
 
                 on_inspection = function ()

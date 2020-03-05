@@ -19,8 +19,8 @@ sd::PlayerState::PlayerState()
             auto arg = std::dynamic_pointer_cast<WalkedThroughDoorEventArgs>(e);
             set_current_room(current_floor_->get_room(arg->door.lock()->get_connected_room()));
         
-            auto args = std::make_shared<LineToOutputEventArgs>(get_current_room()->get_enter_description());
-            EventSystem::get().trigger(args);
+            //auto args = std::make_shared<LineToOutputEventArgs>(get_current_room()->get_enter_description());
+            //EventSystem::get().trigger(args);
         }
     
         if (e->type == EventArgs::Type::START_FIGHT_WITH_GOBLIN) {

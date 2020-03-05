@@ -159,3 +159,9 @@ bool sd::FileInput::is_file_existing(std::string url)
     return is_existing(boost::filesystem::path(url));
 }
 
+void sd::FileInput::write_file(const boost::filesystem::path &url, const std::string &content)
+{
+    boost::filesystem::fstream test(url, std::ios_base::openmode::_S_out);
+    test << content;
+}
+

@@ -11,6 +11,7 @@
 #define SLEEP(time) Sleep(time);
 #else
 #include <unistd.h>
+#include <IO/SelfDestruct.h>
 #define SLEEP(time) usleep(time * 1000);
 #endif
 
@@ -19,7 +20,6 @@ void write_data(std::vector<std::string> data);
 
 int main() {
     //startup();
-    
     
     auto app = std::make_shared<sd::Application>();
     auto result = app->setup ();

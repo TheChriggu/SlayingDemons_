@@ -141,7 +141,7 @@ void sd::MultiTileObject::remove_from_layout(std::vector<TileData> &layout, int 
 
             if(this->layout_[i] != -1)
             {
-                layout[pos].tile_idx_ = 9;
+                layout[pos].tile_idx_ = 8;
                 layout[pos].rotation_ = 0;
             }
         }

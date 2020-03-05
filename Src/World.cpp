@@ -101,12 +101,14 @@ void sd::World::unlock_door(std::string room_name, std::string door_name) {
 }
 
 void sd::World::set_floor(std::string floor_name) {
+
     strtk::convert_to_lowercase(floor_name);
     
     for (auto floor : floors_)
     {
         if(floor->get_name() == floor_name)
         {
+
             player_state_->set_current_floor(floor);
             player_state_->set_current_room(floor->get_start_room());
             player_state_->save_current_vocab();

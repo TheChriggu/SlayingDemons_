@@ -27,6 +27,7 @@
 #include "UI/Screen.h"
 #include "StartUp/SplashScreens.h"
 #include "../Audio/AudioPlayer.h"
+#include "../UI/Cursor.h"
 
 namespace sd {
     class Application : public Manageable {
@@ -51,6 +52,8 @@ namespace sd {
         Sp<Screen> screen_;
         
         void test();
+
+        Sp<Cursor> cursor_;
 
     public:
         Application() = default;

@@ -110,15 +110,22 @@ bool sd::Application::setup()
                 )
             )
         );
-    
+
+    cursor_ = std::make_shared<Cursor>();
+    window_->setMouseCursor(*(cursor_->get_cursor()));
+
     return true;
 }
 
 
-
 bool sd::Application::run()
 {
-    
+
+    if(cursor_->check_on_mouse_cursor())
+    {
+        window_->setMouseCursor(*(cursor_->get_cursor()));
+    }
+
     if (!window_->isOpen())
     {
         return false;
@@ -244,18 +251,18 @@ bool sd::Application::setup_scene()
     // TODO(FK): clean up this shit
     
     std::cout << "Create text output background\n";
-    auto outputBackground = new Panel(sf::Vector2f(41.8, 75.8), sf::Vector2f(1044, 1008), "../Resources/Sprites/Progressing/output_");
+    auto outputBackground = new Panel(sf::Vector2f(31, 33), sf::Vector2f(1044, 1008), "../Resources/Sprites/Progressing/output_");
     outputBackground->set_name("output-panel");
     drawable_objects_.emplace_back(Sp<Panel>(outputBackground));
     
     std::cout << "Create words panel\n";
     drawable_objects_.emplace_back(std::make_shared<PossibleWords>(
-        sf::Vector2f(19.1, 597.9),
+        sf::Vector2f(12, 571),
         sf::Vector2f(1059, 445)));
     
     std::cout << "emplace Inputfield\n";
     std::cout << "Create input field\n";
-    InputField *inputField = new InputField(sf::Vector2f(80, 940), sf::Vector2f(1025, 63), sf::Color::Magenta);
+    InputField *inputField = new InputField(sf::Vector2f(76, 965), sf::Vector2f(1025, 63), sf::Color::Magenta);
     drawable_objects_.emplace_back(Sp<InputField>(inputField));
     
     
@@ -264,7 +271,7 @@ bool sd::Application::setup_scene()
     drawable_objects_.emplace_back(std::make_shared<TextOutput>(sf::Vector2f(90.0, 100.0), sf::Vector2f(1044, 1008), sf::Color::Red));
     
     std::cout << "Create Map panel\n";
-    MapWindow *mapWindow = new MapWindow(sf::Vector2f(1122.8, 79.9), sf::Vector2f(761, 558));
+    MapWindow *mapWindow = new MapWindow(sf::Vector2f(1112, 53), sf::Vector2f(761, 558));
     drawable_objects_.emplace_back(Sp<MapWindow>(mapWindow));
     
     
@@ -282,5 +289,4 @@ void sd::Application::test()
     auto event = std::make_shared<LineToOutputEventArgs>("test");
     EventSystem::get().trigger(event);
 }
-
 

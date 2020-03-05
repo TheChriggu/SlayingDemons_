@@ -20,7 +20,7 @@ file(GLOB_RECURSE EXEC_HEADERS Src/*.h)
 file(GLOB_RECURSE EXEC_SOURCES Src/*.cpp)
 
 # set executable-files (set Project-Target)
-add_executable(${PROJECT_NAME} ${EXEC_HEADERS} ${EXEC_SOURCES})
+add_executable(${PROJECT_NAME} ${EXEC_HEADERS} ${EXEC_SOURCES} Src/UI/Cursor.cpp Src/UI/Cursor.h)
 
 
 target_include_directories(${PROJECT_NAME} PRIVATE Src)

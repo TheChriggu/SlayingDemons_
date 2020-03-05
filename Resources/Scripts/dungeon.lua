@@ -102,10 +102,10 @@ bushDoor_layout = {
 
 dungeon = {
     tutorial_floor ={
-        
+        is_start = true,
 
         tutorial_room={
-            --is_start = true,
+            is_start = true,
 
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
 
@@ -185,7 +185,7 @@ dungeon = {
         southern_forest={
             layout = { {2, 0}, {10, 0}, {10, 6}, {2, 6}},
 
-            --is_start = true,
+            is_start = true,
 
             northern_way = {
                 position = {x = 5,y = 0},
@@ -598,7 +598,6 @@ dungeon = {
         },
         clearing = {
             layout = { {3, 0}, {7, 0}, {7, 6}, {3,6}},
-            is_start = true,
             southern_way = {
                 position = {x = 5,y = 6},
                 layout = door_layout,

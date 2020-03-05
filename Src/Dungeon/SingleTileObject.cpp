@@ -25,6 +25,6 @@ std::string sd::SingleTileObject::get_name() {
 
 void sd::SingleTileObject::remove_from_layout(std::vector<TileData> &layout, int width, int height) {
         //TODO: Make sure to check position against width & height
-        layout[position_on_tile_map_.x + position_on_tile_map_.y * width].tile_idx_ = 9;
+        layout[position_on_tile_map_.x + position_on_tile_map_.y * width].tile_idx_ = 8;
     layout[position_on_tile_map_.x + position_on_tile_map_.y * width].rotation_ = 0;
 }

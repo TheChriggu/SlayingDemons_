@@ -23,7 +23,7 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
     event_handler_ = CREATE_EVENT_HANDLER(
         if (e->type == EventArgs::Type::LINE_TO_OUTPUT) {
             auto arg = std::dynamic_pointer_cast<LineToOutputEventArgs>(e);
-            add_line (arg->line);
+            enqueue_line (arg->line);
         }
         if (e->type == EventArgs::Type::FONTS_CREATED) {
             auto arg = std::dynamic_pointer_cast<FontsCreatedEventArgs>(e);
@@ -81,10 +81,13 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
 
     offset_ = sf::Vector2f(10, 55);
 
+    line_queue_ = std::make_shared<std::vector<std::string>>();
+
 }
 
 bool sd::TextOutput::setup() {
-    ScriptEngine::get().register_all_timeable(1, 0.25, "print_line", &TextOutput::print_line, this);
+
+    ScriptEngine::get().register_all_timeable(1, 0.25, "print_line", &TextOutput::enqueue_line, this);
 
     lines_.push_back(std::make_shared<FormattedLine>(
         "",
@@ -97,6 +100,21 @@ bool sd::TextOutput::setup() {
     auto table = ScriptEngine::get().get_script("config")->get_table("window")->as<sol::table>();
     text_tex_->create(table["size"]["x"], table["size"]["y"]);
     text_sprite_->setTexture(text_tex_->getTexture());
+
+    //one second interval between printing enqueued lines
+    auto routine = std::make_shared<Routine>( Routine(nullptr, 0.25f,
+                    std::function<bool(Sp<Routine>)>
+                            (
+                                [this](Sp<Routine> this_routine)
+                                {
+                                        print_first_in_queue();
+                                        return Routine::restart;
+                                }
+                            )
+                    )
+    );
+
+    RoutineManager::get().start_routine(routine);
 
     return DrawableObject::setup ();
 }
@@ -201,6 +219,20 @@ void sd::TextOutput::reformat() {
     {
         add_line(line);
         std::cout << line << "\n";
+    }
+}
+
+void sd::TextOutput::enqueue_line(std::string string) {
+
+    line_queue_->push_back(string);
+}
+
+void sd::TextOutput::print_first_in_queue() {
+
+    if(line_queue_->size() > 0)
+    {
+        add_line(line_queue_->front());
+        line_queue_->erase(line_queue_->begin());
     }
 }
 

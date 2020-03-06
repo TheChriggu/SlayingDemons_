@@ -28,6 +28,8 @@ namespace sd {
         static Sp<std::vector<std::vector<std::string>>> load_csv(const boost::filesystem::path& url);
         static Sp<std::vector<std::vector<std::string>>> load_tsv(const boost::filesystem::path& url);
         static std::string get_current_directory();
+        static std::string get_path_to_player_vocab();
+        static std::string get_path_to_player_profile();
     
         static void write_tsv(const Sp<std::vector<std::vector<std::string>>> values, const boost::filesystem::path& url);
         static void write_file(const boost::filesystem::path& url, const std::string& content);

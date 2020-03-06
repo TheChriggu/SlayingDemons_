@@ -21,6 +21,8 @@ namespace sd {
         
         Sp<PlayerVocabulary> player_vocabulary_;
 
+        bool door_fight_done;
+
     public:
         PlayerState();
         ~PlayerState() override = default;
@@ -39,6 +41,8 @@ namespace sd {
 
         void save_current_vocab();
         void load_vocab();
+
+        void player_door_fight();
 
     };
 }

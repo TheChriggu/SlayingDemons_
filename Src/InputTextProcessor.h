@@ -44,6 +44,8 @@ namespace sd {
         std::vector<std::string> split_by_space(std::string string);
         Sp<PlayerState> get_player_state();
 
+        bool output_has_queue();
+
         //void handle(Sp<EventArgs> e) override;
     };
 }

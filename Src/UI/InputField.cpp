@@ -61,6 +61,10 @@ bool sd::InputField::setup() {
 }
 
 void sd::InputField::add_text(sf::Uint32 input) {
+    if(text_processor_->output_has_queue())
+    {
+        return;
+    }
     //std::cout << "Code: " << input << std::endl;
     
     if (input == UNI_ENTER || input == UNI_TAB)

@@ -27,6 +27,8 @@ namespace sd {
         void set_floor(std::string floor_name);
 
         void set_stage(int stage);
+
+        Sp<PlayerState> get_player_state();
     };
 }
 

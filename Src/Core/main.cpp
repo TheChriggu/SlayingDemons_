@@ -6,7 +6,7 @@
 #include "IO/FileInput.h"
 
 
-#ifdef CMAKE_HOST_WIN32
+#ifdef _WIN32
 #include <windows.h>
 #define SLEEP(time) Sleep(time);
 #else
@@ -19,7 +19,7 @@ void startup();
 void write_data(std::vector<std::string> data);
 
 int main() {
-    //startup();
+    startup();
     
     /*std::string prefix{"bushe"};
     std::string input1{"t bus"};
@@ -36,14 +36,14 @@ int main() {
         std::cerr << "Error while setting up Application!" << std::endl;
         return EXIT_FAILURE;
     }
-    /*result = app->setup_splash_screens ();
+    result = app->setup_splash_screens ();
     if (!result) {
         std::cerr << "Error while setting up splash screens!" << std::endl;
         return EXIT_FAILURE;
     }
 
     while (app->run_splash_screens ())
-    {}*/
+    {}
     while (app->run ())
     {}
     
@@ -196,7 +196,7 @@ void startup()
     write("The game will start soon.\n");
     write("Please enjoy.\n");
     SLEEP(500);
-    write("loading...[5%]\n");
+    write("loading...[5%]\n\n");
     SLEEP(500);
     write("-------Slaying Demons_-------\n");
     SLEEP(500);
@@ -204,7 +204,7 @@ void startup()
     SLEEP(500);
     write("\n");
     SLEEP(500);
-    write("loading...[34%]\n");
+    write("loading...[34%]\n\n");
     SLEEP(500);
     write("-------Team-------\n");
     SLEEP(500);
@@ -228,11 +228,11 @@ void startup()
     SLEEP(500);
     write("Katharina Batzel\n");
     SLEEP(500);
-    write("Nora Symmnak\n");
+    write("Nora Symmank\n");
     SLEEP(500);
     write(" \n");
     SLEEP(500);
-    write("loading...[52%]\n");
+    write("loading...[52%]\n\n");
     SLEEP(500);
     write("Starting Game Window\n");
 }

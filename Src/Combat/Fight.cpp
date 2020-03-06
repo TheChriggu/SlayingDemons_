@@ -17,8 +17,8 @@ sd::Fight::Fight(Sp<sd::Fighter> player, Sp<sd::Monster> enemy)
     Stats one_stats = {1,1,1,1,1,1,1,1};
     player_->set_base_stats(one_stats, one_stats);
     
-    enemy_->change_hit_points(100);
-    player_->change_hit_points(100);
+    enemy_->set_hit_points(100);
+    player_->set_hit_points(100);
 }
 
 void sd::Fight::full_turn(std::string action, std::string modifier) {
@@ -127,15 +127,15 @@ void sd::Fight::full_turn(std::string action, std::string modifier) {
             enemy_hp_eval = "Your attacks are beginning to show on the " +enemy_->get_alias() + "'s face. " + get_enemy_pronoun("He") + " is taking deep breaths now.";
 
         }
-        else if(player_->get_hit_points() > 35)
+        else if(enemy_->get_hit_points() > 35)
         {
             enemy_hp_eval = "The " + enemy_->get_alias() + "'s handling of " + get_enemy_pronoun("his") + " weapon has become unsteady." + get_enemy_pronoun("He") + " probably can't go on for much longer.";
         }
-        else if(player_->get_hit_points() > 15)
+        else if(enemy_->get_hit_points() > 15)
         {
             enemy_hp_eval = "The " + enemy_->get_alias() + "'s stance is becoming quite unstable. Just a few more hits, and " + get_enemy_pronoun("he") + " might collapse.";
         }
-        else if(player_->get_hit_points() > 0)
+        else if(enemy_->get_hit_points() > 0)
         {
             enemy_hp_eval = "Almost there. One, maybe two attacks, and the " + enemy_->get_alias() + " will finally be done for.";
         }
@@ -183,6 +183,9 @@ void sd::Fight::player_turn (const Sp<sd::Attack>& player_attack)
     {
         eval = "Your attack accidentally healed the " + enemy_->get_alias() + ".";
     }
+
+    std::cout << "damage done by player: " << damage.value << "\n";
+    std::cout << "enemy hp left: " << enemy_->get_hit_points() << "\n";
 
     args = std::make_shared<LineToOutputEventArgs>(eval);
     EventSystem::get().trigger(args);
@@ -257,6 +260,9 @@ void sd::Fight::enemy_turn (const Sp<sd::Attack>& enemy_attack)
             eval = "Its attack accidentally healed you a bit.";
         }
     }
+
+    std::cout << "damage done by enemy: " << damage.value << "\n";
+    std::cout << "player hp left: " << enemy_->get_hit_points() << "\n";
 
 
     args = std::make_shared<LineToOutputEventArgs>(eval);

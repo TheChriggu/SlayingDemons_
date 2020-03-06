@@ -27,6 +27,7 @@ namespace sd{
         void change_base_stats(const Stats& offense, StatwiseOperation offense_ops, const Stats& defense, StatwiseOperation defense_ops);
 
         void change_hit_points(float value);
+        void set_hit_points(float value);
 
         float get_hit_points();
 

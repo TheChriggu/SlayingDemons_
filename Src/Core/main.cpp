@@ -19,7 +19,7 @@ void startup();
 void write_data(std::vector<std::string> data);
 
 int main() {
-    startup();
+    //startup();
     
     /*std::string prefix{"bushe"};
     std::string input1{"t bus"};

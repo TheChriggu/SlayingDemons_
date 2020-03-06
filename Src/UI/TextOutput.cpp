@@ -69,8 +69,13 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
                     break;
             }
         }
+        if(e->type == EventArgs::Type::RESET_OUTPUT_TIMER)
+            {
+                print_first_in_queue();
+            }
         );
-    
+
+
     REGISTER_EVENT_HANDLER();
 
     max_size_.x = size.x -20;
@@ -83,11 +88,14 @@ sd::TextOutput::TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color c
 
     line_queue_ = std::make_shared<std::vector<std::string>>();
 
+    clock_ = std::make_shared<sf::Clock>();
+    clock_->restart();
 }
 
 bool sd::TextOutput::setup() {
 
-    ScriptEngine::get().register_all_timeable(1, 0.25, "print_line", &TextOutput::enqueue_line, this);
+    //ScriptEngine::get().register_all_timeable(1, 0.25f, "print_line", &TextOutput::enqueue_line, this);
+    ScriptEngine::get().register_all("print_line", &TextOutput::enqueue_line, this);
 
     lines_.push_back(std::make_shared<FormattedLine>(
         "",
@@ -102,7 +110,7 @@ bool sd::TextOutput::setup() {
     text_sprite_->setTexture(text_tex_->getTexture());
 
     //one second interval between printing enqueued lines
-    auto routine = std::make_shared<Routine>( Routine(nullptr, 0.25f,
+    /*auto routine = std::make_shared<Routine>( Routine(nullptr, 1.5f,
                     std::function<bool(Sp<Routine>)>
                             (
                                 [this](Sp<Routine> this_routine)
@@ -114,12 +122,21 @@ bool sd::TextOutput::setup() {
                     )
     );
 
-    RoutineManager::get().start_routine(routine);
+    RoutineManager::get().start_routine(routine);*/
 
     return DrawableObject::setup ();
 }
 
 void sd::TextOutput::draw_to(Sp<sf::RenderTarget> window) const {
+
+    if(clock_->getElapsedTime().asSeconds() >= 0.85f)
+    {
+        clock_->restart();
+        auto args = std::make_shared<EventArgs>();
+        args->type = EventArgs::Type::RESET_OUTPUT_TIMER;
+        EventSystem::get().trigger(args);
+    }
+
     text_tex_->clear(sf::Color::Transparent);
 
     for (const auto& line : lines_)
@@ -234,6 +251,10 @@ void sd::TextOutput::print_first_in_queue() {
         add_line(line_queue_->front());
         line_queue_->erase(line_queue_->begin());
     }
+}
+
+bool sd::TextOutput::has_queue() {
+    return line_queue_->size() > 0;
 }
 
 

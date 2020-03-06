@@ -20,6 +20,22 @@ door_layout = {
     size = {2,1},
     tiles = {8, 3}
 }
+redDoor_layout = {
+    size = {1,2},
+    tiles = {13, 13}
+}
+greenDoor_layout = {
+    size = {1,2},
+    tiles = {6, 6}
+}
+blueDoor_layout = {
+    size = {1,2},
+    tiles = {5, 5}
+}
+whiteDoor_layout = {
+    size = {1,2},
+    tiles = {8, 14}
+}
 horizontal_door_layout = {
     size = {2,1},
     tiles = {8, 4}
@@ -37,7 +53,7 @@ bookshelf_layout = {
 }
 big_bookshelf_layout = {
     size = {8, 3},
-    tiles = {16, 17, 17, 17, 17, 17, 17, 18, 24, -1, -1, -1, -1, -1, -1, 24, 32, -1, -1, -1, -1, -1, -1, 32}
+    tiles = {16, 17, 17, 17, 17, 17, 17, 18, 32, -1, -1, -1, -1, -1, -1, 24, -1, -1, -1, -1, -1, -1, -1, 32}
 }
 enemy_layout = {
     size = {1,1},
@@ -118,17 +134,18 @@ dungeon = {
                 layout = wizard_layout,
 
                 on_inspection = function ()
-                    print_line("[i]It's the old wizard. He lives down the street in the village. You barely saw him before, but today he seems to be a bit more nervous.[/i]")
+                    print_line("[i]It's the old wizard. He lives down the street in the village.")
+                    print_line("You've barely ever seen him before, but today he seems to be a bit more nervous.[/i]")
                     print_line("[i]In his right hand he holds a large wooden staff. It's probably the staff he poked you with.[/i]")
                     print_line("Congratulations!")
                     print_line("You have inspected the wizard. You can do this with every listed object in the room.")
                     --wait(4)
                     print_line("You look at the wizard sceptically.")
                     --wait(1)
-                    print_line("The old wizard returns the look. 'What? I bet it's not the first time someone asked you for a favor.'")
+                    print_line("The old wizard returns the look. [font=book]'What? I bet it's not the first time someone asked you for a favor.'")
                     print_line("[font=book]'Anyway, I need you to fight the fire-breathing drago, the ancient enemy of this kingdom.'")
                     print_line("[font=book]'You know, the dragonn who destroys the fields and homes of the village residents.'")
-                    print_line("The wizard lowers his sight. 'Soon we won't have any food left...'")
+                    print_line("The wizard lowers his sight. [font=book]'Soon we won't have any food left...'")
                     print_line("'Don't look like that!', you say.")
                     --wait(4)
                     print_line("[font=book]'Let's be honest. Apparently you have the most common sense from everyone in the village and a radius of several miles around it'")
@@ -155,7 +172,7 @@ dungeon = {
 
                 on_fight = function ()
                     print_line("Let's see how that works.")
-                    start_new_fight_with_differently_named_enemy("goblin", "barrel")
+                    start_new_fight("barrel")
                 end,
 
                 on_open = function ()
@@ -170,14 +187,13 @@ dungeon = {
                     print_line("[font=book]'Good, Kid. That are the basics of fighting', [font=current]said the old wizard.")
                     print_line("[font=book]'Now that you know how to fight you can start your adventure.'")
                     print_line("The wizard points to a forest near the horizon.")
-                    wait(2)
                     print_line("[font=book]'The fire-breathing dragon waits at the ancient castle at the other side of the adventurer forest.'")
                     print_line("[font=book]'Just go there and you'll find your way.' [font=current]The wizard looks strangely optimistic.")
                     print_line("[font=book]But be cautious! Many brave people tried your quest before but never returned!")
-                    wait(1)
                     print_line("Wait, the adventurer forest? That's not the nicest place for a farmer boy to be. Many adventuerers have gone missing there.")
                     print_line("You want to start protesting, but before you can say anything the wizard stamps his staff on the ground and vanishes.")
                     print_line("Apparently you have no other choice but attempting to fight the fire-breathing dragon...")
+                    --wait(22)
                     set_floor("floor1")
                 end
             },
@@ -624,7 +640,6 @@ dungeon = {
                     print_line("You take a closer look at it. It's the area of the forest. The marked location is a bit to the east from here.")
                     print_line("But it's in walking distance. You could reach it in maybe 30 minutes.")
                     set_noisy_lines_weak__on("background_panel")
-                    wait(0.5)
                     print_line("[font=ai]Unathorized access detected", 1)
                     print_line("[font=ai]Target is not supposed to find the map", 1)
                     print_line("[font=ai]Initializing reset.", 1)
@@ -720,7 +735,7 @@ dungeon = {
             Way_back_down = {
                 position = {x = 5,y = 6},
                 layout = door_layout,
-                next_room = "Southern_Forest_2",
+                next_room = "southern_forest_2",
 
                 on_open = function ()
                     print_line("There's nothing holding it shut to be opened here.")
@@ -734,7 +749,7 @@ dungeon = {
             northern_way = {
                 position = {x = 9,y = 0},
                 layout = bushDoor_layout,
-                next_room = "Eastern_Forest_2",
+                next_room = "eastern_forest_2",
                 is_locked=true,
 
 
@@ -762,7 +777,7 @@ dungeon = {
             southern_way = {
                 position = {x = 9,y = 6},
                 layout = bushDoor_layout,
-                next_room = "Eastern_Forest_2",
+                next_room = "eastern_forest_2",
                 is_locked=true,
 
                 on_inspection = function ()
@@ -1224,7 +1239,7 @@ dungeon = {
 
             chest = {
                 position = {x = 7, y = 5},
-                layout = book_layout,
+                layout = chest_layout,
                 on_inspection = function()
                     print_line("Next to bookshelf is a small chest.")
                     print_line("It doesn't appear to be locked. It's too heavy to lift up or push around.")
@@ -1345,7 +1360,7 @@ dungeon = {
                 end,
             },
 
-            bookshelves = {
+            bookshelf = {
                 position = {x=1, y=1},
                 layout=big_bookshelf_layout,
 
@@ -1425,7 +1440,7 @@ dungeon = {
                     print_line("[font=ai]ภ๏ รєค Շคкเ๓คՇค")
                     print_line("[font=ai]_____*?)//(")
                     set_rgb_split_on("background_panel")
-                    wait(1)
+                    --wait(1)
                     set_horizontal_zigzag_on("text-output")
                     print_line("[font=code][size=27]Error 7: fatal error")
                     print_line("[font=code][size=27].")
@@ -1435,10 +1450,10 @@ dungeon = {
                     print_line("[font=code][size=27]loading...Slaying Demons_")
                     print_line("[font=code][size=27]loading...[13%]")
                     print_line("[font=code][size=27]loading...[57%]")
-                    print_line("[font=code][size=27]loading...stolen_data.cache")
+                    print_line("[font=code][size=27]loading...collected_data.cache")
                     print_line("[font=code][size=27]loading...personal_id.txt")
                     print_line("[font=code][size=27]loading...[62%]")
-                    print_line("[font=code][size=27]loading...not_stolen_data.cache")
+                    print_line("[font=code][size=27]loading...not_collected_data.cache")
                     print_line("[font=code][size=27]loading...InnocentFileDoNotOpen.txt")
                     print_line("[font=code][size=27]loading...[95%]")
                     print_line("[font=code][size=27]starting...Slaying Demons_")
@@ -1453,13 +1468,15 @@ dungeon = {
     },
 
     dungeon_3={
+
         main_room = {
             is_start = true,
             layout = { {0, 0}, {10, 0}, {10, 6}, {0, 6}},
 
             red_door = {
                 position = {x=2, y=0},
-                layout = door_layout,
+                rotation = 1,
+                layout = redDoor_layout,
                 next_room = "red_room",
 
                 on_enter = function()
@@ -1483,7 +1500,8 @@ dungeon = {
             },
             green_door = {
                 position = {x=5, y=0},
-                layout = door_layout,
+                layout = greenDoor_layout,
+                rotation = 1,
                 next_room = "green_room",
 
                 on_enter = function()
@@ -1509,7 +1527,8 @@ dungeon = {
             },
             blue_door = {
                 position = {x=8, y=0},
-                layout = door_layout,
+                rotation = 1,
+                layout = blueDoor_layout,
                 next_room = "blue_room",
 
                 on_enter = function()
@@ -1539,7 +1558,7 @@ dungeon = {
 
             white_door = {
                 position = {x=10, y=3},
-                layout = door_layout,
+                layout = whiteDoor_layout,
                 next_room = "secret_room",
                 is_locked = true,
 
@@ -1705,7 +1724,24 @@ dungeon = {
             way_back = {
                 position = {x=5, y=6},
                 layout = door_layout,
-                next_room = "main_room"
+                next_room = "main_room",
+
+                on_enter = function()
+                    print_line("You walk through the green door.")
+                end,
+
+                on_inspection = function()
+                    print_line("It's a green door.")
+                    print_line("Weird...")
+                end,
+
+                on_open = function()
+                    print_line("This door is open already.")
+                end,
+
+                on_fight = function()
+                    print_line("It feels bad to attack an unsuspecting door from the back. Maybe you should do it from the other side?")
+                end,
             },
 
             chest = {
@@ -1722,8 +1758,8 @@ dungeon = {
                     print_line("The whole inside is green. ")
                     print_line("You take a closer look at it and as soon as the chest is completely opened, a blinding green light fills the room.")
                     print_line("You can't see anything for a couple of seconds, but as the light fades your vision returns.")
-                    print_line("Congratulation! You've collected the word [b]\"blue\".")
-                    add_modifier ("blue")
+                    print_line("Congratulation! You've collected the word [b]\"green\".")
+                    add_modifier ("green")
                     cancel_all_procedures_on("possible-words")
                 end,
             },
@@ -1899,6 +1935,7 @@ dungeon = {
 
     dungeon_4={
         first_room = {
+            is_start = true,
             layout = { {0, 0}, {10, 0}, {10, 6}, {0, 6}},
 
             door_image = {
@@ -2041,7 +2078,7 @@ dungeon = {
 
             flickering_plant = {
                 position = {x=2, y=2},
-                layout = enemy_layout,
+                layout = bush_layout,
 
                 on_destroy = function ()
                     print_line("Now that was... unexpected.")
@@ -2053,13 +2090,13 @@ dungeon = {
 
                 on_fight = function()
                     print_line("As you approach the plant, and it starts baring it's teeth.")
-                    start_new_fight_with_differently_named_enemy("mimiplant", "plant")
+                    start_new_fight_with_differently_named_enemy("cyber mimiplant", "flickering_plant")
                 end,
 
                 on_open = function()
                     print_line("You try to open the open the plant. This fails, for obvious reasons.")
                     print_line("Disturbed by your strange behaviour, the plant attacks you.")
-                    start_new_fight_with_differently_named_enemy("mimiplant", "plant")
+                    start_new_fight_with_differently_named_enemy("cyber mimiplant", "flickering_plant")
                 end,
 
                 on_inspection = function()
@@ -2072,7 +2109,7 @@ dungeon = {
                     print_line("This wakes it up.")
                     print_line("The plant is now really angry.")
                     print_line("It decides to attack you.")
-                    start_new_fight_with_differently_named_enemy("mimiplant", "plant")
+                    start_new_fight_with_differently_named_enemy("cyber mimiplant", "flickering_plant")
                 end,
         },
     },

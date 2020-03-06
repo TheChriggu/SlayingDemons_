@@ -81,18 +81,30 @@ bool sd::PlayerVocabulary::has_word(const std::string& word) {
 
 void sd::PlayerVocabulary::add_action(std::string action) {
     strtk::convert_to_lowercase(action);
+    if(has_word(action))
+    {
+        return;
+    }
     actions_.emplace_back(action);
     actions_trie_->add_word(action);
 }
 
 void sd::PlayerVocabulary::add_modifier(std::string modifier) {
     strtk::convert_to_lowercase(modifier);
+    if(has_word(modifier))
+    {
+        return;
+    }
     modifiers_.emplace_back(modifier);
     modifiers_trie_->add_word(modifier);
 }
 
 void sd::PlayerVocabulary::add_command(std::string word) {
     strtk::convert_to_lowercase(word);
+    if(has_word(word))
+    {
+        return;
+    }
     commands_.emplace_back(word);
     commands_trie_->add_word(word);
 }

@@ -32,6 +32,8 @@ namespace sd {
 
         Sp<std::vector<std::string>> line_queue_;
 
+        Sp<sf::Clock> clock_;
+
     public:
         TextOutput(sf::Vector2f position, sf::Vector2f size, sf::Color color);
         ~TextOutput() override = default;
@@ -52,6 +54,8 @@ namespace sd {
         void reformat();
 
         void print_first_in_queue();
+
+        bool has_queue();
     };
 }
 

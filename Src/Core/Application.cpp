@@ -30,6 +30,7 @@ bool sd::Application::run_splash_screens() {
     if(!splash_screens_->DrawTo(screen_->get_texture()))
     {
         audio_player_ = std::make_shared<AudioPlayer>();
+        ScriptEngine::get().broadcast("room_changed", world_->get_player_state()->get_current_room()->get_name());
         return false;
     }
     screen_->display();
@@ -101,17 +102,6 @@ bool sd::Application::setup()
 
 
     std::cout << "End initialization\n";
-    
-    RoutineManager::get().start_routine(
-        std::make_shared<Routine>(
-            nullptr,
-            3,
-            CREATE_ROUTINE_BODY(
-                test();
-                return Routine::end;
-                )
-            )
-        );
 
     cursor_ = std::make_shared<Cursor>();
     window_->setMouseCursor(*(cursor_->get_cursor()));
@@ -286,7 +276,7 @@ bool sd::Application::setup_scene()
 
 void sd::Application::test()
 {
-    auto event = std::make_shared<LineToOutputEventArgs>("test");
-    EventSystem::get().trigger(event);
+    //auto event = std::make_shared<LineToOutputEventArgs>("test");
+    //EventSystem::get().trigger(event);
 }
 

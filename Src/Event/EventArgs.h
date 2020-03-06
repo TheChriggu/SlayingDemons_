@@ -32,7 +32,8 @@ namespace sd {
             COLORS_CREATED,
             CURRENT_COLOR_CHANGED,
             CURRENT_FONT_CHANGED,
-            GAINED_FOCUS
+            GAINED_FOCUS,
+            RESET_OUTPUT_TIMER
         };
 
         EventArgs();

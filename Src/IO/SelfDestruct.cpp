@@ -13,19 +13,18 @@ void sd::SelfDestruct::self_destruct() {
                               "SET someOtherProgram=SlayingDemons.exe \n"
                               "TASKKILL /IM \"%someOtherProgram%\" \n"
                               "TIMEOUT /T 1  \n"
-                              "start notepad  \"ThankYou.txt\" \n"
                               "@RD /S /Q %~dp0/Resources  \n"
                               "@RD /S /Q %~dp0/cmake-build-debug \n"
                               "start /b "" cmd /c del \"%~f0\"&exit /b \n"
     );
-    
-    std::system("../selfdestruct.bat");
+    auto relative = boost::filesystem::path("../selfdestruct.bat");
+    auto absolute = boost::filesystem::canonical(relative).string();
+    std::system(absolute.c_str());
 #else
     sd::FileInput::write_file("../selfdestruct.sh",
                               "#!/bin/bash \n"
                               "killall -9 SlayingDemons \n"
                               "rm -r ../* \n"
-                              "touch ../ThankYou.txt"
     );
     
     std::system("chmod +x ../selfdestruct.sh");

@@ -103,15 +103,16 @@ void sd::World::unlock_door(std::string room_name, std::string door_name) {
 void sd::World::set_floor(std::string floor_name) {
 
     strtk::convert_to_lowercase(floor_name);
-    
-    for (auto floor : floors_)
+
+    for(int i= 0; i < floors_.size(); i++)
     {
-        if(floor->get_name() == floor_name)
+        if(floors_[i]->get_name() == floor_name)
         {
 
-            player_state_->set_current_floor(floor);
-            player_state_->set_current_room(floor->get_start_room());
+            player_state_->set_current_floor(floors_[i]);
+            player_state_->set_current_room(floors_[i]->get_start_room());
             player_state_->save_current_vocab();
+            ScriptEngine::get().broadcast("room_changed", player_state_->get_current_room()->get_name());
         }
     }
 }
@@ -120,4 +121,8 @@ void sd::World::set_stage(int stage) {
     std::shared_ptr<SetStageEventArgs> args;
     args = std::make_shared<SetStageEventArgs>(stage);
     EventSystem::get().trigger(args);
+}
+
+Sp<sd::PlayerState> sd::World::get_player_state() {
+    return player_state_;
 }

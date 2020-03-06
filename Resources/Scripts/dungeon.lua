@@ -291,9 +291,9 @@ dungeon = {
                 end,
 
                 on_fight= function ()
-                    print_line("You use your Pyro Poke on the bush.")
+                    print_line("You use your fire spell on the bush.")
                     wait(2)
-                    print_line("[input] > Pyro Poke")
+                    print_line("[input] > fire spell")
                     print_line("It burns down. The way is free now.")
                     unlock_door("western_forest", "northern_way")
                     unlock_door("eastern_forest", "southern_way")

@@ -6,15 +6,15 @@ animated	*	1	*	1	v	5	*	1	*	4	*	1	*	1	*	1	non-stop moving	while jumping around	th
 blue	*	1	*	1	*	1	*	1	*	1	*	1	*	1	*	1	blue	depressingly	sky
 booming	*	1	+	1	+	1	*	5	+	6	*	1	*	1	*	3	incredibly loud	with an ear shattering noise	ear shattering sound
 bright	*	1	*	1	+	4	*	1	*	1	*	1	*	1	*	1	blinding	with a blinding light	pure light
-chaotic	*	1	+	1	*	4	+	10	+	20	+	20	+	20	+	20	chaotic	in an incomprehensible manner	chaos
+chaotic	*	1	+	1	*	4	+	11	+	10	+	10	+	10	+	10	chaotic	in an incomprehensible manner	chaos
 chromatic	*	1	*	1	*	2	*	1	*	1	*	1	*	1	*	1	colorful	with all the colors of the rainbow	paint
 cyber	*	1	*	1	*	0	+	10	*	1	*	1	*	1	*	1	digital	like a true hacker	binary code
 dancing	*	1	+	1	*	4	*	3	*	2	*	2	*	2	*	2	annoying	annoyingly	a pink tutu
-dissonant	*	1	+	1	+	7	*	4	*	1	*	1	*	1	*	5	uncomfortably sounding	in a way that hurts the ears.	wrong notes
+dissonant	*	1	+	1	+	7	*	2	*	1	*	1	*	1	*	5	uncomfortably sounding	in a way that hurts the ears.	wrong notes
 divine	*	1	+	1	+	1	+	2	+	45	*	1	*	5	*	1	holy	godly	the spirit of belief
-fake	*	1	+	1	+	34	*	1	*	2	*	6	*	1	*	1	unreal	, but not really	cheap imports
+fake	*	1	+	1	+	16	*	1	*	2	+	16	*	1	*	1	unreal	, but not really	cheap imports
 false	*	1	*	1	*	1	+	2	*	4	*	1	*	1	*	1	non	negatively	boolean untruth
-fire	+	11	+	1	*	0.5	*	1	*	5	*	0	*	0	*	0	burning	with some flames	burning coals
+fire	+	11	+	1	*	0.5	*	0.25	*	5	*	0	*	0	*	0	burning	with some flames	burning coals
 flirtyBackup	+	1	*	1	*	0.3	*	2	*	0.5	*	0.5	*	0.5	*	0.5	enticing	in a suggestive Way	rose petals
 flirty	*	1000	*	1000	*	1000	*	1000	*	1000	*	1000	*	1000	*	1000	enticing	in a suggestive Way	rose petals
 frost	+	1	+	1	*	1.5	+	5	*	0.1	*	2	+	0	+	0	cold	frosty	shivering cold of the antarctic ice shelf
@@ -22,7 +22,7 @@ green	*	1	*	1	*	1	*	1	*	1	*	1	*	1	*	1	green	eco-friendly	nature
 healing	*	1	*	1	*	-6	*	-2	*	-2	*	-2	*	-2	*	-2	healing	in a soothing manner	medicine
 heat	+	1	+	1	*	1	*	1	+	34	*	1	*	1	*	5	warm	with the temperature of a campfire in the evening	a sunny day
 heavy	*	1	*	1	+	1	*	5	+	5	+	5	+	5	+	5	weighty	with a lot of weight	a huge dumbbell
-insulting	*	1	*	1	*	0.5	+	20	*	1	*	1	*	1	*	1	berating	in a highly emotionally offesive manner	pure internet saltiness
+insulting	*	1	*	1	*	0.5	+	10	*	1	*	1	*	1	*	1	berating	in a highly emotionally offesive manner	pure internet saltiness
 intimidating	*	1	*	1	*	0.5	*	7	*	1	*	1	*	1	*	1	fear inducing	menacingly	flight reflex
 light	*	1	*	1	*	2	*	1	*	4	*	1	*	1	*	5	mild	with a light touch	almost weightlessness
 magical	+	1	+	1	+	5	*	1	*	5	*	1	*	1	*	1	wand wiggling	like a wizard	phoenix feathers and rainbow pooping unicorns

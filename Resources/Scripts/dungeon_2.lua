@@ -42,7 +42,7 @@ function room_changed(name)
         print_line("Nevertheless you ask yourself why you are here.")
         print_line("The old wizard taught you some more spells before he left.")
         print_line("You start your journey with:")
-        print_line("Flirty, Chaotic, Fire, Useless, Honk, Poke, Attack, Kick and Slash.")
+        print_line("virtouus, fire, magical, slash, spell, orb, inspect, open and enter.")
     else
         is_in_Southern_Forest = false
     end
@@ -54,7 +54,7 @@ function room_changed(name)
         print_line("The old wizard warned you it could be dangerous.")
         print_line("But as far you can tell there's nothing around.")
         print_line("You're starting your journey with:")
-        print_line("flirty, chaotic, fire, useless, unimplemented, honk, poke, attack, kick, slash and an old map with a marked location.")
+        print_line("virtouus, fire, magical, slash, spell, orb, inspect, open, enter and an old map with a marked location.")
     else
         is_in_Southern_Forest_2 = false
     end

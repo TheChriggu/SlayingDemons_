@@ -5,8 +5,21 @@
 #include <iostream>
 #include "AudioPlayer.h"
 #include "../ScriptEngine/ScriptEngine.h"
+#include "../Event/EventSystem.h"
+
 
 sd::AudioPlayer::AudioPlayer() {
+
+    event_handler_ = CREATE_EVENT_HANDLER(
+                             if (e->type == EventArgs::Type::SELF_DESTRUCT)
+                             {
+                                 background_music_.reset();
+                                 sound_buffer_.reset();
+                                 sound_.reset();
+                             }
+                     );
+    REGISTER_EVENT_HANDLER();
+
     ScriptEngine::get().register_all ("set_background_music", &AudioPlayer::set_background_music, this);
     ScriptEngine::get().register_all ("trigger_sfx", &AudioPlayer::trigger_sfx, this);
 

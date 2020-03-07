@@ -15,8 +15,7 @@ divine	*	1	+	1	+	1	+	2	+	45	*	1	*	5	*	1	holy	godly	the spirit of belief
 fake	*	1	+	1	+	16	*	1	*	2	+	16	*	1	*	1	unreal	, but not really	cheap imports
 false	*	1	*	1	*	1	+	2	*	4	*	1	*	1	*	1	non	negatively	boolean untruth
 fire	+	11	+	1	*	0.5	*	0.25	*	5	*	0	*	0	*	0	burning	with some flames	burning coals
-flirtyBackup	+	1	*	1	*	0.3	*	2	*	0.5	*	0.5	*	0.5	*	0.5	enticing	in a suggestive Way	rose petals
-flirty	*	1000	*	1000	*	1000	*	1000	*	1000	*	1000	*	1000	*	1000	enticing	in a suggestive Way	rose petals
+flirty	+	1	*	1	*	0.3	*	2	*	0.5	*	0.5	*	0.5	*	0.5	enticing	in a suggestive Way	rose petals
 frost	+	1	+	1	*	1.5	+	5	*	0.1	*	2	+	0	+	0	cold	frosty	shivering cold of the antarctic ice shelf
 green	*	1	*	1	*	1	*	1	*	1	*	1	*	1	*	1	green	eco-friendly	nature
 healing	*	1	*	1	*	-6	*	-2	*	-2	*	-2	*	-2	*	-2	healing	in a soothing manner	medicine

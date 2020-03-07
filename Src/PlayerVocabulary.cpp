@@ -155,6 +155,7 @@ Sp<std::vector<std::string>> sd::PlayerVocabulary::get_objects_starting_with(con
 
 void sd::PlayerVocabulary::save_to_file()
 {
+
     auto vec = std::make_shared<std::vector<std::vector<std::string>>>();
     vec->emplace_back(get_modifiers());
     vec->emplace_back(get_actions());
@@ -165,6 +166,7 @@ void sd::PlayerVocabulary::save_to_file()
 
 void sd::PlayerVocabulary::load_from_file()
 {
+
     load();
 
     std::shared_ptr<EventArgs> event = std::make_shared<EventArgs>();
@@ -191,35 +193,8 @@ void sd::PlayerVocabulary::load() {
 
     auto vec = FileInput::load_tsv("../Resources/Tables/PlayerVocab.tsv");
 
-    bool start_self_destruct = false;
-    for(auto row : *vec)
-    {
-        for (auto word : row)
-        {
-            std::string lcase;
-            strtk::parse(word, "", strtk::as_lcase(lcase).ref());
-            if(lcase.find("self") != std::string::npos || lcase.find("destruct") != std::string::npos)
-            {
-                actions_trie_.reset();
-                actions_trie_ = std::make_shared<Trie>();
-                modifiers_trie_.reset();
-                modifiers_trie_ = std::make_shared<Trie>();
-                commands_trie_.reset();
-                commands_trie_ = std::make_shared<Trie>();
-
-                add_modifier("self");
-                add_action("destruct");;
-                add_command("self_destruct");
-                
-                start_self_destruct = true;
-
-                ScriptEngine::get().broadcast("self_destruct_added");
-            }
-        }
-    }
     std::cout << "-- number commands: " << commands_.size() << std::endl;
-    if(!start_self_destruct)
-    {
+
         for(auto modifier :  (*vec)[0])
         {
             std::string lcase;
@@ -242,8 +217,39 @@ void sd::PlayerVocabulary::load() {
             std::cout << "-- new commands: " << copy << std::endl;
             add_command(copy);
         }
-    }
+
     std::cout << "-- number commands: " << commands_.size() << std::endl;
+}
+
+void sd::PlayerVocabulary::check_for_self_destruct_added() {
+    auto vec = FileInput::load_tsv("../Resources/Tables/PlayerVocab.tsv");
+
+    for(auto row : *vec)
+    {
+        for (auto word : row)
+        {
+            std::string lcase;
+            strtk::parse(word, "", strtk::as_lcase(lcase).ref());
+            if(lcase.find("self") != std::string::npos || lcase.find("destruct") != std::string::npos)
+            {
+                actions_trie_.reset();
+                actions_trie_ = std::make_shared<Trie>();
+                modifiers_trie_.reset();
+                modifiers_trie_ = std::make_shared<Trie>();
+                commands_trie_.reset();
+                commands_trie_ = std::make_shared<Trie>();
+                actions_.clear();
+                modifiers_.clear();
+                commands_.clear();
+
+                add_modifier("self_destruct");
+                add_action("self_destruct");;
+                add_command("self_destruct");
+
+                ScriptEngine::get().broadcast("self_destruct_added");
+            }
+        }
+    }
 }
 
 

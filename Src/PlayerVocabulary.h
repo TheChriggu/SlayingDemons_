@@ -47,6 +47,7 @@ namespace sd {
         void save_to_file();
         void load_from_file();
         void load();
+        void check_for_self_destruct_added();
     };
 }
 

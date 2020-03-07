@@ -118,11 +118,11 @@ void sd::Fight::full_turn(std::string action, std::string modifier) {
         EventSystem::get().trigger(args);
 
         std::string enemy_hp_eval = "";
-        if(player_->get_hit_points() > 75)
+        if(enemy_->get_hit_points() > 75)
         {
             enemy_hp_eval = "The " + enemy_->get_alias() + " is still standing on his feet strongly, pretty eager to attack you again.";
         }
-        else if(player_->get_hit_points() > 50)
+        else if(enemy_->get_hit_points() > 50)
         {
             enemy_hp_eval = "Your attacks are beginning to show on the " +enemy_->get_alias() + "'s face. " + get_enemy_pronoun("He") + " is taking deep breaths now.";
 
@@ -184,9 +184,6 @@ void sd::Fight::player_turn (const Sp<sd::Attack>& player_attack)
         eval = "Your attack accidentally healed the " + enemy_->get_alias() + ".";
     }
 
-    std::cout << "damage done by player: " << damage.value << "\n";
-    std::cout << "enemy hp left: " << enemy_->get_hit_points() << "\n";
-
     args = std::make_shared<LineToOutputEventArgs>(eval);
     EventSystem::get().trigger(args);
 
@@ -194,6 +191,9 @@ void sd::Fight::player_turn (const Sp<sd::Attack>& player_attack)
     EventSystem::get().trigger(args);
     
     enemy_->change_hit_points(-damage.value);
+
+    std::cout << "damage done by player: " << damage.value << "\n";
+    std::cout << "enemy hp left: " << enemy_->get_hit_points() << "\n";
     
     ScriptEngine::get().broadcast("player_attacked", player_attack->get_sentence(2, enemy_));
 }
@@ -261,10 +261,6 @@ void sd::Fight::enemy_turn (const Sp<sd::Attack>& enemy_attack)
         }
     }
 
-    std::cout << "damage done by enemy: " << damage.value << "\n";
-    std::cout << "player hp left: " << enemy_->get_hit_points() << "\n";
-
-
     args = std::make_shared<LineToOutputEventArgs>(eval);
     EventSystem::get().trigger(args);
 
@@ -272,6 +268,9 @@ void sd::Fight::enemy_turn (const Sp<sd::Attack>& enemy_attack)
     EventSystem::get().trigger(args);
     
     player_->change_hit_points(-damage.value);
+
+    std::cout << "damage done by enemy: " << damage.value << "\n";
+    std::cout << "player hp left: " << player_->get_hit_points() << "\n";
     
     ScriptEngine::get().broadcast("enemy_attacked", enemy_attack->get_sentence(2,enemy_));
 }

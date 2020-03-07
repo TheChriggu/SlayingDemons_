@@ -3,10 +3,22 @@
 //
 
 #include <cstdlib>
+#include <Event/EventArgs.h>
+#include <Event/EventSystem.h>
 #include "SelfDestruct.h"
 #include "FileInput.h"
 
 void sd::SelfDestruct::self_destruct() {
+    //create ThankYou.txt
+    std::ofstream file("../ThankYou.txt", std::ofstream::trunc);
+
+    if (file.is_open()) {
+        std::string text = "Thank you for playing 'Slaying Demons_'\n-------Team-------\nEngineering:\nFelix Konprecht\nChristian Heusser\n \nGame Design:\nLara Serzisko\nChristian Heusser\n\nArt:\nKatharina Batzel\nNora Symmank\n\nStudents at S4G - School for Games";
+
+        file.write(text.c_str(), text.length());
+
+        file.close();
+    }
 
 #ifdef _WIN32
     //self destructor
@@ -18,9 +30,8 @@ void sd::SelfDestruct::self_destruct() {
 
     std::string command = "";
     command += "SET someOtherProgram=SlayingDemons.exe\n";
-    command +=  "PAUSE\n";
     command +=  "TASKKILL /IM \"%someOtherProgram%\"\n";
-    command +=  "PAUSE\n";
+    //command +=  "PAUSE\n";
     command +=  "TIMEOUT /T 2 \n";
     command += "@RD /S /Q \"";
     command += absolute_bin;
@@ -28,19 +39,22 @@ void sd::SelfDestruct::self_destruct() {
     command += "@RD /S /Q \"";
     command += absolute_resources;
     command += "\"\n";
-    command +=  "TIMEOUT /T 2  \n";
-    command += "PAUSE\n";
-    //command += "start notepad \"ThankYou.txt\"\n";
+    command += "start notepad \"ThankYou.txt\"\n";
     command += "start /b "" cmd /c del \"%~f0\"&exit /b \n";
 
     sd::FileInput::write_file("../selfdestruct.bat", command);
 
     //caller
-    sd::FileInput::write_file("../caller.bat", "cd \"..\"\nstart cmd /C start \"\" selfdestruct.bat");
+    sd::FileInput::write_file("../caller.bat", "cd \"..\"\nstart cmd /C start \"\" selfdestruct.bat\nstart /b \"\" cmd /c del \"%~f0\"&exit /b \n");
 
 
     auto relative = boost::filesystem::path("../caller.bat");
     auto absolute = boost::filesystem::canonical(relative).string();
+
+    auto defeated_args = std::make_shared<EventArgs>();
+    defeated_args->type = sd::EventArgs::Type::SELF_DESTRUCT;
+    EventSystem::get().trigger(defeated_args);
+
     system(absolute.c_str());
 #else
     sd::FileInput::write_file("../selfdestruct.sh",
@@ -49,7 +63,11 @@ void sd::SelfDestruct::self_destruct() {
                               "touch ./ThankYou.txt"
                               "rm -r ../* \n"
     );
-    
+
+    auto defeated_args = std::make_shared<EventArgs>();
+    defeated_args->type = sd::EventArgs::Type::SELF_DESTRUCT;
+    EventSystem::get().trigger(defeated_args);
+
     std::system("chmod +x ../selfdestruct.sh");
     std::system("../selfdestruct.sh");
 #endif

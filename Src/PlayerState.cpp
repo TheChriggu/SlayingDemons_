@@ -57,7 +57,7 @@ sd::PlayerState::PlayerState()
         }
         if (e->type == EventArgs::Type::GAINED_FOCUS)
         {
-            load_vocab();
+            check_for_self_destruct_added();
 
             if(!FileInput::is_existing("../Resources/InnocentFileDoNotOpen.txt"))
             {
@@ -145,6 +145,7 @@ void sd::PlayerState::save_current_vocab() {
 
 void sd::PlayerState::load_vocab()
 {
+
     player_vocabulary_->load_from_file();
 }
 
@@ -203,6 +204,10 @@ void sd::PlayerState::player_door_fight() {
             EventSystem::get().trigger(args);
         }
 
+}
+
+void sd::PlayerState::check_for_self_destruct_added() {
+    player_vocabulary_->check_for_self_destruct_added();
 }
 
 

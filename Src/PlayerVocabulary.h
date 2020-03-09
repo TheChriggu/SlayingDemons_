@@ -28,6 +28,9 @@ namespace sd {
         ~PlayerVocabulary() override = default;
 
         bool has_word(const std::string& word);
+        bool has_action(const std::string& word);
+        bool has_modifier(const std::string& word);
+        bool has_command(const std::string& word);
 
         void add_action(std::string action);
         void add_modifier(std::string modifier);

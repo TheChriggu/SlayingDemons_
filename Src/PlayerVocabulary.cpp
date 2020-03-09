@@ -64,24 +64,25 @@ bool sd::PlayerVocabulary::has_word(const std::string& word) {
     for (const auto& action : modifiers_) {
         std::cout << action << " : " << word << std::endl;
     }
-    if(std::count(actions_.begin(), actions_.end(), word))
+    if(has_action(word))
     {
         return true;
     }
-    if(std::count(modifiers_.begin(), modifiers_.end(), word))
+    if(has_modifier(word))
     {
         return true;
     }
-    if(std::count(commands_.begin(), commands_.end(), word))
+    if(has_command(word))
     {
         return true;
     }
+
     return false;
 }
 
 void sd::PlayerVocabulary::add_action(std::string action) {
     strtk::convert_to_lowercase(action);
-    if(has_word(action))
+    if(has_action(action))
     {
         return;
     }
@@ -91,7 +92,7 @@ void sd::PlayerVocabulary::add_action(std::string action) {
 
 void sd::PlayerVocabulary::add_modifier(std::string modifier) {
     strtk::convert_to_lowercase(modifier);
-    if(has_word(modifier))
+    if(has_modifier(modifier))
     {
         return;
     }
@@ -101,7 +102,7 @@ void sd::PlayerVocabulary::add_modifier(std::string modifier) {
 
 void sd::PlayerVocabulary::add_command(std::string word) {
     strtk::convert_to_lowercase(word);
-    if(has_word(word))
+    if(has_command(word))
     {
         return;
     }
@@ -247,9 +248,39 @@ void sd::PlayerVocabulary::check_for_self_destruct_added() {
                 add_command("self_destruct");
 
                 ScriptEngine::get().broadcast("self_destruct_added");
+
+                std::shared_ptr<EventArgs> event = std::make_shared<EventArgs>();
+                event->type = EventArgs::Type::PLAYER_VOCAB_CHANGED;
+                EventSystem::get().trigger(event);
             }
         }
     }
+}
+
+bool sd::PlayerVocabulary::has_action(const std::string &word) {
+    if(std::count(actions_.begin(), actions_.end(), word))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool sd::PlayerVocabulary::has_modifier(const std::string &word) {
+    if(std::count(modifiers_.begin(), modifiers_.end(), word))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool sd::PlayerVocabulary::has_command(const std::string &word) {
+    if(std::count(commands_.begin(), commands_.end(), word))
+    {
+        return true;
+    }
+    return false;
 }
 
 

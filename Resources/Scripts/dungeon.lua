@@ -162,7 +162,7 @@ dungeon = {
                 end,
 
                 on_enter = function()
-                    set_stage(3)
+                    print_line("You can't enter another person.")
                 end
         },
             barrel = {
@@ -289,7 +289,6 @@ dungeon = {
                 is_locked=true,
 
                 on_inspection = function ()
-                    set_stage(2)
                     print_line("You can see a path behind this bush. But you'll first have to remove it. ")
                     print_line("You could try to use some spells on it. ")
                 end,

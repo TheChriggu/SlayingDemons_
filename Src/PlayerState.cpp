@@ -45,8 +45,12 @@ sd::PlayerState::PlayerState()
             EventSystem::get().trigger(args);
 
             ScriptEngine::get().broadcast("fight_stopped");
-        }
 
+            player_vocabulary_->set_objects(current_room_->get_all_objects());
+        }
+        if (e->type == EventArgs::Type::ROOM_LAYOUT_CHANGED) {
+            player_vocabulary_->set_objects(current_room_->get_all_objects());
+        }
         if (e->type == EventArgs::Type::PLAYER_DIED) {
 
             fight_.reset();

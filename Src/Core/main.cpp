@@ -234,6 +234,22 @@ void startup()
     SLEEP(500);
     write("loading...[52%]\n\n");
     SLEEP(500);
+    write("-------Music-------\n");
+    SLEEP(500);
+    write("\"Kawai Kitsune\" & \"The Lift\"\n");
+    SLEEP(500);
+    write("by Kevin MacLeod (incompetech.com)\n");
+    SLEEP(500);
+    write("Licensed under Creative Commons: By Attribution 3.0");
+    SLEEP(500);
+    write("http://creativecommons.org/licenses/by/3.0/");
+    SLEEP(500);
+    write("Engineering:\n");
+    SLEEP(500);
+    write("Felix Konprecht\n");
+    SLEEP(500);
+    write("Christian Heusser\n");
+    SLEEP(500);
     write("Starting Game Window\n");
 }
 

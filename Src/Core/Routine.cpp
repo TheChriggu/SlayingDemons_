@@ -5,34 +5,35 @@
 #include "Routine.h"
 #include <utility>
 
-sd::Routine::Routine(std::function<void()> body, float duration, std::function<bool(Sp<Routine> this_routine)> on_finished_body)
-    : body_(std::move(body))
+sd::Routine::Routine(std::function<void()> update_body, float duration, std::function<bool(Sp<Routine> this_routine)> expired_body)
+    : update_body_(std::move(update_body))
     , duration_(duration)
-    , on_finished_body_(std::move(on_finished_body))
+    , expired_body_(std::move(expired_body))
 { }
 
 bool sd::Routine::process()
 {
-
-    if (body_)
-        body_();
+    if (update_body_)
+        update_body_();
     
+    // if routine expired execute the on_finished function
     if (timer_.getElapsedTime().asSeconds() >= duration_) {
-        if (on_finished_body_)
+        if (expired_body_)
 
-            if (on_finished_body_(shared_from_this())) {
+            if (expired_body_(shared_from_this())) {
+                // if on_finished body returns true restart the routine by resetting the timer and send restart signal back to RoutineManager
                 start();
-                return true;
+                return Routine::restart;
             }
             else
             {
-                return false;
+                return Routine::end;
             }
             
         else
-            return true;
+            return Routine::end;
     } else {
-        return true;
+        return Routine::progress;
     }
 }
 
@@ -44,9 +45,5 @@ void sd::Routine::start()
 void sd::Routine::set_duration(float new_duration)
 {
     duration_ = new_duration;
-}
-sd::Routine::~Routine()
-{
-    std::cout << "DELETE ROUTINE!" << std::endl;
 }
 

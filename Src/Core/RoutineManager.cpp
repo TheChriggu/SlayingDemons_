@@ -20,7 +20,7 @@ sd::RoutineManager::RoutineManager()
 void sd::RoutineManager::start_routine(Sp<sd::Routine> new_routine)
 {
     new_routine->start();
-    active_routines_.emplace_back(new_routine);
+    active_routines_.emplace_back(std::move(new_routine));
 }
 
 void sd::RoutineManager::process()
@@ -31,6 +31,7 @@ void sd::RoutineManager::process()
         if (routine->process())
             continue;
         
+        // remove routine if it is expired
         active_routines_.erase(std::remove(active_routines_.begin(), active_routines_.end(), routine));
     }
 }

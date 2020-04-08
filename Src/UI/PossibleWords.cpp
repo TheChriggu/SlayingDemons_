@@ -83,7 +83,7 @@ sd::PossibleWords::PossibleWords(sf::Vector2f position, sf::Vector2f size)
                  update(player_vocabulary_->get_commands());
              }
          }
-        );
+    );
     
     REGISTER_EVENT_HANDLER();
     

@@ -11,7 +11,7 @@
 #include <map>
 
 class Trie {
-    public:
+public:
     
     Trie() = default;
     virtual ~Trie() = default;
@@ -20,7 +20,7 @@ class Trie {
     Sp<std::vector<std::string>> get_all();
     Sp<std::vector<std::string>> get_all_that_starts_with(const std::string& prefix);
     
-    private:
+private:
     
     std::map<char, Sp<Trie>> children_;
     std::vector<std::string> complete_words_;

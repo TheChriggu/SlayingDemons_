@@ -10,6 +10,7 @@
 #include <functional>
 #include "Event/Subscriber.h"
 #include "Event/EventArgs.h"
+#include "Core/GlobalDefinitions.h"
 
 namespace sd {
     class EventSystem {
@@ -20,6 +21,7 @@ namespace sd {
 
         EventSystem();
         virtual ~EventSystem() = default;
+        // delete copy-constructor and assignment operator so singelton can not be copied
         EventSystem(const EventSystem&) = delete;
         void operator=(const EventSystem&) = delete;
 

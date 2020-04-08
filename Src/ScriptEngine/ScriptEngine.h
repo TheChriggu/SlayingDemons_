@@ -26,6 +26,9 @@ namespace sd {
 
         ScriptEngine();
         virtual ~ScriptEngine() = default;
+        // delete copy-constructor and assignment operator so singelton can not be copied
+        ScriptEngine(const ScriptEngine&) = delete;
+        void operator=(const ScriptEngine&) = delete;
 
         static ScriptEngine& get();
 

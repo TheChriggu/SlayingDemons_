@@ -9,7 +9,14 @@
 #include "GlobalDefinitions.h"
 #include "Routine.h"
 
-#define CREATE_ROUTINE_BODY(content) \
+#define CREATE_UPDATE_BODY(content) \
+std::function<void()>( \
+    [&]() { \
+        content \
+        } \
+    ) \
+
+#define CREATE_EXPIRED_BODY(content) \
 std::function<bool(Sp<Routine>)>( \
     [&](Sp<Routine> this_routine) { \
         content \
@@ -19,17 +26,20 @@ std::function<bool(Sp<Routine>)>( \
 
 namespace sd {
     class RoutineManager {
-        public:
+    public:
         
         static RoutineManager& get();
         
         RoutineManager();
+        virtual ~RoutineManager() = default;
+        // delete copy-constructor and assignment operator so singelton can not be copied
+        RoutineManager(const RoutineManager&) = delete;
+        void operator=(const RoutineManager&) = delete;
         
         void start_routine(Sp<Routine> new_routine);
         void process();
     
-        private:
-        
+    private:
         static Up<RoutineManager> instance_;
         
         std::vector<Sp<Routine>> active_routines_;

@@ -59,17 +59,16 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
         }
 
         ScriptEngine::get().broadcast("self_destruct_executed");
-        auto routine = std::make_shared<Routine>( Routine(nullptr, 35.0f,
-                std::function<bool(Sp<Routine>)>
-                        (
-                                [this](Sp<Routine> this_routine)
-                                {
-                                    SelfDestruct selfDestruct;
-                                    selfDestruct.self_destruct();
-                                    return Routine::restart;
-                                }
-                        )
-        )
+        auto routine = std::make_shared<Routine>( std::make_shared<Routine>(nullptr, 35.0f,
+            std::function<bool(Sp<Routine>)>
+                (
+                    [this](Sp<Routine> this_routine)
+                    {
+                        SelfDestruct::self_destruct();
+                        return Routine::restart;
+                    }
+                )
+            )
         );
 
         RoutineManager::get().start_routine(routine);

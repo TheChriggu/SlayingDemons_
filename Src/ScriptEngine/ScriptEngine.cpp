@@ -51,7 +51,7 @@ void sd::ScriptEngine::start_lua_callback_routine(sol::coroutine& function, floa
         std::make_shared<Routine>(
             nullptr,
             time,
-            CREATE_ROUTINE_BODY(
+            CREATE_EXPIRED_BODY(
                 sol::object result = function();
     
                 if (result.is<float>())

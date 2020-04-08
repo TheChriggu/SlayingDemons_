@@ -11,26 +11,29 @@
 #include "GlobalDefinitions.h"
 
 namespace sd {
+    // inherits from enable_shared_from_this to be able to call expired_body with shared this pointer
     class Routine : public std::enable_shared_from_this<Routine> {
-        public:
+    public:
+        constexpr static bool progress = true;
         constexpr static bool restart = true;
         constexpr static bool end = false;
         
-        
-        Routine(std::function<void()> body, float duration, std::function<bool(Sp<Routine>)> on_finished_body);
-        virtual ~Routine();
+        Routine(std::function<void()> update_body, float duration, std::function<bool(Sp<Routine>)> expired_body);
+        virtual ~Routine() = default;
         
         void start();
         bool process();
         
         void set_duration(float new_duration);
     
-        private:
+    private:
         sf::Clock timer_;
         float duration_;
         
-        std::function<void()> body_;
-        std::function<bool(Sp<Routine>)> on_finished_body_;
+        // gets executed on every process call
+        std::function<void()> update_body_;
+        // gets executed when Routine is expired
+        std::function<bool(Sp<Routine>)> expired_body_;
     };
 }
 

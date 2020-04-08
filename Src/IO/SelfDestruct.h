@@ -9,7 +9,7 @@
 namespace sd {
     class SelfDestruct {
         public:
-        void self_destruct();
+        static void self_destruct();
     };
 }
 

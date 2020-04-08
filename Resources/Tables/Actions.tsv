@@ -17,7 +17,7 @@ shot	1	1	10	5	5	5	5	5	You make a finger gun and shoot the [monster] with [materi
 slash	1	1	9	2	3	2	1	1	Taking out your blade, you swiftly slash the [monster] [adverbial]	The [monster] takes out [his] blade and swiftly slashes you [adverbial].
 smash	1	1	8	4	2	2	2	2	You lift your fists, jump up and pound everything below you with [a] [adjective] smash.	The [monster] lifts his fists, jumps into the air and pounds the ground with [a] [adjective] smash.
 smite	1	1	10	1	5	5	5	5	You smite the [monster] [adverbial].	The [monster] smites you [adverbial].
-scream	1	1	1	8	3	3	3	3	After taking a deep breath, you open your mouth and scream at the [monster] [adverbial].	The ]monster] takes a deep breath and screms at you [adverbial].
+scream	1	1	1	8	3	3	3	3	After taking a deep breath, you open your mouth and scream at the [monster] [adverbial].	The [monster] takes a deep breath and screms at you [adverbial].
 spell	1	1	1	3	7	7	7	7	Focusing your magic powers in your hands, you call upon the powers of [material] and cast a [adjective] spell onto the [monster].	The [monster] focuses all [his] magic power into [his] hands, calls upon the powers of [material] and casts [a] adjective spell onto you.
 storm	1	1	2	8	3	3	3	3	You summon a [adjective] storm. Windy clouds of [material] surround the [monster].	The [monster] summons a [adjective] storm. Windy clouds of [material] surround you.
 sword	1	1	5	5	5	5	5	5	You quickly draw your [adjective] sword, aim it at the [monster] and slash [him] with it.	The [monster] quickly draws [his] [adjective] sword and swings it at you.

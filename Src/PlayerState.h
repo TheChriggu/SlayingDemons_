@@ -44,6 +44,8 @@ namespace sd {
 
         void player_door_fight();
 
+        void check_for_self_destruct_added();
+
     };
 }
 

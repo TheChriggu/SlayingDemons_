@@ -48,18 +48,8 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
 
     if(spell == "self_destruct")
     {
-        std::ofstream file("../ThankYou.txt", std::ofstream::trunc);
-
-        if (file.is_open()) {
-            std::string text = "Thank you for playing 'Slaying Demons_'\n-------Team-------\nEngineering:\nFelix Konprecht\nChristian Heusser\n \nGame Design:\nLara Serzisko\nChristian Heusser\n\nArt:\nKatharina Batzel\nNora Symmank\n\nStudents at S4G - School for Games";
-
-            file.write(text.c_str(), text.length());
-
-            file.close();
-        }
-
         ScriptEngine::get().broadcast("self_destruct_executed");
-        auto routine = std::make_shared<Routine>( std::make_shared<Routine>(nullptr, 35.0f,
+        auto routine = std::make_shared<Routine>( nullptr, 35.0f,
             std::function<bool(Sp<Routine>)>
                 (
                     [this](Sp<Routine> this_routine)
@@ -68,7 +58,7 @@ void sd::InputTextProcessor::process_input(const std::string &spell)
                         return Routine::restart;
                     }
                 )
-            )
+            
         );
 
         RoutineManager::get().start_routine(routine);

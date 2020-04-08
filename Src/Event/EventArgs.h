@@ -33,7 +33,8 @@ namespace sd {
             CURRENT_COLOR_CHANGED,
             CURRENT_FONT_CHANGED,
             GAINED_FOCUS,
-            RESET_OUTPUT_TIMER
+            RESET_OUTPUT_TIMER,
+            SELF_DESTRUCT
         };
 
         EventArgs();

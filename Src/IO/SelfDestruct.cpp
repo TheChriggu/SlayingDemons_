@@ -3,30 +3,71 @@
 //
 
 #include <cstdlib>
+#include <Event/EventArgs.h>
+#include <Event/EventSystem.h>
 #include "SelfDestruct.h"
 #include "FileInput.h"
 
 void sd::SelfDestruct::self_destruct() {
+    //create ThankYou.txt
+    std::ofstream file("../ThankYou.txt", std::ofstream::trunc);
+
+    if (file.is_open()) {
+        std::string text = "Thank you for playing 'Slaying Demons_'\n-------Team-------\nEngineering:\nFelix Konprecht\nChristian Heusser\n \nGame Design:\nLara Serzisko\nChristian Heusser\n\nArt:\nKatharina Batzel\nNora Symmank\n\nStudents at S4G - School for Games";
+
+        file.write(text.c_str(), text.length());
+
+        file.close();
+    }
 
 #ifdef _WIN32
-    sd::FileInput::write_file("../selfdestruct.bat",
-                              "SET someOtherProgram=SlayingDemons.exe \n"
-                              "TASKKILL /IM \"%someOtherProgram%\" \n"
-                              "TIMEOUT /T 1  \n"
-                              "@RD /S /Q %~dp0/Resources  \n"
-                              "@RD /S /Q %~dp0/cmake-build-debug \n"
-                              "start /b "" cmd /c del \"%~f0\"&exit /b \n"
-    );
-    auto relative = boost::filesystem::path("../selfdestruct.bat");
+    //self destructor
+    auto relative_resources = boost::filesystem::path("../Resources");
+    auto absolute_resources = boost::filesystem::canonical(relative_resources).string();
+
+    auto relative_bin = boost::filesystem::path("../bin");
+    auto absolute_bin = boost::filesystem::canonical(relative_bin).string();
+
+    std::string command = "";
+    command += "SET someOtherProgram=SlayingDemons.exe\n";
+    command +=  "TASKKILL /IM \"%someOtherProgram%\"\n";
+    //command +=  "PAUSE\n";
+    command +=  "TIMEOUT /T 2 \n";
+    command += "@RD /S /Q \"";
+    command += absolute_bin;
+    command += "\"\n";
+    command += "@RD /S /Q \"";
+    command += absolute_resources;
+    command += "\"\n";
+    command += "start notepad \"ThankYou.txt\"\n";
+    command += "start /b "" cmd /c del \"%~f0\"&exit /b \n";
+
+    sd::FileInput::write_file("../selfdestruct.bat", command);
+
+    //caller
+    sd::FileInput::write_file("../caller.bat", "cd \"..\"\nstart cmd /C start \"\" selfdestruct.bat\nstart /b \"\" cmd /c del \"%~f0\"&exit /b \n");
+
+
+    auto relative = boost::filesystem::path("../caller.bat");
     auto absolute = boost::filesystem::canonical(relative).string();
-    std::system(absolute.c_str());
+
+    auto defeated_args = std::make_shared<EventArgs>();
+    defeated_args->type = sd::EventArgs::Type::SELF_DESTRUCT;
+    EventSystem::get().trigger(defeated_args);
+
+    system(absolute.c_str());
 #else
     sd::FileInput::write_file("../selfdestruct.sh",
                               "#!/bin/bash \n"
                               "killall -9 SlayingDemons \n"
+                              "touch ./ThankYou.txt"
                               "rm -r ../* \n"
     );
-    
+
+    auto defeated_args = std::make_shared<EventArgs>();
+    defeated_args->type = sd::EventArgs::Type::SELF_DESTRUCT;
+    EventSystem::get().trigger(defeated_args);
+
     std::system("chmod +x ../selfdestruct.sh");
     std::system("../selfdestruct.sh");
 #endif

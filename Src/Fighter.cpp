@@ -47,3 +47,7 @@ float sd::Fighter::get_hit_points() {
     return hit_points_;
 }
 
+void sd::Fighter::set_hit_points(float value) {
+    hit_points_ = value;
+}
+

@@ -7,9 +7,10 @@
 
 #include "SFML/Audio.hpp"
 #include "../Core/GlobalDefinitions.h"
+#include "../Event/Subscriber.h"
 
 namespace sd {
-    class AudioPlayer {
+    class AudioPlayer : Subscriber{
     private:
         Sp<sf::Music> background_music_;
         std::string current_music_;

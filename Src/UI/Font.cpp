@@ -51,6 +51,16 @@ sd::Font::Font() {
                                  args->type = sd::EventArgs::Type::CURRENT_FONT_CHANGED;
                                  EventSystem::get().trigger(args);
                              }
+
+                             if (e->type == EventArgs::Type::SELF_DESTRUCT) {
+                                 fantasy_font_.reset();
+                                 cyber_font_.reset();
+                                 code_font_.reset();
+                                 transition_font_.reset();
+                                 book_font.reset();
+                                 ai_font_.reset();
+                                 current_font_.reset();
+                             }
                      );
 
     REGISTER_EVENT_HANDLER();

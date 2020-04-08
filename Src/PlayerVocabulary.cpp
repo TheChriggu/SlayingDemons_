@@ -64,24 +64,25 @@ bool sd::PlayerVocabulary::has_word(const std::string& word) {
     for (const auto& action : modifiers_) {
         std::cout << action << " : " << word << std::endl;
     }
-    if(std::count(actions_.begin(), actions_.end(), word))
+    if(has_action(word))
     {
         return true;
     }
-    if(std::count(modifiers_.begin(), modifiers_.end(), word))
+    if(has_modifier(word))
     {
         return true;
     }
-    if(std::count(commands_.begin(), commands_.end(), word))
+    if(has_command(word))
     {
         return true;
     }
+
     return false;
 }
 
 void sd::PlayerVocabulary::add_action(std::string action) {
     strtk::convert_to_lowercase(action);
-    if(has_word(action))
+    if(has_action(action))
     {
         return;
     }
@@ -91,7 +92,7 @@ void sd::PlayerVocabulary::add_action(std::string action) {
 
 void sd::PlayerVocabulary::add_modifier(std::string modifier) {
     strtk::convert_to_lowercase(modifier);
-    if(has_word(modifier))
+    if(has_modifier(modifier))
     {
         return;
     }
@@ -101,7 +102,7 @@ void sd::PlayerVocabulary::add_modifier(std::string modifier) {
 
 void sd::PlayerVocabulary::add_command(std::string word) {
     strtk::convert_to_lowercase(word);
-    if(has_word(word))
+    if(has_command(word))
     {
         return;
     }
@@ -155,6 +156,7 @@ Sp<std::vector<std::string>> sd::PlayerVocabulary::get_objects_starting_with(con
 
 void sd::PlayerVocabulary::save_to_file()
 {
+
     auto vec = std::make_shared<std::vector<std::vector<std::string>>>();
     vec->emplace_back(get_modifiers());
     vec->emplace_back(get_actions());
@@ -165,6 +167,7 @@ void sd::PlayerVocabulary::save_to_file()
 
 void sd::PlayerVocabulary::load_from_file()
 {
+
     load();
 
     std::shared_ptr<EventArgs> event = std::make_shared<EventArgs>();
@@ -191,35 +194,8 @@ void sd::PlayerVocabulary::load() {
 
     auto vec = FileInput::load_tsv("../Resources/Tables/PlayerVocab.tsv");
 
-    bool start_self_destruct = false;
-    for(auto row : *vec)
-    {
-        for (auto word : row)
-        {
-            std::string lcase;
-            strtk::parse(word, "", strtk::as_lcase(lcase).ref());
-            if(lcase.find("self") != std::string::npos || lcase.find("destruct") != std::string::npos)
-            {
-                actions_trie_.reset();
-                actions_trie_ = std::make_shared<Trie>();
-                modifiers_trie_.reset();
-                modifiers_trie_ = std::make_shared<Trie>();
-                commands_trie_.reset();
-                commands_trie_ = std::make_shared<Trie>();
-
-                add_modifier("self");
-                add_action("destruct");;
-                add_command("self_destruct");
-                
-                start_self_destruct = true;
-
-                ScriptEngine::get().broadcast("self_destruct_added");
-            }
-        }
-    }
     std::cout << "-- number commands: " << commands_.size() << std::endl;
-    if(!start_self_destruct)
-    {
+
         for(auto modifier :  (*vec)[0])
         {
             std::string lcase;
@@ -242,8 +218,69 @@ void sd::PlayerVocabulary::load() {
             std::cout << "-- new commands: " << copy << std::endl;
             add_command(copy);
         }
-    }
+
     std::cout << "-- number commands: " << commands_.size() << std::endl;
+}
+
+void sd::PlayerVocabulary::check_for_self_destruct_added() {
+    auto vec = FileInput::load_tsv("../Resources/Tables/PlayerVocab.tsv");
+
+    for(auto row : *vec)
+    {
+        for (auto word : row)
+        {
+            std::string lcase;
+            strtk::parse(word, "", strtk::as_lcase(lcase).ref());
+            if(lcase.find("self") != std::string::npos || lcase.find("destruct") != std::string::npos)
+            {
+                actions_trie_.reset();
+                actions_trie_ = std::make_shared<Trie>();
+                modifiers_trie_.reset();
+                modifiers_trie_ = std::make_shared<Trie>();
+                commands_trie_.reset();
+                commands_trie_ = std::make_shared<Trie>();
+                actions_.clear();
+                modifiers_.clear();
+                commands_.clear();
+
+                add_modifier("self_destruct");
+                add_action("self_destruct");;
+                add_command("self_destruct");
+
+                ScriptEngine::get().broadcast("self_destruct_added");
+
+                std::shared_ptr<EventArgs> event = std::make_shared<EventArgs>();
+                event->type = EventArgs::Type::PLAYER_VOCAB_CHANGED;
+                EventSystem::get().trigger(event);
+            }
+        }
+    }
+}
+
+bool sd::PlayerVocabulary::has_action(const std::string &word) {
+    if(std::count(actions_.begin(), actions_.end(), word))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool sd::PlayerVocabulary::has_modifier(const std::string &word) {
+    if(std::count(modifiers_.begin(), modifiers_.end(), word))
+    {
+        return true;
+    }
+
+    return false;
+}
+
+bool sd::PlayerVocabulary::has_command(const std::string &word) {
+    if(std::count(commands_.begin(), commands_.end(), word))
+    {
+        return true;
+    }
+    return false;
 }
 
 

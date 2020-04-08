@@ -160,6 +160,10 @@ dungeon = {
                     print_line("Attack it by typing [b]'fight barrel'.")
                     add_command("fight")
                 end,
+
+                on_enter = function()
+                    print_line("You can't enter another person.")
+                end
         },
             barrel = {
                 position={x=5,y=3},
@@ -285,7 +289,6 @@ dungeon = {
                 is_locked=true,
 
                 on_inspection = function ()
-                    set_stage(2)
                     print_line("You can see a path behind this bush. But you'll first have to remove it. ")
                     print_line("You could try to use some spells on it. ")
                 end,
@@ -1563,7 +1566,6 @@ dungeon = {
                 is_locked = true,
 
                 on_enter = function ()
-                    print_line("This is a placeholder for the actual puzzle...")
                     cancel_all_procedures_on("background_panel")
                     cancel_all_procedures_on("output-panel")
                     cancel_all_procedures_on("possible-words")
@@ -1571,7 +1573,7 @@ dungeon = {
                     cancel_all_procedures_on("map-window")
                     cancel_all_procedures_on("screen")
                     set_noisy_lines_weak__on("output-panel")
-                    set_stage(2)
+                    --set_stage(2)
                     print_line("You walk Through the door.")
                 end,
                 
